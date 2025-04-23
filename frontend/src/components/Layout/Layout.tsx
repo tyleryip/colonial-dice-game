@@ -1,6 +1,8 @@
-import React from "react";
+import GameBoard from "../GameBoard/GameBoard";
+import StyledLayout from "./styles/StyledLayout";
 
 export default function Layout() {
-    return (<div className="bg-white h-dvh grid place-items-center">
-    </div>)
+    return (<StyledLayout>
+        <GameBoard />
+    </StyledLayout>)
 }
