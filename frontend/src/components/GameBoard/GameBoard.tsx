@@ -7,39 +7,40 @@ import OreHexagon from "../../assets/hexagons/ore-hexagon.svg";
 import WheatHexagon from "../../assets/hexagons/wheat-hexagon.svg";
 import WoodHexagon from "../../assets/hexagons/wood-hexagon.svg";
 import WoolHexagon from "../../assets/hexagons/wool-hexagon.svg";
+import ResourceJoker from '../ResourceJoker/ResourceJoker';
+import WoolJoker from "../../assets/jokers/normal/wool-joker.svg"
+import WheatJoker from "../../assets/jokers/normal/wheat-joker.svg"
+import OreJoker from "../../assets/jokers/normal/ore-joker.svg"
+import WildcardJoker from "../../assets/jokers/normal/wildcard-joker.svg"
+import BrickJoker from "../../assets/jokers/normal/wildcard-joker.svg"
+import WoodJoker from "../../assets/jokers/normal/wood-joker.svg"
 
-const hexagonWidth = 150
+const hexagonWidth = 37.5
 
-const horizontalCenter = 100 - (hexagonWidth / 2.18)
+const horizontalCenter = 31
 const horizontalOffset = 27
 
-const verticalCenter = 100 - (hexagonWidth / 2.27)
+const verticalCenter = 33.5
 const verticalOffset = 16
 
 const GameBoard = () => {
+    const brickJoker = <ResourceJoker icon={BrickJoker} width={100} />
+    const wildcardJoker = <ResourceJoker icon={WildcardJoker} width={100} />
+    const woodJoker = <ResourceJoker icon={WoodJoker} width={100} />
+    const oreJoker = <ResourceJoker icon={OreJoker} width={100} />
+    const woolJoker = <ResourceJoker icon={WoolJoker} width={100} />
+    const wheatJoker = <ResourceJoker icon={WheatJoker} width={100} />
+
+
     return (
         <StyledGameBoard>
-            <Hexagon top={`${verticalCenter}%`} left={`${horizontalCenter}%`}>
-                <img width={`${hexagonWidth}%`} src={WaterHexagon}></img>
-            </Hexagon>
-            <Hexagon top={`${verticalCenter + verticalOffset * 2}%`} left={`${horizontalCenter}%`}>
-                <img width={`${hexagonWidth}%`} src={WoolHexagon}></img>
-            </Hexagon>
-            <Hexagon top={`${verticalCenter + verticalOffset}%`} left={`${horizontalCenter - horizontalOffset}%`}>
-                <img width={`${hexagonWidth}%`} src={WheatHexagon}></img>
-            </Hexagon>
-            <Hexagon top={`${verticalCenter - verticalOffset}%`} left={`${horizontalCenter - horizontalOffset}%`}>
-                <img width={`${hexagonWidth}%`} src={OreHexagon}></img>
-            </Hexagon>
-            <Hexagon top={`${verticalCenter - verticalOffset * 2}%`} left={`${horizontalCenter}%`}>
-                <img width={`${hexagonWidth}%`} src={DesertHexagon}></img>
-            </Hexagon>
-            <Hexagon top={`${verticalCenter - verticalOffset}%`} left={`${horizontalCenter + horizontalOffset}%`}>
-                <img width={`${hexagonWidth}%`} src={BrickHexagon}></img>
-            </Hexagon>
-            <Hexagon top={`${verticalCenter + verticalOffset}%`} left={`${horizontalCenter + horizontalOffset}%`}>
-                <img width={`${hexagonWidth}%`} src={WoodHexagon}></img>
-            </Hexagon>
+            <Hexagon tile={WaterHexagon} width={hexagonWidth} top={verticalCenter} left={horizontalCenter} />
+            <Hexagon tile={WoolHexagon} center={woolJoker} width={hexagonWidth} top={verticalCenter + verticalOffset * 2} left={horizontalCenter} />
+            <Hexagon tile={WheatHexagon} center={wheatJoker} width={hexagonWidth} top={verticalCenter + verticalOffset} left={horizontalCenter - horizontalOffset} />
+            <Hexagon tile={OreHexagon} center={oreJoker} width={hexagonWidth} top={verticalCenter - verticalOffset} left={horizontalCenter - horizontalOffset} />
+            <Hexagon tile={DesertHexagon} center={wildcardJoker} width={hexagonWidth} top={verticalCenter - verticalOffset * 2} left={horizontalCenter} />
+            <Hexagon tile={BrickHexagon} center={brickJoker} width={hexagonWidth} top={verticalCenter - verticalOffset} left={horizontalCenter + horizontalOffset} />
+            <Hexagon tile={WoodHexagon} center={woodJoker} width={hexagonWidth} top={verticalCenter + verticalOffset} left={horizontalCenter + horizontalOffset} />
         </StyledGameBoard>
     )
 }
