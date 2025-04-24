@@ -1,16 +1,16 @@
 import { styled } from "styled-components"
 
-interface StyledCenterProps {
+interface StyledKnightProps {
     $top: number,
     $left: number
 }
 
-const StyledCenter = styled.div<StyledCenterProps>`
+const StyledKnight = styled.div<StyledKnightProps>`
     position: absolute;
     top: ${props => `${props.$top}%`};
     left: ${props => `${props.$left}%`};
-    width: 30%;
+    width: 15%;
     z-index: 1;
 `
 
-export default StyledCenter
+export default StyledKnight

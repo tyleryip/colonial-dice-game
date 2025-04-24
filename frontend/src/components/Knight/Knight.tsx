@@ -1,12 +1,12 @@
-interface ResourceJokerProps {
+interface KnightProps {
     icon: string
     width: number
 }
 
-const ResourceJoker = (props: ResourceJokerProps) => {
+const Knight = (props: KnightProps) => {
     return (
         <img width={`${props.width}%`} src={props.icon} />
     )
 }
 
-export default ResourceJoker
+export default Knight
