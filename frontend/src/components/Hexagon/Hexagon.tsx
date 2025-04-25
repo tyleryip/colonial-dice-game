@@ -90,10 +90,11 @@ function AddKnight(knight: React.ReactNode): React.ReactNode | null {
         throw new Error("Knight cannot be empty")
     }
 
-    const knightTopOffset = 6
-    const knightLeftOffset = 43
+    const knightTopOffset = 14
+    const knightLeftOffset = 44
+    const knightWidth = 12
 
-    return <StyledKnight $top={knightTopOffset} $left={knightLeftOffset}>{knight}</StyledKnight>
+    return <StyledKnight $top={knightTopOffset} $left={knightLeftOffset} $width={knightWidth}>{knight}</StyledKnight>
 }
 
 function AddResourceJoker(resourceJoker: React.ReactNode): React.ReactNode | null {
@@ -101,10 +102,11 @@ function AddResourceJoker(resourceJoker: React.ReactNode): React.ReactNode | nul
         throw new Error("Resource joker cannot be empty")
     }
 
-    const jokerTopOffset = 33
-    const jokerLeftOffset = 35
+    const jokerTopOffset = 36
+    const jokerLeftOffset = 37
+    const jokerWidth = 25
 
-    return <StyledResourceJoker $top={jokerTopOffset} $left={jokerLeftOffset}>{resourceJoker}</StyledResourceJoker>
+    return <StyledResourceJoker $top={jokerTopOffset} $left={jokerLeftOffset} $width={jokerWidth}>{resourceJoker}</StyledResourceJoker>
 }
 
 function AddStructure(hexagonStructure: HexagonStructure): React.ReactNode | null {
@@ -141,41 +143,44 @@ function AddRoad(hexagonStructure: HexagonStructure): React.ReactNode | null {
     let roadLeftOffset = 0
     let width = 0
 
+    const horizontalWidth = 25
+    const diagonalWidth = 16.5
+
     switch (hexagonStructure.edge) {
         case HexagonEdge.North:
             roadTopOffset = -2.5
             roadLeftOffset = 37
-            width = 25
+            width = horizontalWidth
             break;
 
         case HexagonEdge.NorthWest:
-            roadTopOffset = 10
-            roadLeftOffset = 4
-            width = 19
+            roadTopOffset = 12.5
+            roadLeftOffset = 5.7
+            width = diagonalWidth
             break;
 
         case HexagonEdge.NorthEast:
-            roadTopOffset = 10
-            roadLeftOffset = 77
-            width = 19
+            roadTopOffset = 12.5
+            roadLeftOffset = 78
+            width = diagonalWidth
             break;
 
         case HexagonEdge.SouthWest:
-            roadTopOffset = 59
-            roadLeftOffset = 4
-            width = 19
+            roadTopOffset = 60
+            roadLeftOffset = 5.7
+            width = diagonalWidth
             break;
 
         case HexagonEdge.SouthEast:
-            roadTopOffset = 59
-            roadLeftOffset = 77
-            width = 19
+            roadTopOffset = 60
+            roadLeftOffset = 78
+            width = diagonalWidth
             break;
 
         case HexagonEdge.South:
             roadTopOffset = 92
             roadLeftOffset = 37
-            width = 25
+            width = horizontalWidth
             break;
 
         default:
@@ -194,45 +199,47 @@ function AddSettlement(hexagonStructure: HexagonStructure): React.ReactNode | nu
         throw new Error("Settlement cannot be placed on an edge");
     }
 
+    const settlementWidth = 13
+
     let settlementTopOffset = 0
     let settlementLeftOffset = 0
 
     switch (hexagonStructure.vertex) {
         case HexagonVertex.NorthWest:
-            settlementTopOffset = -10
-            settlementLeftOffset = 17
+            settlementTopOffset = -8
+            settlementLeftOffset = 19
             break;
 
         case HexagonVertex.NorthEast:
-            settlementTopOffset = -10
-            settlementLeftOffset = 64
+            settlementTopOffset = -8
+            settlementLeftOffset = 67
             break;
 
         case HexagonVertex.West:
-            settlementTopOffset = 38
-            settlementLeftOffset = -5
+            settlementTopOffset = 40
+            settlementLeftOffset = -4
             break;
 
         case HexagonVertex.East:
-            settlementTopOffset = 38
-            settlementLeftOffset = 87
+            settlementTopOffset = 40
+            settlementLeftOffset = 90
             break;
 
         case HexagonVertex.SouthWest:
-            settlementTopOffset = 83
-            settlementLeftOffset = 17
+            settlementTopOffset = 87
+            settlementLeftOffset = 19
             break;
 
         case HexagonVertex.SouthEast:
-            settlementTopOffset = 83
-            settlementLeftOffset = 64
+            settlementTopOffset = 87
+            settlementLeftOffset = 67
             break;
 
         default:
             throw new Error("Settlement must be placed on a vertex");
     }
 
-    return <StyledSettlement key={hexagonStructure.id} $top={settlementTopOffset} $left={settlementLeftOffset}>{hexagonStructure.structure}</StyledSettlement>
+    return <StyledSettlement key={hexagonStructure.id} $top={settlementTopOffset} $left={settlementLeftOffset} $width={settlementWidth}>{hexagonStructure.structure}</StyledSettlement>
 }
 
 function AddCity(hexagonStructure: HexagonStructure): React.ReactNode | null {
@@ -244,43 +251,45 @@ function AddCity(hexagonStructure: HexagonStructure): React.ReactNode | null {
         throw new Error("City cannot be placed on an edge");
     }
 
+    const cityWidth = 15.5
+
     let cityTopOffset = 0
     let cityLeftOffset = 0
 
     switch (hexagonStructure.vertex) {
         case HexagonVertex.NorthWest:
-            cityTopOffset = -10
-            cityLeftOffset = 15
+            cityTopOffset = -7
+            cityLeftOffset = 17
             break;
 
         case HexagonVertex.NorthEast:
-            cityTopOffset = -10
-            cityLeftOffset = 64
+            cityTopOffset = -7
+            cityLeftOffset = 67
             break;
 
         case HexagonVertex.West:
-            cityTopOffset = 38.5
-            cityLeftOffset = -7
+            cityTopOffset = 39
+            cityLeftOffset = -5
             break;
 
         case HexagonVertex.East:
-            cityTopOffset = 38.5
-            cityLeftOffset = 85
+            cityTopOffset = 39
+            cityLeftOffset = 88
             break;
 
         case HexagonVertex.SouthWest:
-            cityTopOffset = 84
-            cityLeftOffset = 15
+            cityTopOffset = 87
+            cityLeftOffset = 17
             break;
 
         case HexagonVertex.SouthEast:
-            cityTopOffset = 84
-            cityLeftOffset = 64
+            cityTopOffset = 87
+            cityLeftOffset = 67
             break;
 
         default:
             throw new Error("City must be placed on a vertex");
     }
 
-    return <StyledCity key={hexagonStructure.id} $top={cityTopOffset} $left={cityLeftOffset}>{hexagonStructure.structure}</StyledCity>
+    return <StyledCity key={hexagonStructure.id} $top={cityTopOffset} $left={cityLeftOffset} $width={cityWidth}>{hexagonStructure.structure}</StyledCity>
 }

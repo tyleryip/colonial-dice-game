@@ -41,7 +41,7 @@ const City = (props: CityProps) => {
         : cityIconsDark[props.cityNumber]
 
     return (
-        <StyledAsset width={"100%"} src={icon} />
+        <StyledAsset src={icon} />
     )
 }
 

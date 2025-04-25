@@ -41,7 +41,7 @@ const Road = (props: RoadProps) => {
         : roadIconsDark[props.type]
 
     return (
-        <StyledAsset width={"100%"} src={icon} />
+        <StyledAsset src={icon} />
     )
 }
 

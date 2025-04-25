@@ -50,7 +50,7 @@ const ResourceJoker = (props: ResourceJokerProps) => {
 
     // TODO: adjust width based on icon type as well since the icons are different sizes?
     return (
-        <StyledAsset width={"100%"} src={icon} />
+        <StyledAsset src={icon} />
     )
 }
 

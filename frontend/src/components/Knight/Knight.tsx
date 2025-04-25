@@ -49,7 +49,7 @@ const Knight = (props: KnightProps) => {
         : knightIconsDark[props.type]
 
     return (
-        <StyledAsset width={"100%"} src={icon} />
+        <StyledAsset src={icon} />
     )
 }
 

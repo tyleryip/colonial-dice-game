@@ -2,14 +2,15 @@ import { styled } from "styled-components"
 
 interface StyledSettlementProps {
     $top: number,
-    $left: number
+    $left: number,
+    $width: number
 }
 
 const StyledSettlement = styled.div<StyledSettlementProps>`
     position: absolute;
     top: ${props => `${props.$top}%`};
     left: ${props => `${props.$left}%`};
-    width: 17%;
+    width: ${props => `${props.$width}%`};
     z-index: 1;
 
     // TODO: move to the asset itself

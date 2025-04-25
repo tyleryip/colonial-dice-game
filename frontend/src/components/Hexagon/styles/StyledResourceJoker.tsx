@@ -2,14 +2,15 @@ import { styled } from "styled-components"
 
 interface StyledResourceJokerProps {
     $top: number,
-    $left: number
+    $left: number,
+    $width: number
 }
 
 const StyledResourceJoker = styled.div<StyledResourceJokerProps>`
     position: absolute;
     top: ${props => `${props.$top}%`};
     left: ${props => `${props.$left}%`};
-    width: 30%;
+    width: ${props => `${props.$width}%`};
     z-index: 2;
 `
 
