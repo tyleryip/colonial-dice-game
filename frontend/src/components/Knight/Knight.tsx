@@ -1,5 +1,5 @@
 import StyledAsset from "../Asset/StyledAsset"
-import { IconType } from "../../constants/enumerations"
+import { IconType, KnightType } from "../../constants/enumerations"
 
 // Light icons
 import knight_1_light from "../../assets/knights/light/knight-1-light.svg"
@@ -19,24 +19,25 @@ import knight_6_dark from "../../assets/knights/dark/knight-6-dark.svg"
 
 interface KnightProps {
     id: number
+    type: KnightType
 }
 
-const knightIconsLight: Readonly<Record<number, string>> = {
-    1: knight_1_light,
-    2: knight_2_light,
-    3: knight_3_light,
-    4: knight_4_light,
-    5: knight_5_light,
-    6: knight_6_light
+const knightIconsLight: { -readonly [key in KnightType]: string } = {
+    [KnightType.Ore]: knight_1_light,
+    [KnightType.Wheat]: knight_2_light,
+    [KnightType.Wool]: knight_3_light,
+    [KnightType.Wood]: knight_4_light,
+    [KnightType.Brick]: knight_5_light,
+    [KnightType.Wildcard]: knight_6_light
 }
 
-const knightIconsDark: Readonly<Record<number, string>> = {
-    1: knight_1_dark,
-    2: knight_2_dark,
-    3: knight_3_dark,
-    4: knight_4_dark,
-    5: knight_5_dark,
-    6: knight_6_dark
+const knightIconsDark: { -readonly [key in KnightType]: string } = {
+    [KnightType.Ore]: knight_1_dark,
+    [KnightType.Wheat]: knight_2_dark,
+    [KnightType.Wool]: knight_3_dark,
+    [KnightType.Wood]: knight_4_dark,
+    [KnightType.Brick]: knight_5_dark,
+    [KnightType.Wildcard]: knight_6_dark
 }
 
 const Knight = (props: KnightProps) => {
@@ -44,8 +45,8 @@ const Knight = (props: KnightProps) => {
     const iconType = IconType.Light
 
     const icon = iconType === IconType.Light
-        ? knightIconsLight[props.id]
-        : knightIconsDark[props.id]
+        ? knightIconsLight[props.type]
+        : knightIconsDark[props.type]
 
     return (
         <StyledAsset width={"100%"} src={icon} />

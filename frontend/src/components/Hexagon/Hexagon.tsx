@@ -2,15 +2,22 @@ import React from 'react'
 import StyledHexagon from './styles/StyledHexagon'
 import StyledKnight from './styles/StyledKnight'
 import StyledResourceJoker from './styles/StyledResourceJoker'
-import { HexagonEdge, HexagonVertex, StructureType } from '../../constants/enumerations'
+import { HexagonEdge, HexagonType, HexagonVertex, StructureType } from '../../constants/enumerations'
 import StyledRoad from './styles/StyledRoad'
 import StyledSettlement from './styles/StyledSettlement'
 import StyledCity from './styles/StyledCity'
 
+// Hexagon icons
+import water_hexagon from "../../assets/hexagons/water-hexagon.svg";
+import ore_hexagon from "../../assets/hexagons/ore-hexagon.svg";
+import wheat_hexagon from "../../assets/hexagons/wheat-hexagon.svg";
+import wool_hexagon from "../../assets/hexagons/wool-hexagon.svg";
+import wood_hexagon from "../../assets/hexagons/wood-hexagon.svg";
+import brick_hexagon from "../../assets/hexagons/brick-hexagon.svg";
+import desert_hexagon from "../../assets/hexagons/desert-hexagon.svg";
+
 interface HexagonProps {
-    top: number,
-    left: number,
-    tile: string
+    type: HexagonType,
     knight?: React.ReactNode
     joker?: React.ReactNode
     structures?: HexagonStructure[]
@@ -27,12 +34,50 @@ export interface HexagonStructure {
     edge?: HexagonEdge
 }
 
+const hexagonIcons: { -readonly [key in HexagonType]: string } = {
+    [HexagonType.Water]: water_hexagon,
+    [HexagonType.Ore]: ore_hexagon,
+    [HexagonType.Wheat]: wheat_hexagon,
+    [HexagonType.Wool]: wool_hexagon,
+    [HexagonType.Wood]: wood_hexagon,
+    [HexagonType.Brick]: brick_hexagon,
+    [HexagonType.Desert]: desert_hexagon
+}
+
 const width = 37.5
 
+const verticalCenter = 33.5
+const verticalOffset = 16
+const verticalOffsets: { -readonly [key in HexagonType]: number } = {
+    [HexagonType.Water]: verticalCenter,
+    [HexagonType.Ore]: verticalCenter - verticalOffset,
+    [HexagonType.Wheat]: verticalCenter + verticalOffset,
+    [HexagonType.Wool]: verticalCenter + 2 * verticalOffset,
+    [HexagonType.Wood]: verticalCenter + verticalOffset,
+    [HexagonType.Brick]: verticalCenter - verticalOffset,
+    [HexagonType.Desert]: verticalCenter - 2 * verticalOffset
+}
+
+const horizontalCenter = 31
+const horizontalOffset = 27
+const horizontalOffsets: { -readonly [key in HexagonType]: number } = {
+    [HexagonType.Water]: horizontalCenter,
+    [HexagonType.Ore]: horizontalCenter - horizontalOffset,
+    [HexagonType.Wheat]: horizontalCenter - horizontalOffset,
+    [HexagonType.Wool]: horizontalCenter,
+    [HexagonType.Wood]: horizontalCenter + horizontalOffset,
+    [HexagonType.Brick]: horizontalCenter + horizontalOffset,
+    [HexagonType.Desert]: horizontalCenter
+}
+
 export default function Hexagon(props: HexagonProps) {
+    const icon = hexagonIcons[props.type]
+    const top = verticalOffsets[props.type]
+    const left = horizontalOffsets[props.type]
+
     return (
-        <StyledHexagon $top={props.top} $left={props.left} $width={width} >
-            <img width={"100%"} src={props.tile} />
+        <StyledHexagon $top={top} $left={left} $width={width} >
+            <img width={"100%"} src={icon} />
             {props.knight && AddKnight(props.knight)}
             {props.joker && AddResourceJoker(props.joker)}
             {props.structures && props.structures.map((s) => AddStructure(s))}

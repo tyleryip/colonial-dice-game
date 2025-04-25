@@ -1,5 +1,5 @@
 import StyledAsset from "../Asset/StyledAsset"
-import { IconType } from "../../constants/enumerations"
+import { IconType, ResourceJokerType } from "../../constants/enumerations"
 
 // Light icons
 import wool_joker_light from "../../assets/jokers/light/wool-joker-light.svg"
@@ -18,25 +18,26 @@ import brick_joker_dark from "../../assets/jokers/dark/brick-joker-dark.svg"
 import wood_joker_dark from "../../assets/jokers/dark/wood-joker-dark.svg"
 
 interface ResourceJokerProps {
-    id: number
+    id: number,
+    type: ResourceJokerType
 }
 
-const resourceJokerIconsLight: Readonly<Record<number, string>> = {
-    1: ore_joker_light,
-    2: wheat_joker_light,
-    3: wool_joker_light,
-    4: wood_joker_light,
-    5: brick_joker_light,
-    6: wildcard_joker_light
+const resourceJokerIconsLight: { -readonly [key in ResourceJokerType]: string } = {
+    [ResourceJokerType.Ore]: ore_joker_light,
+    [ResourceJokerType.Wheat]: wheat_joker_light,
+    [ResourceJokerType.Wool]: wool_joker_light,
+    [ResourceJokerType.Wood]: wood_joker_light,
+    [ResourceJokerType.Brick]: brick_joker_light,
+    [ResourceJokerType.Wildcard]: wildcard_joker_light
 }
 
-const resourceJokerIconsDark: Readonly<Record<number, string>> = {
-    1: ore_joker_dark,
-    2: wheat_joker_dark,
-    3: wool_joker_dark,
-    4: wood_joker_dark,
-    5: brick_joker_dark,
-    6: wildcard_joker_dark
+const resourceJokerIconsDark: { -readonly [key in ResourceJokerType]: string } = {
+    [ResourceJokerType.Ore]: ore_joker_dark,
+    [ResourceJokerType.Wheat]: wheat_joker_dark,
+    [ResourceJokerType.Wool]: wool_joker_dark,
+    [ResourceJokerType.Wood]: wood_joker_dark,
+    [ResourceJokerType.Brick]: brick_joker_dark,
+    [ResourceJokerType.Wildcard]: wildcard_joker_dark
 }
 
 const ResourceJoker = (props: ResourceJokerProps) => {
@@ -44,8 +45,8 @@ const ResourceJoker = (props: ResourceJokerProps) => {
     const iconType = IconType.Light
 
     const icon = iconType === IconType.Light
-        ? resourceJokerIconsLight[props.id]
-        : resourceJokerIconsDark[props.id]
+        ? resourceJokerIconsLight[props.type]
+        : resourceJokerIconsDark[props.type]
 
     // TODO: adjust width based on icon type as well since the icons are different sizes?
     return (

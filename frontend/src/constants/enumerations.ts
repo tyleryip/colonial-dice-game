@@ -14,6 +14,16 @@ export enum RoadType {
     Starting // Special case for the starting road with the arrow
 }
 
+export enum HexagonType {
+    Water,
+    Ore,
+    Wheat,
+    Wool,
+    Wood,
+    Brick,
+    Desert
+}
+
 export enum HexagonVertex {
     NorthWest,
     NorthEast,
@@ -30,6 +40,24 @@ export enum HexagonEdge {
     SouthWest,
     SouthEast,
     South
+}
+
+export enum KnightType {
+    Ore,
+    Wheat,
+    Wool,
+    Wood,
+    Brick,
+    Wildcard
+}
+
+export enum ResourceJokerType {
+    Ore,
+    Wheat,
+    Wool,
+    Wood,
+    Brick,
+    Wildcard
 }
 
 export enum IconType {
