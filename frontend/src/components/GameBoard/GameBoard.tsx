@@ -1,5 +1,5 @@
 import Hexagon, { HexagonStructure } from '../Hexagon/Hexagon'
-import { HexagonEdge, HexagonVertex, StructureType } from '../../constants/enumerations';
+import { HexagonEdge, HexagonVertex, RoadType, StructureType } from '../../constants/enumerations';
 import StyledGameBoard from './styles/StyledGameBoard'
 
 import WaterHexagon from "../../assets/hexagons/water-hexagon.svg";
@@ -10,34 +10,11 @@ import WheatHexagon from "../../assets/hexagons/wheat-hexagon.svg";
 import WoodHexagon from "../../assets/hexagons/wood-hexagon.svg";
 import WoolHexagon from "../../assets/hexagons/wool-hexagon.svg";
 
-import ResourceJoker from '../ResourceJoker/ResourceJoker';
-
-import WoolJoker from "../../assets/jokers/normal/wool-joker.svg"
-import WheatJoker from "../../assets/jokers/normal/wheat-joker.svg"
-import OreJoker from "../../assets/jokers/normal/ore-joker.svg"
-import WildcardJoker from "../../assets/jokers/normal/wildcard-joker.svg"
-import BrickJoker from "../../assets/jokers/normal/brick-joker.svg"
-import WoodJoker from "../../assets/jokers/normal/wood-joker.svg"
-
 import Knight from '../Knight/Knight';
-
-import Knight1Icon from "../../assets/knights/light/knight-1-light.svg"
-
+import ResourceJoker from '../ResourceJoker/ResourceJoker';
 import Road from "../Road/Road";
-
-import HorizontalRoadIcon from "../../assets/roads/light/horizontal-road-light.svg"
-import ForwardslashRoadIcon from "../../assets/roads/light/forwardslash-road-light.svg"
-import BackslashRoadIcon from "../../assets/roads/light/backslash-road-light.svg"
-
 import Settlement from '../Settlement/Settlement';
-
-import Settlement3Icon from "../../assets/settlements/light/settlement-3-light.svg"
-
 import City from '../City/City';
-
-import City7Icon from "../../assets/cities/light/city-7-light.svg"
-
-const hexagonWidth = 37.5
 
 const horizontalCenter = 31
 const horizontalOffset = 27
@@ -48,26 +25,26 @@ const verticalOffset = 16
 const GameBoard = () => {
 
     // Knights
-    const knight1 = <Knight icon={Knight1Icon} width={100} />
+    const knight1 = <Knight id={1} />
 
     // Jokers
-    const brickJoker = <ResourceJoker icon={BrickJoker} width={100} />
-    const wildcardJoker = <ResourceJoker icon={WildcardJoker} width={100} />
-    const woodJoker = <ResourceJoker icon={WoodJoker} width={100} />
-    const oreJoker = <ResourceJoker icon={OreJoker} width={100} />
-    const woolJoker = <ResourceJoker icon={WoolJoker} width={100} />
-    const wheatJoker = <ResourceJoker icon={WheatJoker} width={100} />
+    const oreJoker = <ResourceJoker id={1} />
+    const wheatJoker = <ResourceJoker id={2} />
+    const woolJoker = <ResourceJoker id={3} />
+    const woodJoker = <ResourceJoker id={4} />
+    const brickJoker = <ResourceJoker id={5} />
+    const wildcardJoker = <ResourceJoker id={6} />
 
     // Roads
-    const road1 = <Road icon={HorizontalRoadIcon} width={100} />
-    const road2 = <Road icon={ForwardslashRoadIcon} width={100} />
-    const road3 = <Road icon={BackslashRoadIcon} width={100} />
+    const road1 = <Road id={0} type={RoadType.Horizontal} />
+    const road2 = <Road id={0} type={RoadType.Forwardslash} />
+    const road3 = <Road id={0} type={RoadType.Backslash} />
 
     // Settlements
-    const settlement3 = <Settlement icon={Settlement3Icon} width={100} />
+    const settlement3 = <Settlement id={1} settlementNumber={3} />
 
     // Cities
-    const city7 = <City icon={City7Icon} width={100} />
+    const city7 = <City id={1} cityNumber={7} />
 
     const wheatHexagonStructures: HexagonStructure[] = [
         {
@@ -222,19 +199,19 @@ const GameBoard = () => {
     return (
         <StyledGameBoard>
 
-            <Hexagon tile={WaterHexagon} width={hexagonWidth} top={verticalCenter} left={horizontalCenter} />
+            <Hexagon tile={WaterHexagon} top={verticalCenter} left={horizontalCenter} />
 
-            <Hexagon tile={WoolHexagon} joker={woolJoker} width={hexagonWidth} top={verticalCenter + verticalOffset * 2} left={horizontalCenter} />
+            <Hexagon tile={WoolHexagon} joker={woolJoker} top={verticalCenter + verticalOffset * 2} left={horizontalCenter} />
 
-            <Hexagon tile={WheatHexagon} joker={wheatJoker} structures={wheatHexagonStructures} width={hexagonWidth} top={verticalCenter + verticalOffset} left={horizontalCenter - horizontalOffset} />
+            <Hexagon tile={WheatHexagon} joker={wheatJoker} structures={wheatHexagonStructures} top={verticalCenter + verticalOffset} left={horizontalCenter - horizontalOffset} />
 
-            <Hexagon tile={OreHexagon} joker={oreJoker} knight={knight1} width={hexagonWidth} top={verticalCenter - verticalOffset} left={horizontalCenter - horizontalOffset} />
+            <Hexagon tile={OreHexagon} joker={oreJoker} knight={knight1} top={verticalCenter - verticalOffset} left={horizontalCenter - horizontalOffset} />
 
-            <Hexagon tile={DesertHexagon} joker={wildcardJoker} width={hexagonWidth} top={verticalCenter - verticalOffset * 2} left={horizontalCenter} />
+            <Hexagon tile={DesertHexagon} joker={wildcardJoker} top={verticalCenter - verticalOffset * 2} left={horizontalCenter} />
 
-            <Hexagon tile={BrickHexagon} joker={brickJoker} structures={brickHexagonStructures} width={hexagonWidth} top={verticalCenter - verticalOffset} left={horizontalCenter + horizontalOffset} />
+            <Hexagon tile={BrickHexagon} joker={brickJoker} structures={brickHexagonStructures} top={verticalCenter - verticalOffset} left={horizontalCenter + horizontalOffset} />
 
-            <Hexagon tile={WoodHexagon} joker={woodJoker} width={hexagonWidth} top={verticalCenter + verticalOffset} left={horizontalCenter + horizontalOffset} />
+            <Hexagon tile={WoodHexagon} joker={woodJoker} top={verticalCenter + verticalOffset} left={horizontalCenter + horizontalOffset} />
         </StyledGameBoard>
     )
 }

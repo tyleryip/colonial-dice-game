@@ -8,7 +8,6 @@ import StyledSettlement from './styles/StyledSettlement'
 import StyledCity from './styles/StyledCity'
 
 interface HexagonProps {
-    width: number
     top: number,
     left: number,
     tile: string
@@ -28,9 +27,11 @@ export interface HexagonStructure {
     edge?: HexagonEdge
 }
 
+const width = 37.5
+
 export default function Hexagon(props: HexagonProps) {
     return (
-        <StyledHexagon $top={props.top} $left={props.left} $width={props.width} >
+        <StyledHexagon $top={props.top} $left={props.left} $width={width} >
             <img width={"100%"} src={props.tile} />
             {props.knight && AddKnight(props.knight)}
             {props.joker && AddResourceJoker(props.joker)}
