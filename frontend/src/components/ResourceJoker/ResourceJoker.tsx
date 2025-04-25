@@ -18,7 +18,6 @@ import brick_joker_dark from "../../assets/jokers/dark/brick-joker-dark.svg"
 import wood_joker_dark from "../../assets/jokers/dark/wood-joker-dark.svg"
 
 interface ResourceJokerProps {
-    id: number,
     type: ResourceJokerType
 }
 

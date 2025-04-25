@@ -18,7 +18,6 @@ import settlement_11_dark from "../../assets/settlements/dark/settlement-11-dark
 import { IconType } from "../../constants/enumerations"
 
 interface SettlementProps {
-    id: number, // the unique structure id
     settlementNumber: number // the number that appears on the settlement
 }
 

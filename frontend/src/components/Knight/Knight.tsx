@@ -18,7 +18,6 @@ import knight_5_dark from "../../assets/knights/dark/knight-5-dark.svg"
 import knight_6_dark from "../../assets/knights/dark/knight-6-dark.svg"
 
 interface KnightProps {
-    id: number
     type: KnightType
 }
 

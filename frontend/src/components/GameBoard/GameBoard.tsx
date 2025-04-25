@@ -1,5 +1,5 @@
 import Hexagon, { HexagonStructure } from '../Hexagon/Hexagon'
-import { HexagonEdge, HexagonType, HexagonVertex, KnightType, ResourceJokerType, RoadType, StructureType } from '../../constants/enumerations';
+import { HexagonEdge, HexagonType, HexagonVertex, KnightType, ResourceJokerType, StructureType } from '../../constants/enumerations';
 import StyledGameBoard from './styles/StyledGameBoard'
 
 import Knight from '../Knight/Knight';
@@ -7,197 +7,127 @@ import ResourceJoker from '../ResourceJoker/ResourceJoker';
 import Road from "../Road/Road";
 import Settlement from '../Settlement/Settlement';
 import City from '../City/City';
+import { GetCityStructureId, GetSettlementStructureId } from '../../constants/mappings';
 
 const GameBoard = () => {
 
     // Knights
-    const oreKnight = <Knight id={1} type={KnightType.Ore} />
-    const wheatKnight = <Knight id={2} type={KnightType.Wheat} />
-    const woolKnight = <Knight id={3} type={KnightType.Wool} />
-    const woodKnight = <Knight id={4} type={KnightType.Wood} />
-    const brickKnight = <Knight id={5} type={KnightType.Brick} />
-    const wildcardKnight = <Knight id={6} type={KnightType.Wildcard} />
+    const oreKnight = <Knight type={KnightType.Ore} />
+    const wheatKnight = <Knight type={KnightType.Wheat} />
+    const woolKnight = <Knight type={KnightType.Wool} />
+    const woodKnight = <Knight type={KnightType.Wood} />
+    const brickKnight = <Knight type={KnightType.Brick} />
+    const wildcardKnight = <Knight type={KnightType.Wildcard} />
 
     // Jokers
-    const oreJoker = <ResourceJoker id={1} type={ResourceJokerType.Ore} />
-    const wheatJoker = <ResourceJoker id={2} type={ResourceJokerType.Wheat} />
-    const woolJoker = <ResourceJoker id={3} type={ResourceJokerType.Wool} />
-    const woodJoker = <ResourceJoker id={4} type={ResourceJokerType.Wood} />
-    const brickJoker = <ResourceJoker id={5} type={ResourceJokerType.Brick} />
-    const wildcardJoker = <ResourceJoker id={6} type={ResourceJokerType.Wildcard} />
-
-    // Roads
-    const road1 = <Road id={0} type={RoadType.Horizontal} />
-    const road2 = <Road id={0} type={RoadType.Forwardslash} />
-    const road3 = <Road id={0} type={RoadType.Backslash} />
-
-    // Settlements
-    const settlement3 = <Settlement id={1} settlementNumber={3} />
-
-    // Cities
-    const city7 = <City id={1} cityNumber={7} />
-
-    const wheatHexagonStructures: HexagonStructure[] = [
-        {
-            id: 1,
-            type: StructureType.Road,
-            structure: road1,
-            edge: HexagonEdge.North
-        },
-        {
-            id: 2,
-            type: StructureType.Road,
-            structure: road1,
-            edge: HexagonEdge.South
-        },
-        {
-            id: 3,
-            type: StructureType.Road,
-            structure: road2,
-            edge: HexagonEdge.SouthEast
-        },
-        {
-            id: 4,
-            type: StructureType.Road,
-            structure: road2,
-            edge: HexagonEdge.NorthWest
-        },
-        {
-            id: 5,
-            type: StructureType.Road,
-            structure: road3,
-            edge: HexagonEdge.NorthEast
-        },
-        {
-            id: 6,
-            type: StructureType.Road,
-            structure: road3,
-            edge: HexagonEdge.SouthWest
-        },
-        {
-            id: 7,
-            type: StructureType.Settlement,
-            structure: settlement3,
-            vertex: HexagonVertex.NorthWest
-        },
-        {
-            id: 8,
-            type: StructureType.Settlement,
-            structure: settlement3,
-            vertex: HexagonVertex.NorthEast
-        },
-        {
-            id: 9,
-            type: StructureType.Settlement,
-            structure: settlement3,
-            vertex: HexagonVertex.West
-        },
-        {
-            id: 10,
-            type: StructureType.Settlement,
-            structure: settlement3,
-            vertex: HexagonVertex.East
-        },
-        {
-            id: 11,
-            type: StructureType.Settlement,
-            structure: settlement3,
-            vertex: HexagonVertex.SouthWest
-        },
-        {
-            id: 12,
-            type: StructureType.Settlement,
-            structure: settlement3,
-            vertex: HexagonVertex.SouthEast
-        }
-    ]
-
-    const brickHexagonStructures: HexagonStructure[] = [
-        {
-            id: 1,
-            type: StructureType.Road,
-            structure: road1,
-            edge: HexagonEdge.North
-        },
-        {
-            id: 2,
-            type: StructureType.Road,
-            structure: road1,
-            edge: HexagonEdge.South
-        },
-        {
-            id: 3,
-            type: StructureType.Road,
-            structure: road2,
-            edge: HexagonEdge.SouthEast
-        },
-        {
-            id: 4,
-            type: StructureType.Road,
-            structure: road2,
-            edge: HexagonEdge.NorthWest
-        },
-        {
-            id: 5,
-            type: StructureType.Road,
-            structure: road3,
-            edge: HexagonEdge.NorthEast
-        },
-        {
-            id: 6,
-            type: StructureType.Road,
-            structure: road3,
-            edge: HexagonEdge.SouthWest
-        },
-        {
-            id: 7,
-            type: StructureType.City,
-            structure: city7,
-            vertex: HexagonVertex.NorthWest
-        },
-        {
-            id: 8,
-            type: StructureType.City,
-            structure: city7,
-            vertex: HexagonVertex.NorthEast
-        },
-        {
-            id: 9,
-            type: StructureType.City,
-            structure: city7,
-            vertex: HexagonVertex.West
-        },
-        {
-            id: 10,
-            type: StructureType.City,
-            structure: city7,
-            vertex: HexagonVertex.East
-        },
-        {
-            id: 11,
-            type: StructureType.City,
-            structure: city7,
-            vertex: HexagonVertex.SouthWest
-        },
-        {
-            id: 12,
-            type: StructureType.City,
-            structure: city7,
-            vertex: HexagonVertex.SouthEast
-        }
-    ]
+    const oreJoker = <ResourceJoker type={ResourceJokerType.Ore} />
+    const wheatJoker = <ResourceJoker type={ResourceJokerType.Wheat} />
+    const woolJoker = <ResourceJoker type={ResourceJokerType.Wool} />
+    const woodJoker = <ResourceJoker type={ResourceJokerType.Wood} />
+    const brickJoker = <ResourceJoker type={ResourceJokerType.Brick} />
+    const wildcardJoker = <ResourceJoker type={ResourceJokerType.Wildcard} />
 
     return (
         <StyledGameBoard>
             <Hexagon type={HexagonType.Water} />
-            <Hexagon type={HexagonType.Ore} joker={oreJoker} knight={oreKnight} />
-            <Hexagon type={HexagonType.Wheat} joker={wheatJoker} knight={wheatKnight} structures={wheatHexagonStructures} />
-            <Hexagon type={HexagonType.Wool} joker={woolJoker} knight={woolKnight} />
-            <Hexagon type={HexagonType.Wood} joker={woodJoker} knight={woodKnight} />
-            <Hexagon type={HexagonType.Brick} joker={brickJoker} knight={brickKnight} structures={brickHexagonStructures} />
-            <Hexagon type={HexagonType.Desert} joker={wildcardJoker} knight={wildcardKnight} />
+
+            <Hexagon type={HexagonType.Ore}
+                joker={oreJoker}
+                knight={oreKnight}
+                structures={[
+                    CreateRoad(0, HexagonEdge.NorthEast),
+                    CreateSettlement(3, HexagonVertex.East),
+                    CreateRoad(2, HexagonEdge.SouthEast),
+                    CreateRoad(3, HexagonEdge.South),
+                    CreateCity(7, HexagonVertex.SouthWest),
+                ]} />
+
+            <Hexagon type={HexagonType.Wheat}
+                joker={wheatJoker}
+                knight={wheatKnight}
+                structures={[
+                    CreateRoad(5, HexagonEdge.NorthEast),
+                    CreateSettlement(4, HexagonVertex.East),
+                    CreateRoad(7, HexagonEdge.SouthEast),
+                    CreateRoad(8, HexagonEdge.South),
+                    CreateCity(12, HexagonVertex.SouthWest)
+                ]} />
+
+            <Hexagon type={HexagonType.Wool}
+                joker={woolJoker}
+                knight={woolKnight}
+                structures={[
+                    CreateRoad(10, HexagonEdge.SouthWest),
+                    CreateSettlement(5, HexagonVertex.SouthWest),
+                    CreateRoad(12, HexagonEdge.South),
+                    CreateRoad(13, HexagonEdge.SouthEast),
+                    CreateSettlement(7, HexagonVertex.East),
+                    CreateRoad(21, HexagonEdge.NorthEast)
+                ]} />
+
+            <Hexagon type={HexagonType.Wood}
+                joker={woodJoker}
+                knight={woodKnight}
+                structures={[
+                    CreateRoad(15, HexagonEdge.South),
+                    CreateRoad(16, HexagonEdge.SouthEast),
+                    CreateCity(20, HexagonVertex.East),
+                    CreateRoad(18, HexagonEdge.NorthEast),
+                    CreateRoad(22, HexagonEdge.NorthWest)
+                ]} />
+
+            <Hexagon type={HexagonType.Brick}
+                joker={brickJoker}
+                knight={brickKnight}
+                structures={[
+                    CreateRoad(19, HexagonEdge.SouthEast),
+                    CreateCity(30, HexagonVertex.East),
+                    CreateSettlement(9, HexagonVertex.SouthWest),
+                    CreateRoad(24, HexagonEdge.SouthWest),
+                    CreateRoad(25, HexagonEdge.NorthWest),
+                    CreateSettlement(11, HexagonVertex.NorthWest)
+                ]} />
+
+            <Hexagon type={HexagonType.Desert}
+                joker={wildcardJoker}
+                knight={wildcardKnight} />
         </StyledGameBoard>
     )
 }
 
 export default GameBoard
+
+function CreateRoad(structureId: number, edge: HexagonEdge): HexagonStructure {
+    const road = <Road id={structureId} />
+
+    return {
+        key: structureId,
+        type: StructureType.Road,
+        structure: road,
+        edge: edge
+    }
+}
+
+function CreateSettlement(settlementNumber: number, vertex: HexagonVertex): HexagonStructure {
+    const settlement = <Settlement settlementNumber={settlementNumber} />
+    const structureId = GetSettlementStructureId(settlementNumber)
+
+    return {
+        key: structureId,
+        type: StructureType.Settlement,
+        structure: settlement,
+        vertex: vertex
+    }
+}
+
+function CreateCity(cityNumber: number, vertex: HexagonVertex): HexagonStructure {
+    const city = <City cityNumber={cityNumber} />
+    const structureId = GetCityStructureId(cityNumber)
+
+    return {
+        key: structureId,
+        type: StructureType.City,
+        structure: city,
+        vertex: vertex
+    }
+}

@@ -27,7 +27,7 @@ interface HexagonProps {
  * A structure (road/settlement/city) to be rendered on an edge or vertex of the hexagon 
  */
 export interface HexagonStructure {
-    id: number
+    key: number // Not to be confused with structureId, only used to satisfy React's requirement for lists
     type: StructureType
     structure: React.ReactNode
     vertex?: HexagonVertex
@@ -187,7 +187,7 @@ function AddRoad(hexagonStructure: HexagonStructure): React.ReactNode | null {
             throw new Error("Road must be placed on an edge");
     }
 
-    return <StyledRoad key={hexagonStructure.id} $top={roadTopOffset} $left={roadLeftOffset} $width={width}>{hexagonStructure.structure}</StyledRoad>;
+    return <StyledRoad key={hexagonStructure.key} $top={roadTopOffset} $left={roadLeftOffset} $width={width}>{hexagonStructure.structure}</StyledRoad>;
 }
 
 function AddSettlement(hexagonStructure: HexagonStructure): React.ReactNode | null {
@@ -239,7 +239,7 @@ function AddSettlement(hexagonStructure: HexagonStructure): React.ReactNode | nu
             throw new Error("Settlement must be placed on a vertex");
     }
 
-    return <StyledSettlement key={hexagonStructure.id} $top={settlementTopOffset} $left={settlementLeftOffset} $width={settlementWidth}>{hexagonStructure.structure}</StyledSettlement>
+    return <StyledSettlement key={hexagonStructure.key} $top={settlementTopOffset} $left={settlementLeftOffset} $width={settlementWidth}>{hexagonStructure.structure}</StyledSettlement>
 }
 
 function AddCity(hexagonStructure: HexagonStructure): React.ReactNode | null {
@@ -291,5 +291,5 @@ function AddCity(hexagonStructure: HexagonStructure): React.ReactNode | null {
             throw new Error("City must be placed on a vertex");
     }
 
-    return <StyledCity key={hexagonStructure.id} $top={cityTopOffset} $left={cityLeftOffset} $width={cityWidth}>{hexagonStructure.structure}</StyledCity>
+    return <StyledCity key={hexagonStructure.key} $top={cityTopOffset} $left={cityLeftOffset} $width={cityWidth}>{hexagonStructure.structure}</StyledCity>
 }

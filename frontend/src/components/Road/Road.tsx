@@ -12,10 +12,10 @@ import forwardslash_road_dark from "../../assets/roads/dark/forwardslash-road-da
 import backwardslash_road_dark from "../../assets/roads/dark/backslash-road-dark.svg"
 
 import starting_road from "../../assets/roads/starting-road.svg"
+import { GetRoadType } from "../../constants/mappings"
 
 interface RoadProps {
     id: number // the unique structure id
-    type: RoadType
 }
 
 const roadIconsLight: { -readonly [key in RoadType]: string } = {
@@ -33,12 +33,15 @@ const roadIconsDark: { -readonly [key in RoadType]: string } = {
 }
 
 const Road = (props: RoadProps) => {
+
+    const roadType = GetRoadType(props.id)
+
     // TODO: get icon type from store
     const iconType = IconType.Light
 
     const icon = iconType === IconType.Light
-        ? roadIconsLight[props.type]
-        : roadIconsDark[props.type]
+        ? roadIconsLight[roadType]
+        : roadIconsDark[roadType]
 
     return (
         <StyledAsset src={icon} />

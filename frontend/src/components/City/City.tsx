@@ -14,7 +14,6 @@ import city_20_dark from "../../assets/cities/dark/city-7-dark.svg"
 import city_30_dark from "../../assets/cities/dark/city-7-dark.svg"
 
 interface CityProps {
-    id: number // the unique structure id
     cityNumber: number // the number that appears on the city
 }
 
