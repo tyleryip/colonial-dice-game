@@ -1,14 +1,14 @@
 import StyledAsset from "../Asset/StyledAsset"
 
-interface KnightProps {
+interface CityProps {
     icon: string
     width: number
 }
 
-const Knight = (props: KnightProps) => {
+const City = (props: CityProps) => {
     return (
         <StyledAsset width={`${props.width}%`} src={props.icon} />
     )
 }
 
-export default Knight
+export default City

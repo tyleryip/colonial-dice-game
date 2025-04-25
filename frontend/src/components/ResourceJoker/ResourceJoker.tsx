@@ -1,3 +1,5 @@
+import StyledAsset from "../Asset/StyledAsset"
+
 interface ResourceJokerProps {
     icon: string
     width: number
@@ -5,7 +7,7 @@ interface ResourceJokerProps {
 
 const ResourceJoker = (props: ResourceJokerProps) => {
     return (
-        <img width={`${props.width}%`} src={props.icon} />
+        <StyledAsset width={`${props.width}%`} src={props.icon} />
     )
 }
 

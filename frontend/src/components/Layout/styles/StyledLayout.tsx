@@ -6,6 +6,7 @@ const StyledLayout = styled.div`
     justify-content: center;
     align-items: center;
     justify-content: center;
+    background-color: #6A8CA6;
 `
 
 export default StyledLayout

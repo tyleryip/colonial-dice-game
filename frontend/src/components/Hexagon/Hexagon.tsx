@@ -3,6 +3,9 @@ import StyledHexagon from './styles/StyledHexagon'
 import StyledKnight from './styles/StyledKnight'
 import StyledResourceJoker from './styles/StyledResourceJoker'
 import { HexagonEdge, HexagonVertex, StructureType } from '../../constants/enumerations'
+import StyledRoad from './styles/StyledRoad'
+import StyledSettlement from './styles/StyledSettlement'
+import StyledCity from './styles/StyledCity'
 
 interface HexagonProps {
     width: number
@@ -18,6 +21,7 @@ interface HexagonProps {
  * A structure (road/settlement/city) to be rendered on an edge or vertex of the hexagon 
  */
 export interface HexagonStructure {
+    id: number
     type: StructureType
     structure: React.ReactNode
     vertex?: HexagonVertex
@@ -89,25 +93,50 @@ function AddRoad(hexagonStructure: HexagonStructure): React.ReactNode | null {
 
     let roadTopOffset = 0
     let roadLeftOffset = 0
+    let width = 0
 
     switch (hexagonStructure.edge) {
         case HexagonEdge.North:
+            roadTopOffset = -2.5
+            roadLeftOffset = 37
+            width = 25
             break;
+
         case HexagonEdge.NorthWest:
+            roadTopOffset = 10
+            roadLeftOffset = 4
+            width = 19
             break;
+
         case HexagonEdge.NorthEast:
+            roadTopOffset = 10
+            roadLeftOffset = 77
+            width = 19
             break;
+
         case HexagonEdge.SouthWest:
+            roadTopOffset = 59
+            roadLeftOffset = 4
+            width = 19
             break;
+
         case HexagonEdge.SouthEast:
+            roadTopOffset = 59
+            roadLeftOffset = 77
+            width = 19
             break;
+
         case HexagonEdge.South:
+            roadTopOffset = 92
+            roadLeftOffset = 37
+            width = 25
             break;
+
         default:
             throw new Error("Road must be placed on an edge");
     }
 
-    return;
+    return <StyledRoad key={hexagonStructure.id} $top={roadTopOffset} $left={roadLeftOffset} $width={width}>{hexagonStructure.structure}</StyledRoad>;
 }
 
 function AddSettlement(hexagonStructure: HexagonStructure): React.ReactNode | null {
@@ -124,22 +153,40 @@ function AddSettlement(hexagonStructure: HexagonStructure): React.ReactNode | nu
 
     switch (hexagonStructure.vertex) {
         case HexagonVertex.NorthWest:
+            settlementTopOffset = -10
+            settlementLeftOffset = 17
             break;
+
         case HexagonVertex.NorthEast:
+            settlementTopOffset = -10
+            settlementLeftOffset = 64
             break;
+
         case HexagonVertex.West:
+            settlementTopOffset = 38
+            settlementLeftOffset = -5
             break;
+
         case HexagonVertex.East:
+            settlementTopOffset = 38
+            settlementLeftOffset = 87
             break;
+
         case HexagonVertex.SouthWest:
+            settlementTopOffset = 83
+            settlementLeftOffset = 17
             break;
+
         case HexagonVertex.SouthEast:
+            settlementTopOffset = 83
+            settlementLeftOffset = 64
             break;
+
         default:
             throw new Error("Settlement must be placed on a vertex");
     }
 
-    return
+    return <StyledSettlement key={hexagonStructure.id} $top={settlementTopOffset} $left={settlementLeftOffset}>{hexagonStructure.structure}</StyledSettlement>
 }
 
 function AddCity(hexagonStructure: HexagonStructure): React.ReactNode | null {
@@ -156,20 +203,38 @@ function AddCity(hexagonStructure: HexagonStructure): React.ReactNode | null {
 
     switch (hexagonStructure.vertex) {
         case HexagonVertex.NorthWest:
+            cityTopOffset = -10
+            cityLeftOffset = 15
             break;
+
         case HexagonVertex.NorthEast:
+            cityTopOffset = -10
+            cityLeftOffset = 64
             break;
+
         case HexagonVertex.West:
+            cityTopOffset = 38.5
+            cityLeftOffset = -7
             break;
+
         case HexagonVertex.East:
+            cityTopOffset = 38.5
+            cityLeftOffset = 85
             break;
+
         case HexagonVertex.SouthWest:
+            cityTopOffset = 84
+            cityLeftOffset = 15
             break;
+
         case HexagonVertex.SouthEast:
+            cityTopOffset = 84
+            cityLeftOffset = 64
             break;
+
         default:
             throw new Error("City must be placed on a vertex");
     }
 
-    return
+    return <StyledCity key={hexagonStructure.id} $top={cityTopOffset} $left={cityLeftOffset}>{hexagonStructure.structure}</StyledCity>
 }

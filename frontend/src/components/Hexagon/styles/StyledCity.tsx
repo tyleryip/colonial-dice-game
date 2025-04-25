@@ -1,16 +1,16 @@
 import { styled } from "styled-components"
 
-interface StyledResourceJokerProps {
+interface StyledCityProps {
     $top: number,
     $left: number
 }
 
-const StyledResourceJoker = styled.div<StyledResourceJokerProps>`
+const StyledCity = styled.div<StyledCityProps>`
     position: absolute;
     top: ${props => `${props.$top}%`};
     left: ${props => `${props.$left}%`};
-    width: 30%;
-    z-index: 2;
+    width: 20%;
+    z-index: 1;
 `
 
-export default StyledResourceJoker
+export default StyledCity

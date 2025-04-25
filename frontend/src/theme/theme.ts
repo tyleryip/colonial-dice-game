@@ -1,6 +1,7 @@
 import { DefaultTheme } from "styled-components/dist/types";
 
 export const theme: DefaultTheme = {
+    // TODO: fix breakpoints for actual devices
     breakpoints: {
         xs: `only screen and (min-width: 0px)`,
         s: `only screen and (min-width: 500px)`,

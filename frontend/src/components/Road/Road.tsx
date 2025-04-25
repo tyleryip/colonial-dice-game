@@ -1,14 +1,14 @@
 import StyledAsset from "../Asset/StyledAsset"
 
-interface KnightProps {
+interface RoadProps {
     icon: string
     width: number
 }
 
-const Knight = (props: KnightProps) => {
+const Road = (props: RoadProps) => {
     return (
         <StyledAsset width={`${props.width}%`} src={props.icon} />
     )
 }
 
-export default Knight
+export default Road
