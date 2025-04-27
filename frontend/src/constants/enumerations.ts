@@ -64,3 +64,12 @@ export enum IconType {
     Light,
     Dark
 }
+
+export enum ResourceType {
+    Ore,
+    Wheat,
+    Wool,
+    Wood,
+    Brick,
+    Gold
+}
