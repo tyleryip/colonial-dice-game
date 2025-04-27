@@ -30,8 +30,12 @@ const wobble = keyframes`
     }
 `
 
-const Wobble = styled.div`
-    animation: ${wobble} 1s linear infinite;
+interface WobbleProps {
+    duration: number
+}
+
+const Wobble = styled.div<WobbleProps>`
+    animation: ${wobble} ${(props) => props.duration}s linear;
 `
 
 export default Wobble
