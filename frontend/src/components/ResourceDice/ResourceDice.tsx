@@ -1,5 +1,5 @@
 import StyledResourceDice from "./styles/StyledResourceDice";
-import { useState } from "react";
+import { Dice, TDiceRef} from "../../react-dice-roll/src/index";
 
 // Dice faces
 import ore_face from "../../assets/dice/ore-face.svg";
@@ -8,10 +8,10 @@ import wool_face from "../../assets/dice/wool-face.svg";
 import wood_face from "../../assets/dice/wood-face.svg";
 import brick_face from "../../assets/dice/brick-face.svg";
 import gold_face from "../../assets/dice/gold-face.svg";
-import Wobble from "../../animations/wobble";
+import { useRef } from "react";
 
 export interface ResourceDiceProps {
-  id: number;
+  id: 1 | 2 | 3 | 4 | 5 | 6;
   locked: boolean;
 }
 
@@ -23,35 +23,11 @@ const faceValues = [
   brick_face,
   gold_face,
 ];
-const values = [1, 2, 3, 4, 5, 6];
 
 const ResourceDice = (props: ResourceDiceProps) => {
-  const [value, setValue] = useState(values[props.id - 1]);
-  const [rolling, setRolling] = useState(false);
-
-  const handleClick = () => {
-    setTimeout(() => {
-      const newValue = Math.floor(Math.random() * 6 + 1);
-      console.log(newValue);
-      setValue(newValue);
-      setRolling(false);
-      console.log("Finished rolling!");
-    }, 750);
-
-    console.log("Rolling!");
-    setRolling(true);
-  };
-
-  // TODO: clean up, and round corners on dice by using a styled img with border radius
-
   return (
-    <StyledResourceDice onClick={handleClick}>
-      {rolling && (
-        <Wobble duration={0.75}>
-          <img width={"100%"} src={faceValues[value - 1]} />
-        </Wobble>
-      )}
-      {!rolling && <img width={"100%"} src={faceValues[value - 1]} />}
+    <StyledResourceDice>
+      <Dice defaultValue={props.id} size={40} faces={faceValues} />
     </StyledResourceDice>
   );
 };

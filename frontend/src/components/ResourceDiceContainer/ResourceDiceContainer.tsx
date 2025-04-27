@@ -4,6 +4,7 @@ import StyledResourceDiceContainer from "./StyledResourceDiceContainer"
 const ResourceDiceContainer = () => {
     return (
         <StyledResourceDiceContainer>
+            <button >roll all dice</button>
             <ResourceDice id={1} locked={false} />
             <ResourceDice id={2} locked={false} />
             <ResourceDice id={3} locked={false} />
