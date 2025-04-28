@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components"
+import { keyframes } from "styled-components";
 
 const wobble = keyframes`
     from {
@@ -24,12 +24,4 @@ const wobble = keyframes`
     }
 `
 
-interface WobbleProps {
-    duration: number
-}
-
-const Wobble = styled.div<WobbleProps>`
-    animation: ${wobble} ${(props) => props.duration}s linear;
-`
-
-export default Wobble
+export default wobble

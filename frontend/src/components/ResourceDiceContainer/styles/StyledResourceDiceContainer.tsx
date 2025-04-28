@@ -1,10 +1,7 @@
 import { styled } from "styled-components"
 
 const StyledResourceDiceContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    gap: 5%;
-    justify-content: center;
+    justify-content: center;   
 
     @media ${(props) => props.theme.breakpoints.xs} {
         width: 80%;

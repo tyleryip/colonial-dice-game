@@ -1,5 +1,5 @@
 import StyledResourceDice from "./styles/StyledResourceDice";
-import { useState } from "react";
+import StyledResourceDiceFace from "./styles/StyledResourceDiceFace";
 
 // Dice faces
 import ore_face from "../../assets/dice/ore-face.svg";
@@ -8,12 +8,17 @@ import wool_face from "../../assets/dice/wool-face.svg";
 import wood_face from "../../assets/dice/wood-face.svg";
 import brick_face from "../../assets/dice/brick-face.svg";
 import gold_face from "../../assets/dice/gold-face.svg";
-import Wobble from "../../animations/wobble";
-import StyledResourceDiceFace from "./styles/StyledResourceDiceFace";
+import blank_face from "../../assets/dice/blank_face.svg";
+import lock from "../../assets/dice/lock.svg"
+import StyledLock from "./styles/StyledLock";
 
 export interface ResourceDiceProps {
   id: number;
+  value: number;
+  rolling: boolean;
+  rollDuration: number,
   locked: boolean;
+  onToggleDiceLocked: (id: number) => void
 }
 
 const faceValues = [
@@ -24,37 +29,18 @@ const faceValues = [
   brick_face,
   gold_face,
 ];
-const values = [1, 2, 3, 4, 5, 6];
 
 const ResourceDice = (props: ResourceDiceProps) => {
-  const [value, setValue] = useState(values[props.id - 1]);
-  const [rolling, setRolling] = useState(false);
-
-  const handleClick = () => {
-    setTimeout(() => {
-      const newValue = Math.floor(Math.random() * 6 + 1);
-      console.log(newValue);
-      setValue(newValue);
-      setRolling(false);
-      console.log("Finished rolling!");
-    }, 750);
-
-    console.log("Rolling!");
-    setRolling(true);
-  };
-
-  // TODO: clean up, and round corners on dice by using a styled img with border radius
+  const diceFace = props.rolling ? blank_face : faceValues[props.value - 1]
 
   return (
-    <StyledResourceDice onClick={handleClick}>
-      {rolling && (
-        <Wobble duration={0.75}>
-          <StyledResourceDiceFace width={"100%"} src={faceValues[value - 1]} />
-        </Wobble>
-      )}
-      {!rolling && (
-        <StyledResourceDiceFace width={"100%"} src={faceValues[value - 1]} />
-      )}
+    <StyledResourceDice onClick={() => props.onToggleDiceLocked(props.id)}>
+      <StyledResourceDiceFace
+        width={"100%"}
+        src={diceFace}
+        $rolling={props.rolling}
+        $duration={props.rollDuration} />
+      <StyledLock src={lock} $locked={props.locked} />
     </StyledResourceDice>
   );
 };
