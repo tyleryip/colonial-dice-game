@@ -9,6 +9,7 @@ import wood_face from "../../assets/dice/wood-face.svg";
 import brick_face from "../../assets/dice/brick-face.svg";
 import gold_face from "../../assets/dice/gold-face.svg";
 import Wobble from "../../animations/wobble";
+import StyledResourceDiceFace from "./styles/StyledResourceDiceFace";
 
 export interface ResourceDiceProps {
   id: number;
@@ -48,10 +49,12 @@ const ResourceDice = (props: ResourceDiceProps) => {
     <StyledResourceDice onClick={handleClick}>
       {rolling && (
         <Wobble duration={0.75}>
-          <img width={"100%"} src={faceValues[value - 1]} />
+          <StyledResourceDiceFace width={"100%"} src={faceValues[value - 1]} />
         </Wobble>
       )}
-      {!rolling && <img width={"100%"} src={faceValues[value - 1]} />}
+      {!rolling && (
+        <StyledResourceDiceFace width={"100%"} src={faceValues[value - 1]} />
+      )}
     </StyledResourceDice>
   );
 };
