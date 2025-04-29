@@ -4,8 +4,9 @@ import StyledButtonTray from "./styles/StyledButtonTray"
 import StyledDiceTray from "./styles/StyledDiceTray"
 import StyledResourceDiceContainer from "./styles/StyledResourceDiceContainer"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { rollDice, selectDiceValues, selectIsLocked, selectRollCount, toggleLock } from "../../store/slices/diceSlice"
+import { resetDice, rollDice, selectDiceValues, selectIsLocked, selectRollCount, toggleLock } from "../../store/slices/diceSlice"
 import RollButton from "../Buttons/RollButton/RollButton"
+import BuildButton from "../Buttons/BuildButton/BuildButton"
 
 const ResourceDiceContainer = () => {
     const diceValues = useAppSelector((state) => selectDiceValues(state))
@@ -27,6 +28,10 @@ const ResourceDiceContainer = () => {
         setRolling(true);
     }
 
+    function handleBuildButtonClicked() {
+        dispatch(resetDice());
+    }
+
     return (
         <StyledResourceDiceContainer>
             <StyledDiceTray>
@@ -43,6 +48,7 @@ const ResourceDiceContainer = () => {
             </StyledDiceTray>
             <StyledButtonTray >
                 <RollButton disabled={rolling} handleClick={handleRollButtonClicked} rollCount={rollCount} />
+                <BuildButton handleClick={handleBuildButtonClicked} />
             </StyledButtonTray>
         </StyledResourceDiceContainer>
     )

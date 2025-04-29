@@ -1,6 +1,6 @@
 import { styled } from "styled-components"
 
-const StyledRollButton = styled.button`
+const StyledBuildButton = styled.button`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -15,4 +15,4 @@ const StyledRollButton = styled.button`
     }
 `
 
-export default StyledRollButton;
+export default StyledBuildButton
