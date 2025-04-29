@@ -3,15 +3,15 @@ import { IconType } from "../../constants/enumerations"
 
 // Light icons
 import city_7_light from "../../assets/cities/light/city-7-light.svg"
-import city_12_light from "../../assets/cities/light/city-7-light.svg"
-import city_20_light from "../../assets/cities/light/city-7-light.svg"
-import city_30_light from "../../assets/cities/light/city-7-light.svg"
+import city_12_light from "../../assets/cities/light/city-12-light.svg"
+import city_20_light from "../../assets/cities/light/city-20-light.svg"
+import city_30_light from "../../assets/cities/light/city-30-light.svg"
 
 // Dark icons
 import city_7_dark from "../../assets/cities/dark/city-7-dark.svg"
-import city_12_dark from "../../assets/cities/dark/city-7-dark.svg"
-import city_20_dark from "../../assets/cities/dark/city-7-dark.svg"
-import city_30_dark from "../../assets/cities/dark/city-7-dark.svg"
+import city_12_dark from "../../assets/cities/dark/city-12-dark.svg"
+import city_20_dark from "../../assets/cities/dark/city-20-dark.svg"
+import city_30_dark from "../../assets/cities/dark/city-30-dark.svg"
 
 interface CityProps {
     cityNumber: number // the number that appears on the city
