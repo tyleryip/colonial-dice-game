@@ -3,52 +3,49 @@ import ResourceDice from "../ResourceDice/ResourceDice"
 import StyledButtonTray from "./styles/StyledButtonTray"
 import StyledDiceTray from "./styles/StyledDiceTray"
 import StyledResourceDiceContainer from "./styles/StyledResourceDiceContainer"
+import { useAppDispatch, useAppSelector } from "../../store/hooks"
+import { resetDice, rollDice, selectDiceValues, selectIsLocked, toggleLock } from "../../store/slices/diceSlice"
 
 const ResourceDiceContainer = () => {
+    const diceValues = useAppSelector((state) => selectDiceValues(state))
+    const isLocked = useAppSelector((state) => selectIsLocked(state))
+    const dispatch = useAppDispatch();
+
     const [rolling, setRolling] = useState(false)
-    const [diceValues, setDiceValues] = useState([1, 2, 3, 4, 5, 6])
-    const [diceLocked, setDiceLocked] = useState([false, false, false, false, false])
 
-    const rollDuration = 0.75
+    const diceIds = [0, 1, 2, 3, 4, 5]
+    const rollDurationMilliseconds = 750
 
-    function generateRandomDiceValue(): number {
-        return Math.floor(Math.random() * 6 + 1)
-    }
-
-    function handleRollButtonCLicked() {
+    function handleRollButtonClicked() {
         setTimeout(() => {
-            setDiceValues(diceValues.map((value: number, index: number, array: number[]) => {
-                if (diceLocked[index]) {
-                    return value
-                }
-                return generateRandomDiceValue()
-            }))
+            dispatch(rollDice());
             setRolling(false);
-        }, rollDuration * 1000);
+        }, rollDurationMilliseconds);
 
         setRolling(true);
     }
 
-    function handleToggleDiceLocked(id: number) {
-        console.log(`Toggling Dice with id=${id}`)
-
-        const newDiceLocked = [...diceLocked]
-        newDiceLocked[id - 1] = !diceLocked[id - 1]
-        setDiceLocked(newDiceLocked)
+    function handleResetButtonClicked() {
+        dispatch(resetDice());
     }
 
     return (
         <StyledResourceDiceContainer>
             <StyledDiceTray>
-                <ResourceDice id={1} value={diceValues[0]} rolling={rolling && !diceLocked[0]} rollDuration={rollDuration} locked={diceLocked[0]} onToggleDiceLocked={handleToggleDiceLocked} />
-                <ResourceDice id={2} value={diceValues[1]} rolling={rolling && !diceLocked[1]} rollDuration={rollDuration} locked={diceLocked[1]} onToggleDiceLocked={handleToggleDiceLocked} />
-                <ResourceDice id={3} value={diceValues[2]} rolling={rolling && !diceLocked[2]} rollDuration={rollDuration} locked={diceLocked[2]} onToggleDiceLocked={handleToggleDiceLocked} />
-                <ResourceDice id={4} value={diceValues[3]} rolling={rolling && !diceLocked[3]} rollDuration={rollDuration} locked={diceLocked[3]} onToggleDiceLocked={handleToggleDiceLocked} />
-                <ResourceDice id={5} value={diceValues[4]} rolling={rolling && !diceLocked[4]} rollDuration={rollDuration} locked={diceLocked[4]} onToggleDiceLocked={handleToggleDiceLocked} />
-                <ResourceDice id={6} value={diceValues[5]} rolling={rolling && !diceLocked[5]} rollDuration={rollDuration} locked={diceLocked[5]} onToggleDiceLocked={handleToggleDiceLocked} />
+                {diceIds.map((value: number) =>
+                    <ResourceDice
+                        key={value}
+                        id={value}
+                        value={diceValues[value]}
+                        rolling={rolling}
+                        rollDurationMilliseconds={rollDurationMilliseconds}
+                        locked={isLocked[value]}
+                        onToggleDiceLocked={() => dispatch(toggleLock(value))} />
+                )}
             </StyledDiceTray>
             <StyledButtonTray >
-                <button onClick={handleRollButtonCLicked}>Roll</button>
+                <button onClick={handleRollButtonClicked}>Roll</button>
+                <button onClick={handleResetButtonClicked}>Reset</button>
             </StyledButtonTray>
         </StyledResourceDiceContainer>
     )

@@ -3,7 +3,7 @@ import wobble from "../../../animations/wobble"
 
 interface StyledResourceDiceFaceProps {
     $rolling: boolean
-    $duration: number
+    $rollDuration: number
 }
 
 const StyledResourceDiceFace = styled.img<StyledResourceDiceFaceProps>`
@@ -11,7 +11,7 @@ const StyledResourceDiceFace = styled.img<StyledResourceDiceFaceProps>`
     animation: ${props =>
         props.$rolling &&
         css`
-            ${wobble} ${props.$duration}s linear 
+            ${wobble} ${props.$rollDuration}ms linear 
         `};
 `
 

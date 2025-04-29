@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
+import diceReducer from "../store/slices/diceSlice"
 
 export const store = configureStore({
     reducer: {
-        // Add reducers from slices here
+        dice: diceReducer
     }
 });
 

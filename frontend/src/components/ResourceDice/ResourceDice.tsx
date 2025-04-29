@@ -11,12 +11,13 @@ import gold_face from "../../assets/dice/gold-face.svg";
 import blank_face from "../../assets/dice/blank_face.svg";
 import lock from "../../assets/dice/lock.svg"
 import StyledLock from "./styles/StyledLock";
+import { DiceValue } from "../../types/DiceValue";
 
 export interface ResourceDiceProps {
   id: number;
-  value: number;
+  value: DiceValue;
   rolling: boolean;
-  rollDuration: number,
+  rollDurationMilliseconds: number,
   locked: boolean;
   onToggleDiceLocked: (id: number) => void
 }
@@ -30,17 +31,30 @@ const faceValues = [
   gold_face,
 ];
 
+const diceWidth = 80;
+
 const ResourceDice = (props: ResourceDiceProps) => {
-  const diceFace = props.rolling ? blank_face : faceValues[props.value - 1]
+  const diceFace = (props.rolling && !props.locked) || props.value === null
+    ? blank_face
+    : faceValues[props.value - 1]
+
+  function handleClick() {
+    if (props.value !== null) {
+      props.onToggleDiceLocked(props.id)
+    }
+  }
 
   return (
-    <StyledResourceDice onClick={() => props.onToggleDiceLocked(props.id)}>
+    <StyledResourceDice onClick={handleClick}>
       <StyledResourceDiceFace
-        width={"100%"}
+        width={`${diceWidth}%`}
         src={diceFace}
-        $rolling={props.rolling}
-        $duration={props.rollDuration} />
-      <StyledLock src={lock} $locked={props.locked} />
+        $rolling={props.rolling && !props.locked}
+        $rollDuration={props.rollDurationMilliseconds} />
+      <StyledLock
+        width={`${diceWidth * 0.25}%`}
+        src={lock}
+        $locked={props.locked} />
     </StyledResourceDice>
   );
 };
