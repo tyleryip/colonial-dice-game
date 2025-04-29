@@ -4,11 +4,13 @@ import StyledButtonTray from "./styles/StyledButtonTray"
 import StyledDiceTray from "./styles/StyledDiceTray"
 import StyledResourceDiceContainer from "./styles/StyledResourceDiceContainer"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { resetDice, rollDice, selectDiceValues, selectIsLocked, toggleLock } from "../../store/slices/diceSlice"
+import { rollDice, selectDiceValues, selectIsLocked, selectRollCount, toggleLock } from "../../store/slices/diceSlice"
+import RollButton from "../Buttons/RollButton/RollButton"
 
 const ResourceDiceContainer = () => {
     const diceValues = useAppSelector((state) => selectDiceValues(state))
     const isLocked = useAppSelector((state) => selectIsLocked(state))
+    const rollCount = useAppSelector((state) => selectRollCount(state))
     const dispatch = useAppDispatch();
 
     const [rolling, setRolling] = useState(false)
@@ -23,10 +25,6 @@ const ResourceDiceContainer = () => {
         }, rollDurationMilliseconds);
 
         setRolling(true);
-    }
-
-    function handleResetButtonClicked() {
-        dispatch(resetDice());
     }
 
     return (
@@ -44,8 +42,7 @@ const ResourceDiceContainer = () => {
                 )}
             </StyledDiceTray>
             <StyledButtonTray >
-                <button onClick={handleRollButtonClicked}>Roll</button>
-                <button onClick={handleResetButtonClicked}>Reset</button>
+                <RollButton disabled={rolling} handleClick={handleRollButtonClicked} rollCount={rollCount} />
             </StyledButtonTray>
         </StyledResourceDiceContainer>
     )

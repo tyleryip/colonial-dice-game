@@ -31,7 +31,7 @@ const faceValues = [
   gold_face,
 ];
 
-const diceWidth = 80;
+const diceWidth = 100;
 
 const ResourceDice = (props: ResourceDiceProps) => {
   const diceFace = (props.rolling && !props.locked) || props.value === null

@@ -3,8 +3,11 @@ import { styled } from "styled-components"
 const StyledDiceTray = styled.div`
     display: flex;
     flex-direction: row;
-    gap: 5%;
-    justify-content: center;    
+    justify-self: center;
+    justify-content: center; 
+    align-items: center;
+    gap: 2%;
+    width: 100%;
 `
 
 export default StyledDiceTray;

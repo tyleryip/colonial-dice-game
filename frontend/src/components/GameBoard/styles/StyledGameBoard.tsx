@@ -11,19 +11,19 @@ const StyledGameBoard = styled.div`
     }
 
     @media ${(props) => props.theme.breakpoints.s} {
-        width: 50%;
+        width: 80%;
     }
 
     @media ${(props) => props.theme.breakpoints.m} {
-        width: 40%;
+        width: 70%;
     }
 
     @media ${(props) => props.theme.breakpoints.l} {
-        width: 40%;
+        width: 80%;
     }
 
     @media ${(props) => props.theme.breakpoints.xl} {
-        width: 30%;
+        width: 40%;
     }
 `
 
