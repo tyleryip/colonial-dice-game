@@ -20,27 +20,45 @@ export const diceSlice = createSlice({
     name: 'dice',
     initialState: initialState,
     reducers: {
-        // When the user clicks the roll button
+        /**
+         * When the user clicks the roll button
+         * @param state 
+         */
         rollDice: (state) => {
             state.diceValues = generateNewDiceValues(state.diceValues, state.isLocked)
             state.rollCount += 1;
         },
-        // When the building phase ends and the rolling phase begins
+        /**
+         * When the building phase ends and the rolling phase begins
+         * @param state 
+         */
         resetDice: (state) => {
             state.diceValues = [null, null, null, null, null, null];
             state.isLocked = [false, false, false, false, false, false];
             state.isSpent = [false, false, false, false, false, false];
             state.rollCount = 0;
         },
-        // When the user trades their gold in for a resource of their choice
+        /**
+         * When the user trades their gold in for a resource of their choice
+         * @param state 
+         * @param action 
+         */
         setDice: (state, action: PayloadAction<SetDicePayload>) => {
             state.diceValues[action.payload.id] = action.payload.value
         },
-        // When the user builds a structure and loses resource in their inventory
+        /**
+         * When the user builds a structure and loses resource in their inventory
+         * @param state 
+         * @param action 
+         */
         spendDice: (state, action: PayloadAction<number>) => {
             state.isSpent[action.payload] = true
         },
-        // When the user switches the lock on a dice between rolls
+        /**
+         * When the user switches the lock on a dice between rolls
+         * @param state 
+         * @param action 
+         */
         toggleLock: (state, action: PayloadAction<number>) => {
             state.isLocked[action.payload] = !state.isLocked[action.payload]
         }

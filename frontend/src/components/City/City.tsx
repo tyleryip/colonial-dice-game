@@ -1,6 +1,6 @@
 import StyledAsset from "../Asset/StyledAsset"
 import { IconType } from "../../constants/enumerations"
-import { selectIsBuilt } from "../../store/slices/structureSlice"
+import { selectIsStructureBuilt } from "../../store/slices/structureSlice"
 import { GetCityStructureId } from "../../constants/mappings"
 
 // Light icons
@@ -35,10 +35,10 @@ const cityIconsDark: Readonly<Record<number, string>> = {
 }
 
 const City = (props: CityProps) => {
-    const structures = useAppSelector(state => selectIsBuilt(state))
+    const isStructureBuilt = useAppSelector(state => selectIsStructureBuilt(state))
 
     const structureId = GetCityStructureId(props.cityNumber)
-    const iconType = structures[structureId]
+    const iconType = isStructureBuilt[structureId]
         ? IconType.Dark
         : IconType.Light
 

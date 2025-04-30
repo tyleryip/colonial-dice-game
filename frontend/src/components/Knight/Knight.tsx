@@ -1,5 +1,8 @@
 import StyledAsset from "../Asset/StyledAsset"
 import { IconType, KnightType } from "../../constants/enumerations"
+import { useAppSelector } from "../../store/hooks"
+import { selectIsKnightBuilt } from "../../store/slices/knightSlice"
+import { GetKnightId } from "../../constants/mappings"
 
 // Light icons
 import knight_1_light from "../../assets/knights/light/knight-1-light.svg"
@@ -40,8 +43,12 @@ const knightIconsDark: { -readonly [key in KnightType]: string } = {
 }
 
 const Knight = (props: KnightProps) => {
-    // TODO: get icon state from store
-    const iconType = IconType.Light
+    const knightId = GetKnightId(props.type)
+    const isKnightBuilt = useAppSelector(state => selectIsKnightBuilt(state))
+
+    const iconType = isKnightBuilt[knightId]
+        ? IconType.Dark
+        : IconType.Light
 
     const icon = iconType === IconType.Light
         ? knightIconsLight[props.type]

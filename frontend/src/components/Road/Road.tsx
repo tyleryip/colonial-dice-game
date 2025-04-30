@@ -1,7 +1,7 @@
 import { IconType, RoadType } from "../../constants/enumerations"
 import StyledAsset from "../Asset/StyledAsset"
 import { useAppSelector } from "../../store/hooks"
-import { selectIsBuilt } from "../../store/slices/structureSlice"
+import { selectIsStructureBuilt } from "../../store/slices/structureSlice"
 import { GetRoadType } from "../../constants/mappings"
 
 // Light icons
@@ -35,9 +35,9 @@ const roadIconsDark: { -readonly [key in RoadType]: string } = {
 }
 
 const Road = (props: RoadProps) => {
-    const structures = useAppSelector(state => selectIsBuilt(state))
+    const isStructureBuilt = useAppSelector(state => selectIsStructureBuilt(state))
 
-    const iconType = structures[props.id]
+    const iconType = isStructureBuilt[props.id]
         ? IconType.Dark
         : IconType.Light
 

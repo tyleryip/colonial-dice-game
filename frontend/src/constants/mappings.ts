@@ -94,12 +94,12 @@ export function GetRoadType(structureId: number): RoadType {
 }
 
 const resourceJokerMappings: { -readonly [key in ResourceJokerType]: number } = {
-    [ResourceJokerType.Ore]: 1,
-    [ResourceJokerType.Wheat]: 2,
-    [ResourceJokerType.Wool]: 3,
-    [ResourceJokerType.Wood]: 4,
-    [ResourceJokerType.Brick]: 5,
-    [ResourceJokerType.Wildcard]: 6,
+    [ResourceJokerType.Ore]: 0,
+    [ResourceJokerType.Wheat]: 1,
+    [ResourceJokerType.Wool]: 2,
+    [ResourceJokerType.Wood]: 3,
+    [ResourceJokerType.Brick]: 4,
+    [ResourceJokerType.Wildcard]: 5,
 }
 
 /**
@@ -108,10 +108,10 @@ const resourceJokerMappings: { -readonly [key in ResourceJokerType]: number } = 
  * @returns resource joker id
  */
 export function GetResourceJokerId(type: ResourceJokerType): number {
-    let resourceJokeId = 0
+    let resourceJokeId = -1
     resourceJokeId = resourceJokerMappings[type]
 
-    if (resourceJokeId === 0) {
+    if (resourceJokeId == -1) {
         throw Error(`Resource joker with ResourceJokerType=${type} not found`)
     }
 
@@ -119,12 +119,12 @@ export function GetResourceJokerId(type: ResourceJokerType): number {
 }
 
 const knightMappings: { -readonly [key in KnightType]: number } = {
-    [KnightType.Ore]: 1,
-    [KnightType.Wheat]: 2,
-    [KnightType.Wool]: 3,
-    [KnightType.Wood]: 4,
-    [KnightType.Brick]: 5,
-    [KnightType.Wildcard]: 6,
+    [KnightType.Ore]: 0,
+    [KnightType.Wheat]: 1,
+    [KnightType.Wool]: 2,
+    [KnightType.Wood]: 3,
+    [KnightType.Brick]: 4,
+    [KnightType.Wildcard]: 5,
 }
 
 /**
@@ -133,10 +133,10 @@ const knightMappings: { -readonly [key in KnightType]: number } = {
  * @returns resource joker id
  */
 export function GetKnightId(type: KnightType): number {
-    let knightId = 0
+    let knightId = -1
     knightId = knightMappings[type]
 
-    if (knightId === 0) {
+    if (knightId == -1) {
         throw Error(`Knight with KnightType=${type} not found`)
     }
 

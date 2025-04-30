@@ -1,7 +1,7 @@
 import StyledAsset from "../Asset/StyledAsset"
 import { IconType } from "../../constants/enumerations"
 import { useAppSelector } from "../../store/hooks"
-import { selectIsBuilt } from "../../store/slices/structureSlice"
+import { selectIsStructureBuilt } from "../../store/slices/structureSlice"
 import { GetSettlementStructureId } from "../../constants/mappings"
 
 // Light icons
@@ -43,10 +43,10 @@ const settlementIconsDark: Readonly<Record<number, string>> = {
 }
 
 const Settlement = (props: SettlementProps) => {
-    const structures = useAppSelector(state => selectIsBuilt(state))
+    const isStructureBuilt = useAppSelector(state => selectIsStructureBuilt(state))
 
     const structureId = GetSettlementStructureId(props.settlementNumber)
-    const iconType = structures[structureId]
+    const iconType = isStructureBuilt[structureId]
         ? IconType.Dark
         : IconType.Light
 

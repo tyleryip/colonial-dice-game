@@ -14,13 +14,20 @@ export const scoreSlice = createSlice({
     name: 'score',
     initialState: initialState,
     reducers: {
-        // When the game is reset
-        resetScore: (state) => {
-            state.scores = new Array(15).fill(null)
-        },
-        // When a new score should be added to the scoreboard
+        /**
+         * When a new score should be added to the scoreboard
+         * @param state 
+         * @param action 
+         */
         addScore: (state, action: PayloadAction<number>) => {
             state.scores = findFirstEmptyScoreAndSet(state.scores, action.payload)
+        },
+        /**
+         * When the game is reset
+         * @param state 
+         */
+        resetScore: (state) => {
+            state.scores = new Array(15).fill(null)
         }
     }
 })

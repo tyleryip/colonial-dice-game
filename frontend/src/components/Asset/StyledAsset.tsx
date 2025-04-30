@@ -5,7 +5,7 @@ import { styled } from "styled-components"
  */
 const StyledAsset = styled.img`
     position: absolute;
-    width: 100%
+    width: 100%;
 `
 
 export default StyledAsset
