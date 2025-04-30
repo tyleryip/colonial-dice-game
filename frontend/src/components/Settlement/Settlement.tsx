@@ -16,6 +16,9 @@ import settlement_7_dark from "../../assets/settlements/dark/settlement-7-dark.s
 import settlement_9_dark from "../../assets/settlements/dark/settlement-9-dark.svg"
 import settlement_11_dark from "../../assets/settlements/dark/settlement-11-dark.svg"
 import { IconType } from "../../constants/enumerations"
+import { useAppSelector } from "../../store/hooks"
+import { selectStructures } from "../../store/slices/structureSlice"
+import { GetSettlementStructureId } from "../../constants/mappings"
 
 interface SettlementProps {
     settlementNumber: number // the number that appears on the settlement
@@ -40,8 +43,12 @@ const settlementIconsDark: Readonly<Record<number, string>> = {
 }
 
 const Settlement = (props: SettlementProps) => {
-    // TODO: get icon type based on store
-    const iconType = IconType.Light
+    const structures = useAppSelector(state => selectStructures(state))
+
+    const structureId = GetSettlementStructureId(props.settlementNumber)
+    const iconType = structures[structureId].built
+        ? IconType.Dark
+        : IconType.Light
 
     const icon = iconType === IconType.Light
         ? settlementIconsLight[props.settlementNumber]

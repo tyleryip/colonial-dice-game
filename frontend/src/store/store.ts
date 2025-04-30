@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import diceReducer, { diceSlice } from "../store/slices/diceSlice"
 import scoreReducer, { scoreSlice } from "../store/slices/scoreSlice"
+import structureReducer, { structureSlice } from "../store/slices/structureSlice"
 
 export const store = configureStore({
     reducer: {
         dice: diceReducer,
-        score: scoreReducer
+        score: scoreReducer,
+        structure: structureReducer,
     },
     devTools: {
         actionCreators: {
@@ -19,6 +21,10 @@ export const store = configureStore({
             // Score actions
             ["Add Score"]: scoreSlice.actions.addScore,
             ["Reset Score"]: scoreSlice.actions.resetScore,
+
+            // Structure actions
+            ["Build Structure"]: structureSlice.actions.buildStructure,
+            ["Reset Structures"]: structureSlice.actions.resetStructures,
         }
     }
 });

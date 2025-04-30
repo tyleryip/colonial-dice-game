@@ -13,6 +13,8 @@ import backwardslash_road_dark from "../../assets/roads/dark/backslash-road-dark
 
 import starting_road from "../../assets/roads/starting-road.svg"
 import { GetRoadType } from "../../constants/mappings"
+import { useAppSelector } from "../../store/hooks"
+import { selectStructures } from "../../store/slices/structureSlice"
 
 interface RoadProps {
     id: number // the unique structure id
@@ -33,12 +35,13 @@ const roadIconsDark: { -readonly [key in RoadType]: string } = {
 }
 
 const Road = (props: RoadProps) => {
+    const structures = useAppSelector(state => selectStructures(state))
+
+    const iconType = structures[props.id].built
+        ? IconType.Dark
+        : IconType.Light
 
     const roadType = GetRoadType(props.id)
-
-    // TODO: get icon type from store
-    const iconType = IconType.Light
-
     const icon = iconType === IconType.Light
         ? roadIconsLight[roadType]
         : roadIconsDark[roadType]
