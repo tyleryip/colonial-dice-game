@@ -13,6 +13,12 @@ const StyledBaseButton = styled.button`
     &:hover {
         filter: drop-shadow(10px 5px 20px rgba(36, 36, 36, 0.5));
         background-color: #dcc7a1;
+        cursor: pointer;
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        pointer-events: none;
     }
     `
 

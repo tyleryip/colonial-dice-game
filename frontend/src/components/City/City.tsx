@@ -1,5 +1,7 @@
 import StyledAsset from "../Asset/StyledAsset"
 import { IconType } from "../../constants/enumerations"
+import { selectIsBuilt } from "../../store/slices/structureSlice"
+import { GetCityStructureId } from "../../constants/mappings"
 
 // Light icons
 import city_7_light from "../../assets/cities/light/city-7-light.svg"
@@ -13,8 +15,6 @@ import city_12_dark from "../../assets/cities/dark/city-12-dark.svg"
 import city_20_dark from "../../assets/cities/dark/city-20-dark.svg"
 import city_30_dark from "../../assets/cities/dark/city-30-dark.svg"
 import { useAppSelector } from "../../store/hooks"
-import { selectStructures } from "../../store/slices/structureSlice"
-import { GetCityStructureId } from "../../constants/mappings"
 
 interface CityProps {
     cityNumber: number // the number that appears on the city
@@ -35,10 +35,10 @@ const cityIconsDark: Readonly<Record<number, string>> = {
 }
 
 const City = (props: CityProps) => {
-    const structures = useAppSelector(state => selectStructures(state))
+    const structures = useAppSelector(state => selectIsBuilt(state))
 
     const structureId = GetCityStructureId(props.cityNumber)
-    const iconType = structures[structureId].built
+    const iconType = structures[structureId]
         ? IconType.Dark
         : IconType.Light
 

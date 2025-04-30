@@ -48,7 +48,7 @@ const ResourceDiceContainer = () => {
             </StyledDiceTray>
             <StyledButtonTray >
                 <RollButton disabled={rolling} handleClick={handleRollButtonClicked} rollCount={rollCount} />
-                <BuildButton handleClick={handleBuildButtonClicked} />
+                <BuildButton disabled={rollCount == 0} handleClick={handleBuildButtonClicked} />
             </StyledButtonTray>
         </StyledResourceDiceContainer>
     )

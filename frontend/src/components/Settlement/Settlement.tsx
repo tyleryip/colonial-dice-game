@@ -1,4 +1,8 @@
 import StyledAsset from "../Asset/StyledAsset"
+import { IconType } from "../../constants/enumerations"
+import { useAppSelector } from "../../store/hooks"
+import { selectIsBuilt } from "../../store/slices/structureSlice"
+import { GetSettlementStructureId } from "../../constants/mappings"
 
 // Light icons
 import settlement_3_light from "../../assets/settlements/light/settlement-3-light.svg"
@@ -15,10 +19,6 @@ import settlement_5_dark from "../../assets/settlements/dark/settlement-5-dark.s
 import settlement_7_dark from "../../assets/settlements/dark/settlement-7-dark.svg"
 import settlement_9_dark from "../../assets/settlements/dark/settlement-9-dark.svg"
 import settlement_11_dark from "../../assets/settlements/dark/settlement-11-dark.svg"
-import { IconType } from "../../constants/enumerations"
-import { useAppSelector } from "../../store/hooks"
-import { selectStructures } from "../../store/slices/structureSlice"
-import { GetSettlementStructureId } from "../../constants/mappings"
 
 interface SettlementProps {
     settlementNumber: number // the number that appears on the settlement
@@ -43,10 +43,10 @@ const settlementIconsDark: Readonly<Record<number, string>> = {
 }
 
 const Settlement = (props: SettlementProps) => {
-    const structures = useAppSelector(state => selectStructures(state))
+    const structures = useAppSelector(state => selectIsBuilt(state))
 
     const structureId = GetSettlementStructureId(props.settlementNumber)
-    const iconType = structures[structureId].built
+    const iconType = structures[structureId]
         ? IconType.Dark
         : IconType.Light
 

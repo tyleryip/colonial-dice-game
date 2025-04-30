@@ -13,7 +13,7 @@ const BuildButton = (props: BuildButtonProps) => {
 
     return (
         <StyledBuildButton title={tooltip} disabled={props.disabled} onClick={props.handleClick}>
-            <StyledBuildButtonIcon src={build_icon} />
+            <StyledBuildButtonIcon $disabled={props.disabled ?? false} src={build_icon} />
         </StyledBuildButton>
     )
 }

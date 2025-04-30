@@ -1,7 +1,14 @@
-import { styled } from "styled-components"
+import { css, styled } from "styled-components"
 
-const StyledBuildButtonIcon = styled.img`
+interface StyledBuildButtonIconProps {
+    $disabled: boolean
+}
+
+const StyledBuildButtonIcon = styled.img<StyledBuildButtonIconProps>`
     width: 32%;
-`
+    opacity: ${props => props.$disabled && css`70%`};
+
+    transition: opacity 250ms ease-out;
+    `
 
 export default StyledBuildButtonIcon
