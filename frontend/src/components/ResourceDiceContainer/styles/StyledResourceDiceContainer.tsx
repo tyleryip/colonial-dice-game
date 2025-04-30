@@ -4,7 +4,6 @@ const StyledResourceDiceContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 2%;
 
     @media ${(props) => props.theme.breakpoints.xs} {
         width: 70%;

@@ -8,8 +8,10 @@ const StyledRollButtonIcon = styled.img<StyledRollButtonIconProps>`
     width: 25%;
     opacity: ${props => props.$used &&
         css`
-        50%
+        30%
     `};
+
+    transition: opacity 250ms ease-out;
 `
 
 export default StyledRollButtonIcon

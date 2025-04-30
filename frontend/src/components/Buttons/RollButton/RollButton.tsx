@@ -10,7 +10,9 @@ interface RollButtonProps {
 }
 
 const RollButton = (props: RollButtonProps) => {
-    const tooltip = `${3 - props.rollCount} rolls left`
+    const tooltip = props.rollCount === 2
+        ? "1 roll left"
+        : `${3 - props.rollCount} rolls left`
 
     return (
         <StyledRollButton title={tooltip} disabled={props.disabled || props.rollCount >= 3} onClick={props.handleClick}>

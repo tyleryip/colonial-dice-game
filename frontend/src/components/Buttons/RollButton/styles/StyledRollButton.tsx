@@ -6,7 +6,7 @@ const StyledRollButton = styled(StyledBaseButton)`
     flex-direction: row;
     justify-content: center;
     gap: 3%;
-    width: 50%;
+    width: 45%;
 `
 
 export default StyledRollButton;

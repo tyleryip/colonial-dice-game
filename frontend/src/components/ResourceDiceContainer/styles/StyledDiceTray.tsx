@@ -6,7 +6,7 @@ const StyledDiceTray = styled.div`
     justify-self: center;
     justify-content: center; 
     align-items: center;
-    gap: 2%;
+    gap: 3%;
     width: 100%;
 `
 

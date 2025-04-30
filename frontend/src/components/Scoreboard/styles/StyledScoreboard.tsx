@@ -1,7 +1,6 @@
 import { styled } from "styled-components"
 
 const StyledScoreboard = styled.div`
-    margin-top: 1%;
     display: grid;
     justify-items: stretch;
     align-items: stretch;
@@ -18,13 +17,12 @@ const StyledScoreboard = styled.div`
     }
 
     @media ${(props) => props.theme.breakpoints.m} {
-        grid-template-columns: repeat(18, 1fr);
-        grid-template-rows: 1fr;
 
     }
 
     @media ${(props) => props.theme.breakpoints.l} {
-
+        grid-template-columns: repeat(17, 1fr);
+        grid-template-rows: 1fr;
     }
 
     @media ${(props) => props.theme.breakpoints.xl} {
