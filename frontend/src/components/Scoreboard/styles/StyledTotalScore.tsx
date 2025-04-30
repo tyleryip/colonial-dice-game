@@ -16,11 +16,11 @@ const StyledTotalScore = styled.div`
     }
 
     @media ${(props) => props.theme.breakpoints.m} {
-        grid-column: span 2;
+
     }
 
     @media ${(props) => props.theme.breakpoints.l} {
-
+        grid-column: span 2;
     }
 
     @media ${(props) => props.theme.breakpoints.xl} {
