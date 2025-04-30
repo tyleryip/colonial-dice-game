@@ -16,6 +16,9 @@ import ore_joker_dark from "../../assets/jokers/dark/ore-joker-dark.svg"
 import wildcard_joker_dark from "../../assets/jokers/dark/wildcard-joker-dark.svg"
 import brick_joker_dark from "../../assets/jokers/dark/brick-joker-dark.svg"
 import wood_joker_dark from "../../assets/jokers/dark/wood-joker-dark.svg"
+import { useAppSelector } from "../../store/hooks"
+import { selectIsResourceJokerSpent } from "../../store/slices/resourceJokerSlice"
+import { GetResourceJokerId } from "../../constants/mappings"
 
 interface ResourceJokerProps {
     type: ResourceJokerType
@@ -40,14 +43,17 @@ const resourceJokerIconsDark: { -readonly [key in ResourceJokerType]: string } =
 }
 
 const ResourceJoker = (props: ResourceJokerProps) => {
-    // TODO: get icon type from store
-    const iconType = IconType.Light
+    const resourceJokerIsSpent = useAppSelector(state => selectIsResourceJokerSpent(state))
+
+    const resourceJokerId = GetResourceJokerId(props.type)
+    const iconType = resourceJokerIsSpent[resourceJokerId]
+        ? IconType.Dark
+        : IconType.Light
 
     const icon = iconType === IconType.Light
         ? resourceJokerIconsLight[props.type]
         : resourceJokerIconsDark[props.type]
 
-    // TODO: adjust width based on icon type as well since the icons are different sizes?
     return (
         <StyledAsset src={icon} />
     )

@@ -1,13 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import diceReducer, { diceSlice } from "../store/slices/diceSlice"
+import resourceJokerReducer, { resourceJokerSlice } from "../store/slices/resourceJokerSlice"
+import knightReducer, { knightSlice } from "./slices/knightSlice";
 import scoreReducer, { scoreSlice } from "../store/slices/scoreSlice"
 import structureReducer, { structureSlice } from "../store/slices/structureSlice"
-import knightReducer, { knightSlice } from "./slices/knightSlice";
 
 export const store = configureStore({
     reducer: {
         dice: diceReducer,
         knight: knightReducer,
+        resourceJoker: resourceJokerReducer,
         score: scoreReducer,
         structure: structureReducer,
     },
@@ -23,6 +25,11 @@ export const store = configureStore({
             // Knight actions
             ["Build Knight"]: knightSlice.actions.buildKnight,
             ["Reset Knights"]: knightSlice.actions.resetKnights,
+
+            // Resource joker actions
+            ["Build Resource Joker"]: resourceJokerSlice.actions.buildResourceJoker,
+            ["Reset Resource Jokers"]: resourceJokerSlice.actions.resetResourceJokers,
+            ["Spend Resource Joker"]: resourceJokerSlice.actions.spendResourceJoker,
 
             // Score actions
             ["Add Score"]: scoreSlice.actions.addScore,
