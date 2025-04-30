@@ -1,34 +1,35 @@
-import { styled } from "styled-components";
+import { styled } from "styled-components"
 
-const StyledGameBoard = styled.div`
-    position: relative;
-    aspect-ratio: 1/1;
-    margin-right: auto;
-    margin-left: auto;
+const StyledTotalScore = styled.div`
+    width: 100%;
+    display: flex;
+    justify-self: stretch;
+    align-self: stretch;
+    padding-left: 1.5%;
 
     @media ${(props) => props.theme.breakpoints.xs} {
-        width: 100%;
+        grid-column: span 3;
     }
 
     @media ${(props) => props.theme.breakpoints.s} {
-        width: 80%;
+
     }
 
     @media ${(props) => props.theme.breakpoints.m} {
-        width: 65%;
+        grid-column: span 2;
     }
 
     @media ${(props) => props.theme.breakpoints.l} {
-        width: 50%;
+
     }
 
     @media ${(props) => props.theme.breakpoints.xl} {
-        width: 40%;
+
     }
 
     @media ${(props) => props.theme.breakpoints.xxl} {
-        width: 35%;
+
     }
 `
 
-export default StyledGameBoard
+export default StyledTotalScore

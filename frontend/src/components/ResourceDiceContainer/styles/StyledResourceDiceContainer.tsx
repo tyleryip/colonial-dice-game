@@ -7,11 +7,11 @@ const StyledResourceDiceContainer = styled.div`
     margin-top: 2%;
 
     @media ${(props) => props.theme.breakpoints.xs} {
-        width: 50%;
+        width: 70%;
     }
 
     @media ${(props) => props.theme.breakpoints.s} {
-        width: 50%;
+        width: 60%;
     }
 
     @media ${(props) => props.theme.breakpoints.m} {
@@ -19,11 +19,15 @@ const StyledResourceDiceContainer = styled.div`
     }
 
     @media ${(props) => props.theme.breakpoints.l} {
-        width: 40%;
+        width: 30%;
     }
 
     @media ${(props) => props.theme.breakpoints.xl} {
         width: 30%;
+    }
+
+    @media ${(props) => props.theme.breakpoints.xxl} {
+        width: 25%;
     }
 `
 

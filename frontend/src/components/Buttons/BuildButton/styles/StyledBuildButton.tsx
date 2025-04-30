@@ -4,7 +4,7 @@ import StyledBaseButton from "../../styles/StyledBaseButton"
 const StyledBuildButton = styled(StyledBaseButton)`
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     width: 35%;
 `
 

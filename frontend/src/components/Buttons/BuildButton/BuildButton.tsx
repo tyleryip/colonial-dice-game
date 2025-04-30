@@ -1,4 +1,7 @@
 import StyledBuildButton from "./styles/StyledBuildButton"
+import StyledBuildButtonIcon from "./styles/StyledBuildButtonIcon"
+
+import build_icon from "../../../assets/buttons/build-icon.svg"
 
 interface BuildButtonProps {
     disabled?: boolean
@@ -10,7 +13,7 @@ const BuildButton = (props: BuildButtonProps) => {
 
     return (
         <StyledBuildButton title={tooltip} disabled={props.disabled} onClick={props.handleClick}>
-            {"Build"}
+            <StyledBuildButtonIcon src={build_icon} />
         </StyledBuildButton>
     )
 }

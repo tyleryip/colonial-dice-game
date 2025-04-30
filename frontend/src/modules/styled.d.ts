@@ -8,7 +8,8 @@ declare module 'styled-components' {
             s: string,
             m: string,
             l: string,
-            xl: string
+            xl: string,
+            xxl: string
         }
     }
 }
