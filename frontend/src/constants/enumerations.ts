@@ -8,10 +8,22 @@ export enum StructureType {
 }
 
 export enum RoadType {
-    Horizontal, // Roads that look like this: -
-    Forwardslash, // Roads that look like this: /
-    Backslash, // Roads that look like this: \
-    Starting // Special case for the starting road with the arrow
+    /**
+     * Roads that look like this: -
+     */
+    Horizontal,
+    /**
+     * Roads that look like this: /
+     */
+    Forwardslash,
+    /**
+     * Roads that look like this: \
+     */
+    Backslash,
+    /**
+     * Special case for the starting road with the arrow
+     */
+    Starting
 }
 
 export enum HexagonType {
@@ -72,4 +84,15 @@ export enum ResourceType {
     Wood,
     Brick,
     Gold
+}
+
+export enum GamePhase {
+    /**
+     * When the user is rolling dice for resources
+     */
+    Rolling,
+    /**
+     * When the user is building structures
+     */
+    Building
 }

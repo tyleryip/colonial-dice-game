@@ -42,9 +42,17 @@ export const diceSlice = createSlice({
          * When the user trades their gold in for a resource of their choice
          * @param state 
          * @param action 
-         */
+        */
         setDice: (state, action: PayloadAction<SetDicePayload>) => {
             state.diceValues[action.payload.id] = action.payload.value
+        },
+        /**
+         * When the user stops rolling early and forfeits the rest of their rolls
+         * @param state 
+         * @param action 
+         */
+        setRollCount: (state, action: PayloadAction<number>) => {
+            state.rollCount = action.payload
         },
         /**
          * When the user builds a structure and loses resource in their inventory
@@ -59,8 +67,15 @@ export const diceSlice = createSlice({
          * @param state 
          * @param action 
          */
-        toggleLock: (state, action: PayloadAction<number>) => {
+        toggleDiceLock: (state, action: PayloadAction<number>) => {
             state.isLocked[action.payload] = !state.isLocked[action.payload]
+        },
+        /**
+         * When the roll phase ends and all dice should appear unlocked
+         * @param state 
+         */
+        unlockAllDice: (state) => {
+            state.isLocked = [false, false, false, false, false, false];
         }
     }
 })
@@ -74,7 +89,7 @@ export interface SetDicePayload {
     value: DiceValue
 }
 
-export const { rollDice, resetDice, setDice, spendDice, toggleLock } = diceSlice.actions
+export const { rollDice, resetDice, setDice, setRollCount, spendDice, toggleDiceLock, unlockAllDice } = diceSlice.actions
 
 // Selectors
 

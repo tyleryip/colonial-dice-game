@@ -4,14 +4,19 @@ import StyledButtonTray from "./styles/StyledButtonTray"
 import StyledDiceTray from "./styles/StyledDiceTray"
 import StyledResourceDiceContainer from "./styles/StyledResourceDiceContainer"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { resetDice, rollDice, selectDiceValues, selectIsLocked, selectRollCount, toggleLock } from "../../store/slices/diceSlice"
+import { resetDice, rollDice, selectDiceValues, selectIsLocked, selectIsSpent, selectRollCount, setRollCount, toggleDiceLock, unlockAllDice } from "../../store/slices/diceSlice"
 import RollButton from "../Buttons/RollButton/RollButton"
 import BuildButton from "../Buttons/BuildButton/BuildButton"
+import { selectCurrentGamePhase, setGamePhase } from "../../store/slices/gameSlice"
+import { GamePhase } from "../../constants/enumerations"
 
 const ResourceDiceContainer = () => {
+    const currentGamePhase = useAppSelector((state) => selectCurrentGamePhase(state))
     const diceValues = useAppSelector((state) => selectDiceValues(state))
     const isLocked = useAppSelector((state) => selectIsLocked(state))
+    const isSpent = useAppSelector((state) => selectIsSpent(state))
     const rollCount = useAppSelector((state) => selectRollCount(state))
+
     const dispatch = useAppDispatch();
 
     const [rolling, setRolling] = useState(false)
@@ -19,18 +24,51 @@ const ResourceDiceContainer = () => {
     const diceIds = [0, 1, 2, 3, 4, 5]
     const rollDurationMilliseconds = 750
 
+    // Event handlers
+
     function handleRollButtonClicked() {
+        if (currentGamePhase == GamePhase.Building) {
+            // if the user is starting to roll after completing the build phase, we need to update the phase to rolling
+            dispatch(setGamePhase(GamePhase.Rolling))
+        }
+
         setTimeout(() => {
+            // Generate new values for the dice after rolling
             dispatch(rollDice());
+
+            // Stop rolling animation
             setRolling(false);
+
         }, rollDurationMilliseconds);
 
+        // Start rolling animation
         setRolling(true);
     }
 
     function handleBuildButtonClicked() {
-        dispatch(resetDice());
+        if (currentGamePhase == GamePhase.Rolling) {
+            dispatch(setGamePhase(GamePhase.Building))
+
+            // Remove the locks from the dice since they cannot be rolled anymore
+            dispatch(unlockAllDice())
+
+            // Make all the dice in the Roll Button appear used
+            dispatch(setRollCount(3))
+        }
+
+        if (currentGamePhase == GamePhase.Building) {
+            dispatch(setGamePhase(GamePhase.Rolling))
+            dispatch(resetDice())
+        }
     }
+
+    // Disabled states
+
+    const rollButtonDisabled = (currentGamePhase == GamePhase.Rolling && rollCount >= 3)
+        || currentGamePhase == GamePhase.Building
+        || rolling
+
+    const buildButtonDisabled = (currentGamePhase == GamePhase.Rolling && rollCount == 0)
 
     return (
         <StyledResourceDiceContainer>
@@ -43,12 +81,14 @@ const ResourceDiceContainer = () => {
                         rolling={rolling}
                         rollDurationMilliseconds={rollDurationMilliseconds}
                         locked={isLocked[value]}
-                        onToggleDiceLocked={() => dispatch(toggleLock(value))} />
+                        spent={isSpent[value]}
+                        currentGamePhase={currentGamePhase}
+                        onToggleDiceLocked={() => dispatch(toggleDiceLock(value))} />
                 )}
             </StyledDiceTray>
             <StyledButtonTray >
-                <RollButton disabled={rolling} handleClick={handleRollButtonClicked} rollCount={rollCount} />
-                <BuildButton disabled={rollCount == 0} handleClick={handleBuildButtonClicked} />
+                <RollButton disabled={rollButtonDisabled} handleClick={handleRollButtonClicked} rollCount={rollCount} />
+                <BuildButton disabled={buildButtonDisabled} handleClick={handleBuildButtonClicked} currentGamePhase={currentGamePhase} />
             </StyledButtonTray>
         </StyledResourceDiceContainer>
     )

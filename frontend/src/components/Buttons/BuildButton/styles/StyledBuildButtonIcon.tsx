@@ -5,8 +5,8 @@ interface StyledBuildButtonIconProps {
 }
 
 const StyledBuildButtonIcon = styled.img<StyledBuildButtonIconProps>`
-    width: 32%;
-    opacity: ${props => props.$disabled && css`70%`};
+    width: 37%;
+    opacity: ${props => props.$disabled && css`30%`};
 
     transition: opacity 250ms ease-out;
     `

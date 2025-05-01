@@ -5,7 +5,7 @@ interface StyledRollButtonIconProps {
 }
 
 const StyledRollButtonIcon = styled.img<StyledRollButtonIconProps>`
-    width: 25%;
+    width: 24%;
     opacity: ${props => props.$used &&
         css`
         30%
