@@ -107,5 +107,5 @@ function generateNewDiceValues(values: DiceValue[], isLocked: boolean[]) {
 }
 
 function generateRandomDiceValue(): DiceValue {
-    return Math.floor(Math.random() * 6 + 1) as DiceValue
+    return Math.floor(Math.random() * 6) as DiceValue
 }

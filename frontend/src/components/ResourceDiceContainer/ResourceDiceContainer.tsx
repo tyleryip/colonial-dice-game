@@ -8,7 +8,7 @@ import { resetDice, rollDice, selectDiceValues, selectIsLocked, selectIsSpent, s
 import RollButton from "../Buttons/RollButton/RollButton"
 import BuildButton from "../Buttons/BuildButton/BuildButton"
 import { selectCurrentGamePhase, setGamePhase } from "../../store/slices/gameSlice"
-import { GamePhase } from "../../constants/enumerations"
+import { GamePhase, ResourceType } from "../../constants/enumerations"
 
 const ResourceDiceContainer = () => {
     const currentGamePhase = useAppSelector((state) => selectCurrentGamePhase(state))
@@ -62,13 +62,15 @@ const ResourceDiceContainer = () => {
         }
     }
 
-    // Disabled states
+    // Conditional rendering
 
     const rollButtonDisabled = (currentGamePhase == GamePhase.Rolling && rollCount >= 3)
         || currentGamePhase == GamePhase.Building
         || rolling
 
     const buildButtonDisabled = (currentGamePhase == GamePhase.Rolling && rollCount == 0)
+
+    const isTradeable = diceValues.filter(diceValue => diceValue == ResourceType.Gold).length > 1;
 
     return (
         <StyledResourceDiceContainer>
@@ -80,8 +82,9 @@ const ResourceDiceContainer = () => {
                         value={diceValues[value]}
                         rolling={rolling}
                         rollDurationMilliseconds={rollDurationMilliseconds}
-                        locked={isLocked[value]}
-                        spent={isSpent[value]}
+                        isLocked={isLocked[value]}
+                        isSpent={isSpent[value]}
+                        isTradeable={isTradeable}
                         currentGamePhase={currentGamePhase}
                         onToggleDiceLocked={() => dispatch(toggleDiceLock(value))} />
                 )}

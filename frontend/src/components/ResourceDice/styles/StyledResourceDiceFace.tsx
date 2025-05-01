@@ -1,30 +1,36 @@
 import { styled, css } from "styled-components"
 import wobble from "../../../animations/wobble"
+import pulse from "../../../animations/pulse"
 
 interface StyledResourceDiceFaceProps {
-    $rolling: boolean
-    $rollDuration: number
-    $spent: boolean
+    $wobble: boolean
+    $wobbleDurationMilliseconds: number
+    $grayscale: boolean
+    $pulse: boolean
 }
 
 const StyledResourceDiceFace = styled.img<StyledResourceDiceFaceProps>`
     border-radius: 10%;
     filter: ${props =>
-        props.$spent &&
+        props.$grayscale &&
         css`
             grayscale(100%)
         `};
     opacity: ${props =>
-        props.$spent &&
+        props.$grayscale &&
         css`
             30%
         `
     };
     animation: ${props =>
-        props.$rolling &&
-        css`
-            ${wobble} ${props.$rollDuration}ms linear 
-        `};
+        (props.$wobble &&
+            css`
+             ${wobble} ${props.$wobbleDurationMilliseconds}ms linear 
+        `)
+        || (props.$pulse &&
+            css`${pulse} 1s infinite`
+        )
+    };
 
     transition: opacity 250ms ease-out, filter 250ms ease-out;
 `

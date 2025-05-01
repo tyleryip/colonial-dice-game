@@ -12,15 +12,16 @@ import blank_face from "../../assets/dice/blank_face.svg";
 import lock from "../../assets/dice/lock.svg"
 import StyledLock from "./styles/StyledLock";
 import { DiceValue } from "../../types/DiceValue";
-import { GamePhase } from "../../constants/enumerations";
+import { GamePhase, ResourceType } from "../../constants/enumerations";
 
 export interface ResourceDiceProps {
   id: number;
   value: DiceValue;
   rolling: boolean;
   rollDurationMilliseconds: number,
-  locked: boolean;
-  spent: boolean;
+  isLocked: boolean;
+  isSpent: boolean;
+  isTradeable: boolean;
   currentGamePhase: GamePhase;
   onToggleDiceLocked: (id: number) => void
 }
@@ -37,28 +38,54 @@ const faceValues = [
 const diceWidth = 100;
 
 const ResourceDice = (props: ResourceDiceProps) => {
-  const diceFace = (props.rolling && !props.locked) || props.value === null
+  const diceFace = (props.rolling && !props.isLocked) || props.value === null
     ? blank_face
-    : faceValues[props.value - 1]
+    : faceValues[props.value]
+
+  // Dice face should pulse if it can be traded
+  const pulse = props.currentGamePhase == GamePhase.Building
+    && props.value == ResourceType.Gold
+    && props.isTradeable
+
+  // Dice face should wobble when rolling and unlocked
+  const wobble = props.rolling && !props.isLocked
+
+  // Cursor should be pointer if it meets conditions to handleClick
+  const pointer = (props.currentGamePhase == GamePhase.Rolling && props.value !== null)
+    || pulse
+
+  const tooltip = props.currentGamePhase == GamePhase.Rolling && props.value !== null && !props.isLocked
+    ? "Lock dice"
+    : props.currentGamePhase == GamePhase.Rolling && props.value !== null && props.isLocked
+      ? "Unlock dice"
+      : pulse
+        ? "Trade gold"
+        : ""
 
   function handleClick() {
-    if (props.currentGamePhase == GamePhase.Rolling && props.value !== null) {
+    if (props.currentGamePhase == GamePhase.Rolling
+      && props.value !== null) {
       props.onToggleDiceLocked(props.id)
+    }
+
+    if (pulse) {
+      alert("This would open the popup to trade gold!")
     }
   }
 
   return (
-    <StyledResourceDice onClick={handleClick}>
+    <StyledResourceDice title={tooltip} onClick={handleClick} $pointer={pointer}>
       <StyledResourceDiceFace
         width={`${diceWidth}%`}
         src={diceFace}
-        $spent={props.spent}
-        $rolling={props.rolling && !props.locked}
-        $rollDuration={props.rollDurationMilliseconds} />
+        $grayscale={props.isSpent}
+        $pulse={pulse}
+        $wobble={wobble}
+        $wobbleDurationMilliseconds={props.rollDurationMilliseconds} />
       <StyledLock
         width={`${diceWidth * 0.25}%`}
         src={lock}
-        $locked={props.locked} />
+        $locked={props.isLocked} />
     </StyledResourceDice>
   );
 };
