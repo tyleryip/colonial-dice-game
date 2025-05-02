@@ -22,6 +22,7 @@ export const store = configureStore({
             ["Reset Dice"]: diceSlice.actions.resetDice,
             ["Set Dice"]: diceSlice.actions.setDice,
             ["Spend Dice"]: diceSlice.actions.spendDice,
+            ["Spend Gold"]: diceSlice.actions.spendGold,
             ["Toggle Dice Lock"]: diceSlice.actions.toggleDiceLock,
             ["Unlock All Dice"]: diceSlice.actions.unlockAllDice,
 

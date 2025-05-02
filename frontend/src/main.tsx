@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+import './styles/reactjs-popup.css'
 import App from './components/App/App.tsx'
 import { store } from './store/store.ts'
 import { Provider } from 'react-redux'

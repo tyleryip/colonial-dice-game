@@ -70,7 +70,10 @@ const ResourceDiceContainer = () => {
 
     const buildButtonDisabled = (currentGamePhase == GamePhase.Rolling && rollCount == 0)
 
-    const isTradeable = diceValues.filter(diceValue => diceValue == ResourceType.Gold).length > 1;
+    const isTradeable = diceIds
+        .map((diceId) => diceValues[diceId] == ResourceType.Gold && !isSpent[diceId])
+        .filter(result => result == true)
+        .length > 1
 
     return (
         <StyledResourceDiceContainer>

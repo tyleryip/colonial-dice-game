@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store"
 import { DiceValue } from "../../types/DiceValue";
+import { ResourceType } from "../../constants/enumerations";
 
 interface diceState {
     diceValues: DiceValue[],
@@ -57,10 +58,18 @@ export const diceSlice = createSlice({
         /**
          * When the user builds a structure and loses resource in their inventory
          * @param state 
-         * @param action 
+         * @param action
          */
         spendDice: (state, action: PayloadAction<number>) => {
             state.isSpent[action.payload] = true
+        },
+        /**
+         * When the user trades two gold in for a resource of their choice, set one of the gold to spent
+         * @param state 
+         */
+        spendGold: (state) => {
+            const firstGoldIndex = findFirstGoldIndex(state.diceValues)
+            state.isSpent[firstGoldIndex] = true
         },
         /**
          * When the user switches the lock on a dice between rolls
@@ -89,7 +98,7 @@ export interface SetDicePayload {
     value: DiceValue
 }
 
-export const { rollDice, resetDice, setDice, setRollCount, spendDice, toggleDiceLock, unlockAllDice } = diceSlice.actions
+export const { rollDice, resetDice, setDice, setRollCount, spendDice, spendGold, toggleDiceLock, unlockAllDice } = diceSlice.actions
 
 // Selectors
 
@@ -99,6 +108,10 @@ export const selectIsSpent = (state: RootState) => state.dice.isSpent
 export const selectRollCount = (state: RootState) => state.dice.rollCount
 
 // Helper functions
+
+function findFirstGoldIndex(values: DiceValue[]): number {
+    return values.indexOf(ResourceType.Gold)
+}
 
 function generateNewDiceValues(values: DiceValue[], isLocked: boolean[]) {
     return values.map((value: DiceValue, index: number) => {
