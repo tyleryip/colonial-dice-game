@@ -15,6 +15,9 @@ import wool_hexagon from "../../assets/hexagons/wool-hexagon.svg";
 import wood_hexagon from "../../assets/hexagons/wood-hexagon.svg";
 import brick_hexagon from "../../assets/hexagons/brick-hexagon.svg";
 import desert_hexagon from "../../assets/hexagons/desert-hexagon.svg";
+import ResourceCostPopup from '../Popups/ResourceCostPopup/ResourceCostPopup'
+import { GetKnightCost } from '../../constants/knights'
+import { useHover } from '@uidotdev/usehooks'
 
 interface HexagonProps {
     type: HexagonType,
@@ -90,11 +93,20 @@ function AddKnight(knight: React.ReactNode): React.ReactNode | null {
         throw new Error("Knight cannot be empty")
     }
 
+    const [ref, hovering] = useHover();
+
     const knightTopOffset = 14
     const knightLeftOffset = 44
     const knightWidth = 12
 
-    return <StyledKnight $top={knightTopOffset} $left={knightLeftOffset} $width={knightWidth}>{knight}</StyledKnight>
+    return (
+        <div ref={ref}>
+            <StyledKnight $top={knightTopOffset} $left={knightLeftOffset} $width={knightWidth}>
+                {knight}
+            </StyledKnight>
+            <ResourceCostPopup disabled={!hovering} cost={GetKnightCost()} />
+        </div>
+    )
 }
 
 function AddResourceJoker(resourceJoker: React.ReactNode): React.ReactNode | null {

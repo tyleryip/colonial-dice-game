@@ -68,7 +68,7 @@ export const diceSlice = createSlice({
          * @param state 
          */
         spendGold: (state) => {
-            const firstGoldIndex = findFirstUnspentGoldIndex(state.diceValues)
+            const firstGoldIndex = findFirstUnspentGoldIndex(state.diceValues, state.isSpent)
             state.isSpent[firstGoldIndex] = true
         },
         /**
@@ -109,8 +109,14 @@ export const selectRollCount = (state: RootState) => state.dice.rollCount
 
 // Helper functions
 
-function findFirstUnspentGoldIndex(values: DiceValue[]): number {
-    return values.indexOf(ResourceType.Gold)
+function findFirstUnspentGoldIndex(values: DiceValue[], isSpent: boolean[]): number {
+    for (let index = 0; index < values.length; index++) {
+        if (values[index] == ResourceType.Gold && !isSpent[index]) {
+            return index
+        }
+    }
+
+    throw new Error("No unspent gold found")
 }
 
 function generateNewDiceValues(values: DiceValue[], isLocked: boolean[]) {

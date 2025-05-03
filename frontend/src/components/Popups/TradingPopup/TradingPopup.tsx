@@ -62,7 +62,11 @@ const TradingPopup = (props: TradingPopupProps) => {
                             src={icon} />
                     })}
                 </StyledTradingPopup>
-                <StyledPopupArrow src={tooltip_arrow} $top={-20} $left={40} />
+                <StyledPopupArrow
+                    src={tooltip_arrow}
+                    $top={-20}
+                    $left={40}
+                    $width={23} />
             </div>
         )
 }

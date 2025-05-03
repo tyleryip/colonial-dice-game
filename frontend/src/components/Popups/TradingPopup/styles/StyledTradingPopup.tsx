@@ -8,7 +8,7 @@ const StyledTradingPopup = styled(StyledBasePopup)`
     justify-content: space-around;
 
     @media ${(props) => props.theme.breakpoints.xs} {
-        top: -445%;
+        top: -435%;
         left: -10%;
         width: 100%;
         padding-top: 5%;

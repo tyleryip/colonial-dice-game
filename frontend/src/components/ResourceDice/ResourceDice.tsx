@@ -51,9 +51,10 @@ const ResourceDice = (props: ResourceDiceProps) => {
     ? blank_face
     : faceValues[props.value]
 
-  // Dice face should conditionally pulse and open a popup if tradeable and in building game phase
+  // Dice face should conditionally pulse and open a popup if tradeable, unspent, and in building game phase
   const isTradeable = isGamePhaseBuilding
     && props.value == ResourceType.Gold
+    && !props.isSpent
     && props.isTradeable
 
   // Dice face should wobble when rolling and unlocked
