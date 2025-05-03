@@ -3,10 +3,8 @@ import StyledResourceDiceFace from "./styles/StyledResourceDiceFace";
 import StyledLock from "./styles/StyledLock";
 import { DiceValue } from "../../types/DiceValue";
 import { GamePhase, ResourceType } from "../../constants/enumerations";
-import Popup from "reactjs-popup";
 import TradingPopup from "../Popups/TradingPopup/TradingPopup";
-import { useRef } from "react";
-import { PopupActions } from "reactjs-popup/dist/types";
+import { useState } from "react";
 
 // Dice faces
 import ore_face from "../../assets/dice/ore-face.svg";
@@ -42,7 +40,7 @@ const faceValues = [
 const diceWidth = 100;
 
 const ResourceDice = (props: ResourceDiceProps) => {
-  const popupRef = useRef<PopupActions | null>(null);
+  const [showTradingPopup, setShowTradingPopup] = useState(false);
 
   // Helpers for evaluating current game phase
   const isGamePhaseRolling = props.currentGamePhase == GamePhase.Rolling
@@ -72,45 +70,39 @@ const ResourceDice = (props: ResourceDiceProps) => {
         ? "Trade gold"
         : ""
 
-  function handleDiceClickDuringRollingGamePhase() {
+  function handleClick() {
     if (isGamePhaseRolling
       && props.value !== null) {
       props.onToggleDiceLocked(props.id)
     }
+
+    if ((isGamePhaseBuilding && isTradeable)) {
+      setShowTradingPopup(!showTradingPopup);
+    }
   }
 
-  function handleClosePopup() {
-    if (popupRef.current != null) {
-      popupRef.current.close();
-    }
+  function handleCloseTradePopup() {
+    setShowTradingPopup(false);
   }
 
   return (
     <StyledResourceDice title={tooltip} $pointer={pointer}>
-      <Popup
-        ref={popupRef}
-        position={'top center'}
-        on={'click'}
-        disabled={!isTradeable}
-        repositionOnResize={true}
-        closeOnDocumentClick={true}
-        nested={true}
-        trigger={<div>
-          <StyledResourceDiceFace
-            width={`${diceWidth}%`}
-            src={diceFace}
-            onClick={handleDiceClickDuringRollingGamePhase}
-            $grayscale={props.isSpent}
-            $pulse={isTradeable}
-            $wobble={wobble}
-            $wobbleDurationMilliseconds={props.rollDurationMilliseconds} />
-          <StyledLock
-            width={`${diceWidth * 0.25}%`}
-            src={lock}
-            $locked={props.isLocked} />
-        </div>}>
-        <TradingPopup onClosePopup={handleClosePopup} diceId={props.id} />
-      </Popup>
+      <TradingPopup
+        diceId={props.id}
+        disabled={!showTradingPopup}
+        onClose={handleCloseTradePopup} />
+      <StyledResourceDiceFace
+        width={`${diceWidth}%`}
+        src={diceFace}
+        onClick={handleClick}
+        $grayscale={props.isSpent}
+        $pulse={isTradeable}
+        $wobble={wobble}
+        $wobbleDurationMilliseconds={props.rollDurationMilliseconds} />
+      <StyledLock
+        width={`${diceWidth * 0.25}%`}
+        src={lock}
+        $locked={props.isLocked} />
     </StyledResourceDice>
   );
 };

@@ -7,11 +7,11 @@ const StyledTradingIcon = styled.img`
     }
 
     @media ${(props) => props.theme.breakpoints.xs} {
-        width: 60%;
+        width: 90%
     }
 
     @media ${(props) => props.theme.breakpoints.s} {
-        width: 14%;
+        width: 20%
     }
 
     @media ${(props) => props.theme.breakpoints.m} {

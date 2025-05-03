@@ -3,9 +3,6 @@ import { IconType, KnightType } from "../../constants/enumerations"
 import { useAppSelector } from "../../store/hooks"
 import { selectIsKnightBuilt } from "../../store/slices/knightSlice"
 import { GetKnightId } from "../../constants/mappings"
-import Popup from "reactjs-popup"
-import ResourceCostPopup from "../Popups/ResourceCostPopup/ResourceCostPopup"
-import { GetKnightCost } from "../../constants/knights"
 
 // Light icons
 import knight_1_light from "../../assets/knights/light/knight-1-light.svg"
@@ -58,16 +55,7 @@ const Knight = (props: KnightProps) => {
         : knightIconsDark[props.type]
 
     return (
-        <Popup
-            offsetX={10}
-            on={'hover'}
-            position={'top center'}
-            nested={true}
-            trigger={
-                <StyledAsset src={icon} />
-            }>
-            <ResourceCostPopup cost={GetKnightCost()} />
-        </Popup>
+        <StyledAsset src={icon} />
     )
 }
 

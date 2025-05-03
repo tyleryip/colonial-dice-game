@@ -4,6 +4,10 @@ import { useAppDispatch } from '../../../store/hooks';
 import { setDice, SetDicePayload, spendGold } from '../../../store/slices/diceSlice';
 import { DiceValue } from '../../../types/DiceValue';
 import { ResourceType } from '../../../constants/enumerations';
+import StyledPopupArrow from '../styles/StyledPopupArrow';
+import useClickOutside from '../../../hooks/useClickOutside';
+
+import tooltip_arrow from "../../../assets/tooltip/tooltip-arrow.svg"
 
 // Dice faces
 import ore_face from "../../../assets/dice/ore-face.svg";
@@ -13,8 +17,9 @@ import wood_face from "../../../assets/dice/wood-face.svg";
 import brick_face from "../../../assets/dice/brick-face.svg";
 
 interface TradingPopupProps {
-    onClosePopup: () => void
-    diceId: number
+    diceId: number,
+    disabled: boolean,
+    onClose: () => void
 }
 
 const faceValues = [
@@ -26,6 +31,9 @@ const faceValues = [
 ];
 
 const TradingPopup = (props: TradingPopupProps) => {
+    // If any clicks are registered outside of this div, invoke the onClose function
+    const ref = useClickOutside(() => props.onClose());
+
     const dispatch = useAppDispatch()
 
     const tooltip = (resourceId: number) => `Trade for ${ResourceType[resourceId]}`
@@ -39,20 +47,24 @@ const TradingPopup = (props: TradingPopupProps) => {
         dispatch(setDice(setDicePayload))
         dispatch(spendGold())
 
-        props.onClosePopup();
+        props.onClose();
     }
 
-    return (
-        <StyledTradingPopup>
-            {faceValues.map((icon: string, resourceId: number) => {
-                return <StyledTradingIcon
-                    title={tooltip(resourceId)}
-                    key={resourceId}
-                    onClick={() => handleClick(resourceId)}
-                    src={icon} />
-            })}
-        </StyledTradingPopup>
-    )
+    return !props.disabled
+        && (
+            <div ref={ref}>
+                <StyledTradingPopup>
+                    {faceValues.map((icon: string, resourceId: number) => {
+                        return <StyledTradingIcon
+                            title={tooltip(resourceId)}
+                            key={resourceId}
+                            onClick={() => handleClick(resourceId)}
+                            src={icon} />
+                    })}
+                </StyledTradingPopup>
+                <StyledPopupArrow src={tooltip_arrow} $top={-20} $left={40} />
+            </div>
+        )
 }
 
 export default TradingPopup
