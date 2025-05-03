@@ -147,19 +147,29 @@ export function GetStructureType(structureId: number): StructureType {
  */
 const cost: { -readonly [key in StructureType]: Resources } = {
     [StructureType.Road]: {
-        [ResourceType.Brick]: 1,
+        [ResourceType.Ore]: 0,
+        [ResourceType.Wheat]: 0,
+        [ResourceType.Wool]: 0,
         [ResourceType.Wood]: 1,
+        [ResourceType.Brick]: 1,
+        [ResourceType.Gold]: 0
     },
     [StructureType.Settlement]: {
-        [ResourceType.Brick]: 1,
+        [ResourceType.Ore]: 0,
         [ResourceType.Wheat]: 1,
-        [ResourceType.Wood]: 1,
         [ResourceType.Wool]: 1,
+        [ResourceType.Wood]: 1,
+        [ResourceType.Brick]: 1,
+        [ResourceType.Gold]: 0
 
     },
     [StructureType.City]: {
-        [ResourceType.Wheat]: 2,
         [ResourceType.Ore]: 3,
+        [ResourceType.Wheat]: 2,
+        [ResourceType.Wool]: 0,
+        [ResourceType.Wood]: 0,
+        [ResourceType.Brick]: 0,
+        [ResourceType.Gold]: 0
     },
 }
 

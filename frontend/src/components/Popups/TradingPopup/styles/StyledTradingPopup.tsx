@@ -1,22 +1,16 @@
 import { styled } from "styled-components"
+import StyledBasePopup from "../../styles/StyledBasePopup"
 
-const StyledTradingPopup = styled.div`
-    width: 100%;
+const StyledTradingPopup = styled(StyledBasePopup)`
     display: flex;
     align-items: center;
     justify-content: space-around;
-    border-radius: 10px;
-    background-color: #FFFFFF;
 
     @media ${(props) => props.theme.breakpoints.xs} {
-        padding-top: 3%;
-        padding-bottom: 3%;
         flex-direction: column;
     }
 
     @media ${(props) => props.theme.breakpoints.s} {
-        padding-top: 1%;
-        padding-bottom: 1%;
         flex-direction: row;
     }
 

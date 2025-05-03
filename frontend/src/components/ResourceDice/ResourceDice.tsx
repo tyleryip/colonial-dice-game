@@ -4,8 +4,9 @@ import StyledLock from "./styles/StyledLock";
 import { DiceValue } from "../../types/DiceValue";
 import { GamePhase, ResourceType } from "../../constants/enumerations";
 import Popup from "reactjs-popup";
-import TradingPopup from "../TradingPopup/TradingPopup";
+import TradingPopup from "../Popups/TradingPopup/TradingPopup";
 import { useRef } from "react";
+import { PopupActions } from "reactjs-popup/dist/types";
 
 // Dice faces
 import ore_face from "../../assets/dice/ore-face.svg";
@@ -16,7 +17,6 @@ import brick_face from "../../assets/dice/brick-face.svg";
 import gold_face from "../../assets/dice/gold-face.svg";
 import blank_face from "../../assets/dice/blank_face.svg";
 import lock from "../../assets/dice/lock.svg"
-import { PopupActions } from "reactjs-popup/dist/types";
 
 interface ResourceDiceProps {
   id: number;

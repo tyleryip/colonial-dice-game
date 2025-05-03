@@ -32,6 +32,7 @@
         - [x] Evaluating whether user can build based on prerequisite structures
         - [ ] Adjusting resources after building
         - [ ] Show building cost on structure hover
+        - [x] User can trade gold when they have more than 2 gold
     - [ ] Scoring state
         - [ ] Score is added correctly for new structures
         - [ ] Score is added correctly for no structures

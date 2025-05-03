@@ -1,16 +1,16 @@
 import StyledTradingPopup from './styles/StyledTradingPopup'
+import StyledTradingIcon from './styles/StyledTradingIcon';
+import { useAppDispatch } from '../../../store/hooks';
+import { setDice, SetDicePayload, spendGold } from '../../../store/slices/diceSlice';
+import { DiceValue } from '../../../types/DiceValue';
+import { ResourceType } from '../../../constants/enumerations';
 
 // Dice faces
-import ore_face from "../../assets/dice/ore-face.svg";
-import wheat_face from "../../assets/dice/wheat-face.svg";
-import wool_face from "../../assets/dice/wool-face.svg";
-import wood_face from "../../assets/dice/wood-face.svg";
-import brick_face from "../../assets/dice/brick-face.svg";
-import StyledTradingIcon from './styles/StyledTradingIcon';
-import { useAppDispatch } from '../../store/hooks';
-import { setDice, SetDicePayload, spendGold } from '../../store/slices/diceSlice';
-import { DiceValue } from '../../types/DiceValue';
-import { ResourceType } from '../../constants/enumerations';
+import ore_face from "../../../assets/dice/ore-face.svg";
+import wheat_face from "../../../assets/dice/wheat-face.svg";
+import wool_face from "../../../assets/dice/wool-face.svg";
+import wood_face from "../../../assets/dice/wood-face.svg";
+import brick_face from "../../../assets/dice/brick-face.svg";
 
 interface TradingPopupProps {
     onClosePopup: () => void

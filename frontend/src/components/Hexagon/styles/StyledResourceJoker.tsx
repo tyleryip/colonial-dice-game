@@ -12,6 +12,10 @@ const StyledResourceJoker = styled.div<StyledResourceJokerProps>`
     left: ${props => `${props.$left}%`};
     width: ${props => `${props.$width}%`};
     z-index: 2;
+
+    &:hover {
+        cursor: pointer;
+    }
 `
 
 export default StyledResourceJoker

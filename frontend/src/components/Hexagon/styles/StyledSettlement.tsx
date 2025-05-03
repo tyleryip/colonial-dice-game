@@ -13,7 +13,6 @@ const StyledSettlement = styled.div<StyledSettlementProps>`
     width: ${props => `${props.$width}%`};
     z-index: 1;
 
-    // TODO: move to the asset itself
     &:hover {
         cursor: pointer;
     }

@@ -12,6 +12,10 @@ const StyledRoad = styled.div<StyledRoadProps>`
     left: ${props => `${props.$left}%`};
     width: ${props => `${props.$width}%`};
     z-index: 1;
+
+    &:hover {
+        cursor: pointer;
+    }
 `
 
 export default StyledRoad
