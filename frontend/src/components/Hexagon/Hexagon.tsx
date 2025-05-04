@@ -2,10 +2,15 @@ import React from 'react'
 import StyledHexagon from './styles/StyledHexagon'
 import StyledKnight from './styles/StyledKnight'
 import StyledResourceJoker from './styles/StyledResourceJoker'
-import { HexagonEdge, HexagonType, HexagonVertex, StructureType } from '../../constants/enumerations'
+import { GamePhase, HexagonEdge, HexagonType, HexagonVertex, StructureType } from '../../constants/enumerations'
 import StyledRoad from './styles/StyledRoad'
 import StyledSettlement from './styles/StyledSettlement'
 import StyledCity from './styles/StyledCity'
+import ResourceCostPopup from '../Popups/ResourceCostPopup/ResourceCostPopup'
+import { GetKnightCost } from '../../constants/knights'
+import { useHover } from '@uidotdev/usehooks'
+import { useAppSelector } from '../../store/hooks'
+import { selectCurrentGamePhase } from '../../store/slices/gameSlice'
 
 // Hexagon icons
 import water_hexagon from "../../assets/hexagons/water-hexagon.svg";
@@ -15,9 +20,6 @@ import wool_hexagon from "../../assets/hexagons/wool-hexagon.svg";
 import wood_hexagon from "../../assets/hexagons/wood-hexagon.svg";
 import brick_hexagon from "../../assets/hexagons/brick-hexagon.svg";
 import desert_hexagon from "../../assets/hexagons/desert-hexagon.svg";
-import ResourceCostPopup from '../Popups/ResourceCostPopup/ResourceCostPopup'
-import { GetKnightCost } from '../../constants/knights'
-import { useHover } from '@uidotdev/usehooks'
 
 interface HexagonProps {
     type: HexagonType,
@@ -93,6 +95,7 @@ function AddKnight(knight: React.ReactNode): React.ReactNode | null {
         throw new Error("Knight cannot be empty")
     }
 
+    const currentGamePhase = useAppSelector(state => selectCurrentGamePhase(state))
     const [ref, hovering] = useHover();
 
     const knightTopOffset = 14
@@ -104,7 +107,7 @@ function AddKnight(knight: React.ReactNode): React.ReactNode | null {
             <StyledKnight $top={knightTopOffset} $left={knightLeftOffset} $width={knightWidth}>
                 {knight}
             </StyledKnight>
-            <ResourceCostPopup disabled={!hovering} cost={GetKnightCost()} />
+            <ResourceCostPopup disabled={!hovering || currentGamePhase != GamePhase.Building} cost={GetKnightCost()} />
         </div>
     )
 }
