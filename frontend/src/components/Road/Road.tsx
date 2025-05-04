@@ -15,9 +15,13 @@ import forwardslash_road_dark from "../../assets/roads/dark/forwardslash-road-da
 import backwardslash_road_dark from "../../assets/roads/dark/backslash-road-dark.svg"
 
 import starting_road from "../../assets/roads/starting-road.svg"
+import StyledRoad from "./styles/StyledRoad"
 
 interface RoadProps {
     id: number // the unique structure id
+    top: number,
+    left: number,
+    width: number
 }
 
 const roadIconsLight: { -readonly [key in RoadType]: string } = {
@@ -47,7 +51,11 @@ const Road = (props: RoadProps) => {
         : roadIconsDark[roadType]
 
     return (
-        <StyledAsset src={icon} />
+        <div>
+            <StyledRoad $top={props.top} $left={props.left} $width={props.width}>
+                <StyledAsset src={icon} />
+            </StyledRoad>
+        </div>
     )
 }
 

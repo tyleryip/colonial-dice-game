@@ -19,6 +19,7 @@ import wood_joker_dark from "../../assets/jokers/dark/wood-joker-dark.svg"
 import { useAppSelector } from "../../store/hooks"
 import { selectIsResourceJokerSpent } from "../../store/slices/resourceJokerSlice"
 import { GetResourceJokerId } from "../../constants/mappings"
+import StyledResourceJoker from "./styles/StyledResourceJoker"
 
 interface ResourceJokerProps {
     type: ResourceJokerType
@@ -54,8 +55,15 @@ const ResourceJoker = (props: ResourceJokerProps) => {
         ? resourceJokerIconsLight[props.type]
         : resourceJokerIconsDark[props.type]
 
+    const jokerTopOffset = 36
+    const jokerLeftOffset = 37
+    const jokerWidth = 25
+
+
     return (
-        <StyledAsset src={icon} />
+        <StyledResourceJoker $top={jokerTopOffset} $left={jokerLeftOffset} $width={jokerWidth}>
+            <StyledAsset src={icon} />
+        </StyledResourceJoker>
     )
 }
 

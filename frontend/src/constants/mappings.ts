@@ -1,57 +1,57 @@
 import { KnightType, ResourceJokerType, ResourceType, RoadType } from "./enumerations"
 
 /**
- * Maps a settlement number to its structure id
+ * Maps a structureId to its settlement number
  */
 const settlementMappings: Readonly<Record<number, number>> = {
-    3: 1,
-    4: 6,
-    5: 11,
-    7: 14,
-    9: 23,
-    11: 26
+    1: 3,
+    6: 4,
+    11: 5,
+    14: 7,
+    23: 9,
+    26: 11
 }
 
 /**
- * Given a settlement number, return its structure id
- * @param settlementNumber 
- * @returns structureId
+ * Given a structureId, return its settlement number
+ * @param structureId 
+ * @returns settlement number
  */
-export function GetSettlementStructureId(settlementNumber: number): number {
-    let structureId = 0
-    structureId = settlementMappings[settlementNumber]
+export function GetSettlementNumber(structureId: number): number {
+    let settlementNumber = 0
+    settlementNumber = settlementMappings[structureId]
 
-    if (structureId === 0) {
+    if (settlementNumber === 0) {
         throw Error("Settlement number not found")
     }
 
-    return structureId
+    return settlementNumber
 }
 
 /**
- * Maps a city number to its structure id
+ * Maps a strcutureId with its city number
  */
 const cityMappings: Readonly<Record<number, number>> = {
-    7: 4,
-    12: 9,
-    20: 17,
-    30: 20
+    4: 7,
+    9: 12,
+    17: 20,
+    20: 30
 }
 
 /**
- * Given a city number, return its structure id
- * @param settlementNumber 
- * @returns structureId
+ * Given a structureId, return its city number
+ * @param structureId 
+ * @returns city number
  */
-export function GetCityStructureId(settlementNumber: number): number {
-    let structureId = 0
-    structureId = cityMappings[settlementNumber]
+export function GetCityNumber(structureId: number): number {
+    let cityNumber = 0
+    cityNumber = cityMappings[structureId]
 
-    if (structureId === 0) {
+    if (cityNumber === 0) {
         throw Error("City number not found")
     }
 
-    return structureId
+    return cityNumber
 }
 
 /**

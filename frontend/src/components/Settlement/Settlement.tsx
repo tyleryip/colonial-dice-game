@@ -2,7 +2,8 @@ import StyledAsset from "../Asset/StyledAsset"
 import { IconType } from "../../constants/enumerations"
 import { useAppSelector } from "../../store/hooks"
 import { selectIsStructureBuilt } from "../../store/slices/structureSlice"
-import { GetSettlementStructureId } from "../../constants/mappings"
+import { GetSettlementNumber } from "../../constants/mappings"
+import StyledSettlement from "./styles/StyledSettlement"
 
 // Light icons
 import settlement_3_light from "../../assets/settlements/light/settlement-3-light.svg"
@@ -21,7 +22,9 @@ import settlement_9_dark from "../../assets/settlements/dark/settlement-9-dark.s
 import settlement_11_dark from "../../assets/settlements/dark/settlement-11-dark.svg"
 
 interface SettlementProps {
-    settlementNumber: number // the number that appears on the settlement
+    id: number,
+    top: number,
+    left: number
 }
 
 const settlementIconsLight: Readonly<Record<number, string>> = {
@@ -45,17 +48,23 @@ const settlementIconsDark: Readonly<Record<number, string>> = {
 const Settlement = (props: SettlementProps) => {
     const isStructureBuilt = useAppSelector(state => selectIsStructureBuilt(state))
 
-    const structureId = GetSettlementStructureId(props.settlementNumber)
-    const iconType = isStructureBuilt[structureId]
+    const iconType = isStructureBuilt[props.id]
         ? IconType.Dark
         : IconType.Light
 
+    const settlementNumber = GetSettlementNumber(props.id)
     const icon = iconType === IconType.Light
-        ? settlementIconsLight[props.settlementNumber]
-        : settlementIconsDark[props.settlementNumber]
+        ? settlementIconsLight[settlementNumber]
+        : settlementIconsDark[settlementNumber]
+
+    const settlementWidth = 13
 
     return (
-        <StyledAsset src={icon} />
+        <div>
+            <StyledSettlement $top={props.top} $left={props.left} $width={settlementWidth}>
+                <StyledAsset src={icon} />
+            </StyledSettlement>
+        </div>
     )
 }
 

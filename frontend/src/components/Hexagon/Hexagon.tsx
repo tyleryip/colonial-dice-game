@@ -1,16 +1,11 @@
 import React from 'react'
 import StyledHexagon from './styles/StyledHexagon'
-import StyledKnight from './styles/StyledKnight'
-import StyledResourceJoker from './styles/StyledResourceJoker'
-import { GamePhase, HexagonEdge, HexagonType, HexagonVertex, StructureType } from '../../constants/enumerations'
-import StyledRoad from './styles/StyledRoad'
-import StyledSettlement from './styles/StyledSettlement'
-import StyledCity from './styles/StyledCity'
-import ResourceCostPopup from '../Popups/ResourceCostPopup/ResourceCostPopup'
-import { GetKnightCost } from '../../constants/knights'
-import { useHover } from '@uidotdev/usehooks'
-import { useAppSelector } from '../../store/hooks'
-import { selectCurrentGamePhase } from '../../store/slices/gameSlice'
+import { HexagonEdge, HexagonType, HexagonVertex, KnightType, ResourceJokerType, StructureType } from '../../constants/enumerations'
+import Knight from '../Knight/Knight'
+import ResourceJoker from '../ResourceJoker/ResourceJoker'
+import City from '../City/City'
+import Settlement from '../Settlement/Settlement'
+import Road from '../Road/Road'
 
 // Hexagon icons
 import water_hexagon from "../../assets/hexagons/water-hexagon.svg";
@@ -23,8 +18,8 @@ import desert_hexagon from "../../assets/hexagons/desert-hexagon.svg";
 
 interface HexagonProps {
     type: HexagonType,
-    knight?: React.ReactNode
-    joker?: React.ReactNode
+    knightType?: KnightType
+    resourceJokerType?: ResourceJokerType
     structures?: HexagonStructure[]
 }
 
@@ -32,9 +27,8 @@ interface HexagonProps {
  * A structure (road/settlement/city) to be rendered on an edge or vertex of the hexagon 
  */
 export interface HexagonStructure {
-    key: number // Not to be confused with structureId, only used to satisfy React's requirement for lists
+    id: number
     type: StructureType
-    structure: React.ReactNode
     vertex?: HexagonVertex
     edge?: HexagonEdge
 }
@@ -83,52 +77,14 @@ export default function Hexagon(props: HexagonProps) {
     return (
         <StyledHexagon $top={top} $left={left} $width={width} >
             <img width={"100%"} src={icon} />
-            {props.knight && AddKnight(props.knight)}
-            {props.joker && AddResourceJoker(props.joker)}
-            {props.structures && props.structures.map((s) => AddStructure(s))}
+            {props.knightType != undefined && <Knight type={props.knightType} />}
+            {props.resourceJokerType != undefined && <ResourceJoker type={props.resourceJokerType} />}
+            {props.structures != undefined && props.structures.map((s) => AddStructure(s))}
         </StyledHexagon>
     )
 }
 
-function AddKnight(knight: React.ReactNode): React.ReactNode | null {
-    if (knight == null) {
-        throw new Error("Knight cannot be empty")
-    }
-
-    const currentGamePhase = useAppSelector(state => selectCurrentGamePhase(state))
-    const [ref, hovering] = useHover();
-
-    const knightTopOffset = 14
-    const knightLeftOffset = 44
-    const knightWidth = 12
-
-    return (
-        <div ref={ref}>
-            <StyledKnight $top={knightTopOffset} $left={knightLeftOffset} $width={knightWidth}>
-                {knight}
-            </StyledKnight>
-            <ResourceCostPopup disabled={!hovering || currentGamePhase != GamePhase.Building} cost={GetKnightCost()} />
-        </div>
-    )
-}
-
-function AddResourceJoker(resourceJoker: React.ReactNode): React.ReactNode | null {
-    if (resourceJoker == null) {
-        throw new Error("Resource joker cannot be empty")
-    }
-
-    const jokerTopOffset = 36
-    const jokerLeftOffset = 37
-    const jokerWidth = 25
-
-    return <StyledResourceJoker $top={jokerTopOffset} $left={jokerLeftOffset} $width={jokerWidth}>{resourceJoker}</StyledResourceJoker>
-}
-
 function AddStructure(hexagonStructure: HexagonStructure): React.ReactNode | null {
-    if (hexagonStructure.structure == null) {
-        throw new Error("Hexagon structure cannot be empty")
-    }
-
     if (hexagonStructure.edge && hexagonStructure.vertex) {
         throw new Error("Hexagon structure cannot have both an edge and vertex set");
     }
@@ -202,7 +158,12 @@ function AddRoad(hexagonStructure: HexagonStructure): React.ReactNode | null {
             throw new Error("Road must be placed on an edge");
     }
 
-    return <StyledRoad key={hexagonStructure.key} $top={roadTopOffset} $left={roadLeftOffset} $width={width}>{hexagonStructure.structure}</StyledRoad>;
+    return <Road
+        key={hexagonStructure.id}
+        id={hexagonStructure.id}
+        top={roadTopOffset}
+        left={roadLeftOffset}
+        width={width} />
 }
 
 function AddSettlement(hexagonStructure: HexagonStructure): React.ReactNode | null {
@@ -213,8 +174,6 @@ function AddSettlement(hexagonStructure: HexagonStructure): React.ReactNode | nu
     if (hexagonStructure.edge != null) {
         throw new Error("Settlement cannot be placed on an edge");
     }
-
-    const settlementWidth = 13
 
     let settlementTopOffset = 0
     let settlementLeftOffset = 0
@@ -254,7 +213,11 @@ function AddSettlement(hexagonStructure: HexagonStructure): React.ReactNode | nu
             throw new Error("Settlement must be placed on a vertex");
     }
 
-    return <StyledSettlement key={hexagonStructure.key} $top={settlementTopOffset} $left={settlementLeftOffset} $width={settlementWidth}>{hexagonStructure.structure}</StyledSettlement>
+    return <Settlement
+        key={hexagonStructure.id}
+        id={hexagonStructure.id}
+        top={settlementTopOffset}
+        left={settlementLeftOffset} />
 }
 
 function AddCity(hexagonStructure: HexagonStructure): React.ReactNode | null {
@@ -265,8 +228,6 @@ function AddCity(hexagonStructure: HexagonStructure): React.ReactNode | null {
     if (hexagonStructure.edge != null) {
         throw new Error("City cannot be placed on an edge");
     }
-
-    const cityWidth = 15.5
 
     let cityTopOffset = 0
     let cityLeftOffset = 0
@@ -306,5 +267,9 @@ function AddCity(hexagonStructure: HexagonStructure): React.ReactNode | null {
             throw new Error("City must be placed on a vertex");
     }
 
-    return <StyledCity key={hexagonStructure.key} $top={cityTopOffset} $left={cityLeftOffset} $width={cityWidth}>{hexagonStructure.structure}</StyledCity>
+    return <City
+        key={hexagonStructure.id}
+        id={hexagonStructure.id}
+        top={cityTopOffset}
+        left={cityLeftOffset} />
 }

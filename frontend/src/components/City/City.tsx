@@ -1,7 +1,7 @@
 import StyledAsset from "../Asset/StyledAsset"
 import { IconType } from "../../constants/enumerations"
 import { selectIsStructureBuilt } from "../../store/slices/structureSlice"
-import { GetCityStructureId } from "../../constants/mappings"
+import { GetCityNumber } from "../../constants/mappings"
 
 // Light icons
 import city_7_light from "../../assets/cities/light/city-7-light.svg"
@@ -15,9 +15,12 @@ import city_12_dark from "../../assets/cities/dark/city-12-dark.svg"
 import city_20_dark from "../../assets/cities/dark/city-20-dark.svg"
 import city_30_dark from "../../assets/cities/dark/city-30-dark.svg"
 import { useAppSelector } from "../../store/hooks"
+import StyledCity from "./styles/StyledCity"
 
 interface CityProps {
-    cityNumber: number // the number that appears on the city
+    id: number,
+    top: number,
+    left: number
 }
 
 const cityIconsLight: Readonly<Record<number, string>> = {
@@ -37,17 +40,23 @@ const cityIconsDark: Readonly<Record<number, string>> = {
 const City = (props: CityProps) => {
     const isStructureBuilt = useAppSelector(state => selectIsStructureBuilt(state))
 
-    const structureId = GetCityStructureId(props.cityNumber)
-    const iconType = isStructureBuilt[structureId]
+    const iconType = isStructureBuilt[props.id]
         ? IconType.Dark
         : IconType.Light
 
+    const cityNumber = GetCityNumber(props.id)
     const icon = iconType === IconType.Light
-        ? cityIconsLight[props.cityNumber]
-        : cityIconsDark[props.cityNumber]
+        ? cityIconsLight[cityNumber]
+        : cityIconsDark[cityNumber]
+
+    const cityWidth = 15.5
 
     return (
-        <StyledAsset src={icon} />
+        <div>
+            <StyledCity $top={props.top} $left={props.left} $width={cityWidth}>
+                <StyledAsset src={icon} />
+            </StyledCity>
+        </div>
     )
 }
 
