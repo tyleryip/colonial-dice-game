@@ -1,19 +1,21 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store"
 import { DiceValue } from "../../types/DiceValue";
+import { Dice } from "../../types/Dice";
 import { ResourceType } from "../../constants/enumerations";
 
 interface diceState {
-    diceValues: DiceValue[],
-    isLocked: boolean[],
+    dice: Dice[],
     rollCount: number,
-    isSpent: boolean[]
 }
 
 const initialState: diceState = {
-    diceValues: [null, null, null, null, null, null],
-    isLocked: [false, false, false, false, false, false],
-    isSpent: [false, false, false, false, false, false],
+    dice: new Array(6).fill(
+        {
+            value: null,
+            locked: false,
+            spent: false
+        }),
     rollCount: 0
 }
 
@@ -26,7 +28,7 @@ export const diceSlice = createSlice({
          * @param state 
          */
         rollDice: (state) => {
-            state.diceValues = generateNewDiceValues(state.diceValues, state.isLocked)
+            state.dice = generateNewDiceValues(state.dice)
             state.rollCount += 1;
         },
         /**
@@ -34,10 +36,8 @@ export const diceSlice = createSlice({
          * @param state 
          */
         resetDice: (state) => {
-            state.diceValues = [null, null, null, null, null, null];
-            state.isLocked = [false, false, false, false, false, false];
-            state.isSpent = [false, false, false, false, false, false];
-            state.rollCount = 0;
+            state.dice = initialState.dice;
+            state.rollCount = initialState.rollCount;
         },
         /**
          * When the user trades their gold in for a resource of their choice
@@ -45,7 +45,7 @@ export const diceSlice = createSlice({
          * @param action 
         */
         setDice: (state, action: PayloadAction<SetDicePayload>) => {
-            state.diceValues[action.payload.id] = action.payload.value
+            state.dice[action.payload.id].value = action.payload.value
         },
         /**
          * When the user stops rolling early and forfeits the rest of their rolls
@@ -61,15 +61,15 @@ export const diceSlice = createSlice({
          * @param action
          */
         spendDice: (state, action: PayloadAction<number>) => {
-            state.isSpent[action.payload] = true
+            state.dice[action.payload].spent = true
         },
         /**
          * When the user trades two gold in for a resource of their choice, set one of the gold to spent
          * @param state 
          */
         spendGold: (state) => {
-            const firstGoldIndex = findFirstUnspentGoldIndex(state.diceValues, state.isSpent)
-            state.isSpent[firstGoldIndex] = true
+            const firstGoldIndex = findFirstUnspentGoldIndex(state.dice)
+            state.dice[firstGoldIndex].spent = true
         },
         /**
          * When the user switches the lock on a dice between rolls
@@ -77,14 +77,14 @@ export const diceSlice = createSlice({
          * @param action 
          */
         toggleDiceLock: (state, action: PayloadAction<number>) => {
-            state.isLocked[action.payload] = !state.isLocked[action.payload]
+            state.dice[action.payload].locked = !state.dice[action.payload].locked
         },
         /**
          * When the roll phase ends and all dice should appear unlocked
          * @param state 
          */
-        unlockAllDice: (state) => {
-            state.isLocked = [false, false, false, false, false, false];
+        resetDiceLocks: (state) => {
+            state.dice = unlockAllDice(state.dice)
         }
     }
 })
@@ -98,20 +98,18 @@ export interface SetDicePayload {
     value: DiceValue
 }
 
-export const { rollDice, resetDice, setDice, setRollCount, spendDice, spendGold, toggleDiceLock, unlockAllDice } = diceSlice.actions
+export const { rollDice, resetDice, resetDiceLocks, setDice, setRollCount, spendDice, spendGold, toggleDiceLock } = diceSlice.actions
 
 // Selectors
 
-export const selectDiceValues = (state: RootState) => state.dice.diceValues
-export const selectIsLocked = (state: RootState) => state.dice.isLocked
-export const selectIsSpent = (state: RootState) => state.dice.isSpent
+export const selectDice = (state: RootState) => state.dice.dice
 export const selectRollCount = (state: RootState) => state.dice.rollCount
 
 // Helper functions
 
-function findFirstUnspentGoldIndex(values: DiceValue[], isSpent: boolean[]): number {
-    for (let index = 0; index < values.length; index++) {
-        if (values[index] == ResourceType.Gold && !isSpent[index]) {
+function findFirstUnspentGoldIndex(dice: Dice[]): number {
+    for (let index = 0; index < dice.length; index++) {
+        if (dice[index].value == ResourceType.Gold && !dice[index].spent) {
             return index
         }
     }
@@ -119,12 +117,26 @@ function findFirstUnspentGoldIndex(values: DiceValue[], isSpent: boolean[]): num
     throw new Error("No unspent gold found")
 }
 
-function generateNewDiceValues(values: DiceValue[], isLocked: boolean[]) {
-    return values.map((value: DiceValue, index: number) => {
-        return isLocked[index] ? value : generateRandomDiceValue()
+function generateNewDiceValues(dice: Dice[]): Dice[] {
+    return dice.map((d: Dice) => {
+        return {
+            value: d.locked ? d.value : generateRandomDiceValue(),
+            locked: d.locked,
+            spent: d.spent
+        }
     })
 }
 
 function generateRandomDiceValue(): DiceValue {
     return Math.floor(Math.random() * 6) as DiceValue
+}
+
+function unlockAllDice(dice: Dice[]): Dice[] {
+    return dice.map((d: Dice) => {
+        return {
+            value: d.value,
+            locked: false,
+            spent: d.spent
+        }
+    })
 }

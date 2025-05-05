@@ -1,4 +1,4 @@
-import { GamePhase, IconType, RoadType, StructureType } from "../../constants/enumerations"
+import { IconType, RoadType, StructureType } from "../../constants/enumerations"
 import StyledAsset from "../Asset/StyledAsset"
 import { useAppSelector } from "../../store/hooks"
 import { selectIsStructureBuilt } from "../../store/slices/structureSlice"
@@ -17,7 +17,7 @@ import backwardslash_road_dark from "../../assets/roads/dark/backslash-road-dark
 import starting_road from "../../assets/roads/starting-road.svg"
 import StyledRoad from "./styles/StyledRoad"
 import { useHover } from "@uidotdev/usehooks"
-import { selectCurrentGamePhase } from "../../store/slices/gameSlice"
+import { selectIsGamePhaseBuilding } from "../../store/slices/gameSlice"
 import ResourceCostPopup from "../Popups/ResourceCostPopup/ResourceCostPopup"
 import { GetStructureCost } from "../../constants/structures"
 
@@ -67,7 +67,7 @@ const Road = (props: RoadProps) => {
     const isStructureBuilt = useAppSelector(state => selectIsStructureBuilt(state))
     const isRoadBuilt = isStructureBuilt[props.id]
 
-    const currentGamePhase = useAppSelector(state => selectCurrentGamePhase(state))
+    const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
     const [ref, hovering] = useHover();
 
     const iconType = isRoadBuilt
@@ -85,7 +85,7 @@ const Road = (props: RoadProps) => {
                 $top={props.top}
                 $left={props.left}
                 $width={props.width}
-                $pointer={currentGamePhase == GamePhase.Building && !isRoadBuilt}>
+                $pointer={gamePhaseBuilding && !isRoadBuilt}>
                 <StyledAsset src={icon} />
             </StyledRoad>
             <ResourceCostPopup

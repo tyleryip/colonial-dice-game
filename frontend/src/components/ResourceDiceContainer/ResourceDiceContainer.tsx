@@ -4,30 +4,29 @@ import StyledButtonTray from "./styles/StyledButtonTray"
 import StyledDiceTray from "./styles/StyledDiceTray"
 import StyledResourceDiceContainer from "./styles/StyledResourceDiceContainer"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { resetDice, rollDice, selectDiceValues, selectIsLocked, selectIsSpent, selectRollCount, setRollCount, toggleDiceLock, unlockAllDice } from "../../store/slices/diceSlice"
+import { resetDice, resetDiceLocks, rollDice, selectDice, selectRollCount, setRollCount, toggleDiceLock } from "../../store/slices/diceSlice"
 import RollButton from "../Buttons/RollButton/RollButton"
 import BuildButton from "../Buttons/BuildButton/BuildButton"
-import { selectCurrentGamePhase, setGamePhase } from "../../store/slices/gameSlice"
+import { selectIsGamePhaseBuilding, selectIsGamePhaseRolling, setGamePhase } from "../../store/slices/gameSlice"
 import { GamePhase, ResourceType } from "../../constants/enumerations"
+import { Dice } from "../../types/Dice"
 
 const ResourceDiceContainer = () => {
-    const currentGamePhase = useAppSelector((state) => selectCurrentGamePhase(state))
-    const diceValues = useAppSelector((state) => selectDiceValues(state))
-    const isLocked = useAppSelector((state) => selectIsLocked(state))
-    const isSpent = useAppSelector((state) => selectIsSpent(state))
+    const dice = useAppSelector((state) => selectDice(state))
+    const gamePhaseRolling = useAppSelector((state) => selectIsGamePhaseRolling(state))
+    const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
+
     const rollCount = useAppSelector((state) => selectRollCount(state))
 
     const dispatch = useAppDispatch();
 
     const [rolling, setRolling] = useState(false)
-
-    const diceIds = [0, 1, 2, 3, 4, 5]
     const rollDurationMilliseconds = 750
 
     // Event handlers
 
     function handleRollButtonClicked() {
-        if (currentGamePhase == GamePhase.Building) {
+        if (gamePhaseBuilding) {
             // if the user is starting to roll after completing the build phase, we need to update the phase to rolling
             dispatch(setGamePhase(GamePhase.Rolling))
         }
@@ -46,17 +45,17 @@ const ResourceDiceContainer = () => {
     }
 
     function handleBuildButtonClicked() {
-        if (currentGamePhase == GamePhase.Rolling) {
+        if (gamePhaseRolling) {
             dispatch(setGamePhase(GamePhase.Building))
 
             // Remove the locks from the dice since they cannot be rolled anymore
-            dispatch(unlockAllDice())
+            dispatch(resetDiceLocks())
 
             // Make all the dice in the Roll Button appear used
             dispatch(setRollCount(3))
         }
 
-        if (currentGamePhase == GamePhase.Building) {
+        if (gamePhaseBuilding) {
             dispatch(setGamePhase(GamePhase.Rolling))
             dispatch(resetDice())
         }
@@ -64,37 +63,36 @@ const ResourceDiceContainer = () => {
 
     // Conditional rendering
 
-    const rollButtonDisabled = (currentGamePhase == GamePhase.Rolling && rollCount >= 3)
-        || currentGamePhase == GamePhase.Building
+    const rollButtonDisabled = (gamePhaseRolling && rollCount >= 3)
+        || gamePhaseBuilding
         || rolling
 
-    const buildButtonDisabled = (currentGamePhase == GamePhase.Rolling && rollCount == 0)
+    const buildButtonDisabled = (gamePhaseRolling && rollCount == 0)
 
-    const isTradeable = diceIds
-        .map((diceId) => diceValues[diceId] == ResourceType.Gold && !isSpent[diceId])
+    const isTradeable = dice
+        .map((dice: Dice) => dice.value == ResourceType.Gold && !dice.spent)
         .filter(result => result == true)
         .length > 1
 
     return (
         <StyledResourceDiceContainer>
             <StyledDiceTray>
-                {diceIds.map((value: number) =>
+                {dice.map((dice: Dice, id: number) =>
                     <ResourceDice
-                        key={value}
-                        id={value}
-                        value={diceValues[value]}
+                        key={id}
+                        id={id}
+                        value={dice.value}
                         rolling={rolling}
                         rollDurationMilliseconds={rollDurationMilliseconds}
-                        isLocked={isLocked[value]}
-                        isSpent={isSpent[value]}
+                        isLocked={dice.locked}
+                        isSpent={dice.spent}
                         isTradeable={isTradeable}
-                        currentGamePhase={currentGamePhase}
-                        onToggleDiceLocked={() => dispatch(toggleDiceLock(value))} />
+                        onToggleDiceLocked={() => dispatch(toggleDiceLock(id))} />
                 )}
             </StyledDiceTray>
             <StyledButtonTray >
                 <RollButton disabled={rollButtonDisabled} handleClick={handleRollButtonClicked} rollCount={rollCount} />
-                <BuildButton disabled={buildButtonDisabled} handleClick={handleBuildButtonClicked} currentGamePhase={currentGamePhase} />
+                <BuildButton disabled={buildButtonDisabled} handleClick={handleBuildButtonClicked} />
             </StyledButtonTray>
         </StyledResourceDiceContainer>
     )

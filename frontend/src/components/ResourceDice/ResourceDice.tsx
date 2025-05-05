@@ -2,7 +2,7 @@ import StyledResourceDice from "./styles/StyledResourceDice";
 import StyledResourceDiceFace from "./styles/StyledResourceDiceFace";
 import StyledLock from "./styles/StyledLock";
 import { DiceValue } from "../../types/DiceValue";
-import { GamePhase, ResourceType } from "../../constants/enumerations";
+import { ResourceType } from "../../constants/enumerations";
 import TradingPopup from "../Popups/TradingPopup/TradingPopup";
 import { useState } from "react";
 
@@ -15,6 +15,8 @@ import brick_face from "../../assets/dice/brick-face.svg";
 import gold_face from "../../assets/dice/gold-face.svg";
 import blank_face from "../../assets/dice/blank_face.svg";
 import lock from "../../assets/dice/lock.svg"
+import { useAppSelector } from "../../store/hooks";
+import { selectIsGamePhaseBuilding, selectIsGamePhaseRolling } from "../../store/slices/gameSlice";
 
 interface ResourceDiceProps {
   id: number;
@@ -24,7 +26,6 @@ interface ResourceDiceProps {
   isLocked: boolean;
   isSpent: boolean;
   isTradeable: boolean;
-  currentGamePhase: GamePhase;
   onToggleDiceLocked: (id: number) => void
 }
 
@@ -42,9 +43,8 @@ const diceWidth = 100;
 const ResourceDice = (props: ResourceDiceProps) => {
   const [showTradingPopup, setShowTradingPopup] = useState(false);
 
-  // Helpers for evaluating current game phase
-  const isGamePhaseRolling = props.currentGamePhase == GamePhase.Rolling
-  const isGamePhaseBuilding = props.currentGamePhase == GamePhase.Building
+  const gamePhaseRolling = useAppSelector((state) => selectIsGamePhaseRolling(state))
+  const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
 
   // Conditionally render dice face
   const diceFace = (props.rolling && !props.isLocked) || props.value === null
@@ -52,7 +52,7 @@ const ResourceDice = (props: ResourceDiceProps) => {
     : faceValues[props.value]
 
   // Dice face should conditionally pulse and open a popup if tradeable, unspent, and in building game phase
-  const isTradeable = isGamePhaseBuilding
+  const isTradeable = gamePhaseBuilding
     && props.value == ResourceType.Gold
     && !props.isSpent
     && props.isTradeable
@@ -61,23 +61,23 @@ const ResourceDice = (props: ResourceDiceProps) => {
   const wobble = props.rolling && !props.isLocked
 
   // Cursor should be pointer if it meets conditions to handleClick
-  const pointer = (isGamePhaseRolling && props.value !== null) || isTradeable
+  const pointer = (gamePhaseRolling && props.value !== null) || isTradeable
 
-  const tooltip = isGamePhaseRolling && props.value !== null && !props.isLocked
+  const tooltip = gamePhaseRolling && props.value !== null && !props.isLocked
     ? "Lock dice"
-    : isGamePhaseRolling && props.value !== null && props.isLocked
+    : gamePhaseRolling && props.value !== null && props.isLocked
       ? "Unlock dice"
       : isTradeable
         ? "Trade gold"
         : ""
 
   function handleClick() {
-    if (isGamePhaseRolling
+    if (gamePhaseRolling
       && props.value !== null) {
       props.onToggleDiceLocked(props.id)
     }
 
-    if ((isGamePhaseBuilding && isTradeable)) {
+    if ((gamePhaseBuilding && isTradeable)) {
       setShowTradingPopup(!showTradingPopup);
     }
   }
@@ -93,9 +93,9 @@ const ResourceDice = (props: ResourceDiceProps) => {
         disabled={!showTradingPopup}
         onClose={handleCloseTradePopup} />
       <StyledResourceDiceFace
-        width={`${diceWidth}%`}
         src={diceFace}
         onClick={handleClick}
+        $width={diceWidth}
         $grayscale={props.isSpent}
         $pulse={isTradeable}
         $wobble={wobble}

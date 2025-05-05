@@ -20,11 +20,11 @@ export const store = configureStore({
             // Dice actions
             ["Roll Dice"]: diceSlice.actions.rollDice,
             ["Reset Dice"]: diceSlice.actions.resetDice,
+            ["Reset Dice Locks"]: diceSlice.actions.resetDiceLocks,
             ["Set Dice"]: diceSlice.actions.setDice,
             ["Spend Dice"]: diceSlice.actions.spendDice,
             ["Spend Gold"]: diceSlice.actions.spendGold,
             ["Toggle Dice Lock"]: diceSlice.actions.toggleDiceLock,
-            ["Unlock All Dice"]: diceSlice.actions.unlockAllDice,
 
             // Game actions
             ["Set Game Phase"]: gameSlice.actions.setGamePhase,

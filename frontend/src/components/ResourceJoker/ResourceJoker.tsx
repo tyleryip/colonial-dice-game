@@ -55,13 +55,8 @@ const ResourceJoker = (props: ResourceJokerProps) => {
         ? resourceJokerIconsLight[props.type]
         : resourceJokerIconsDark[props.type]
 
-    const jokerTopOffset = 36
-    const jokerLeftOffset = 37
-    const jokerWidth = 25
-
-
     return (
-        <StyledResourceJoker $top={jokerTopOffset} $left={jokerLeftOffset} $width={jokerWidth}>
+        <StyledResourceJoker $top={36} $left={37} $width={25}>
             <StyledAsset src={icon} />
         </StyledResourceJoker>
     )

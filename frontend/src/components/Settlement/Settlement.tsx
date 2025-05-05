@@ -1,5 +1,5 @@
 import StyledAsset from "../Asset/StyledAsset"
-import { GamePhase, IconType, StructureType } from "../../constants/enumerations"
+import { IconType, StructureType } from "../../constants/enumerations"
 import { useAppSelector } from "../../store/hooks"
 import { selectIsStructureBuilt } from "../../store/slices/structureSlice"
 import { GetSettlementNumber } from "../../constants/mappings"
@@ -20,10 +20,10 @@ import settlement_5_dark from "../../assets/settlements/dark/settlement-5-dark.s
 import settlement_7_dark from "../../assets/settlements/dark/settlement-7-dark.svg"
 import settlement_9_dark from "../../assets/settlements/dark/settlement-9-dark.svg"
 import settlement_11_dark from "../../assets/settlements/dark/settlement-11-dark.svg"
-import { selectCurrentGamePhase } from "../../store/slices/gameSlice"
+import { selectIsGamePhaseBuilding } from "../../store/slices/gameSlice"
 import { useHover } from "@uidotdev/usehooks"
 import ResourceCostPopup from "../Popups/ResourceCostPopup/ResourceCostPopup"
-import { GetStructureCost } from "../../constants/structures"
+import { GetStructureCost, GetStructurePrerequisites } from "../../constants/structures"
 
 interface SettlementProps {
     id: number,
@@ -53,7 +53,16 @@ const Settlement = (props: SettlementProps) => {
     const isStructureBuilt = useAppSelector(state => selectIsStructureBuilt(state))
     const isSettlementBuilt = isStructureBuilt[props.id]
 
-    const currentGamePhase = useAppSelector(state => selectCurrentGamePhase(state))
+    const settlementCost = GetStructureCost(StructureType.Settlement)
+
+    const prerequisites = GetStructurePrerequisites(props.id)
+    const canBuildSettlement =
+        !isSettlementBuilt &&
+        prerequisites
+            .map((structureId: number) => isStructureBuilt[structureId])
+            .every(() => true)
+
+    const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
     const [ref, hovering] = useHover();
 
     const iconType = isSettlementBuilt
@@ -65,20 +74,19 @@ const Settlement = (props: SettlementProps) => {
         ? settlementIconsLight[settlementNumber]
         : settlementIconsDark[settlementNumber]
 
-    const settlementWidth = 13
-
     return (
         <div ref={ref}>
             <StyledSettlement
                 $top={props.top}
                 $left={props.left}
-                $width={settlementWidth}
-                $pointer={currentGamePhase == GamePhase.Building && !isSettlementBuilt}>
+                $width={13}
+                $pointer={gamePhaseBuilding && !isSettlementBuilt}
+                $pulse={gamePhaseBuilding && !isSettlementBuilt && canBuildSettlement}>
                 <StyledAsset src={icon} />
             </StyledSettlement>
             <ResourceCostPopup
                 disabled={!hovering || isSettlementBuilt}
-                cost={GetStructureCost(StructureType.Settlement)}
+                cost={settlementCost}
                 top={props.top - 26}
                 left={props.left - 36}
                 width={85}

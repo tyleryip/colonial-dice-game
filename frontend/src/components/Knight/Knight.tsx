@@ -1,10 +1,10 @@
 import StyledAsset from "../Asset/StyledAsset"
-import { GamePhase, IconType, KnightType } from "../../constants/enumerations"
+import { IconType, KnightType } from "../../constants/enumerations"
 import { useAppSelector } from "../../store/hooks"
 import { selectIsKnightBuilt } from "../../store/slices/knightSlice"
 import { GetKnightId } from "../../constants/mappings"
 import StyledKnight from "./styles/StyledKnight"
-import { selectCurrentGamePhase } from "../../store/slices/gameSlice"
+import { selectIsGamePhaseBuilding } from "../../store/slices/gameSlice"
 import { useHover } from "@uidotdev/usehooks"
 import ResourceCostPopup from "../Popups/ResourceCostPopup/ResourceCostPopup"
 import { GetKnightCost } from "../../constants/knights"
@@ -52,7 +52,7 @@ const Knight = (props: KnightProps) => {
     const isKnightBuilt = useAppSelector(state => selectIsKnightBuilt(state))
     const isBuilt = isKnightBuilt[knightId]
 
-    const currentGamePhase = useAppSelector(state => selectCurrentGamePhase(state))
+    const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
     const [ref, hovering] = useHover();
 
     const iconType = isBuilt
@@ -69,7 +69,7 @@ const Knight = (props: KnightProps) => {
                 $top={14}
                 $left={44}
                 $width={12}
-                $pointer={currentGamePhase == GamePhase.Building && !isBuilt}>
+                $pointer={gamePhaseBuilding && !isBuilt}>
                 <StyledAsset src={icon} />
             </StyledKnight>
             <ResourceCostPopup

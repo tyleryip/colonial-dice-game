@@ -1,23 +1,25 @@
 import StyledBuildButton from "./styles/StyledBuildButton"
 import StyledBuildButtonIcon from "./styles/StyledBuildButtonIcon"
+import { selectIsGamePhaseRolling } from "../../../store/slices/gameSlice"
+import { useAppSelector } from "../../../store/hooks"
 
+// Icons
 import build_icon from "../../../assets/buttons/build-icon.svg"
 import dice_icon from "../../../assets/buttons/dice-icon.svg"
-import { GamePhase } from "../../../constants/enumerations"
 
 interface BuildButtonProps {
     disabled?: boolean
-    currentGamePhase: GamePhase
     handleClick: () => void
 }
 
 const BuildButton = (props: BuildButtonProps) => {
+    const gamePhaseRolling = useAppSelector((state) => selectIsGamePhaseRolling(state))
 
-    const tooltip = props.currentGamePhase == GamePhase.Rolling
+    const tooltip = gamePhaseRolling
         ? "End rolling and build"
         : "End building and roll"
 
-    const icon = props.currentGamePhase == GamePhase.Rolling
+    const icon = gamePhaseRolling
         ? build_icon
         : dice_icon
 

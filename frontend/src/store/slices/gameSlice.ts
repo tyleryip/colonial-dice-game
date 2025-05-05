@@ -40,4 +40,10 @@ export const { setGamePhase, resetGame } = gameSlice.actions
 
 // Selectors
 
-export const selectCurrentGamePhase = (state: RootState) => state.game.currentGamePhase
+export function selectIsGamePhaseRolling(state: RootState) {
+    return state.game.currentGamePhase == GamePhase.Rolling
+}
+
+export function selectIsGamePhaseBuilding(state: RootState) {
+    return state.game.currentGamePhase == GamePhase.Building
+}
