@@ -1,5 +1,5 @@
 import StyledAsset from "../Asset/StyledAsset"
-import { IconType } from "../../constants/enumerations"
+import { GamePhase, IconType, StructureType } from "../../constants/enumerations"
 import { useAppSelector } from "../../store/hooks"
 import { selectIsStructureBuilt } from "../../store/slices/structureSlice"
 import { GetSettlementNumber } from "../../constants/mappings"
@@ -20,6 +20,10 @@ import settlement_5_dark from "../../assets/settlements/dark/settlement-5-dark.s
 import settlement_7_dark from "../../assets/settlements/dark/settlement-7-dark.svg"
 import settlement_9_dark from "../../assets/settlements/dark/settlement-9-dark.svg"
 import settlement_11_dark from "../../assets/settlements/dark/settlement-11-dark.svg"
+import { selectCurrentGamePhase } from "../../store/slices/gameSlice"
+import { useHover } from "@uidotdev/usehooks"
+import ResourceCostPopup from "../Popups/ResourceCostPopup/ResourceCostPopup"
+import { GetStructureCost } from "../../constants/structures"
 
 interface SettlementProps {
     id: number,
@@ -48,6 +52,9 @@ const settlementIconsDark: Readonly<Record<number, string>> = {
 const Settlement = (props: SettlementProps) => {
     const isStructureBuilt = useAppSelector(state => selectIsStructureBuilt(state))
 
+    const currentGamePhase = useAppSelector(state => selectCurrentGamePhase(state))
+    const [ref, hovering] = useHover();
+
     const iconType = isStructureBuilt[props.id]
         ? IconType.Dark
         : IconType.Light
@@ -60,10 +67,13 @@ const Settlement = (props: SettlementProps) => {
     const settlementWidth = 13
 
     return (
-        <div>
+        <div ref={ref}>
             <StyledSettlement $top={props.top} $left={props.left} $width={settlementWidth}>
                 <StyledAsset src={icon} />
             </StyledSettlement>
+            <ResourceCostPopup
+                disabled={!hovering || currentGamePhase != GamePhase.Building}
+                cost={GetStructureCost(StructureType.Settlement)} />
         </div>
     )
 }

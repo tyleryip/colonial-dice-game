@@ -1,5 +1,5 @@
 import StyledAsset from "../Asset/StyledAsset"
-import { IconType } from "../../constants/enumerations"
+import { GamePhase, IconType, StructureType } from "../../constants/enumerations"
 import { selectIsStructureBuilt } from "../../store/slices/structureSlice"
 import { GetCityNumber } from "../../constants/mappings"
 
@@ -16,6 +16,10 @@ import city_20_dark from "../../assets/cities/dark/city-20-dark.svg"
 import city_30_dark from "../../assets/cities/dark/city-30-dark.svg"
 import { useAppSelector } from "../../store/hooks"
 import StyledCity from "./styles/StyledCity"
+import { useHover } from "@uidotdev/usehooks"
+import { selectCurrentGamePhase } from "../../store/slices/gameSlice"
+import ResourceCostPopup from "../Popups/ResourceCostPopup/ResourceCostPopup"
+import { GetStructureCost } from "../../constants/structures"
 
 interface CityProps {
     id: number,
@@ -40,6 +44,9 @@ const cityIconsDark: Readonly<Record<number, string>> = {
 const City = (props: CityProps) => {
     const isStructureBuilt = useAppSelector(state => selectIsStructureBuilt(state))
 
+    const currentGamePhase = useAppSelector(state => selectCurrentGamePhase(state))
+    const [ref, hovering] = useHover();
+
     const iconType = isStructureBuilt[props.id]
         ? IconType.Dark
         : IconType.Light
@@ -52,10 +59,13 @@ const City = (props: CityProps) => {
     const cityWidth = 15.5
 
     return (
-        <div>
+        <div ref={ref}>
             <StyledCity $top={props.top} $left={props.left} $width={cityWidth}>
                 <StyledAsset src={icon} />
             </StyledCity>
+            <ResourceCostPopup
+                disabled={!hovering || currentGamePhase != GamePhase.Building}
+                cost={GetStructureCost(StructureType.City)} />
         </div>
     )
 }

@@ -1,4 +1,4 @@
-import { IconType, RoadType } from "../../constants/enumerations"
+import { GamePhase, IconType, RoadType, StructureType } from "../../constants/enumerations"
 import StyledAsset from "../Asset/StyledAsset"
 import { useAppSelector } from "../../store/hooks"
 import { selectIsStructureBuilt } from "../../store/slices/structureSlice"
@@ -16,6 +16,10 @@ import backwardslash_road_dark from "../../assets/roads/dark/backslash-road-dark
 
 import starting_road from "../../assets/roads/starting-road.svg"
 import StyledRoad from "./styles/StyledRoad"
+import { useHover } from "@uidotdev/usehooks"
+import { selectCurrentGamePhase } from "../../store/slices/gameSlice"
+import ResourceCostPopup from "../Popups/ResourceCostPopup/ResourceCostPopup"
+import { GetStructureCost } from "../../constants/structures"
 
 interface RoadProps {
     id: number // the unique structure id
@@ -41,6 +45,9 @@ const roadIconsDark: { -readonly [key in RoadType]: string } = {
 const Road = (props: RoadProps) => {
     const isStructureBuilt = useAppSelector(state => selectIsStructureBuilt(state))
 
+    const currentGamePhase = useAppSelector(state => selectCurrentGamePhase(state))
+    const [ref, hovering] = useHover();
+
     const iconType = isStructureBuilt[props.id]
         ? IconType.Dark
         : IconType.Light
@@ -51,10 +58,13 @@ const Road = (props: RoadProps) => {
         : roadIconsDark[roadType]
 
     return (
-        <div>
+        <div ref={ref}>
             <StyledRoad $top={props.top} $left={props.left} $width={props.width}>
                 <StyledAsset src={icon} />
             </StyledRoad>
+            <ResourceCostPopup
+                disabled={!hovering || currentGamePhase != GamePhase.Building}
+                cost={GetStructureCost(StructureType.Road)} />
         </div>
     )
 }

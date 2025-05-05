@@ -71,7 +71,9 @@ const Knight = (props: KnightProps) => {
             <StyledKnight $top={knightTopOffset} $left={knightLeftOffset} $width={knightWidth}>
                 <StyledAsset src={icon} />
             </StyledKnight>
-            <ResourceCostPopup disabled={!hovering || currentGamePhase != GamePhase.Building} cost={GetKnightCost()} />
+            <ResourceCostPopup
+                disabled={!hovering || currentGamePhase != GamePhase.Building}
+                cost={GetKnightCost()} />
         </div>
     )
 }

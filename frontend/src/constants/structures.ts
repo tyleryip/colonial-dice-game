@@ -178,7 +178,6 @@ const cost: { -readonly [key in StructureType]: Resources } = {
  * @param structureId 
  * @returns the cost of the structure in Resources
  */
-export function GetStructureCost(structureId: number): Resources {
-    const structureType = GetStructureType(structureId)
-    return cost[structureType];
+export function GetStructureCost(type: StructureType): Resources {
+    return cost[type];
 }
