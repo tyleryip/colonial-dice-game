@@ -1,19 +1,58 @@
-import { styled } from "styled-components"
-import StyledBasePopup from "../../styles/StyledBasePopup"
+import { css, styled } from "styled-components"
 
-const StyledResourceCostPopup = styled(StyledBasePopup)`
+interface StyledResourceCostPopupProps {
+    $top: number,
+    $left: number,
+    $width: number,
+    $allowVertical?: boolean
+    $verticalTop?: number
+    $verticalLeft?: number
+    $verticalWidth?: number
+}
+
+const StyledResourceCostPopup = styled.div<StyledResourceCostPopupProps>`
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 3;
+
     position: absolute;
     display: flex;
-    flex-direction: row;
     justify-content: space-around;
-    top: -10%;
-    left: 24%;
-    width: 50%;
-    padding-top: 1%;
-    padding-bottom: 1%;
-    padding-left: 1%;
-    padding-right: 1%;
-    flex-direction: row;
+    top: ${props => `${props.$top}%`};
+    left: ${props => `${props.$left}%`};
+    width: ${props => `${props.$width}%`};
+
+    @media ${(props) => props.theme.breakpoints.xs} {
+        flex-direction: ${props => props.$allowVertical
+        && css`column`};
+        top: ${props => `${props.$verticalTop}%`};
+        left: ${props => `${props.$verticalLeft}%`};
+        width: ${props => `${props.$verticalWidth}%`};
+    }
+
+    @media ${(props) => props.theme.breakpoints.s} {
+        flex-direction: row;
+        top: ${props => `${props.$top}%`};
+        left: ${props => `${props.$left}%`};
+        width: ${props => `${props.$width}%`};
+    }
+
+    @media ${(props) => props.theme.breakpoints.m} {
+   
+    }
+
+    @media ${(props) => props.theme.breakpoints.l} {
+     
+    }
+
+    @media ${(props) => props.theme.breakpoints.xl} {
+    
+    }
+
+    @media ${(props) => props.theme.breakpoints.xxl} {
+     
+    }
 `
 
 export default StyledResourceCostPopup

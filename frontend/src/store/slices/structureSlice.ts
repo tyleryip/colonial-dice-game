@@ -6,7 +6,7 @@ interface structureState {
 }
 
 const initialState: structureState = {
-    isBuilt: new Array(27).fill(false)
+    isBuilt: getInitialState()
 }
 
 export const structureSlice = createSlice({
@@ -44,6 +44,13 @@ export const { resetStructures, buildStructure } = structureSlice.actions;
 export const selectIsStructureBuilt = (state: RootState) => state.structure.isBuilt
 
 // Helper functions
+
+function getInitialState(): boolean[] {
+    const isBuilt = new Array(27).fill(false);
+    isBuilt[0] = true;
+
+    return isBuilt
+}
 
 function validateStructureId(structureId: number) {
     if (structureId < 1 || structureId > 6) {

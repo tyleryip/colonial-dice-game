@@ -51,11 +51,12 @@ const settlementIconsDark: Readonly<Record<number, string>> = {
 
 const Settlement = (props: SettlementProps) => {
     const isStructureBuilt = useAppSelector(state => selectIsStructureBuilt(state))
+    const isSettlementBuilt = isStructureBuilt[props.id]
 
     const currentGamePhase = useAppSelector(state => selectCurrentGamePhase(state))
     const [ref, hovering] = useHover();
 
-    const iconType = isStructureBuilt[props.id]
+    const iconType = isSettlementBuilt
         ? IconType.Dark
         : IconType.Light
 
@@ -68,12 +69,22 @@ const Settlement = (props: SettlementProps) => {
 
     return (
         <div ref={ref}>
-            <StyledSettlement $top={props.top} $left={props.left} $width={settlementWidth}>
+            <StyledSettlement
+                $top={props.top}
+                $left={props.left}
+                $width={settlementWidth}
+                $pointer={currentGamePhase == GamePhase.Building && !isSettlementBuilt}>
                 <StyledAsset src={icon} />
             </StyledSettlement>
             <ResourceCostPopup
-                disabled={!hovering || currentGamePhase != GamePhase.Building}
-                cost={GetStructureCost(StructureType.Settlement)} />
+                disabled={!hovering || isSettlementBuilt}
+                cost={GetStructureCost(StructureType.Settlement)}
+                top={props.top - 26}
+                left={props.left - 36}
+                width={85}
+                arrowTop={props.top - 4.5}
+                arrowLeft={props.left + 4}
+                arrowWidth={5} />
         </div>
     )
 }

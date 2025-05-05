@@ -1,7 +1,11 @@
 import { styled } from "styled-components"
-import StyledBasePopup from "../../styles/StyledBasePopup"
 
-const StyledTradingPopup = styled(StyledBasePopup)`
+const StyledTradingPopup = styled.div`
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 3;
+
     position: absolute;
     display: flex;
     align-items: center;

@@ -1,9 +1,10 @@
-import { styled } from "styled-components"
+import { css, styled } from "styled-components"
 
 interface StyledRoadProps {
     $top: number,
     $left: number,
-    $width: number
+    $width: number,
+    $pointer: boolean
 }
 
 const StyledRoad = styled.div<StyledRoadProps>`
@@ -14,7 +15,7 @@ const StyledRoad = styled.div<StyledRoadProps>`
     z-index: 1;
 
     &:hover {
-        cursor: pointer;
+        cursor: ${props => props.$pointer && css`pointer`};
     }
 `
 

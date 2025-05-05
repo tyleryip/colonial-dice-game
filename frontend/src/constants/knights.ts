@@ -27,14 +27,7 @@ export function GetKnightPrerequisites(knightId: number): number | null {
     return prerequisites[knightId]
 }
 
-const cost: Resources = {
-    [ResourceType.Ore]: 1,
-    [ResourceType.Wheat]: 1,
-    [ResourceType.Wool]: 1,
-    [ResourceType.Wood]: 0,
-    [ResourceType.Brick]: 0,
-    [ResourceType.Gold]: 0
-}
+const cost: Resources = [ResourceType.Ore, ResourceType.Wheat, ResourceType.Wool]
 
 /**
  * @param

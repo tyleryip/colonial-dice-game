@@ -43,11 +43,12 @@ const cityIconsDark: Readonly<Record<number, string>> = {
 
 const City = (props: CityProps) => {
     const isStructureBuilt = useAppSelector(state => selectIsStructureBuilt(state))
+    const isCityBuilt = isStructureBuilt[props.id]
 
     const currentGamePhase = useAppSelector(state => selectCurrentGamePhase(state))
     const [ref, hovering] = useHover();
 
-    const iconType = isStructureBuilt[props.id]
+    const iconType = isCityBuilt
         ? IconType.Dark
         : IconType.Light
 
@@ -60,12 +61,27 @@ const City = (props: CityProps) => {
 
     return (
         <div ref={ref}>
-            <StyledCity $top={props.top} $left={props.left} $width={cityWidth}>
+            <StyledCity
+                $top={props.top}
+                $left={props.left}
+                $width={cityWidth}
+                $pointer={currentGamePhase == GamePhase.Building && !isCityBuilt}>
                 <StyledAsset src={icon} />
             </StyledCity>
             <ResourceCostPopup
-                disabled={!hovering || currentGamePhase != GamePhase.Building}
-                cost={GetStructureCost(StructureType.City)} />
+                disabled={!hovering || isCityBuilt}
+                cost={GetStructureCost(StructureType.City)}
+                top={props.top - 25}
+                left={props.left - 41}
+                width={100}
+                arrowTop={props.top - 5}
+                arrowLeft={props.left + 6.5}
+                arrowWidth={5}
+                allowVertical
+                verticalTop={props.top - 117}
+                verticalLeft={props.left - 1}
+                verticalWidth={20}
+            />
         </div>
     )
 }

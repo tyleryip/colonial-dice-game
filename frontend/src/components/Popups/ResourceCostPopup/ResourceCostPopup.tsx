@@ -1,4 +1,4 @@
-import { resourceId as ResourceId, Resources } from '../../../types/Resources'
+import { Resources } from '../../../types/Resources'
 import StyledResourceCostIcon from './styles/StyledResourceCostIcon'
 import StyledResourceCostPopup from './styles/StyledResourceCostPopup'
 import StyledPopupArrow from '../styles/StyledPopupArrow';
@@ -11,10 +11,21 @@ import wood_face from "../../../assets/dice/wood-face.svg";
 import brick_face from "../../../assets/dice/brick-face.svg";
 
 import tooltip_arrow from "../../../assets/tooltip/tooltip-arrow.svg"
+import { ResourceType } from '../../../constants/enumerations';
 
 interface ResourceCostPopupProps {
     cost: Resources
     disabled: boolean
+    top: number,
+    left: number,
+    width: number
+    arrowTop: number,
+    arrowLeft: number,
+    arrowWidth: number,
+    allowVertical?: boolean,
+    verticalTop?: number,
+    verticalLeft?: number,
+    verticalWidth?: number,
 }
 
 const faceValues = [
@@ -28,19 +39,27 @@ const faceValues = [
 const ResourceCostPopup = (props: ResourceCostPopupProps) => {
     return !props.disabled &&
         (<>
-            <StyledResourceCostPopup>
-                {Array.from({ length: 5 }).map((_, resourceId: number) => {
-                    return (
-                        props.cost[resourceId as ResourceId] > 0
-                        && Array.from({ length: props.cost[resourceId as ResourceId] })
-                            .map((_, index: number) => <StyledResourceCostIcon key={index} src={faceValues[resourceId]} />))
-                })}
+            <StyledResourceCostPopup
+                $top={props.top}
+                $left={props.left}
+                $width={props.width}
+                $allowVertical={props.allowVertical}
+                $verticalTop={props.verticalTop}
+                $verticalLeft={props.verticalLeft}
+                $verticalWidth={props.verticalWidth} >
+                {props.cost.map((value: ResourceType, index: number) =>
+                    <StyledResourceCostIcon
+                        key={index}
+                        src={faceValues[value]}
+                        $width={90 / props.cost.length}
+                        $allowVertical={props.allowVertical}
+                        $verticalWidth={100} />)}
             </StyledResourceCostPopup>
             <StyledPopupArrow
                 src={tooltip_arrow}
-                $top={8}
-                $left={47.5}
-                $width={5} />
+                $top={props.arrowTop}
+                $left={props.arrowLeft}
+                $width={props.arrowWidth} />
         </>
         )
 }

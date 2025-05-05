@@ -50,11 +50,12 @@ const knightIconsDark: { -readonly [key in KnightType]: string } = {
 const Knight = (props: KnightProps) => {
     const knightId = GetKnightId(props.type)
     const isKnightBuilt = useAppSelector(state => selectIsKnightBuilt(state))
+    const isBuilt = isKnightBuilt[knightId]
 
     const currentGamePhase = useAppSelector(state => selectCurrentGamePhase(state))
     const [ref, hovering] = useHover();
 
-    const iconType = isKnightBuilt[knightId]
+    const iconType = isBuilt
         ? IconType.Dark
         : IconType.Light
 
@@ -62,18 +63,24 @@ const Knight = (props: KnightProps) => {
         ? knightIconsLight[props.type]
         : knightIconsDark[props.type]
 
-    const knightTopOffset = 14
-    const knightLeftOffset = 44
-    const knightWidth = 12
-
     return (
         <div ref={ref}>
-            <StyledKnight $top={knightTopOffset} $left={knightLeftOffset} $width={knightWidth}>
+            <StyledKnight
+                $top={14}
+                $left={44}
+                $width={12}
+                $pointer={currentGamePhase == GamePhase.Building && !isBuilt}>
                 <StyledAsset src={icon} />
             </StyledKnight>
             <ResourceCostPopup
-                disabled={!hovering || currentGamePhase != GamePhase.Building}
-                cost={GetKnightCost()} />
+                disabled={!hovering || isBuilt}
+                cost={GetKnightCost()}
+                top={-13}
+                left={18}
+                width={65}
+                arrowTop={9}
+                arrowLeft={47.5}
+                arrowWidth={5} />
         </div>
     )
 }
