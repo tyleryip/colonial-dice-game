@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store"
 import { DiceValue } from "../../types/DiceValue";
 import { Dice } from "../../types/Dice";
-import { ResourceType } from "../../constants/enumerations";
+import { ResourceType } from "../../constants/resources";
 
 interface diceState {
     dice: Dice[],
@@ -105,11 +105,41 @@ export const { rollDice, resetDice, resetDiceLocks, setDice, setRollCount, spend
 export const selectDice = (state: RootState) => state.dice.dice
 export const selectRollCount = (state: RootState) => state.dice.rollCount
 
+/**
+ * Determines if the user can build this structure or knight based on unspent inventory
+ * @param state 
+ * @param cost the cost of the structure or knight
+ * @returns true if the user can build, false otherwise
+ */
+export function selectCanBuild(state: RootState, cost: ResourceType[]): boolean {
+    // Need to keep track of which dice are spent
+    const spentDice: number[] = []
+    state.dice.dice.forEach((dice: Dice, diceId: number) => {
+        if (dice.spent) {
+            spentDice.push(diceId)
+        }
+    })
+
+    let canBuild = true;
+    cost.forEach((resourceType: ResourceType) => {
+        const index = state.dice.dice.findIndex((dice: Dice, index: number) => dice.value == resourceType.id && !spentDice.includes(index))
+
+        if (index == -1) {
+            canBuild = false
+        }
+
+        spentDice.push(index)
+    })
+
+
+    return canBuild
+}
+
 // Helper functions
 
 function findFirstUnspentGoldIndex(dice: Dice[]): number {
     for (let index = 0; index < dice.length; index++) {
-        if (dice[index].value == ResourceType.Gold && !dice[index].spent) {
+        if (dice[index].value == ResourceType.GOLD.id && !dice[index].spent) {
             return index
         }
     }

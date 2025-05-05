@@ -1,10 +1,12 @@
 import { css, styled } from "styled-components"
+import pulse from "../../../animations/pulse"
 
 interface StyledKnightProps {
     $top: number,
     $left: number,
     $width: number,
-    $pointer: boolean
+    $pointer: boolean,
+    $pulse: boolean
 }
 
 const StyledKnight = styled.div<StyledKnightProps>`
@@ -17,6 +19,12 @@ const StyledKnight = styled.div<StyledKnightProps>`
     &:hover {
         cursor: ${props => props.$pointer && css`pointer`};
     }
+
+    animation: ${props =>
+    (props.$pulse &&
+        css`${pulse(1.08)} 1s infinite`
+    )
+    };
 `
 
 export default StyledKnight

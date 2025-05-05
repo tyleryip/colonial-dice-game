@@ -7,7 +7,7 @@ import StyledCity from "./styles/StyledCity"
 import { useHover } from "@uidotdev/usehooks"
 import { selectIsGamePhaseBuilding } from "../../store/slices/gameSlice"
 import ResourceCostPopup from "../Popups/ResourceCostPopup/ResourceCostPopup"
-import { GetStructureCost } from "../../constants/structures"
+import { GetStructureCost, GetStructurePrerequisites } from "../../constants/structures"
 
 // Light icons
 import city_7_light from "../../assets/cities/light/city-7-light.svg"
@@ -20,6 +20,7 @@ import city_7_dark from "../../assets/cities/dark/city-7-dark.svg"
 import city_12_dark from "../../assets/cities/dark/city-12-dark.svg"
 import city_20_dark from "../../assets/cities/dark/city-20-dark.svg"
 import city_30_dark from "../../assets/cities/dark/city-30-dark.svg"
+import { selectCanBuild } from "../../store/slices/diceSlice"
 
 interface CityProps {
     id: number,
@@ -45,6 +46,15 @@ const City = (props: CityProps) => {
     const isStructureBuilt = useAppSelector(state => selectIsStructureBuilt(state))
     const isCityBuilt = isStructureBuilt[props.id]
 
+    const cityCost = GetStructureCost(StructureType.City)
+    const canBuild = useAppSelector(state => selectCanBuild(state, cityCost))
+
+    const prerequisites = GetStructurePrerequisites(props.id)
+    const canBuildCity =
+        !isCityBuilt
+        && prerequisites.map((structureId: number) => isStructureBuilt[structureId]).every((isBuilt: boolean) => isBuilt)
+        && canBuild
+
     const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
     const [ref, hovering] = useHover();
 
@@ -65,7 +75,8 @@ const City = (props: CityProps) => {
                 $top={props.top}
                 $left={props.left}
                 $width={cityWidth}
-                $pointer={gamePhaseBuilding && !isCityBuilt}>
+                $pointer={gamePhaseBuilding && canBuildCity}
+                $pulse={gamePhaseBuilding && canBuildCity}>
                 <StyledAsset src={icon} />
             </StyledCity>
             <ResourceCostPopup

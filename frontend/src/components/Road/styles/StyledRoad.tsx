@@ -1,10 +1,12 @@
 import { css, styled } from "styled-components"
+import pulse from "../../../animations/pulse"
 
 interface StyledRoadProps {
     $top: number,
     $left: number,
     $width: number,
-    $pointer: boolean
+    $pointer: boolean,
+    $pulse: boolean
 }
 
 const StyledRoad = styled.div<StyledRoadProps>`
@@ -17,6 +19,12 @@ const StyledRoad = styled.div<StyledRoadProps>`
     &:hover {
         cursor: ${props => props.$pointer && css`pointer`};
     }
+
+    animation: ${props =>
+    (props.$pulse &&
+        css`${pulse(1.08)} 1s infinite`
+    )
+    };
 `
 
 export default StyledRoad

@@ -77,15 +77,6 @@ export enum IconType {
     Dark
 }
 
-export enum ResourceType {
-    Ore,
-    Wheat,
-    Wool,
-    Wood,
-    Brick,
-    Gold
-}
-
 export enum GamePhase {
     /**
      * When the user is rolling dice for resources

@@ -7,7 +7,6 @@ import StyledKnight from "./styles/StyledKnight"
 import { selectIsGamePhaseBuilding } from "../../store/slices/gameSlice"
 import { useHover } from "@uidotdev/usehooks"
 import ResourceCostPopup from "../Popups/ResourceCostPopup/ResourceCostPopup"
-import { GetKnightCost } from "../../constants/knights"
 
 // Light icons
 import knight_1_light from "../../assets/knights/light/knight-1-light.svg"
@@ -24,6 +23,8 @@ import knight_3_dark from "../../assets/knights/dark/knight-3-dark.svg"
 import knight_4_dark from "../../assets/knights/dark/knight-4-dark.svg"
 import knight_5_dark from "../../assets/knights/dark/knight-5-dark.svg"
 import knight_6_dark from "../../assets/knights/dark/knight-6-dark.svg"
+import { GetKnightPrerequisites, knightCost } from "../../constants/knights"
+import { selectCanBuild } from "../../store/slices/diceSlice"
 
 interface KnightProps {
     type: KnightType
@@ -52,6 +53,14 @@ const Knight = (props: KnightProps) => {
     const isKnightBuilt = useAppSelector(state => selectIsKnightBuilt(state))
     const isBuilt = isKnightBuilt[knightId]
 
+    const canBuild = useAppSelector(state => selectCanBuild(state, knightCost))
+
+    const prerequisiteId = GetKnightPrerequisites(knightId)
+    const canBuildKnight =
+        !isBuilt
+        && (prerequisiteId == null || isKnightBuilt[prerequisiteId])
+        && canBuild
+
     const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
     const [ref, hovering] = useHover();
 
@@ -69,12 +78,13 @@ const Knight = (props: KnightProps) => {
                 $top={14}
                 $left={44}
                 $width={12}
-                $pointer={gamePhaseBuilding && !isBuilt}>
+                $pointer={gamePhaseBuilding && canBuildKnight}
+                $pulse={gamePhaseBuilding && canBuildKnight}>
                 <StyledAsset src={icon} />
             </StyledKnight>
             <ResourceCostPopup
                 disabled={!hovering || isBuilt}
-                cost={GetKnightCost()}
+                cost={knightCost}
                 top={-13}
                 left={18}
                 width={65}

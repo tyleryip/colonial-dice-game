@@ -19,7 +19,8 @@ import StyledRoad from "./styles/StyledRoad"
 import { useHover } from "@uidotdev/usehooks"
 import { selectIsGamePhaseBuilding } from "../../store/slices/gameSlice"
 import ResourceCostPopup from "../Popups/ResourceCostPopup/ResourceCostPopup"
-import { GetStructureCost } from "../../constants/structures"
+import { GetStructureCost, GetStructurePrerequisites } from "../../constants/structures"
+import { selectCanBuild } from "../../store/slices/diceSlice"
 
 interface RoadProps {
     id: number // the unique structure id
@@ -67,6 +68,15 @@ const Road = (props: RoadProps) => {
     const isStructureBuilt = useAppSelector(state => selectIsStructureBuilt(state))
     const isRoadBuilt = isStructureBuilt[props.id]
 
+    const roadCost = GetStructureCost(StructureType.Road)
+    const canBuild = useAppSelector(state => selectCanBuild(state, roadCost))
+
+    const prerequisites = GetStructurePrerequisites(props.id)
+    const canBuildRoad =
+        !isRoadBuilt
+        && prerequisites.map((structureId: number) => isStructureBuilt[structureId]).every((isBuilt: boolean) => isBuilt)
+        && canBuild
+
     const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
     const [ref, hovering] = useHover();
 
@@ -85,12 +95,13 @@ const Road = (props: RoadProps) => {
                 $top={props.top}
                 $left={props.left}
                 $width={props.width}
-                $pointer={gamePhaseBuilding && !isRoadBuilt}>
+                $pointer={gamePhaseBuilding && canBuildRoad}
+                $pulse={gamePhaseBuilding && canBuildRoad}>
                 <StyledAsset src={icon} />
             </StyledRoad>
             <ResourceCostPopup
                 disabled={!hovering || isRoadBuilt || roadType == RoadType.Starting}
-                cost={GetStructureCost(StructureType.Road)}
+                cost={roadCost}
                 top={props.top + resourceCostPopupTop[roadType]}
                 left={props.left + resourceCostPopupLeft[roadType]}
                 width={42}

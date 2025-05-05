@@ -1,4 +1,4 @@
-import { KnightType, ResourceJokerType, ResourceType, RoadType } from "./enumerations"
+import { KnightType, ResourceJokerType, RoadType } from "./enumerations"
 
 /**
  * Maps a structureId to its settlement number
@@ -141,29 +141,4 @@ export function GetKnightId(type: KnightType): number {
     }
 
     return knightId
-}
-
-const resourceMappings: Readonly<Record<number, ResourceType>> = {
-    1: ResourceType.Ore,
-    2: ResourceType.Wheat,
-    3: ResourceType.Wool,
-    4: ResourceType.Wood,
-    5: ResourceType.Brick,
-    6: ResourceType.Gold,
-}
-
-/**
- * Given a resourceId, return its ResourceType
- * @param resourceId
- * @returns ResourceType
- */
-export function GetResourceType(resourceId: number): ResourceType {
-    let resourceType = undefined
-    resourceType = resourceMappings[resourceId]
-
-    if (resourceType === undefined) {
-        throw Error(`Resource with resourceId=${resourceId} not found`)
-    }
-
-    return resourceType
 }

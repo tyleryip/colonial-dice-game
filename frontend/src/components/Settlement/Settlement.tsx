@@ -24,6 +24,7 @@ import { selectIsGamePhaseBuilding } from "../../store/slices/gameSlice"
 import { useHover } from "@uidotdev/usehooks"
 import ResourceCostPopup from "../Popups/ResourceCostPopup/ResourceCostPopup"
 import { GetStructureCost, GetStructurePrerequisites } from "../../constants/structures"
+import { selectCanBuild } from "../../store/slices/diceSlice"
 
 interface SettlementProps {
     id: number,
@@ -54,13 +55,13 @@ const Settlement = (props: SettlementProps) => {
     const isSettlementBuilt = isStructureBuilt[props.id]
 
     const settlementCost = GetStructureCost(StructureType.Settlement)
+    const canBuild = useAppSelector(state => selectCanBuild(state, settlementCost))
 
     const prerequisites = GetStructurePrerequisites(props.id)
     const canBuildSettlement =
-        !isSettlementBuilt &&
-        prerequisites
-            .map((structureId: number) => isStructureBuilt[structureId])
-            .every(() => true)
+        !isSettlementBuilt
+        && prerequisites.map((structureId: number) => isStructureBuilt[structureId]).every((isBuilt: boolean) => isBuilt)
+        && canBuild
 
     const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
     const [ref, hovering] = useHover();
@@ -80,8 +81,8 @@ const Settlement = (props: SettlementProps) => {
                 $top={props.top}
                 $left={props.left}
                 $width={13}
-                $pointer={gamePhaseBuilding && !isSettlementBuilt}
-                $pulse={gamePhaseBuilding && !isSettlementBuilt && canBuildSettlement}>
+                $pointer={gamePhaseBuilding && canBuildSettlement}
+                $pulse={gamePhaseBuilding && canBuildSettlement}>
                 <StyledAsset src={icon} />
             </StyledSettlement>
             <ResourceCostPopup

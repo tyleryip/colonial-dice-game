@@ -2,7 +2,6 @@ import StyledResourceDice from "./styles/StyledResourceDice";
 import StyledResourceDiceFace from "./styles/StyledResourceDiceFace";
 import StyledLock from "./styles/StyledLock";
 import { DiceValue } from "../../types/DiceValue";
-import { ResourceType } from "../../constants/enumerations";
 import TradingPopup from "../Popups/TradingPopup/TradingPopup";
 import { useState } from "react";
 
@@ -17,6 +16,7 @@ import blank_face from "../../assets/dice/blank_face.svg";
 import lock from "../../assets/dice/lock.svg"
 import { useAppSelector } from "../../store/hooks";
 import { selectIsGamePhaseBuilding, selectIsGamePhaseRolling } from "../../store/slices/gameSlice";
+import { ResourceType } from "../../constants/resources";
 
 interface ResourceDiceProps {
   id: number;
@@ -53,7 +53,7 @@ const ResourceDice = (props: ResourceDiceProps) => {
 
   // Dice face should conditionally pulse and open a popup if tradeable, unspent, and in building game phase
   const isTradeable = gamePhaseBuilding
-    && props.value == ResourceType.Gold
+    && props.value == ResourceType.GOLD.id
     && !props.isSpent
     && props.isTradeable
 

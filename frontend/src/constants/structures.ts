@@ -1,5 +1,5 @@
-import { Resources } from "../types/Resources"
-import { ResourceType, StructureType } from "./enumerations"
+import { StructureType } from "./enumerations"
+import { ResourceType } from "./resources"
 
 /**
  * Maps a structure id to a list of its prerequisite structure ids
@@ -145,10 +145,10 @@ export function GetStructureType(structureId: number): StructureType {
 /**
  * Maps a StructureType to Resources
  */
-const cost: { -readonly [key in StructureType]: Resources } = {
-    [StructureType.Road]: [ResourceType.Wood, ResourceType.Brick],
-    [StructureType.Settlement]: [ResourceType.Wheat, ResourceType.Wool, ResourceType.Wood, ResourceType.Brick],
-    [StructureType.City]: [ResourceType.Ore, ResourceType.Ore, ResourceType.Wheat, ResourceType.Wheat, ResourceType.Wheat]
+const cost: { -readonly [key in StructureType]: ResourceType[] } = {
+    [StructureType.Road]: [ResourceType.WOOD, ResourceType.BRICK],
+    [StructureType.Settlement]: [ResourceType.WHEAT, ResourceType.WOOL, ResourceType.WOOD, ResourceType.BRICK],
+    [StructureType.City]: [ResourceType.ORE, ResourceType.ORE, ResourceType.WHEAT, ResourceType.WHEAT, ResourceType.WHEAT]
 }
 
 /**
@@ -156,6 +156,6 @@ const cost: { -readonly [key in StructureType]: Resources } = {
  * @param structureId 
  * @returns the cost of the structure in Resources
  */
-export function GetStructureCost(type: StructureType): Resources {
+export function GetStructureCost(type: StructureType): ResourceType[] {
     return cost[type];
 }

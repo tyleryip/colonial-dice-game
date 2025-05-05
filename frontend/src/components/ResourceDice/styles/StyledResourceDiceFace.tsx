@@ -33,7 +33,7 @@ const StyledResourceDiceFace = styled.img<StyledResourceDiceFaceProps>`
              ${wobble} ${props.$wobbleDurationMilliseconds}ms linear 
         `)
         || (props.$pulse &&
-            css`${pulse} 1s infinite`
+            css`${pulse(1.05)} 1s infinite`
         )
     };
 

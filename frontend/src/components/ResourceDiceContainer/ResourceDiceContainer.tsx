@@ -8,8 +8,9 @@ import { resetDice, resetDiceLocks, rollDice, selectDice, selectRollCount, setRo
 import RollButton from "../Buttons/RollButton/RollButton"
 import BuildButton from "../Buttons/BuildButton/BuildButton"
 import { selectIsGamePhaseBuilding, selectIsGamePhaseRolling, setGamePhase } from "../../store/slices/gameSlice"
-import { GamePhase, ResourceType } from "../../constants/enumerations"
+import { GamePhase } from "../../constants/enumerations"
 import { Dice } from "../../types/Dice"
+import { ResourceType } from "../../constants/resources"
 
 const ResourceDiceContainer = () => {
     const dice = useAppSelector((state) => selectDice(state))
@@ -70,7 +71,9 @@ const ResourceDiceContainer = () => {
     const buildButtonDisabled = (gamePhaseRolling && rollCount == 0)
 
     const isTradeable = dice
-        .map((dice: Dice) => dice.value == ResourceType.Gold && !dice.spent)
+        .map((dice: Dice) =>
+            dice.value == ResourceType.GOLD.id &&
+            !dice.spent)
         .filter(result => result == true)
         .length > 1
 

@@ -3,15 +3,14 @@ import StyledResourceCostIcon from './styles/StyledResourceCostIcon'
 import StyledResourceCostPopup from './styles/StyledResourceCostPopup'
 import StyledPopupArrow from '../styles/StyledPopupArrow';
 
-// Resource icons
+// Icons
 import ore_face from "../../../assets/dice/ore-face.svg";
 import wheat_face from "../../../assets/dice/wheat-face.svg";
 import wool_face from "../../../assets/dice/wool-face.svg";
 import wood_face from "../../../assets/dice/wood-face.svg";
 import brick_face from "../../../assets/dice/brick-face.svg";
-
 import tooltip_arrow from "../../../assets/tooltip/tooltip-arrow.svg"
-import { ResourceType } from '../../../constants/enumerations';
+import { ResourceType } from '../../../constants/resources';
 
 interface ResourceCostPopupProps {
     cost: Resources
@@ -47,10 +46,10 @@ const ResourceCostPopup = (props: ResourceCostPopupProps) => {
                 $verticalTop={props.verticalTop}
                 $verticalLeft={props.verticalLeft}
                 $verticalWidth={props.verticalWidth} >
-                {props.cost.map((value: ResourceType, index: number) =>
+                {props.cost.map((resourceType: ResourceType, index: number) =>
                     <StyledResourceCostIcon
                         key={index}
-                        src={faceValues[value]}
+                        src={faceValues[resourceType.id]}
                         $width={90 / props.cost.length}
                         $allowVertical={props.allowVertical}
                         $verticalWidth={100} />)}

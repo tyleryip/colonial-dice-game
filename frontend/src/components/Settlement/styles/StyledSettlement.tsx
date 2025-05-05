@@ -22,7 +22,7 @@ const StyledSettlement = styled.div<StyledSettlementProps>`
 
     animation: ${props =>
     (props.$pulse &&
-        css`${pulse} 1s infinite`
+        css`${pulse(1.08)} 1s infinite`
     )
     };
 `

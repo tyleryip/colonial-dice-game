@@ -3,18 +3,18 @@ import StyledTradingIcon from './styles/StyledTradingIcon';
 import { useAppDispatch } from '../../../store/hooks';
 import { setDice, SetDicePayload, spendGold } from '../../../store/slices/diceSlice';
 import { DiceValue } from '../../../types/DiceValue';
-import { ResourceType } from '../../../constants/enumerations';
 import StyledPopupArrow from '../styles/StyledPopupArrow';
 import useClickOutside from '../../../hooks/useClickOutside';
 
-import tooltip_arrow from "../../../assets/tooltip/tooltip-arrow.svg"
 
-// Dice faces
+// Icons
 import ore_face from "../../../assets/dice/ore-face.svg";
 import wheat_face from "../../../assets/dice/wheat-face.svg";
 import wool_face from "../../../assets/dice/wool-face.svg";
 import wood_face from "../../../assets/dice/wood-face.svg";
 import brick_face from "../../../assets/dice/brick-face.svg";
+import tooltip_arrow from "../../../assets/tooltip/tooltip-arrow.svg"
+import { ResourceType } from '../../../constants/resources';
 
 interface TradingPopupProps {
     diceId: number,
@@ -30,13 +30,15 @@ const faceValues = [
     brick_face
 ];
 
+const resourceTypes = [ResourceType.ORE, ResourceType.WHEAT, ResourceType.WOOL, ResourceType.WOOD, ResourceType.BRICK]
+
 const TradingPopup = (props: TradingPopupProps) => {
     // If any clicks are registered outside of this div, invoke the onClose function
     const ref = useClickOutside(() => props.onClose());
 
     const dispatch = useAppDispatch()
 
-    const tooltip = (resourceId: number) => `Trade for ${ResourceType[resourceId]}`
+    const tooltip = (resourceType: ResourceType) => `Trade for ${resourceType.name}`
 
     function handleClick(resourceId: number) {
         const setDicePayload: SetDicePayload = {
@@ -54,12 +56,12 @@ const TradingPopup = (props: TradingPopupProps) => {
         && (
             <div ref={ref}>
                 <StyledTradingPopup>
-                    {faceValues.map((icon: string, resourceId: number) => {
+                    {resourceTypes.map((resourceType: ResourceType, resourceId: number) => {
                         return <StyledTradingIcon
-                            title={tooltip(resourceId)}
+                            title={tooltip(resourceType)}
                             key={resourceId}
                             onClick={() => handleClick(resourceId)}
-                            src={icon} />
+                            src={faceValues[resourceId]} />
                     })}
                 </StyledTradingPopup>
                 <StyledPopupArrow

@@ -1,5 +1,4 @@
-import { Resources } from "../types/Resources"
-import { ResourceType } from "./enumerations"
+import { ResourceType } from "./resources"
 
 /**
  * Maps a knight id to a its prerequisite knight ids
@@ -27,12 +26,4 @@ export function GetKnightPrerequisites(knightId: number): number | null {
     return prerequisites[knightId]
 }
 
-const cost: Resources = [ResourceType.Ore, ResourceType.Wheat, ResourceType.Wool]
-
-/**
- * @param
- * @returns the cost of a knight in Resources
- */
-export function GetKnightCost(): Resources {
-    return cost
-}
+export const knightCost: ResourceType[] = [ResourceType.ORE, ResourceType.WHEAT, ResourceType.WOOL]
