@@ -16,29 +16,32 @@
 - [ ] Dice
     - [x] Rolling functionality
     - [x] Locking functionality
-    - [ ] Resource state based on roll results
-    - [ ] Play rolling sound effect on roll
+    - [x] Resource state based on roll results
 - [ ] Scoreboard
     - [x] Scoreboard rendering
     - [x] Score tracking functionality
     - [x] Score reseting functionality
 - [ ] Gameplay
-    - [ ] Game state flows properly
-    - [ ] Rolling state
+    - [x] Game state flows properly
+    - [x] Rolling state
          - [x] Roll counter state
     - [ ] Building state
         - [x] Maintain structure state
-        - [ ] Evaluating whether user can build a specific structure based on resources
+        - [x] Evaluating whether user can build a specific structure based on resources
         - [x] Evaluating whether user can build based on prerequisite structures
-        - [ ] Adjusting resources after building
-        - [ ] Show building cost on structure hover
+        - [x] Adjusting resources after building
+        - [x] Show building cost on structure hover
         - [x] User can trade gold when they have more than 2 gold
-    - [ ] Scoring state
-        - [ ] Score is added correctly for new structures
-        - [ ] Score is added correctly for no structures
-        - [ ] Total score is calculated upon completion
+        - [ ] User can spend a resource joker and set a dice of their choice
+    - [ ] Scoring functionality
+        - [x] Score is added correctly for new structures
+        - [x] Score is added correctly for no structures
+        - [x] Total score is calculated upon completion
 - [ ] Instructions modal
     - [ ] Build costs shown in instruction modal
+- [ ] End of game modal
+    - [ ] Show scoreboard results
+    - [ ] Play again button
 
 ### Non-Functional Requirements
 
@@ -59,3 +62,7 @@
 - [ ] AI plays Catan Dice game
 - [ ] Store local user high-score in cookies
 - [ ] Island 2
+- [ ] Sound effects
+    - [ ] Dice sound effect on roll
+    - [ ] Building sound effect
+    - [ ] Trading/resource joker sound effect
