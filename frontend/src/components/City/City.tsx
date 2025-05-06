@@ -75,7 +75,7 @@ const City = (props: CityProps) => {
             dispatch(buildStructure(props.id))
 
             cityCost.forEach((resourceType: ResourceType) => {
-                dispatch(spendDice(resourceType))
+                dispatch(spendDice(JSON.stringify(resourceType)))
             })
 
             dispatch(addToPendingScore(cityNumber))

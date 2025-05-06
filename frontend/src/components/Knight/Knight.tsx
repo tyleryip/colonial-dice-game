@@ -80,7 +80,7 @@ const Knight = (props: KnightProps) => {
             dispatch(buildKnight(knightId))
 
             knightCost.forEach((resourceType: ResourceType) => {
-                dispatch(spendDice(resourceType))
+                dispatch(spendDice(JSON.stringify(resourceType)))
             })
 
             // TODO: get the point value from constants

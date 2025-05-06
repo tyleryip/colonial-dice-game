@@ -47,7 +47,7 @@ const TradingPopup = (props: TradingPopupProps) => {
         }
 
         dispatch(setDice(setDicePayload))
-        dispatch(spendDice(ResourceType.GOLD))
+        dispatch(spendDice(JSON.stringify(ResourceType.GOLD)))
 
         props.onClose();
     }

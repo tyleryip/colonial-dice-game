@@ -97,7 +97,7 @@ const Road = (props: RoadProps) => {
             dispatch(buildStructure(props.id))
 
             roadCost.forEach((resourceType: ResourceType) => {
-                dispatch(spendDice(resourceType))
+                dispatch(spendDice(JSON.stringify(resourceType)))
             })
 
             dispatch(addToPendingScore(1))

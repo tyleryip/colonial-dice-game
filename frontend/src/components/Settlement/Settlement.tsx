@@ -83,7 +83,7 @@ const Settlement = (props: SettlementProps) => {
             dispatch(buildStructure(props.id))
 
             settlementCost.forEach((resourceType: ResourceType) => {
-                dispatch(spendDice(resourceType))
+                dispatch(spendDice(JSON.stringify(resourceType)))
             })
 
             dispatch(addToPendingScore(settlementNumber))

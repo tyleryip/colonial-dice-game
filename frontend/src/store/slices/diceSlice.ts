@@ -68,8 +68,9 @@ export const diceSlice = createSlice({
          * @param state 
          * @param action
          */
-        spendDice: (state, action: PayloadAction<ResourceType>) => {
-            const firstUnspentIndex = findFirstUnspentIndex(state.dice, action.payload)
+        spendDice: (state, action: PayloadAction<string>) => {
+            const resourceType: ResourceType = JSON.parse(action.payload)
+            const firstUnspentIndex = findFirstUnspentIndex(state.dice, resourceType)
             state.dice[firstUnspentIndex].spent = true
         },
         /**
