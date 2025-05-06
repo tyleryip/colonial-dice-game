@@ -53,7 +53,7 @@ function getInitialState(): boolean[] {
 }
 
 function validateStructureId(structureId: number) {
-    if (structureId < 1 || structureId > 6) {
+    if (structureId < 1 || structureId > 26) {
         throw new Error(`Structure with id=${structureId} not found`)
     }
 }

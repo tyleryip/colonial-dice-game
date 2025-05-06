@@ -60,16 +60,17 @@ export const diceSlice = createSlice({
          * @param state 
          * @param action
          */
-        spendDice: (state, action: PayloadAction<number>) => {
+        setDiceSpent: (state, action: PayloadAction<number>) => {
             state.dice[action.payload].spent = true
         },
         /**
          * When the user trades two gold in for a resource of their choice, set one of the gold to spent
          * @param state 
+         * @param action
          */
-        spendGold: (state) => {
-            const firstGoldIndex = findFirstUnspentGoldIndex(state.dice)
-            state.dice[firstGoldIndex].spent = true
+        spendDice: (state, action: PayloadAction<ResourceType>) => {
+            const firstUnspentIndex = findFirstUnspentIndex(state.dice, action.payload)
+            state.dice[firstUnspentIndex].spent = true
         },
         /**
          * When the user switches the lock on a dice between rolls
@@ -98,7 +99,7 @@ export interface SetDicePayload {
     value: DiceValue
 }
 
-export const { rollDice, resetDice, resetDiceLocks, setDice, setRollCount, spendDice, spendGold, toggleDiceLock } = diceSlice.actions
+export const { rollDice, resetDice, resetDiceLocks, setDice, setRollCount, setDiceSpent, spendDice, toggleDiceLock } = diceSlice.actions
 
 // Selectors
 
@@ -137,9 +138,9 @@ export function selectCanBuild(state: RootState, cost: ResourceType[]): boolean 
 
 // Helper functions
 
-function findFirstUnspentGoldIndex(dice: Dice[]): number {
+function findFirstUnspentIndex(dice: Dice[], resourceType: ResourceType): number {
     for (let index = 0; index < dice.length; index++) {
-        if (dice[index].value == ResourceType.GOLD.id && !dice[index].spent) {
+        if (dice[index].value == resourceType.id && !dice[index].spent) {
             return index
         }
     }

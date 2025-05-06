@@ -1,7 +1,7 @@
 import { IconType, RoadType, StructureType } from "../../constants/enumerations"
 import StyledAsset from "../Asset/StyledAsset"
-import { useAppSelector } from "../../store/hooks"
-import { selectIsStructureBuilt } from "../../store/slices/structureSlice"
+import { useAppDispatch, useAppSelector } from "../../store/hooks"
+import { buildStructure, selectIsStructureBuilt } from "../../store/slices/structureSlice"
 import { GetRoadType } from "../../constants/mappings"
 
 // Light icons
@@ -20,7 +20,9 @@ import { useHover } from "@uidotdev/usehooks"
 import { selectIsGamePhaseBuilding } from "../../store/slices/gameSlice"
 import ResourceCostPopup from "../Popups/ResourceCostPopup/ResourceCostPopup"
 import { GetStructureCost, GetStructurePrerequisites } from "../../constants/structures"
-import { selectCanBuild } from "../../store/slices/diceSlice"
+import { selectCanBuild, spendDice } from "../../store/slices/diceSlice"
+import { ResourceType } from "../../constants/resources"
+import { addToPendingScore } from "../../store/slices/scoreSlice"
 
 interface RoadProps {
     id: number // the unique structure id
@@ -65,6 +67,7 @@ const resourceCostPopupArrowLeft: { -readonly [key in RoadType]: number } = {
 }
 
 const Road = (props: RoadProps) => {
+    const dispatch = useAppDispatch();
     const isStructureBuilt = useAppSelector(state => selectIsStructureBuilt(state))
     const isRoadBuilt = isStructureBuilt[props.id]
 
@@ -89,8 +92,20 @@ const Road = (props: RoadProps) => {
         ? roadIconsLight[roadType]
         : roadIconsDark[roadType]
 
+    function handleClick() {
+        if (gamePhaseBuilding && canBuildRoad) {
+            dispatch(buildStructure(props.id))
+
+            roadCost.forEach((resourceType: ResourceType) => {
+                dispatch(spendDice(resourceType))
+            })
+
+            dispatch(addToPendingScore(1))
+        }
+    }
+
     return (
-        <div ref={ref}>
+        <div ref={ref} onClick={handleClick}>
             <StyledRoad
                 $top={props.top}
                 $left={props.left}

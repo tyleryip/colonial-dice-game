@@ -1,13 +1,15 @@
-import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 import { ScoreValue } from "../../types/ScoreValue"
 
 interface scoreState {
     scores: ScoreValue[]
+    pendingScore: ScoreValue
 }
 
 const initialState: scoreState = {
-    scores: new Array(15).fill(null)
+    scores: new Array(15).fill(null),
+    pendingScore: 0
 }
 
 export const scoreSlice = createSlice({
@@ -15,12 +17,26 @@ export const scoreSlice = createSlice({
     initialState: initialState,
     reducers: {
         /**
-         * When a new score should be added to the scoreboard
+         * When the pending score should be published to the scoreboard at the end of the build phase
          * @param state 
          * @param action 
          */
-        addScore: (state, action: PayloadAction<number>) => {
-            state.scores = findFirstEmptyScoreAndSet(state.scores, action.payload)
+        addScore: (state) => {
+            const index = findFirstEmptyScoreIndex(state.scores)
+            state.scores[index] = state.pendingScore != null && state.pendingScore > 0
+                ? state.pendingScore
+                : -2
+            state.pendingScore = 0
+        },
+        /**
+         * When the pending score is changing after building structures or knights
+         * @param state 
+         * @param action the number of points to add to the pending score
+         */
+        addToPendingScore: (state, action: PayloadAction<number>) => {
+            state.pendingScore = state.pendingScore == null || state.pendingScore == 0
+                ? action.payload
+                : state.pendingScore + action.payload
         },
         /**
          * When the game is reset
@@ -36,30 +52,15 @@ export default scoreSlice.reducer;
 
 // Actions
 
-export const { resetScore, addScore } = scoreSlice.actions
+export const { resetScore, addScore, addToPendingScore } = scoreSlice.actions
 
 // Selectors
 
 export const selectScoreValues = (state: RootState) => state.score.scores
-export const selectTotalScore = createSelector(
-    (state: RootState) => state.score.scores,
-    (scores: ScoreValue[]) => calculateTotalScore(scores)
-)
+export const selectPendingScore = (state: RootState) => state.score.pendingScore
 
 // Helper functions
 
-function findFirstEmptyScoreAndSet(scores: ScoreValue[], newScore: ScoreValue) {
-    const newScores = [...scores]
-    const firstNullIndex = newScores.indexOf(null)
-    if (firstNullIndex !== -1) {
-        newScores[firstNullIndex] = newScore
-    }
-
-    return newScores
-}
-
-function calculateTotalScore(scores: ScoreValue[]) {
-    return scores.reduce((accumulator: number, currentValue: ScoreValue) => {
-        return accumulator + (currentValue ?? 0);
-    }, 0)
+function findFirstEmptyScoreIndex(scores: ScoreValue[]): number {
+    return scores.findIndex(score => score == null)
 }

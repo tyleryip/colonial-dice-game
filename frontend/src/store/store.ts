@@ -22,11 +22,12 @@ export const store = configureStore({
             ["Reset Dice"]: diceSlice.actions.resetDice,
             ["Reset Dice Locks"]: diceSlice.actions.resetDiceLocks,
             ["Set Dice"]: diceSlice.actions.setDice,
+            ["Set Dice Spent"]: diceSlice.actions.setDiceSpent,
             ["Spend Dice"]: diceSlice.actions.spendDice,
-            ["Spend Gold"]: diceSlice.actions.spendGold,
             ["Toggle Dice Lock"]: diceSlice.actions.toggleDiceLock,
 
             // Game actions
+            ["Increment Turn"]: gameSlice.actions.incrementTurn,
             ["Set Game Phase"]: gameSlice.actions.setGamePhase,
             ["Reset Game"]: gameSlice.actions.resetGame,
 
@@ -41,6 +42,7 @@ export const store = configureStore({
 
             // Score actions
             ["Add Score"]: scoreSlice.actions.addScore,
+            ["Add To Pending Score"]: scoreSlice.actions.addToPendingScore,
             ["Reset Score"]: scoreSlice.actions.resetScore,
 
             // Structure actions

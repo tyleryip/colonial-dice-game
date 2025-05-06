@@ -7,10 +7,11 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { resetDice, resetDiceLocks, rollDice, selectDice, selectRollCount, setRollCount, toggleDiceLock } from "../../store/slices/diceSlice"
 import RollButton from "../Buttons/RollButton/RollButton"
 import BuildButton from "../Buttons/BuildButton/BuildButton"
-import { selectIsGamePhaseBuilding, selectIsGamePhaseRolling, setGamePhase } from "../../store/slices/gameSlice"
+import { incrementTurn, selectIsGamePhaseBuilding, selectIsGamePhaseRolling, setGamePhase } from "../../store/slices/gameSlice"
 import { GamePhase } from "../../constants/enumerations"
 import { Dice } from "../../types/Dice"
 import { ResourceType } from "../../constants/resources"
+import { addScore } from "../../store/slices/scoreSlice"
 
 const ResourceDiceContainer = () => {
     const dice = useAppSelector((state) => selectDice(state))
@@ -58,6 +59,8 @@ const ResourceDiceContainer = () => {
 
         if (gamePhaseBuilding) {
             dispatch(setGamePhase(GamePhase.Rolling))
+            dispatch(addScore())
+            dispatch(incrementTurn())
             dispatch(resetDice())
         }
     }

@@ -1,8 +1,8 @@
 import StyledAsset from "../Asset/StyledAsset"
 import { IconType, StructureType } from "../../constants/enumerations"
-import { selectIsStructureBuilt } from "../../store/slices/structureSlice"
+import { buildStructure, selectIsStructureBuilt } from "../../store/slices/structureSlice"
 import { GetCityNumber } from "../../constants/mappings"
-import { useAppSelector } from "../../store/hooks"
+import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import StyledCity from "./styles/StyledCity"
 import { useHover } from "@uidotdev/usehooks"
 import { selectIsGamePhaseBuilding } from "../../store/slices/gameSlice"
@@ -20,7 +20,9 @@ import city_7_dark from "../../assets/cities/dark/city-7-dark.svg"
 import city_12_dark from "../../assets/cities/dark/city-12-dark.svg"
 import city_20_dark from "../../assets/cities/dark/city-20-dark.svg"
 import city_30_dark from "../../assets/cities/dark/city-30-dark.svg"
-import { selectCanBuild } from "../../store/slices/diceSlice"
+import { selectCanBuild, spendDice } from "../../store/slices/diceSlice"
+import { ResourceType } from "../../constants/resources"
+import { addToPendingScore } from "../../store/slices/scoreSlice"
 
 interface CityProps {
     id: number,
@@ -43,6 +45,7 @@ const cityIconsDark: Readonly<Record<number, string>> = {
 }
 
 const City = (props: CityProps) => {
+    const dispatch = useAppDispatch();
     const isStructureBuilt = useAppSelector(state => selectIsStructureBuilt(state))
     const isCityBuilt = isStructureBuilt[props.id]
 
@@ -67,14 +70,24 @@ const City = (props: CityProps) => {
         ? cityIconsLight[cityNumber]
         : cityIconsDark[cityNumber]
 
-    const cityWidth = 15.5
+    function handleClick() {
+        if (gamePhaseBuilding && canBuildCity) {
+            dispatch(buildStructure(props.id))
+
+            cityCost.forEach((resourceType: ResourceType) => {
+                dispatch(spendDice(resourceType))
+            })
+
+            dispatch(addToPendingScore(cityNumber))
+        }
+    }
 
     return (
-        <div ref={ref}>
+        <div ref={ref} onClick={handleClick}>
             <StyledCity
                 $top={props.top}
                 $left={props.left}
-                $width={cityWidth}
+                $width={15.5}
                 $pointer={gamePhaseBuilding && canBuildCity}
                 $pulse={gamePhaseBuilding && canBuildCity}>
                 <StyledAsset src={icon} />

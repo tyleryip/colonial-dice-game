@@ -1,7 +1,7 @@
 import StyledTradingPopup from './styles/StyledTradingPopup'
 import StyledTradingIcon from './styles/StyledTradingIcon';
 import { useAppDispatch } from '../../../store/hooks';
-import { setDice, SetDicePayload, spendGold } from '../../../store/slices/diceSlice';
+import { setDice, SetDicePayload, spendDice } from '../../../store/slices/diceSlice';
 import { DiceValue } from '../../../types/DiceValue';
 import StyledPopupArrow from '../styles/StyledPopupArrow';
 import useClickOutside from '../../../hooks/useClickOutside';
@@ -47,7 +47,7 @@ const TradingPopup = (props: TradingPopupProps) => {
         }
 
         dispatch(setDice(setDicePayload))
-        dispatch(spendGold())
+        dispatch(spendDice(ResourceType.GOLD))
 
         props.onClose();
     }

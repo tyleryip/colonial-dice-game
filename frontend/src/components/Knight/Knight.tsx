@@ -1,7 +1,7 @@
 import StyledAsset from "../Asset/StyledAsset"
 import { IconType, KnightType } from "../../constants/enumerations"
-import { useAppSelector } from "../../store/hooks"
-import { selectIsKnightBuilt } from "../../store/slices/knightSlice"
+import { useAppDispatch, useAppSelector } from "../../store/hooks"
+import { buildKnight, selectIsKnightBuilt } from "../../store/slices/knightSlice"
 import { GetKnightId } from "../../constants/mappings"
 import StyledKnight from "./styles/StyledKnight"
 import { selectIsGamePhaseBuilding } from "../../store/slices/gameSlice"
@@ -24,7 +24,9 @@ import knight_4_dark from "../../assets/knights/dark/knight-4-dark.svg"
 import knight_5_dark from "../../assets/knights/dark/knight-5-dark.svg"
 import knight_6_dark from "../../assets/knights/dark/knight-6-dark.svg"
 import { GetKnightPrerequisites, knightCost } from "../../constants/knights"
-import { selectCanBuild } from "../../store/slices/diceSlice"
+import { selectCanBuild, spendDice } from "../../store/slices/diceSlice"
+import { ResourceType } from "../../constants/resources"
+import { addToPendingScore } from "../../store/slices/scoreSlice"
 
 interface KnightProps {
     type: KnightType
@@ -49,6 +51,7 @@ const knightIconsDark: { -readonly [key in KnightType]: string } = {
 }
 
 const Knight = (props: KnightProps) => {
+    const dispatch = useAppDispatch();
     const knightId = GetKnightId(props.type)
     const isKnightBuilt = useAppSelector(state => selectIsKnightBuilt(state))
     const isBuilt = isKnightBuilt[knightId]
@@ -72,8 +75,21 @@ const Knight = (props: KnightProps) => {
         ? knightIconsLight[props.type]
         : knightIconsDark[props.type]
 
+    function handleClick() {
+        if (gamePhaseBuilding && canBuild) {
+            dispatch(buildKnight(knightId))
+
+            knightCost.forEach((resourceType: ResourceType) => {
+                dispatch(spendDice(resourceType))
+            })
+
+            // TODO: get the point value from constants
+            dispatch(addToPendingScore(knightId + 1))
+        }
+    }
+
     return (
-        <div ref={ref}>
+        <div ref={ref} onClick={handleClick}>
             <StyledKnight
                 $top={14}
                 $left={44}
