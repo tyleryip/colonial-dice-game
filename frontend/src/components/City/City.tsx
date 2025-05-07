@@ -1,13 +1,16 @@
 import StyledAsset from "../Asset/StyledAsset"
-import { IconType, StructureType } from "../../constants/enumerations"
-import { buildStructure, selectIsStructureBuilt } from "../../store/slices/structureSlice"
+import { IconType } from "../../constants/enumerations"
+import { buildStructure, selectHasPrerequisiteStructuresBuilt, selectIsStructureBuilt } from "../../store/slices/structureSlice"
 import { GetCityNumber } from "../../constants/mappings"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import StyledCity from "./styles/StyledCity"
 import { useHover } from "@uidotdev/usehooks"
 import { selectIsGamePhaseBuilding } from "../../store/slices/gameSlice"
 import ResourceCostPopup from "../Popups/ResourceCostPopup/ResourceCostPopup"
-import { GetStructureCost, GetStructurePrerequisites } from "../../constants/structures"
+import { cityCost } from "../../constants/structures"
+import { selectHasResourcesNeeded, spendDice } from "../../store/slices/diceSlice"
+import { ResourceType } from "../../constants/resources"
+import { addToPendingScore } from "../../store/slices/scoreSlice"
 
 // Light icons
 import city_7_light from "../../assets/cities/light/city-7-light.svg"
@@ -20,9 +23,6 @@ import city_7_dark from "../../assets/cities/dark/city-7-dark.svg"
 import city_12_dark from "../../assets/cities/dark/city-12-dark.svg"
 import city_20_dark from "../../assets/cities/dark/city-20-dark.svg"
 import city_30_dark from "../../assets/cities/dark/city-30-dark.svg"
-import { selectCanBuild, spendDice } from "../../store/slices/diceSlice"
-import { ResourceType } from "../../constants/resources"
-import { addToPendingScore } from "../../store/slices/scoreSlice"
 
 interface CityProps {
     id: number,
@@ -45,34 +45,49 @@ const cityIconsDark: Readonly<Record<number, string>> = {
 }
 
 const City = (props: CityProps) => {
+    // Props and constants
+
+    const structureId = props.id
+    const cityNumber = GetCityNumber(structureId)
+
+    // Dispatch
+
     const dispatch = useAppDispatch();
-    const isStructureBuilt = useAppSelector(state => selectIsStructureBuilt(state))
-    const isCityBuilt = isStructureBuilt[props.id]
 
-    const cityCost = GetStructureCost(StructureType.City)
-    const canBuild = useAppSelector(state => selectCanBuild(state, cityCost))
-
-    const prerequisites = GetStructurePrerequisites(props.id)
-    const canBuildCity =
-        !isCityBuilt
-        && prerequisites.map((structureId: number) => isStructureBuilt[structureId]).every((isBuilt: boolean) => isBuilt)
-        && canBuild
+    // Selectors
 
     const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
+    const isCityBuilt = useAppSelector(state => selectIsStructureBuilt(state, structureId))
+    const hasResourcesNeeded = useAppSelector(state => selectHasResourcesNeeded(state, cityCost))
+    const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectHasPrerequisiteStructuresBuilt(state, structureId))
+
+    // Can build conditions
+
+    const canBuildCity =
+        gamePhaseBuilding
+        && !isCityBuilt
+        && hasPrerequisiteStructuresBuilt
+        && hasResourcesNeeded
+
+    // Conditional rendering
+
     const [ref, hovering] = useHover();
 
     const iconType = isCityBuilt
         ? IconType.Dark
         : IconType.Light
 
-    const cityNumber = GetCityNumber(props.id)
     const icon = iconType === IconType.Light
         ? cityIconsLight[cityNumber]
         : cityIconsDark[cityNumber]
 
+    const disableResourceCostPopup = !hovering || isCityBuilt
+
+    // Event handlers
+
     function handleClick() {
-        if (gamePhaseBuilding && canBuildCity) {
-            dispatch(buildStructure(props.id))
+        if (canBuildCity) {
+            dispatch(buildStructure(structureId))
 
             cityCost.forEach((resourceType: ResourceType) => {
                 dispatch(spendDice(JSON.stringify(resourceType)))
@@ -87,20 +102,18 @@ const City = (props: CityProps) => {
             <StyledCity
                 $top={props.top}
                 $left={props.left}
-                $width={15.5}
-                $pointer={gamePhaseBuilding && canBuildCity}
-                $pulse={gamePhaseBuilding && canBuildCity}>
+                $pointer={canBuildCity}
+                $pulse={canBuildCity}>
                 <StyledAsset src={icon} />
             </StyledCity>
             <ResourceCostPopup
-                disabled={!hovering || isCityBuilt}
-                cost={GetStructureCost(StructureType.City)}
+                disabled={disableResourceCostPopup}
+                cost={cityCost}
                 top={props.top - 25}
                 left={props.left - 41}
                 width={100}
                 arrowTop={props.top - 5}
                 arrowLeft={props.left + 6.5}
-                arrowWidth={5}
                 allowVertical
                 verticalTop={props.top - 117}
                 verticalLeft={props.left - 1}

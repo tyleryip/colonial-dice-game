@@ -1,7 +1,7 @@
-import { IconType, RoadType, StructureType } from "../../constants/enumerations"
+import { IconType, RoadType } from "../../constants/enumerations"
 import StyledAsset from "../Asset/StyledAsset"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { buildStructure, selectIsStructureBuilt } from "../../store/slices/structureSlice"
+import { buildStructure, selectHasPrerequisiteStructuresBuilt, selectIsStructureBuilt } from "../../store/slices/structureSlice"
 import { GetRoadType } from "../../constants/mappings"
 
 // Light icons
@@ -19,8 +19,8 @@ import StyledRoad from "./styles/StyledRoad"
 import { useHover } from "@uidotdev/usehooks"
 import { selectIsGamePhaseBuilding } from "../../store/slices/gameSlice"
 import ResourceCostPopup from "../Popups/ResourceCostPopup/ResourceCostPopup"
-import { GetStructureCost, GetStructurePrerequisites } from "../../constants/structures"
-import { selectCanBuild, spendDice } from "../../store/slices/diceSlice"
+import { roadCost } from "../../constants/structures"
+import { selectHasResourcesNeeded, spendDice } from "../../store/slices/diceSlice"
 import { ResourceType } from "../../constants/resources"
 import { addToPendingScore } from "../../store/slices/scoreSlice"
 
@@ -67,40 +67,58 @@ const resourceCostPopupArrowLeft: { -readonly [key in RoadType]: number } = {
 }
 
 const Road = (props: RoadProps) => {
+    // Props and constants
+    const structureId = props.id
+    const roadType = GetRoadType(structureId)
+    const roadPoints = 1
+
+    // Dispatch
+
     const dispatch = useAppDispatch();
-    const isStructureBuilt = useAppSelector(state => selectIsStructureBuilt(state))
-    const isRoadBuilt = isStructureBuilt[props.id]
 
-    const roadCost = GetStructureCost(StructureType.Road)
-    const canBuild = useAppSelector(state => selectCanBuild(state, roadCost))
+    // Selectors
 
-    const prerequisites = GetStructurePrerequisites(props.id)
+    const gamePhaseBuilding = useAppSelector(state => selectIsGamePhaseBuilding(state))
+    const isRoadBuilt = useAppSelector(state => selectIsStructureBuilt(state, structureId))
+    const hasResourcesNeeded = useAppSelector(state => selectHasResourcesNeeded(state, roadCost))
+    const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectHasPrerequisiteStructuresBuilt(state, structureId))
+
+    // Can build conditions
+
     const canBuildRoad =
-        !isRoadBuilt
-        && prerequisites.map((structureId: number) => isStructureBuilt[structureId]).every((isBuilt: boolean) => isBuilt)
-        && canBuild
+        gamePhaseBuilding
+        && !isRoadBuilt
+        && hasPrerequisiteStructuresBuilt
+        && hasResourcesNeeded
 
-    const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
+    // Conditional rendering
+
     const [ref, hovering] = useHover();
 
     const iconType = isRoadBuilt
         ? IconType.Dark
         : IconType.Light
 
-    const roadType = GetRoadType(props.id)
     const icon = iconType === IconType.Light
         ? roadIconsLight[roadType]
         : roadIconsDark[roadType]
 
+    const disableResourceCostPopup =
+        !hovering
+        || isRoadBuilt
+        || roadType == RoadType.Starting
+
+    // Event handlers
+
     function handleClick() {
-        if (gamePhaseBuilding && canBuildRoad) {
-            dispatch(buildStructure(props.id))
+        if (canBuildRoad) {
+            dispatch(buildStructure(structureId))
 
             roadCost.forEach((resourceType: ResourceType) => {
                 dispatch(spendDice(JSON.stringify(resourceType)))
             })
 
-            dispatch(addToPendingScore(1))
+            dispatch(addToPendingScore(roadPoints))
         }
     }
 
@@ -110,19 +128,18 @@ const Road = (props: RoadProps) => {
                 $top={props.top}
                 $left={props.left}
                 $width={props.width}
-                $pointer={gamePhaseBuilding && canBuildRoad}
-                $pulse={gamePhaseBuilding && canBuildRoad}>
+                $pointer={canBuildRoad}
+                $pulse={canBuildRoad}>
                 <StyledAsset src={icon} />
             </StyledRoad>
             <ResourceCostPopup
-                disabled={!hovering || isRoadBuilt || roadType == RoadType.Starting}
+                disabled={disableResourceCostPopup}
                 cost={roadCost}
                 top={props.top + resourceCostPopupTop[roadType]}
                 left={props.left + resourceCostPopupLeft[roadType]}
                 width={42}
                 arrowTop={props.top - 5}
-                arrowLeft={props.left + resourceCostPopupArrowLeft[roadType]}
-                arrowWidth={5} />
+                arrowLeft={props.left + resourceCostPopupArrowLeft[roadType]} />
         </div>
     )
 }

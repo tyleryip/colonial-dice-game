@@ -142,20 +142,6 @@ export function GetStructureType(structureId: number): StructureType {
     return structureTypes[structureId]
 }
 
-/**
- * Maps a StructureType to Resources
- */
-const cost: { -readonly [key in StructureType]: ResourceType[] } = {
-    [StructureType.Road]: [ResourceType.WOOD, ResourceType.BRICK],
-    [StructureType.Settlement]: [ResourceType.WHEAT, ResourceType.WOOL, ResourceType.WOOD, ResourceType.BRICK],
-    [StructureType.City]: [ResourceType.ORE, ResourceType.ORE, ResourceType.ORE, ResourceType.WHEAT, ResourceType.WHEAT]
-}
-
-/**
- * Given a structureId, return the cost in Resources
- * @param structureId 
- * @returns the cost of the structure in Resources
- */
-export function GetStructureCost(type: StructureType): ResourceType[] {
-    return cost[type];
-}
+export const roadCost = [ResourceType.WOOD, ResourceType.BRICK]
+export const settlementCost = [ResourceType.WHEAT, ResourceType.WOOL, ResourceType.WOOD, ResourceType.BRICK]
+export const cityCost = [ResourceType.ORE, ResourceType.ORE, ResourceType.ORE, ResourceType.WHEAT, ResourceType.WHEAT]

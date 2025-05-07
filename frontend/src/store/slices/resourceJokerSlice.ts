@@ -41,7 +41,10 @@ export const { resetResourceJokers, spendResourceJoker } = resourceJokerSlice.ac
 
 // Selectors
 
-export const selectIsResourceJokerSpent = (state: RootState) => state.resourceJoker.isSpent;
+export const selectIsResourceJokerSpent = (state: RootState, resourceJokerId: number) => {
+    validateResourceJokerId(resourceJokerId)
+    return state.resourceJoker.isSpent[resourceJokerId];
+}
 
 // Helper functions
 

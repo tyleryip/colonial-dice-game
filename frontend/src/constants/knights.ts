@@ -18,7 +18,7 @@ const prerequisites: Readonly<Record<number, number | null>> = {
  * @param knightId 
  * @returns the knightId of its prerequisite knight
  */
-export function GetKnightPrerequisites(knightId: number): number | null {
+export function GetKnightPrerequisite(knightId: number): number | null {
     if (knightId < 0 || knightId > 5) {
         throw new Error(`knight with knightId=${knightId} not found`)
     }

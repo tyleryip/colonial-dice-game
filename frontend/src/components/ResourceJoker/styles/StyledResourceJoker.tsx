@@ -2,18 +2,15 @@ import { css, styled } from "styled-components"
 import pulse from "../../../animations/pulse"
 
 interface StyledResourceJokerProps {
-    $top: number,
-    $left: number,
-    $width: number,
     $pointer: boolean,
     $pulse: boolean
 }
 
 const StyledResourceJoker = styled.div<StyledResourceJokerProps>`
     position: absolute;
-    top: ${props => `${props.$top}%`};
-    left: ${props => `${props.$left}%`};
-    width: ${props => `${props.$width}%`};
+    top: 36%;
+    left: 37%;
+    width: 25%;
     z-index: 2;
 
     &:hover {

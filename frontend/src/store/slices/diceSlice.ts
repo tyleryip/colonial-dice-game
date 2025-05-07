@@ -142,7 +142,7 @@ export const selectRollCount = (state: RootState) => state.dice.rollCount
  * @param cost the cost of the structure or knight
  * @returns true if the user can build, false otherwise
  */
-export function selectCanBuild(state: RootState, cost: ResourceType[]): boolean {
+export function selectHasResourcesNeeded(state: RootState, cost: ResourceType[]): boolean {
     // Need to keep track of which dice are spent
     const spentDice: number[] = []
     state.dice.dice.forEach((dice: Dice, diceId: number) => {

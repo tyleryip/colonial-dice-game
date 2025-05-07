@@ -1,4 +1,3 @@
-import { Resources } from '../../../types/Resources'
 import StyledResourceCostIcon from './styles/StyledResourceCostIcon'
 import StyledResourceCostPopup from './styles/StyledResourceCostPopup'
 import StyledPopupArrow from '../styles/StyledPopupArrow';
@@ -13,14 +12,13 @@ import tooltip_arrow from "../../../assets/tooltip/tooltip-arrow.svg"
 import { ResourceType } from '../../../constants/resources';
 
 interface ResourceCostPopupProps {
-    cost: Resources
+    cost: ResourceType[]
     disabled: boolean
     top: number,
     left: number,
     width: number
     arrowTop: number,
     arrowLeft: number,
-    arrowWidth: number,
     allowVertical?: boolean,
     verticalTop?: number,
     verticalLeft?: number,
@@ -58,7 +56,7 @@ const ResourceCostPopup = (props: ResourceCostPopupProps) => {
                 src={tooltip_arrow}
                 $top={props.arrowTop}
                 $left={props.arrowLeft}
-                $width={props.arrowWidth} />
+                $width={5} />
         </>
         )
 }

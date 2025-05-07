@@ -2,18 +2,15 @@ import { css, styled } from "styled-components"
 import pulse from "../../../animations/pulse"
 
 interface StyledKnightProps {
-    $top: number,
-    $left: number,
-    $width: number,
     $pointer: boolean,
     $pulse: boolean
 }
 
 const StyledKnight = styled.div<StyledKnightProps>`
     position: absolute;
-    top: ${props => `${props.$top}%`};
-    left: ${props => `${props.$left}%`};
-    width: ${props => `${props.$width}%`};
+    top: 14%;
+    left: 44%;
+    width: 12%;
     z-index: 1;
 
     &:hover {

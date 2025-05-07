@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { RootState } from "../store"
+import { GetStructurePrerequisites } from "../../constants/structures"
 
 interface structureState {
     isBuilt: boolean[]
@@ -41,19 +42,29 @@ export const { resetStructures, buildStructure } = structureSlice.actions;
 
 // Selectors
 
-export const selectIsStructureBuilt = (state: RootState) => state.structure.isBuilt
+export const selectIsStructureBuilt = (state: RootState, structureId: number) => {
+    validateStructureId(structureId)
+    return state.structure.isBuilt[structureId]
+}
+export const selectHasPrerequisiteStructuresBuilt = (state: RootState, structureId: number) => {
+    validateStructureId(structureId)
+    const structurePrerequisites = GetStructurePrerequisites(structureId)
+    return structurePrerequisites
+        .map((structureId: number) => state.structure.isBuilt[structureId])
+        .every((isBuilt: boolean) => isBuilt)
+}
 
 // Helper functions
 
 function getInitialState(): boolean[] {
     const isBuilt = new Array(27).fill(false);
-    isBuilt[0] = true;
+    isBuilt[0] = true; // Starting road is always already built
 
     return isBuilt
 }
 
 function validateStructureId(structureId: number) {
-    if (structureId < 1 || structureId > 26) {
+    if (structureId < 0 || structureId > 26) {
         throw new Error(`Structure with id=${structureId} not found`)
     }
 }

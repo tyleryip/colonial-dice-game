@@ -43,8 +43,6 @@ const hexagonIcons: { -readonly [key in HexagonType]: string } = {
     [HexagonType.Desert]: desert_hexagon
 }
 
-const width = 37.5
-
 const verticalCenter = 33.5
 const verticalOffset = 16
 const verticalOffsets: { -readonly [key in HexagonType]: number } = {
@@ -75,7 +73,7 @@ export default function Hexagon(props: HexagonProps) {
     const left = horizontalOffsets[props.type]
 
     return (
-        <StyledHexagon $top={top} $left={left} $width={width} >
+        <StyledHexagon $top={top} $left={left} >
             <img width={"100%"} src={icon} />
             {props.knightType != undefined && <Knight type={props.knightType} />}
             {props.resourceJokerType != undefined && <ResourceJoker type={props.resourceJokerType} />}

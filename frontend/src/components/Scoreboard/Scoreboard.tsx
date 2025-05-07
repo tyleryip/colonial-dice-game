@@ -8,9 +8,13 @@ import StyledScoreboardBox from './styles/StyledScoreboardBox'
 import StyledTotalScore from './styles/StyledTotalScore'
 
 const Scoreboard = () => {
+    // Selectors
+
     const scores = useAppSelector(state => selectScoreValues(state))
     const pendingScore = useAppSelector(state => selectPendingScore(state))
     const currentTurn = useAppSelector(state => selectCurrentTurn(state))
+
+    // Helper functions
 
     function formatScoreboardDisplayValue(value: ScoreValue): string {
         if (value == null || value <= 0) {
@@ -49,11 +53,17 @@ const Scoreboard = () => {
     return (
         <StyledScoreboard>
             {Array.from({ length: 15 }).map((_, index: number) => {
-                return <StyledScoreboardBox key={index} $pending={index == currentTurn}>{getScoreboardBoxDisplayValue(index)}</StyledScoreboardBox>
+                return <StyledScoreboardBox key={index}
+                    $pending={index == currentTurn}>
+                    {getScoreboardBoxDisplayValue(index)}
+                </StyledScoreboardBox>
             })}
             <StyledTotalScore >
                 <StyledEqualsIcon>{"="}</StyledEqualsIcon>
-                <StyledScoreboardBox $pending={pendingScore != null && pendingScore > 0}>{getTotalScoreDisplayValue()}</StyledScoreboardBox>
+                <StyledScoreboardBox
+                    $pending={pendingScore != null && pendingScore > 0}>
+                    {getTotalScoreDisplayValue()}
+                </StyledScoreboardBox>
             </StyledTotalScore>
         </StyledScoreboard>
     )

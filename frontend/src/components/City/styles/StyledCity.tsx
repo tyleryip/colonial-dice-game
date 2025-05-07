@@ -4,7 +4,6 @@ import pulse from "../../../animations/pulse"
 interface StyledCityProps {
     $top: number,
     $left: number,
-    $width: number,
     $pointer: boolean,
     $pulse: boolean
 }
@@ -13,7 +12,7 @@ const StyledCity = styled.div<StyledCityProps>`
     position: absolute;
     top: ${props => `${props.$top}%`};
     left: ${props => `${props.$left}%`};
-    width: ${props => `${props.$width}%`};
+    width: 15.5%;
     z-index: 1;
 
     &:hover {

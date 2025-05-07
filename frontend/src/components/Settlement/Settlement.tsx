@@ -1,9 +1,16 @@
 import StyledAsset from "../Asset/StyledAsset"
-import { IconType, StructureType } from "../../constants/enumerations"
+import { IconType } from "../../constants/enumerations"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { buildStructure, selectIsStructureBuilt } from "../../store/slices/structureSlice"
+import { buildStructure, selectHasPrerequisiteStructuresBuilt, selectIsStructureBuilt } from "../../store/slices/structureSlice"
 import { GetSettlementNumber } from "../../constants/mappings"
 import StyledSettlement from "./styles/StyledSettlement"
+import { selectIsGamePhaseBuilding } from "../../store/slices/gameSlice"
+import { useHover } from "@uidotdev/usehooks"
+import ResourceCostPopup from "../Popups/ResourceCostPopup/ResourceCostPopup"
+import { settlementCost } from "../../constants/structures"
+import { selectHasResourcesNeeded, spendDice } from "../../store/slices/diceSlice"
+import { ResourceType } from "../../constants/resources"
+import { addToPendingScore } from "../../store/slices/scoreSlice"
 
 // Light icons
 import settlement_3_light from "../../assets/settlements/light/settlement-3-light.svg"
@@ -20,13 +27,6 @@ import settlement_5_dark from "../../assets/settlements/dark/settlement-5-dark.s
 import settlement_7_dark from "../../assets/settlements/dark/settlement-7-dark.svg"
 import settlement_9_dark from "../../assets/settlements/dark/settlement-9-dark.svg"
 import settlement_11_dark from "../../assets/settlements/dark/settlement-11-dark.svg"
-import { selectIsGamePhaseBuilding } from "../../store/slices/gameSlice"
-import { useHover } from "@uidotdev/usehooks"
-import ResourceCostPopup from "../Popups/ResourceCostPopup/ResourceCostPopup"
-import { GetStructureCost, GetStructurePrerequisites } from "../../constants/structures"
-import { selectCanBuild, spendDice } from "../../store/slices/diceSlice"
-import { ResourceType } from "../../constants/resources"
-import { addToPendingScore } from "../../store/slices/scoreSlice"
 
 interface SettlementProps {
     id: number,
@@ -53,30 +53,48 @@ const settlementIconsDark: Readonly<Record<number, string>> = {
 }
 
 const Settlement = (props: SettlementProps) => {
+    // Props and constants
+
+    const structureId = props.id
+    const settlementNumber = GetSettlementNumber(structureId)
+
+    // Dispatch
+
     const dispatch = useAppDispatch();
-    const isStructureBuilt = useAppSelector(state => selectIsStructureBuilt(state))
-    const isSettlementBuilt = isStructureBuilt[props.id]
 
-    const settlementCost = GetStructureCost(StructureType.Settlement)
-    const canBuild = useAppSelector(state => selectCanBuild(state, settlementCost))
-
-    const prerequisites = GetStructurePrerequisites(props.id)
-    const canBuildSettlement =
-        !isSettlementBuilt
-        && prerequisites.map((structureId: number) => isStructureBuilt[structureId]).every((isBuilt: boolean) => isBuilt)
-        && canBuild
+    // Selectors
 
     const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
+    const isSettlementBuilt = useAppSelector(state => selectIsStructureBuilt(state, structureId))
+    const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectHasPrerequisiteStructuresBuilt(state, structureId))
+    const hasResourcesNeeded = useAppSelector(state => selectHasResourcesNeeded(state, settlementCost))
+
+    // Built and can build conditions
+
+    const canBuildSettlement =
+        gamePhaseBuilding
+        && !isSettlementBuilt
+        && hasPrerequisiteStructuresBuilt
+        && hasResourcesNeeded
+
+    // Conditional rendering
+
     const [ref, hovering] = useHover();
 
     const iconType = isSettlementBuilt
         ? IconType.Dark
         : IconType.Light
 
-    const settlementNumber = GetSettlementNumber(props.id)
     const icon = iconType === IconType.Light
         ? settlementIconsLight[settlementNumber]
         : settlementIconsDark[settlementNumber]
+
+    const disableResourceCostPopup =
+        !hovering
+        || isSettlementBuilt
+        || !canBuildSettlement
+
+    // Event handlers
 
     function handleClick() {
         if (gamePhaseBuilding && canBuildSettlement) {
@@ -95,20 +113,18 @@ const Settlement = (props: SettlementProps) => {
             <StyledSettlement
                 $top={props.top}
                 $left={props.left}
-                $width={13}
-                $pointer={gamePhaseBuilding && canBuildSettlement}
-                $pulse={gamePhaseBuilding && canBuildSettlement}>
+                $pointer={canBuildSettlement}
+                $pulse={canBuildSettlement}>
                 <StyledAsset src={icon} />
             </StyledSettlement>
             <ResourceCostPopup
-                disabled={!hovering || isSettlementBuilt || (gamePhaseBuilding && !canBuildSettlement)}
+                disabled={disableResourceCostPopup}
                 cost={settlementCost}
                 top={props.top - 26}
                 left={props.left - 36}
                 width={85}
                 arrowTop={props.top - 4.5}
-                arrowLeft={props.left + 4}
-                arrowWidth={5} />
+                arrowLeft={props.left + 4} />
         </div>
     )
 }

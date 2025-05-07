@@ -47,29 +47,44 @@ const resourceJokerIconsDark: { -readonly [key in ResourceJokerType]: string } =
 }
 
 const ResourceJoker = (props: ResourceJokerProps) => {
-    const dispatch = useAppDispatch();
-    const resourceJokerId = GetResourceJokerId(props.type)
-    const isKnightBuilt = useAppSelector(state => selectIsKnightBuilt(state))
-    const resourceJokerAvailable = isKnightBuilt[resourceJokerId]
-    const resourceJokerIsSpent = useAppSelector(state => selectIsResourceJokerSpent(state))
-    const isSpent = resourceJokerIsSpent[resourceJokerId]
+    // Props and constants
+    const resourceJokerType = props.type
+    const resourceJokerId = GetResourceJokerId(resourceJokerType)
 
-    const canUseResourceJoker =
-        resourceJokerAvailable
-        && !isSpent
+    // Dispatch
+
+    const dispatch = useAppDispatch();
+
+    // Selectors
 
     const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
+    // Each resource joker will line up with its corresponding knight (ex. knightId 1 = resourceJokerId 1)
+    const resourceJokerAvailable = useAppSelector(state => selectIsKnightBuilt(state, resourceJokerId))
+    const resourceJokerIsSpent = useAppSelector(state => selectIsResourceJokerSpent(state, resourceJokerId))
 
-    const iconType = isSpent
+    // Can spend conditions
+
+    const canSpendResourceJoker =
+        gamePhaseBuilding
+        && !resourceJokerIsSpent
+        && resourceJokerAvailable
+
+    // Conditional rendering
+
+    const iconType = resourceJokerIsSpent
         ? IconType.Dark
         : IconType.Light
 
     const icon = iconType === IconType.Light
-        ? resourceJokerIconsLight[props.type]
-        : resourceJokerIconsDark[props.type]
+        ? resourceJokerIconsLight[resourceJokerType]
+        : resourceJokerIconsDark[resourceJokerType]
+
+    // Event handlers
 
     function handleClick() {
-        if (gamePhaseBuilding && canUseResourceJoker) {
+        // TODO: handle the wildcard joker selection
+
+        if (canSpendResourceJoker) {
             dispatch(setResourceJokerFlag(resourceJokerId))
         }
     }
@@ -77,11 +92,8 @@ const ResourceJoker = (props: ResourceJokerProps) => {
     return (
         <div onClick={handleClick}>
             <StyledResourceJoker
-                $top={36}
-                $left={37}
-                $width={25}
-                $pointer={gamePhaseBuilding && canUseResourceJoker}
-                $pulse={gamePhaseBuilding && canUseResourceJoker}>
+                $pointer={gamePhaseBuilding && canSpendResourceJoker}
+                $pulse={gamePhaseBuilding && canSpendResourceJoker}>
                 <StyledAsset src={icon} />
             </StyledResourceJoker>
         </div>

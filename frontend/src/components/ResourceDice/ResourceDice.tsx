@@ -4,7 +4,7 @@ import StyledLock from "./styles/StyledLock";
 import { DiceValue } from "../../types/DiceValue";
 import TradingPopup from "../Popups/TradingPopup/TradingPopup";
 import { useState } from "react";
-import { useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { selectIsGamePhaseBuilding, selectIsGamePhaseRolling } from "../../store/slices/gameSlice";
 import { ResourceType } from "../../constants/resources";
 
@@ -17,6 +17,7 @@ import brick_face from "../../assets/dice/brick-face.svg";
 import gold_face from "../../assets/dice/gold-face.svg";
 import blank_face from "../../assets/dice/blank_face.svg";
 import lock from "../../assets/dice/lock.svg"
+import { toggleDiceLock } from "../../store/slices/diceSlice";
 
 interface ResourceDiceProps {
   id: number;
@@ -26,7 +27,6 @@ interface ResourceDiceProps {
   isLocked: boolean;
   isSpent: boolean;
   isTradeable: boolean;
-  onToggleDiceLocked: (id: number) => void
 }
 
 const faceValues = [
@@ -41,71 +41,86 @@ const faceValues = [
 const diceWidth = 100;
 
 const ResourceDice = (props: ResourceDiceProps) => {
-  const [showTradingPopup, setShowTradingPopup] = useState(false);
+  // Props and constants
+  const diceId = props.id
+  const diceValue = props.value
+  const isLocked = props.isLocked
+  const isSpent = props.isSpent
+  const rolling = props.rolling
+  const isTradeable = props.isTradeable
+  const [tradingPopupOpen, setTradingPopupOpen] = useState(false);
+
+  // Dispatch
+
+  const dispatch = useAppDispatch();
+
+  // Selectors
 
   const gamePhaseRolling = useAppSelector((state) => selectIsGamePhaseRolling(state))
   const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
 
-  // Conditionally render dice face
-  const diceFace = (props.rolling && !props.isLocked) || props.value === null
+  // Conditional rendering
+
+  const diceFace = (rolling && !isLocked) || diceValue === null
     ? blank_face
-    : faceValues[props.value]
+    : faceValues[diceValue]
 
-  // Dice face should conditionally pulse and open a popup if tradeable, unspent, and in building game phase
-  const isTradeable = gamePhaseBuilding
-    && props.value == ResourceType.GOLD.id
-    && !props.isSpent
-    && props.isTradeable
+  const canOpenTradePopup = gamePhaseBuilding
+    && diceValue == ResourceType.GOLD.id
+    && !isSpent
+    && isTradeable
 
-  // Dice face should wobble when rolling and unlocked
-  const wobble = props.rolling && !props.isLocked
+  const wobble = rolling && !isLocked
 
-  // Cursor should be pointer if it meets conditions to handleClick
-  const pointer = (gamePhaseRolling && props.value !== null) || isTradeable
+  const pointer = (gamePhaseRolling && diceValue !== null) || isTradeable
 
-  const tooltip = gamePhaseRolling && props.value !== null && !props.isLocked
+  const tooltip = gamePhaseRolling && diceValue !== null && !isLocked
     ? "Lock dice"
-    : gamePhaseRolling && props.value !== null && props.isLocked
+    : gamePhaseRolling && diceValue !== null && isLocked
       ? "Unlock dice"
       : isTradeable
         ? "Trade gold"
         : ""
 
+  // Event handlers
+
   function handleClick() {
     if (gamePhaseRolling
-      && props.value !== null) {
-      props.onToggleDiceLocked(props.id)
+      && diceValue !== null) {
+      dispatch(toggleDiceLock(diceId))
     }
 
     if (gamePhaseBuilding) {
+      // TODO: handle resource joker setting
+
       if (isTradeable) {
-        setShowTradingPopup(!showTradingPopup);
+        setTradingPopupOpen(!tradingPopupOpen);
       }
     }
   }
 
   function handleCloseTradePopup() {
-    setShowTradingPopup(false);
+    setTradingPopupOpen(false);
   }
 
   return (
     <StyledResourceDice title={tooltip} $pointer={pointer}>
       <TradingPopup
-        diceId={props.id}
-        disabled={!showTradingPopup}
+        diceId={diceId}
+        disabled={!tradingPopupOpen}
         onClose={handleCloseTradePopup} />
       <StyledResourceDiceFace
         src={diceFace}
         onClick={handleClick}
         $width={diceWidth}
-        $grayscale={props.isSpent}
-        $pulse={isTradeable}
+        $grayscale={isSpent}
+        $pulse={canOpenTradePopup}
         $wobble={wobble}
         $wobbleDurationMilliseconds={props.rollDurationMilliseconds} />
       <StyledLock
         width={`${diceWidth * 0.25}%`}
         src={lock}
-        $locked={props.isLocked} />
+        $locked={isLocked} />
     </StyledResourceDice>
   );
 };
