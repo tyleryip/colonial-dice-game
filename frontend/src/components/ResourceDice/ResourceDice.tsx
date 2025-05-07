@@ -4,6 +4,9 @@ import StyledLock from "./styles/StyledLock";
 import { DiceValue } from "../../types/DiceValue";
 import TradingPopup from "../Popups/TradingPopup/TradingPopup";
 import { useState } from "react";
+import { useAppSelector } from "../../store/hooks";
+import { selectIsGamePhaseBuilding, selectIsGamePhaseRolling } from "../../store/slices/gameSlice";
+import { ResourceType } from "../../constants/resources";
 
 // Dice faces
 import ore_face from "../../assets/dice/ore-face.svg";
@@ -14,9 +17,6 @@ import brick_face from "../../assets/dice/brick-face.svg";
 import gold_face from "../../assets/dice/gold-face.svg";
 import blank_face from "../../assets/dice/blank_face.svg";
 import lock from "../../assets/dice/lock.svg"
-import { useAppSelector } from "../../store/hooks";
-import { selectIsGamePhaseBuilding, selectIsGamePhaseRolling } from "../../store/slices/gameSlice";
-import { ResourceType } from "../../constants/resources";
 
 interface ResourceDiceProps {
   id: number;
@@ -77,8 +77,10 @@ const ResourceDice = (props: ResourceDiceProps) => {
       props.onToggleDiceLocked(props.id)
     }
 
-    if ((gamePhaseBuilding && isTradeable)) {
-      setShowTradingPopup(!showTradingPopup);
+    if (gamePhaseBuilding) {
+      if (isTradeable) {
+        setShowTradingPopup(!showTradingPopup);
+      }
     }
   }
 

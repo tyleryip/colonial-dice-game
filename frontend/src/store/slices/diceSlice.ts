@@ -7,6 +7,7 @@ import { ResourceType } from "../../constants/resources";
 interface diceState {
     dice: Dice[],
     rollCount: number,
+    resourceJokerFlag: number | null
 }
 
 const initialState: diceState = {
@@ -16,13 +17,21 @@ const initialState: diceState = {
             locked: false,
             spent: false
         }),
-    rollCount: 0
+    rollCount: 0,
+    resourceJokerFlag: null
 }
 
 export const diceSlice = createSlice({
     name: 'dice',
     initialState: initialState,
     reducers: {
+        /**
+         * When the user has made a selection for which dice the want to set with the resource joker
+         * @param state 
+         */
+        clearResourceJokerFlag: (state) => {
+            state.resourceJokerFlag = null
+        },
         /**
          * When the user clicks the roll button
          * @param state 
@@ -38,6 +47,7 @@ export const diceSlice = createSlice({
         resetDice: (state) => {
             state.dice = initialState.dice;
             state.rollCount = initialState.rollCount;
+            state.resourceJokerFlag = null
         },
         /**
          * When the user trades their gold in for a resource of their choice
@@ -62,6 +72,14 @@ export const diceSlice = createSlice({
          */
         setDiceSpent: (state, action: PayloadAction<number>) => {
             state.dice[action.payload].spent = true
+        },
+        /**
+         * When the user clicks a resource joker and wants to pick a dice to set
+         * @param state 
+         * @param action 
+         */
+        setResourceJokerFlag: (state, action: PayloadAction<number>) => {
+            state.resourceJokerFlag = action.payload
         },
         /**
          * When the user trades two gold in for a resource of their choice, set one of the gold to spent
@@ -100,7 +118,18 @@ export interface SetDicePayload {
     value: DiceValue
 }
 
-export const { rollDice, resetDice, resetDiceLocks, setDice, setRollCount, setDiceSpent, spendDice, toggleDiceLock } = diceSlice.actions
+export const {
+    clearResourceJokerFlag,
+    rollDice,
+    resetDice,
+    resetDiceLocks,
+    setDice,
+    setRollCount,
+    setDiceSpent,
+    setResourceJokerFlag,
+    spendDice,
+    toggleDiceLock
+} = diceSlice.actions
 
 // Selectors
 

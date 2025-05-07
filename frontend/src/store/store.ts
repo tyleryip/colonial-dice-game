@@ -18,6 +18,7 @@ export const store = configureStore({
     devTools: {
         actionCreators: {
             // Dice actions
+            ["Clear Resource Joker Flag"]: diceSlice.actions.clearResourceJokerFlag,
             ["Roll Dice"]: diceSlice.actions.rollDice,
             ["Reset Dice"]: diceSlice.actions.resetDice,
             ["Reset Dice Locks"]: diceSlice.actions.resetDiceLocks,
@@ -36,7 +37,6 @@ export const store = configureStore({
             ["Reset Knights"]: knightSlice.actions.resetKnights,
 
             // Resource joker actions
-            ["Build Resource Joker"]: resourceJokerSlice.actions.buildResourceJoker,
             ["Reset Resource Jokers"]: resourceJokerSlice.actions.resetResourceJokers,
             ["Spend Resource Joker"]: resourceJokerSlice.actions.spendResourceJoker,
 
