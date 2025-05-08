@@ -135,6 +135,9 @@ export const {
 
 export const selectDice = (state: RootState) => state.dice.dice
 export const selectRollCount = (state: RootState) => state.dice.rollCount
+export const selectResourceJokerFlag = (state: RootState) => state.dice.resourceJokerFlag
+
+export const selectAllDiceSpent = (state: RootState) => state.dice.dice.every(dice => dice.spent)
 
 /**
  * Determines if the user can build this structure or knight based on unspent inventory
@@ -142,7 +145,7 @@ export const selectRollCount = (state: RootState) => state.dice.rollCount
  * @param cost the cost of the structure or knight
  * @returns true if the user can build, false otherwise
  */
-export function selectHasResourcesNeeded(state: RootState, cost: ResourceType[]): boolean {
+export const selectHasResourcesNeeded = (state: RootState, cost: ResourceType[]): boolean => {
     // Need to keep track of which dice are spent
     const spentDice: number[] = []
     state.dice.dice.forEach((dice: Dice, diceId: number) => {

@@ -1,27 +1,28 @@
-import StyledAsset from "../Asset/StyledAsset"
 import { IconType, ResourceJokerType } from "../../constants/enumerations"
-import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { selectIsResourceJokerSpent } from "../../store/slices/resourceJokerSlice"
 import { GetResourceJokerId } from "../../constants/mappings"
-import StyledResourceJoker from "./styles/StyledResourceJoker"
-import { selectIsKnightBuilt } from "../../store/slices/knightSlice"
+import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { selectIsGamePhaseBuilding } from "../../store/slices/gameSlice"
-import { clearResourceJokerFlag, selectAllDiceSpent, selectResourceJokerFlag, setResourceJokerFlag } from "../../store/slices/diceSlice"
-import { getResourceType } from "../../constants/resources"
+import { selectIsKnightBuilt } from "../../store/slices/knightSlice"
+import { selectIsResourceJokerSpent } from "../../store/slices/resourceJokerSlice"
+import { setResourceJokerFlag } from "../../store/slices/diceSlice"
+import StyledResourceJoker from "../ResourceJoker/styles/StyledResourceJoker"
+import StyledAsset from "../Asset/StyledAsset"
+
+// Light icons
 import wool_joker_light from "../../assets/jokers/light/wool-joker-light.svg"
 import wheat_joker_light from "../../assets/jokers/light/wheat-joker-light.svg"
 import ore_joker_light from "../../assets/jokers/light/ore-joker-light.svg"
 import brick_joker_light from "../../assets/jokers/light/brick-joker-light.svg"
 import wood_joker_light from "../../assets/jokers/light/wood-joker-light.svg"
+import wildcard_joker_light from "../../assets/jokers/light/wildcard-joker-light.svg"
+
+// Dark icons
 import wool_joker_dark from "../../assets/jokers/dark/wool-joker-dark.svg"
 import wheat_joker_dark from "../../assets/jokers/dark/wheat-joker-dark.svg"
 import ore_joker_dark from "../../assets/jokers/dark/ore-joker-dark.svg"
+import wildcard_joker_dark from "../../assets/jokers/dark/wildcard-joker-dark.svg"
 import brick_joker_dark from "../../assets/jokers/dark/brick-joker-dark.svg"
 import wood_joker_dark from "../../assets/jokers/dark/wood-joker-dark.svg"
-
-interface ResourceJokerProps {
-    type: ResourceJokerType
-}
 
 const resourceJokerIconsLight: Readonly<Record<number, string>> = {
     0: ore_joker_light,
@@ -29,6 +30,7 @@ const resourceJokerIconsLight: Readonly<Record<number, string>> = {
     2: wool_joker_light,
     3: wood_joker_light,
     4: brick_joker_light,
+    5: wildcard_joker_light
 }
 
 const resourceJokerIconsDark: Readonly<Record<number, string>> = {
@@ -37,12 +39,12 @@ const resourceJokerIconsDark: Readonly<Record<number, string>> = {
     2: wool_joker_dark,
     3: wood_joker_dark,
     4: brick_joker_dark,
+    5: wildcard_joker_dark
 }
 
-const ResourceJoker = (props: ResourceJokerProps) => {
+const WildcardResourceJoker = () => {
     // Props and constants
-    const resourceJokerType = props.type
-    const resourceJokerId = GetResourceJokerId(resourceJokerType)
+    const resourceJokerId = GetResourceJokerId(ResourceJokerType.Wildcard)
 
     // Dispatch
 
@@ -54,8 +56,6 @@ const ResourceJoker = (props: ResourceJokerProps) => {
     // Each resource joker will line up with its corresponding knight (ex. knightId 1 = resourceJokerId 1)
     const resourceJokerAvailable = useAppSelector(state => selectIsKnightBuilt(state, resourceJokerId))
     const resourceJokerIsSpent = useAppSelector(state => selectIsResourceJokerSpent(state, resourceJokerId))
-    const resourceJokerFlag = useAppSelector(state => selectResourceJokerFlag(state))
-    const allDiceSpent = useAppSelector(state => selectAllDiceSpent(state))
 
     // Can spend conditions
 
@@ -63,13 +63,6 @@ const ResourceJoker = (props: ResourceJokerProps) => {
         gamePhaseBuilding
         && !resourceJokerIsSpent
         && resourceJokerAvailable
-        && resourceJokerFlag == null
-        && !allDiceSpent
-
-    const canCancelResourceJoker =
-        gamePhaseBuilding
-        && !resourceJokerIsSpent
-        && resourceJokerFlag == resourceJokerId
 
     // Conditional rendering
 
@@ -78,59 +71,26 @@ const ResourceJoker = (props: ResourceJokerProps) => {
         : IconType.Light
 
     const icon = iconType === IconType.Light
-        ? resourceJokerIconsLight[resourceJokerType]
-        : resourceJokerIconsDark[resourceJokerType]
-
-    const tooltip = (): string => {
-        if (canSpendResourceJoker) {
-            return `Set any dice to ${getResourceType(resourceJokerId).toString()}`
-        }
-
-        if (canCancelResourceJoker) {
-            return "Cancel"
-        }
-
-        return ""
-    }
-
-    const pulseDurationSeconds = (): number => {
-        if (canSpendResourceJoker) {
-            return 1
-        }
-
-        if (canCancelResourceJoker) {
-            return 1.5
-        }
-
-        return 0
-    }
+        ? resourceJokerIconsLight[resourceJokerId]
+        : resourceJokerIconsDark[resourceJokerId]
 
     // Event handlers
 
-    const handleClick = () => {
+    function handleClick() {
         if (canSpendResourceJoker) {
             dispatch(setResourceJokerFlag(resourceJokerId))
-            return
-        }
-
-        if (canCancelResourceJoker) {
-            dispatch(clearResourceJokerFlag())
-            return
         }
     }
 
     return (
         <div onClick={handleClick}>
             <StyledResourceJoker
-                title={tooltip()}
-                $pointer={canSpendResourceJoker || canCancelResourceJoker}
-                $pulse={canSpendResourceJoker || canCancelResourceJoker}
-                $pulseDurationSeconds={pulseDurationSeconds()}
-                $pending={canCancelResourceJoker}>
+                $pointer={gamePhaseBuilding && canSpendResourceJoker}
+                $pulse={gamePhaseBuilding && canSpendResourceJoker}>
                 <StyledAsset src={icon} />
             </StyledResourceJoker>
         </div>
     )
 }
 
-export default ResourceJoker
+export default WildcardResourceJoker

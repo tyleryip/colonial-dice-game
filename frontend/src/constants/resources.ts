@@ -13,3 +13,15 @@ export class ResourceType {
         return this.name;
     }
 }
+
+export const getResourceType = (resourceId: number): ResourceType => {
+    switch (resourceId) {
+        case 0: return ResourceType.ORE
+        case 1: return ResourceType.WHEAT
+        case 2: return ResourceType.WOOL
+        case 3: return ResourceType.WOOD
+        case 4: return ResourceType.BRICK
+        case 5: return ResourceType.GOLD
+        default: throw new Error("Unknown ResourceType")
+    }
+}

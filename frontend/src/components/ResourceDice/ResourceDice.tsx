@@ -6,7 +6,7 @@ import TradingPopup from "../Popups/TradingPopup/TradingPopup";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { selectIsGamePhaseBuilding, selectIsGamePhaseRolling } from "../../store/slices/gameSlice";
-import { ResourceType } from "../../constants/resources";
+import { getResourceType, ResourceType } from "../../constants/resources";
 
 // Dice faces
 import ore_face from "../../assets/dice/ore-face.svg";
@@ -17,7 +17,8 @@ import brick_face from "../../assets/dice/brick-face.svg";
 import gold_face from "../../assets/dice/gold-face.svg";
 import blank_face from "../../assets/dice/blank_face.svg";
 import lock from "../../assets/dice/lock.svg"
-import { toggleDiceLock } from "../../store/slices/diceSlice";
+import { toggleDiceLock, selectResourceJokerFlag, setDice, clearResourceJokerFlag } from "../../store/slices/diceSlice";
+import { spendResourceJoker } from "../../store/slices/resourceJokerSlice";
 
 interface ResourceDiceProps {
   id: number;
@@ -56,8 +57,9 @@ const ResourceDice = (props: ResourceDiceProps) => {
 
   // Selectors
 
-  const gamePhaseRolling = useAppSelector((state) => selectIsGamePhaseRolling(state))
-  const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
+  const gamePhaseRolling = useAppSelector(state => selectIsGamePhaseRolling(state))
+  const gamePhaseBuilding = useAppSelector(state => selectIsGamePhaseBuilding(state))
+  const resourceJokerFlag = useAppSelector(state => selectResourceJokerFlag(state))
 
   // Conditional rendering
 
@@ -65,33 +67,53 @@ const ResourceDice = (props: ResourceDiceProps) => {
     ? blank_face
     : faceValues[diceValue]
 
-  const canOpenTradePopup = gamePhaseBuilding
+  const canOpenTradePopup =
+    gamePhaseBuilding
     && diceValue == ResourceType.GOLD.id
     && !isSpent
     && isTradeable
 
+  const canSetWithResourceJoker =
+    gamePhaseBuilding
+    && resourceJokerFlag != null
+    && !isSpent
+
   const wobble = rolling && !isLocked
 
-  const pointer = (gamePhaseRolling && diceValue !== null) || isTradeable
+  const pointer =
+    (gamePhaseRolling && diceValue !== null)
+    || canOpenTradePopup
+    || canSetWithResourceJoker
 
-  const tooltip = gamePhaseRolling && diceValue !== null && !isLocked
-    ? "Lock dice"
-    : gamePhaseRolling && diceValue !== null && isLocked
-      ? "Unlock dice"
-      : isTradeable
-        ? "Trade gold"
-        : ""
+  const getTooltip = (): string => {
+    if (gamePhaseRolling && diceValue != null) {
+      return isLocked ? "Unlock dice" : "Lock dice"
+    }
+
+    if (gamePhaseBuilding && resourceJokerFlag != null) {
+      return `Set to ${getResourceType(resourceJokerFlag).toString()}`
+    }
+
+    return isTradeable ? "Trade gold" : ""
+  }
 
   // Event handlers
 
-  function handleClick() {
+  const handleClick = () => {
     if (gamePhaseRolling
       && diceValue !== null) {
       dispatch(toggleDiceLock(diceId))
+      return
     }
 
     if (gamePhaseBuilding) {
-      // TODO: handle resource joker setting
+      // Resource joker setting takes priority over gold trading
+      if (resourceJokerFlag != null) {
+        dispatch(setDice({ id: diceId, value: resourceJokerFlag as DiceValue }))
+        dispatch(clearResourceJokerFlag())
+        dispatch(spendResourceJoker(resourceJokerFlag))
+        return; // Prevent setting a gold dice from also opening up the trading popup
+      }
 
       if (isTradeable) {
         setTradingPopupOpen(!tradingPopupOpen);
@@ -99,12 +121,12 @@ const ResourceDice = (props: ResourceDiceProps) => {
     }
   }
 
-  function handleCloseTradePopup() {
+  const handleCloseTradePopup = () => {
     setTradingPopupOpen(false);
   }
 
   return (
-    <StyledResourceDice title={tooltip} $pointer={pointer}>
+    <StyledResourceDice title={getTooltip()} $pointer={pointer}>
       <TradingPopup
         diceId={diceId}
         disabled={!tradingPopupOpen}
@@ -114,7 +136,7 @@ const ResourceDice = (props: ResourceDiceProps) => {
         onClick={handleClick}
         $width={diceWidth}
         $grayscale={isSpent}
-        $pulse={canOpenTradePopup}
+        $pulse={canOpenTradePopup || canSetWithResourceJoker}
         $wobble={wobble}
         $wobbleDurationMilliseconds={props.rollDurationMilliseconds} />
       <StyledLock

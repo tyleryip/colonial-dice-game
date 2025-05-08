@@ -40,7 +40,7 @@ const BuildButton = (props: BuildButtonProps) => {
 
     // Event handlers
 
-    function handleClick() {
+    const handleClick = () => {
         if (gamePhaseRolling) {
             dispatch(setGamePhase(GamePhase.Building))
             dispatch(resetDiceLocks())

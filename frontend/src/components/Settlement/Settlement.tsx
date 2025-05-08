@@ -92,7 +92,8 @@ const Settlement = (props: SettlementProps) => {
     const disableResourceCostPopup =
         !hovering
         || isSettlementBuilt
-        || !canBuildSettlement
+
+    const tooltip = canBuildSettlement ? "Build settlement" : ""
 
     // Event handlers
 
@@ -111,6 +112,7 @@ const Settlement = (props: SettlementProps) => {
     return (
         <div ref={ref} onClick={handleClick}>
             <StyledSettlement
+                title={tooltip}
                 $top={props.top}
                 $left={props.left}
                 $pointer={canBuildSettlement}

@@ -81,7 +81,11 @@ const City = (props: CityProps) => {
         ? cityIconsLight[cityNumber]
         : cityIconsDark[cityNumber]
 
-    const disableResourceCostPopup = !hovering || isCityBuilt
+    const disableResourceCostPopup =
+        !hovering
+        || isCityBuilt
+
+    const tooltip = canBuildCity ? "Build city" : ""
 
     // Event handlers
 
@@ -100,6 +104,7 @@ const City = (props: CityProps) => {
     return (
         <div ref={ref} onClick={handleClick}>
             <StyledCity
+                title={tooltip}
                 $top={props.top}
                 $left={props.left}
                 $pointer={canBuildCity}

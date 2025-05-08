@@ -15,6 +15,7 @@ import wool_hexagon from "../../assets/hexagons/wool-hexagon.svg";
 import wood_hexagon from "../../assets/hexagons/wood-hexagon.svg";
 import brick_hexagon from "../../assets/hexagons/brick-hexagon.svg";
 import desert_hexagon from "../../assets/hexagons/desert-hexagon.svg";
+import WildcardResourceJoker from '../WildcardResourceJoker/WildcardResourceJoker'
 
 interface HexagonProps {
     type: HexagonType,
@@ -68,16 +69,29 @@ const horizontalOffsets: { -readonly [key in HexagonType]: number } = {
 }
 
 export default function Hexagon(props: HexagonProps) {
+    // Props and constants
+
     const icon = hexagonIcons[props.type]
     const top = verticalOffsets[props.type]
     const left = horizontalOffsets[props.type]
 
     return (
-        <StyledHexagon $top={top} $left={left} >
-            <img width={"100%"} src={icon} />
-            {props.knightType != undefined && <Knight type={props.knightType} />}
-            {props.resourceJokerType != undefined && <ResourceJoker type={props.resourceJokerType} />}
-            {props.structures != undefined && props.structures.map((s) => AddStructure(s))}
+        <StyledHexagon
+            $top={top}
+            $left={left} >
+            <img
+                width={"100%"}
+                src={icon} />
+            {props.knightType != undefined
+                && <Knight type={props.knightType} />}
+            {props.resourceJokerType != undefined
+                && props.resourceJokerType != ResourceJokerType.Wildcard
+                && <ResourceJoker type={props.resourceJokerType} />}
+            {props.resourceJokerType != undefined
+                && props.resourceJokerType == ResourceJokerType.Wildcard
+                && <WildcardResourceJoker />}
+            {props.structures != undefined
+                && props.structures.map((s) => AddStructure(s))}
         </StyledHexagon>
     )
 }

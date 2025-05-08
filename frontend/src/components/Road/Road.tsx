@@ -108,6 +108,8 @@ const Road = (props: RoadProps) => {
         || isRoadBuilt
         || roadType == RoadType.Starting
 
+    const tooltip = canBuildRoad ? "Build road" : ""
+
     // Event handlers
 
     function handleClick() {
@@ -125,6 +127,7 @@ const Road = (props: RoadProps) => {
     return (
         <div ref={ref} onClick={handleClick}>
             <StyledRoad
+                title={tooltip}
                 $top={props.top}
                 $left={props.left}
                 $width={props.width}

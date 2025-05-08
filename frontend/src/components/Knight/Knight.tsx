@@ -89,6 +89,8 @@ const Knight = (props: KnightProps) => {
 
     const disableResourceCostPopup = !hovering || isKnightBuilt
 
+    const tooltip = canBuildKnight ? "Build knight" : ""
+
     // Event handlers
 
     function handleClick() {
@@ -106,6 +108,7 @@ const Knight = (props: KnightProps) => {
     return (
         <div ref={ref} onClick={handleClick}>
             <StyledKnight
+                title={tooltip}
                 $pointer={canBuildKnight}
                 $pulse={canBuildKnight}>
                 <StyledAsset src={icon} />
