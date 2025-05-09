@@ -1,8 +1,5 @@
 import StyledTradingPopup from './styles/StyledTradingPopup'
 import StyledTradingIcon from './styles/StyledTradingIcon';
-import { useAppDispatch } from '../../../store/hooks';
-import { setDice, SetDicePayload, spendDice } from '../../../store/slices/diceSlice';
-import { DiceValue } from '../../../types/DiceValue';
 import StyledPopupArrow from '../styles/StyledPopupArrow';
 import useClickOutside from '../../../hooks/useClickOutside';
 import { ResourceType } from '../../../constants/resources';
@@ -16,8 +13,9 @@ import brick_face from "../../../assets/dice/brick-face.svg";
 import tooltip_arrow from "../../../assets/tooltip/tooltip-arrow.svg"
 
 interface TradingPopupProps {
-    diceId: number,
     disabled: boolean,
+    tooltip: (resourceType: ResourceType) => string
+    onClick: (resourceId: number) => void,
     onClose: () => void
 }
 
@@ -35,31 +33,15 @@ const TradingPopup = (props: TradingPopupProps) => {
     // If any clicks are registered outside of this div, invoke the onClose function
     const ref = useClickOutside(() => props.onClose());
 
-    const dispatch = useAppDispatch()
-
-    const tooltip = (resourceType: ResourceType) => `Trade for ${resourceType.name}`
-
-    function handleClick(resourceId: number) {
-        const setDicePayload: SetDicePayload = {
-            id: props.diceId,
-            value: resourceId as DiceValue
-        }
-
-        dispatch(setDice(setDicePayload))
-        dispatch(spendDice(JSON.stringify(ResourceType.GOLD)))
-
-        props.onClose();
-    }
-
     return !props.disabled
         && (
             <div ref={ref}>
                 <StyledTradingPopup>
                     {resourceTypes.map((resourceType: ResourceType, resourceId: number) => {
                         return <StyledTradingIcon
-                            title={tooltip(resourceType)}
+                            title={props.tooltip(resourceType)}
                             key={resourceId}
-                            onClick={() => handleClick(resourceId)}
+                            onClick={() => props.onClick(resourceId)}
                             src={faceValues[resourceId]} />
                     })}
                 </StyledTradingPopup>

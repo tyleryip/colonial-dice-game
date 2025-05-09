@@ -23,6 +23,9 @@ import ore_joker_dark from "../../assets/jokers/dark/ore-joker-dark.svg"
 import wildcard_joker_dark from "../../assets/jokers/dark/wildcard-joker-dark.svg"
 import brick_joker_dark from "../../assets/jokers/dark/brick-joker-dark.svg"
 import wood_joker_dark from "../../assets/jokers/dark/wood-joker-dark.svg"
+import { useState } from "react"
+import TradingPopup from "../Popups/TradingPopup/TradingPopup"
+import { ResourceType } from "../../constants/resources"
 
 const resourceJokerIconsLight: Readonly<Record<number, string>> = {
     0: ore_joker_light,
@@ -45,6 +48,8 @@ const resourceJokerIconsDark: Readonly<Record<number, string>> = {
 const WildcardResourceJoker = () => {
     // Props and constants
     const resourceJokerId = GetResourceJokerId(ResourceJokerType.Wildcard)
+    const [tradingPopupOpen, setTradingPopupOpen] = useState(false);
+    const [targetResource, setTargetResource] = useState<number | null>(null)
 
     // Dispatch
 
@@ -70,24 +75,63 @@ const WildcardResourceJoker = () => {
         ? IconType.Dark
         : IconType.Light
 
-    const icon = iconType === IconType.Light
-        ? resourceJokerIconsLight[resourceJokerId]
-        : resourceJokerIconsDark[resourceJokerId]
+    const icon = (): string => {
+        if (targetResource != null) {
+            return resourceJokerIconsLight[targetResource]
+        }
+
+        return iconType === IconType.Light
+            ? resourceJokerIconsLight[resourceJokerId]
+            : resourceJokerIconsDark[resourceJokerId]
+    }
+
+    const getTradingPopupTooltip = (resourceType: ResourceType) => {
+        return `Trade for ${resourceType.name}`;
+    }
+
+    const pulseDurationSeconds = (): number => {
+        if (canSpendResourceJoker) {
+            return 1
+        }
+
+        if (targetResource != null) {
+            return 1.5
+        }
+
+        return 0
+    }
 
     // Event handlers
 
-    function handleClick() {
+    const handleClick = () => {
         if (canSpendResourceJoker) {
-            dispatch(setResourceJokerFlag(resourceJokerId))
+            setTradingPopupOpen(true)
         }
+    }
+
+    const handleTradePopupClick = (resourceId: number) => {
+        setTargetResource(resourceId)
+
+        setTradingPopupOpen(false);
+    }
+
+    const handleCloseTradePopup = () => {
+        setTradingPopupOpen(false);
     }
 
     return (
         <div onClick={handleClick}>
+            <TradingPopup
+                tooltip={getTradingPopupTooltip}
+                disabled={!tradingPopupOpen}
+                onClick={handleTradePopupClick}
+                onClose={handleCloseTradePopup} />
             <StyledResourceJoker
                 $pointer={gamePhaseBuilding && canSpendResourceJoker}
-                $pulse={gamePhaseBuilding && canSpendResourceJoker}>
-                <StyledAsset src={icon} />
+                $pulse={gamePhaseBuilding && canSpendResourceJoker}
+                $pulseDurationSeconds={pulseDurationSeconds()}
+                $pending={targetResource != null}>
+                <StyledAsset src={icon()} />
             </StyledResourceJoker>
         </div>
     )

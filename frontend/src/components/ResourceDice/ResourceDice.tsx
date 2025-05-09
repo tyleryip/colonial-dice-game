@@ -17,7 +17,7 @@ import brick_face from "../../assets/dice/brick-face.svg";
 import gold_face from "../../assets/dice/gold-face.svg";
 import blank_face from "../../assets/dice/blank_face.svg";
 import lock from "../../assets/dice/lock.svg"
-import { toggleDiceLock, selectResourceJokerFlag, setDice, clearResourceJokerFlag } from "../../store/slices/diceSlice";
+import { toggleDiceLock, selectResourceJokerFlag, setDice, clearResourceJokerFlag, SetDicePayload, spendDice } from "../../store/slices/diceSlice";
 import { spendResourceJoker } from "../../store/slices/resourceJokerSlice";
 
 interface ResourceDiceProps {
@@ -97,6 +97,10 @@ const ResourceDice = (props: ResourceDiceProps) => {
     return isTradeable ? "Trade gold" : ""
   }
 
+  const getTradingPopupTooltip = (resourceType: ResourceType) => {
+    return `Trade for ${resourceType.name}`;
+  }
+
   // Event handlers
 
   const handleClick = () => {
@@ -121,6 +125,18 @@ const ResourceDice = (props: ResourceDiceProps) => {
     }
   }
 
+  const handleTradePopupClick = (resourceId: number) => {
+    const setDicePayload: SetDicePayload = {
+      id: diceId,
+      value: resourceId as DiceValue
+    }
+
+    dispatch(setDice(setDicePayload))
+    dispatch(spendDice(JSON.stringify(ResourceType.GOLD)))
+
+    handleCloseTradePopup();
+  }
+
   const handleCloseTradePopup = () => {
     setTradingPopupOpen(false);
   }
@@ -128,8 +144,9 @@ const ResourceDice = (props: ResourceDiceProps) => {
   return (
     <StyledResourceDice title={getTooltip()} $pointer={pointer}>
       <TradingPopup
-        diceId={diceId}
+        tooltip={getTradingPopupTooltip}
         disabled={!tradingPopupOpen}
+        onClick={handleTradePopupClick}
         onClose={handleCloseTradePopup} />
       <StyledResourceDiceFace
         src={diceFace}
