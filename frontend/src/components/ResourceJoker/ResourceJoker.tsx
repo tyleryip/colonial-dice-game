@@ -6,7 +6,7 @@ import { GetResourceJokerId } from "../../constants/mappings"
 import StyledResourceJoker from "./styles/StyledResourceJoker"
 import { selectIsKnightBuilt } from "../../store/slices/knightSlice"
 import { selectIsGamePhaseBuilding } from "../../store/slices/gameSlice"
-import { clearResourceJokerFlag, selectAllDiceSpent, selectResourceJokerFlag, setResourceJokerFlag } from "../../store/slices/diceSlice"
+import { clearResourceJokerFlag, selectAllDiceSpent, selectResourceJokerFlag, selectWildcardJokerFlag, setResourceJokerFlag } from "../../store/slices/diceSlice"
 import { getResourceType } from "../../constants/resources"
 import wool_joker_light from "../../assets/jokers/light/wool-joker-light.svg"
 import wheat_joker_light from "../../assets/jokers/light/wheat-joker-light.svg"
@@ -55,6 +55,7 @@ const ResourceJoker = (props: ResourceJokerProps) => {
     const resourceJokerAvailable = useAppSelector(state => selectIsKnightBuilt(state, resourceJokerId))
     const resourceJokerIsSpent = useAppSelector(state => selectIsResourceJokerSpent(state, resourceJokerId))
     const resourceJokerFlag = useAppSelector(state => selectResourceJokerFlag(state))
+    const wildcardJokerFlag = useAppSelector(state => selectWildcardJokerFlag(state))
     const allDiceSpent = useAppSelector(state => selectAllDiceSpent(state))
 
     // Can spend conditions
@@ -64,6 +65,7 @@ const ResourceJoker = (props: ResourceJokerProps) => {
         && !resourceJokerIsSpent
         && resourceJokerAvailable
         && resourceJokerFlag == null
+        && wildcardJokerFlag == null
         && !allDiceSpent
 
     const canCancelResourceJoker =

@@ -15,7 +15,7 @@ import wool_hexagon from "../../assets/hexagons/wool-hexagon.svg";
 import wood_hexagon from "../../assets/hexagons/wood-hexagon.svg";
 import brick_hexagon from "../../assets/hexagons/brick-hexagon.svg";
 import desert_hexagon from "../../assets/hexagons/desert-hexagon.svg";
-import WildcardResourceJoker from '../WildcardResourceJoker/WildcardResourceJoker'
+import WildcardResourceJoker from '../WildcardJoker/WildcardJoker'
 
 interface HexagonProps {
     type: HexagonType,

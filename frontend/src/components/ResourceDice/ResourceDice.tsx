@@ -17,8 +17,10 @@ import brick_face from "../../assets/dice/brick-face.svg";
 import gold_face from "../../assets/dice/gold-face.svg";
 import blank_face from "../../assets/dice/blank_face.svg";
 import lock from "../../assets/dice/lock.svg"
-import { toggleDiceLock, selectResourceJokerFlag, setDice, clearResourceJokerFlag, SetDicePayload, spendDice } from "../../store/slices/diceSlice";
+import { toggleDiceLock, selectResourceJokerFlag, setDice, clearResourceJokerFlag, SetDicePayload, spendDice, selectWildcardJokerFlag, clearWildcardJokerFlag } from "../../store/slices/diceSlice";
 import { spendResourceJoker } from "../../store/slices/resourceJokerSlice";
+import { ResourceJokerType } from "../../constants/enumerations";
+import { GetResourceJokerId } from "../../constants/mappings";
 
 interface ResourceDiceProps {
   id: number;
@@ -60,6 +62,7 @@ const ResourceDice = (props: ResourceDiceProps) => {
   const gamePhaseRolling = useAppSelector(state => selectIsGamePhaseRolling(state))
   const gamePhaseBuilding = useAppSelector(state => selectIsGamePhaseBuilding(state))
   const resourceJokerFlag = useAppSelector(state => selectResourceJokerFlag(state))
+  const wildcardJokerFlag = useAppSelector(state => selectWildcardJokerFlag(state))
 
   // Conditional rendering
 
@@ -78,20 +81,35 @@ const ResourceDice = (props: ResourceDiceProps) => {
     && resourceJokerFlag != null
     && !isSpent
 
+  const canSetWithWildcardJoker =
+    gamePhaseBuilding
+    && wildcardJokerFlag != null
+    && !isSpent
+
   const wobble = rolling && !isLocked
+
+  const pulse =
+    canOpenTradePopup
+    || canSetWithResourceJoker
+    || canSetWithWildcardJoker
 
   const pointer =
     (gamePhaseRolling && diceValue !== null)
     || canOpenTradePopup
     || canSetWithResourceJoker
+    || canSetWithWildcardJoker
 
   const getTooltip = (): string => {
     if (gamePhaseRolling && diceValue != null) {
       return isLocked ? "Unlock dice" : "Lock dice"
     }
 
-    if (gamePhaseBuilding && resourceJokerFlag != null) {
+    if (gamePhaseBuilding && resourceJokerFlag != null && !isSpent) {
       return `Set to ${getResourceType(resourceJokerFlag).toString()}`
+    }
+
+    if (gamePhaseBuilding && wildcardJokerFlag != null && !isSpent) {
+      return `Set to ${getResourceType(wildcardJokerFlag).toString()}`
     }
 
     return isTradeable ? "Trade gold" : ""
@@ -110,8 +128,15 @@ const ResourceDice = (props: ResourceDiceProps) => {
       return
     }
 
-    if (gamePhaseBuilding) {
-      // Resource joker setting takes priority over gold trading
+    if (gamePhaseBuilding && !isSpent) {
+      // Resource and wildcard joker setting takes priority over gold trading
+      if (wildcardJokerFlag != null) {
+        dispatch(setDice({ id: diceId, value: wildcardJokerFlag as DiceValue }))
+        dispatch(clearWildcardJokerFlag())
+        dispatch(spendResourceJoker(GetResourceJokerId(ResourceJokerType.Wildcard)))
+        return; // Prevent setting a gold dice from also opening up the trading popup
+      }
+
       if (resourceJokerFlag != null) {
         dispatch(setDice({ id: diceId, value: resourceJokerFlag as DiceValue }))
         dispatch(clearResourceJokerFlag())
@@ -153,7 +178,7 @@ const ResourceDice = (props: ResourceDiceProps) => {
         onClick={handleClick}
         $width={diceWidth}
         $grayscale={isSpent}
-        $pulse={canOpenTradePopup || canSetWithResourceJoker}
+        $pulse={pulse}
         $wobble={wobble}
         $wobbleDurationMilliseconds={props.rollDurationMilliseconds} />
       <StyledLock

@@ -7,7 +7,8 @@ import { ResourceType } from "../../constants/resources";
 interface diceState {
     dice: Dice[],
     rollCount: number,
-    resourceJokerFlag: number | null
+    resourceJokerFlag: number | null,
+    wildcardJokerFlag: number | null
 }
 
 const initialState: diceState = {
@@ -18,7 +19,8 @@ const initialState: diceState = {
             spent: false
         }),
     rollCount: 0,
-    resourceJokerFlag: null
+    resourceJokerFlag: null,
+    wildcardJokerFlag: null
 }
 
 export const diceSlice = createSlice({
@@ -26,11 +28,18 @@ export const diceSlice = createSlice({
     initialState: initialState,
     reducers: {
         /**
-         * When the user has made a selection for which dice the want to set with the resource joker
+         * When the user has made a selection for which dice the want to set with the resource joker, or cancel
          * @param state 
          */
         clearResourceJokerFlag: (state) => {
             state.resourceJokerFlag = null
+        },
+        /**
+         * When the user has made a selection for which dice the want to set with the wildcard joker, or cancel
+         * @param state 
+         */
+        clearWildcardJokerFlag: (state) => {
+            state.wildcardJokerFlag = null
         },
         /**
          * When the user clicks the roll button
@@ -47,7 +56,8 @@ export const diceSlice = createSlice({
         resetDice: (state) => {
             state.dice = initialState.dice;
             state.rollCount = initialState.rollCount;
-            state.resourceJokerFlag = null
+            state.resourceJokerFlag = null;
+            state.wildcardJokerFlag = null;
         },
         /**
          * When the user trades their gold in for a resource of their choice
@@ -80,6 +90,14 @@ export const diceSlice = createSlice({
          */
         setResourceJokerFlag: (state, action: PayloadAction<number>) => {
             state.resourceJokerFlag = action.payload
+        },
+        /**
+         * When the user clicks a resource joker and wants to pick a dice to set
+         * @param state 
+         * @param action 
+         */
+        setWildcardJokerFlag: (state, action: PayloadAction<number>) => {
+            state.wildcardJokerFlag = action.payload
         },
         /**
          * When the user trades two gold in for a resource of their choice, set one of the gold to spent
@@ -120,6 +138,7 @@ export interface SetDicePayload {
 
 export const {
     clearResourceJokerFlag,
+    clearWildcardJokerFlag,
     rollDice,
     resetDice,
     resetDiceLocks,
@@ -127,6 +146,7 @@ export const {
     setRollCount,
     setDiceSpent,
     setResourceJokerFlag,
+    setWildcardJokerFlag,
     spendDice,
     toggleDiceLock
 } = diceSlice.actions
@@ -136,6 +156,7 @@ export const {
 export const selectDice = (state: RootState) => state.dice.dice
 export const selectRollCount = (state: RootState) => state.dice.rollCount
 export const selectResourceJokerFlag = (state: RootState) => state.dice.resourceJokerFlag
+export const selectWildcardJokerFlag = (state: RootState) => state.dice.wildcardJokerFlag
 
 export const selectAllDiceSpent = (state: RootState) => state.dice.dice.every(dice => dice.spent)
 

@@ -4,9 +4,11 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { selectIsGamePhaseBuilding } from "../../store/slices/gameSlice"
 import { selectIsKnightBuilt } from "../../store/slices/knightSlice"
 import { selectIsResourceJokerSpent } from "../../store/slices/resourceJokerSlice"
-import { setResourceJokerFlag } from "../../store/slices/diceSlice"
 import StyledResourceJoker from "../ResourceJoker/styles/StyledResourceJoker"
 import StyledAsset from "../Asset/StyledAsset"
+import { useState } from "react"
+import { ResourceType } from "../../constants/resources"
+import WildcardTradingPopup from "../Popups/WildcardTradingPopup/WildcardTradingPopup"
 
 // Light icons
 import wool_joker_light from "../../assets/jokers/light/wool-joker-light.svg"
@@ -23,9 +25,7 @@ import ore_joker_dark from "../../assets/jokers/dark/ore-joker-dark.svg"
 import wildcard_joker_dark from "../../assets/jokers/dark/wildcard-joker-dark.svg"
 import brick_joker_dark from "../../assets/jokers/dark/brick-joker-dark.svg"
 import wood_joker_dark from "../../assets/jokers/dark/wood-joker-dark.svg"
-import { useState } from "react"
-import TradingPopup from "../Popups/TradingPopup/TradingPopup"
-import { ResourceType } from "../../constants/resources"
+import { clearWildcardJokerFlag, selectAllDiceSpent, selectResourceJokerFlag, selectWildcardJokerFlag, setWildcardJokerFlag } from "../../store/slices/diceSlice"
 
 const resourceJokerIconsLight: Readonly<Record<number, string>> = {
     0: ore_joker_light,
@@ -49,7 +49,6 @@ const WildcardResourceJoker = () => {
     // Props and constants
     const resourceJokerId = GetResourceJokerId(ResourceJokerType.Wildcard)
     const [tradingPopupOpen, setTradingPopupOpen] = useState(false);
-    const [targetResource, setTargetResource] = useState<number | null>(null)
 
     // Dispatch
 
@@ -61,13 +60,24 @@ const WildcardResourceJoker = () => {
     // Each resource joker will line up with its corresponding knight (ex. knightId 1 = resourceJokerId 1)
     const resourceJokerAvailable = useAppSelector(state => selectIsKnightBuilt(state, resourceJokerId))
     const resourceJokerIsSpent = useAppSelector(state => selectIsResourceJokerSpent(state, resourceJokerId))
+    const resourceJokerFlag = useAppSelector(state => selectResourceJokerFlag(state))
+    const wildcardJokerFlag = useAppSelector(state => selectWildcardJokerFlag(state))
+    const allDiceSpent = useAppSelector(state => selectAllDiceSpent(state))
 
     // Can spend conditions
 
-    const canSpendResourceJoker =
+    const canSpendWildcardJoker =
         gamePhaseBuilding
         && !resourceJokerIsSpent
         && resourceJokerAvailable
+        && resourceJokerFlag == null
+        && wildcardJokerFlag == null
+        && !allDiceSpent
+
+    const canCancelWildcardJoker =
+        gamePhaseBuilding
+        && !resourceJokerIsSpent
+        && wildcardJokerFlag != null
 
     // Conditional rendering
 
@@ -76,8 +86,8 @@ const WildcardResourceJoker = () => {
         : IconType.Light
 
     const icon = (): string => {
-        if (targetResource != null) {
-            return resourceJokerIconsLight[targetResource]
+        if (wildcardJokerFlag != null) {
+            return resourceJokerIconsLight[wildcardJokerFlag]
         }
 
         return iconType === IconType.Light
@@ -85,16 +95,28 @@ const WildcardResourceJoker = () => {
             : resourceJokerIconsDark[resourceJokerId]
     }
 
+    const tooltip = (): string => {
+        if (canSpendWildcardJoker) {
+            return "Set any dice to resource of your choice"
+        }
+
+        if (canCancelWildcardJoker) {
+            return "Cancel"
+        }
+
+        return ""
+    }
+
     const getTradingPopupTooltip = (resourceType: ResourceType) => {
-        return `Trade for ${resourceType.name}`;
+        return `Set any dice to ${resourceType.name}`;
     }
 
     const pulseDurationSeconds = (): number => {
-        if (canSpendResourceJoker) {
+        if (canSpendWildcardJoker) {
             return 1
         }
 
-        if (targetResource != null) {
+        if (wildcardJokerFlag != null) {
             return 1.5
         }
 
@@ -104,15 +126,19 @@ const WildcardResourceJoker = () => {
     // Event handlers
 
     const handleClick = () => {
-        if (canSpendResourceJoker) {
-            setTradingPopupOpen(true)
+        if (canSpendWildcardJoker) {
+            setTradingPopupOpen(!tradingPopupOpen)
+        }
+
+        if (canCancelWildcardJoker) {
+            dispatch(clearWildcardJokerFlag())
         }
     }
 
     const handleTradePopupClick = (resourceId: number) => {
-        setTargetResource(resourceId)
+        dispatch(setWildcardJokerFlag(resourceId))
 
-        setTradingPopupOpen(false);
+        handleCloseTradePopup();
     }
 
     const handleCloseTradePopup = () => {
@@ -121,16 +147,17 @@ const WildcardResourceJoker = () => {
 
     return (
         <div onClick={handleClick}>
-            <TradingPopup
+            <WildcardTradingPopup
                 tooltip={getTradingPopupTooltip}
                 disabled={!tradingPopupOpen}
                 onClick={handleTradePopupClick}
                 onClose={handleCloseTradePopup} />
             <StyledResourceJoker
-                $pointer={gamePhaseBuilding && canSpendResourceJoker}
-                $pulse={gamePhaseBuilding && canSpendResourceJoker}
+                title={tooltip()}
+                $pointer={canSpendWildcardJoker || canCancelWildcardJoker}
+                $pulse={canSpendWildcardJoker || canCancelWildcardJoker}
                 $pulseDurationSeconds={pulseDurationSeconds()}
-                $pending={targetResource != null}>
+                $pending={wildcardJokerFlag != null}>
                 <StyledAsset src={icon()} />
             </StyledResourceJoker>
         </div>

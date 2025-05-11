@@ -4,7 +4,7 @@ import StyledButtonTray from "./styles/StyledButtonTray"
 import StyledDiceTray from "./styles/StyledDiceTray"
 import StyledResourceDiceContainer from "./styles/StyledResourceDiceContainer"
 import { useAppSelector } from "../../store/hooks"
-import { selectDice, selectResourceJokerFlag, selectRollCount } from "../../store/slices/diceSlice"
+import { selectDice, selectResourceJokerFlag, selectRollCount, selectWildcardJokerFlag } from "../../store/slices/diceSlice"
 import RollButton from "../Buttons/RollButton/RollButton"
 import BuildButton from "../Buttons/BuildButton/BuildButton"
 import { selectIsGamePhaseBuilding, selectIsGamePhaseRolling } from "../../store/slices/gameSlice"
@@ -24,6 +24,7 @@ const ResourceDiceContainer = () => {
     const gamePhaseRolling = useAppSelector(state => selectIsGamePhaseRolling(state))
     const gamePhaseBuilding = useAppSelector(state => selectIsGamePhaseBuilding(state))
     const resourceJokerFlag = useAppSelector(state => selectResourceJokerFlag(state))
+    const wildcardJokerFlag = useAppSelector(state => selectWildcardJokerFlag(state))
 
     // Conditional rendering
 
@@ -35,6 +36,7 @@ const ResourceDiceContainer = () => {
     const buildButtonDisabled =
         (gamePhaseRolling && rollCount == 0)
         || resourceJokerFlag != null
+        || wildcardJokerFlag != null
 
     // Tradeable = more than 1 unspent gold dice
     const isTradeable = dice

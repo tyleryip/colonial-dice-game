@@ -5,6 +5,10 @@ const StyledTradingPopup = styled.div`
     border-radius: 5px;
     overflow: hidden;
     z-index: 3;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    padding-left: 10%;
+    padding-right: 10%;
 
     position: absolute;
     display: flex;
@@ -15,10 +19,6 @@ const StyledTradingPopup = styled.div`
         top: -435%;
         left: -10%;
         width: 100%;
-        padding-top: 5%;
-        padding-bottom: 5%;
-        padding-left: 10%;
-        padding-right: 10%;
         flex-direction: column;
     }
 
@@ -26,10 +26,6 @@ const StyledTradingPopup = styled.div`
         top: -100%;
         left: -160%;
         width: 400%;
-        padding-top: 5%;
-        padding-bottom: 5%;
-        padding-left: 10%;
-        padding-right: 10%;
         flex-direction: row;
     }
 
