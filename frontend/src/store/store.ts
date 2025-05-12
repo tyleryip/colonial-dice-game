@@ -1,20 +1,38 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import diceReducer, { diceSlice } from "../store/slices/diceSlice"
 import gameReducer, { gameSlice } from "../store/slices/gameSlice"
 import resourceJokerReducer, { resourceJokerSlice } from "../store/slices/resourceJokerSlice"
 import knightReducer, { knightSlice } from "./slices/knightSlice";
 import scoreReducer, { scoreSlice } from "../store/slices/scoreSlice"
 import structureReducer, { structureSlice } from "../store/slices/structureSlice"
+import { FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE } from "redux-persist";
+import { persistStore } from "redux-persist";
+import sessionStorage from "redux-persist/lib/storage/session";
+
+const persistConfig = {
+    key: "root",
+    storage: sessionStorage
+}
+
+const rootReducer = combineReducers({
+    dice: diceReducer,
+    game: gameReducer,
+    knight: knightReducer,
+    resourceJoker: resourceJokerReducer,
+    score: scoreReducer,
+    structure: structureReducer,
+})
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export const store = configureStore({
-    reducer: {
-        dice: diceReducer,
-        game: gameReducer,
-        knight: knightReducer,
-        resourceJoker: resourceJokerReducer,
-        score: scoreReducer,
-        structure: structureReducer,
-    },
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+            }
+        }),
     devTools: {
         actionCreators: {
             // Dice actions
@@ -52,5 +70,6 @@ export const store = configureStore({
     }
 });
 
+export const persistor = persistStore(store)
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch

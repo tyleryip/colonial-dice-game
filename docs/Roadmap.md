@@ -42,7 +42,7 @@
 - [x] End of game modal
     - [x] Show scoreboard results
     - [x] Play again button
-- [ ] Use session storage to store game state
+- [x] Use session storage to store game state
 
 ### Non-Functional Requirements
 
