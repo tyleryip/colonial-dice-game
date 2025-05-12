@@ -1,6 +1,7 @@
 import { styled } from "styled-components"
 
 const StyledScoreboard = styled.div`
+    margin-top: 2%;
     display: grid;
     justify-items: stretch;
     align-items: stretch;

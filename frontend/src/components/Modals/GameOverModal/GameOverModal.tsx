@@ -18,6 +18,9 @@ const GameOverModal = () => {
 
     const show = gamePhaseRolling && allScoresFilled
 
+    // Copy
+
+    const headerCopy = "Game Over"
     const scoreCopy = `Your score was ${totalScore}.`
     const playAgainCopy = "Press the button to play again."
 
@@ -28,7 +31,7 @@ const GameOverModal = () => {
             backdrop="static"
         >
             <StyledModalHeader>
-                Game Over
+                {headerCopy}
             </StyledModalHeader>
             <StyledGameOverModalBody>
                 <p>{scoreCopy}</p>

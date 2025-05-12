@@ -1,34 +1,33 @@
-import { styled } from "styled-components"
+import NavbarCollapse from 'react-bootstrap/NavbarCollapse'
+import { styled } from 'styled-components'
 
-const StyledResourceDiceContainer = styled.div`
-    margin-bottom: 2%;
+const StyledNavbarCollapse = styled(NavbarCollapse)`
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: right;
 
     @media ${(props) => props.theme.breakpoints.xs} {
-        width: 70%;
+        flex-direction: column;
     }
 
     @media ${(props) => props.theme.breakpoints.s} {
-        width: 60%;
+        flex-direction: row;
     }
 
     @media ${(props) => props.theme.breakpoints.m} {
-        width: 40%;
+    
     }
 
     @media ${(props) => props.theme.breakpoints.l} {
-        width: 30%;
+      
     }
 
     @media ${(props) => props.theme.breakpoints.xl} {
-        width: 30%;
+     
     }
 
     @media ${(props) => props.theme.breakpoints.xxl} {
-        width: 25%;
+      
     }
 `
 
-export default StyledResourceDiceContainer
+export default StyledNavbarCollapse

@@ -37,6 +37,9 @@
         - [x] Score is added correctly for new structures
         - [x] Score is added correctly for no structures
         - [x] Total score is calculated upon completion
+- [ ] Navbar
+    - [ ] Add How to Play modal
+    - [ ] Add Settings modal
 - [ ] Instructions modal
     - [ ] Build costs shown in instruction modal
 - [x] End of game modal
