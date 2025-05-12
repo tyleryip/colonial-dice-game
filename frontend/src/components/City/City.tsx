@@ -114,7 +114,7 @@ const City = (props: CityProps) => {
             <ResourceCostPopup
                 disabled={disableResourceCostPopup}
                 cost={cityCost}
-                top={props.top - 25}
+                top={props.top - 23}
                 left={props.left - 41}
                 width={100}
                 arrowTop={props.top - 5}

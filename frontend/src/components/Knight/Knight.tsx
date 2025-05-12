@@ -116,7 +116,7 @@ const Knight = (props: KnightProps) => {
             <ResourceCostPopup
                 disabled={disableResourceCostPopup}
                 cost={knightCost}
-                top={-13}
+                top={-12}
                 left={18}
                 width={65}
                 arrowTop={9}

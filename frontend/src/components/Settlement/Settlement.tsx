@@ -122,7 +122,7 @@ const Settlement = (props: SettlementProps) => {
             <ResourceCostPopup
                 disabled={disableResourceCostPopup}
                 cost={settlementCost}
-                top={props.top - 26}
+                top={props.top - 24}
                 left={props.left - 36}
                 width={85}
                 arrowTop={props.top - 4.5}
