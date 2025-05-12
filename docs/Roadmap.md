@@ -12,7 +12,7 @@
         - [x] Roads rendering
         - [x] Settlements rendering
         - [x] Cities rendering
-    - [ ] Correct icons display based on structure state from store
+    - [x] Correct icons display based on structure state from store
 - [ ] Dice
     - [x] Rolling functionality
     - [x] Locking functionality
@@ -25,23 +25,24 @@
     - [x] Game state flows properly
     - [x] Rolling state
          - [x] Roll counter state
-    - [ ] Building state
+    - [x] Building state
         - [x] Maintain structure state
         - [x] Evaluating whether user can build a specific structure based on resources
         - [x] Evaluating whether user can build based on prerequisite structures
         - [x] Adjusting resources after building
         - [x] Show building cost on structure hover
         - [x] User can trade gold when they have more than 2 gold
-        - [ ] User can spend a resource joker and set a dice of their choice
-    - [ ] Scoring functionality
+        - [x] User can spend a resource joker and set a dice of their choice
+    - [x] Scoring functionality
         - [x] Score is added correctly for new structures
         - [x] Score is added correctly for no structures
         - [x] Total score is calculated upon completion
 - [ ] Instructions modal
     - [ ] Build costs shown in instruction modal
-- [ ] End of game modal
-    - [ ] Show scoreboard results
-    - [ ] Play again button
+- [x] End of game modal
+    - [x] Show scoreboard results
+    - [x] Play again button
+- [ ] Use session storage to store game state
 
 ### Non-Functional Requirements
 
@@ -66,3 +67,5 @@
     - [ ] Dice sound effect on roll
     - [ ] Building sound effect
     - [ ] Trading/resource joker sound effect
+- [ ] End of game modal
+    - [ ] Show statistics button

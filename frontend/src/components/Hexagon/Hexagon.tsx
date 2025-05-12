@@ -161,7 +161,7 @@ function AddRoad(hexagonStructure: HexagonStructure): React.ReactNode | null {
             break;
 
         case HexagonEdge.South:
-            roadTopOffset = 93.5
+            roadTopOffset = 95
             roadLeftOffset = 37
             width = horizontalWidth
             break;

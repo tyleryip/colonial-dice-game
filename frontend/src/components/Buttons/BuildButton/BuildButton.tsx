@@ -2,13 +2,13 @@ import StyledBuildButton from "./styles/StyledBuildButton"
 import StyledBuildButtonIcon from "./styles/StyledBuildButtonIcon"
 import { incrementTurn, selectIsGamePhaseBuilding, selectIsGamePhaseRolling, setGamePhase } from "../../../store/slices/gameSlice"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
+import { GamePhase } from "../../../constants/enumerations"
+import { addScore } from "../../../store/slices/scoreSlice"
+import { resetDice, resetDiceLocks, setRollCount } from "../../../store/slices/diceSlice"
 
 // Icons
 import build_icon from "../../../assets/buttons/build-icon.svg"
 import dice_icon from "../../../assets/buttons/dice-icon.svg"
-import { GamePhase } from "../../../constants/enumerations"
-import { addScore } from "../../../store/slices/scoreSlice"
-import { resetDice, resetDiceLocks, setRollCount } from "../../../store/slices/diceSlice"
 
 interface BuildButtonProps {
     disabled?: boolean

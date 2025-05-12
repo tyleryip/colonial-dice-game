@@ -59,6 +59,13 @@ export const { resetScore, addScore, addToPendingScore } = scoreSlice.actions
 export const selectScoreValues = (state: RootState) => state.score.scores
 export const selectPendingScore = (state: RootState) => state.score.pendingScore
 
+export const selectTotalScore = (state: RootState) => state.score.scores
+    .reduce((accumulator: number, currentValue: ScoreValue) => {
+        return accumulator + (currentValue ?? 0);
+    }, 0)
+
+export const selectAllScoresFilled = (state: RootState) => state.score.scores.every(score => typeof score === 'number')
+
 // Helper functions
 
 function findFirstEmptyScoreIndex(scores: ScoreValue[]): number {
