@@ -3,6 +3,7 @@ import { styled } from "styled-components"
 const StyledLayout = styled.div`
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
     height: 100%;
     align-items: center;
     justify-content: flex-start;
