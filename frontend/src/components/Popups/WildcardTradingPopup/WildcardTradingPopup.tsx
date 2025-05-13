@@ -47,7 +47,7 @@ const WildcardTradingPopup = (props: WildcardTradingPopupProps) => {
                 </StyledWildcardTradingPopup>
                 <StyledPopupArrow
                     src={tooltip_arrow}
-                    $top={9}
+                    $top={8}
                     $left={48}
                     $width={5} />
             </div>

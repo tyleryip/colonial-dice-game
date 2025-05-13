@@ -12,7 +12,7 @@ const StyledTradingPopup = styled.div`
     justify-content: space-around;
 
     top: -15%;
-    left: -10%;
+    left: -6%;
     width: 112%;
     padding-left: 5%;
     padding-right: 5%;

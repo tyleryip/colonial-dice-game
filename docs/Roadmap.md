@@ -38,10 +38,12 @@
         - [x] Score is added correctly for no structures
         - [x] Total score is calculated upon completion
 - [ ] Navbar
-    - [ ] Add How to Play modal
+    - [x] Add How to Play modal
     - [ ] Add Settings modal
-- [ ] Instructions modal
-    - [ ] Build costs shown in instruction modal
+- [x] Instructions modal
+    - [x] GIFs in modal to show gameplay
+- [ ] Settings modal
+    - [ ] Add reset game button
 - [x] End of game modal
     - [x] Show scoreboard results
     - [x] Play again button
@@ -61,8 +63,6 @@
 
 ## Phase 2 - Enhancements
 
-- [ ] Instructions modal
-    - [ ] GIFs in modal to show gameplay
 - [ ] AI plays Catan Dice game
 - [ ] Store local user high-score in cookies
 - [ ] Island 2

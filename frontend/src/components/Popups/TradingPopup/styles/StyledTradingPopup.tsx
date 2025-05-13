@@ -24,7 +24,7 @@ const StyledTradingPopup = styled.div`
 
     @media ${(props) => props.theme.breakpoints.s} {
         top: -100%;
-        left: -160%;
+        left: -147%;
         width: 400%;
         flex-direction: row;
     }

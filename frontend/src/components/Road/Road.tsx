@@ -46,7 +46,7 @@ const roadIconsDark: { -readonly [key in RoadType]: string } = {
 }
 
 const resourceCostPopupTop: { -readonly [key in RoadType]: number } = {
-    [RoadType.Horizontal]: -26,
+    [RoadType.Horizontal]: -25,
     [RoadType.Forwardslash]: -25,
     [RoadType.Backslash]: -25,
     [RoadType.Starting]: 0
