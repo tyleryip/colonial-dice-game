@@ -1,28 +1,36 @@
-import StyledNavBar from './styles/StyledNavBar'
-import StyledNavBarBrand from './styles/StyledNavBarBrand'
 import dice_icon from "../../assets/buttons/dice-icon.svg"
-import StyledNavBarBrandIcon from './styles/StyledNavBarBrandIcon'
 import NavbarToggle from 'react-bootstrap/NavbarToggle'
 import StyledNavbarCollapse from './styles/StyledNavbarCollapse'
 import StyledNavbarText from './styles/StyledNavbarText'
+import HowToPlayModal from '../Modals/HowToPlayModal/HowToPlayModal'
+import { useState } from 'react'
+import StyledNavbarButton from './NavbarButton/styles/StyledNavbarButton'
+import StyledNavbarBrandIcon from './styles/StyledNavbarBrandIcon'
+import StyledNavbarBrand from "./styles/StyledNavbarBrand"
+import StyledNavbar from "./styles/StyledNavbar"
 
 const Navbar = () => {
+    const [showHowToPlayModal, setShowHowToPlayModal] = useState(false)
+
     return (
-        <StyledNavBar expand="sm">
-            <StyledNavBarBrand href={"/"}>
-                <StyledNavBarBrandIcon src={dice_icon} />
+        <StyledNavbar expand="sm">
+            <StyledNavbarBrand href={"/"}>
+                <StyledNavbarBrandIcon src={dice_icon} />
                 {"Colonial Dice Game"}
-            </StyledNavBarBrand>
+            </StyledNavbarBrand>
             <NavbarToggle />
             <StyledNavbarCollapse>
                 <StyledNavbarText>
-                    {"How to Play"}
+                    <StyledNavbarButton onClick={() => setShowHowToPlayModal(true)}>
+                        {"How to Play"}
+                    </StyledNavbarButton>
+                    <HowToPlayModal show={showHowToPlayModal} onHide={() => setShowHowToPlayModal(false)} />
                 </StyledNavbarText>
                 <StyledNavbarText >
                     {"Settings"}
                 </StyledNavbarText>
             </StyledNavbarCollapse>
-        </StyledNavBar>
+        </StyledNavbar>
     )
 }
 
