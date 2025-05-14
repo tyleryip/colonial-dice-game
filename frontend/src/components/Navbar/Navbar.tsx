@@ -8,9 +8,11 @@ import StyledNavbarButton from './NavbarButton/styles/StyledNavbarButton'
 import StyledNavbarBrandIcon from './styles/StyledNavbarBrandIcon'
 import StyledNavbarBrand from "./styles/StyledNavbarBrand"
 import StyledNavbar from "./styles/StyledNavbar"
+import SettingsModal from "../Modals/SettingsModal/SettingsModal"
 
 const Navbar = () => {
     const [showHowToPlayModal, setShowHowToPlayModal] = useState(false)
+    const [showSettingsModal, setShowSettingsModal] = useState(false)
 
     return (
         <StyledNavbar expand="sm">
@@ -27,7 +29,10 @@ const Navbar = () => {
                     <HowToPlayModal show={showHowToPlayModal} onHide={() => setShowHowToPlayModal(false)} />
                 </StyledNavbarText>
                 <StyledNavbarText >
-                    {"Settings"}
+                    <StyledNavbarButton onClick={() => setShowSettingsModal(true)}>
+                        {"Settings"}
+                    </StyledNavbarButton>
+                    <SettingsModal show={showSettingsModal} onHide={() => setShowSettingsModal(false)} />
                 </StyledNavbarText>
             </StyledNavbarCollapse>
         </StyledNavbar>
