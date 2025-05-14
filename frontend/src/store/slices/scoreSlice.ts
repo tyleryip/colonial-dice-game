@@ -44,6 +44,7 @@ export const scoreSlice = createSlice({
          */
         resetScore: (state) => {
             state.scores = new Array(15).fill(null)
+            state.pendingScore = null
         }
     }
 })
