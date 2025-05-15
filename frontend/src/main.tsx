@@ -8,11 +8,13 @@ import { Provider } from 'react-redux'
 import { ThemeProvider } from 'styled-components'
 import { theme } from './theme/theme.ts'
 import { PersistGate } from 'redux-persist/integration/react'
+import GlobalStyle from './GlobalStyle.ts'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor} >
+        <GlobalStyle />
         <ThemeProvider theme={theme} >
           <App />
         </ThemeProvider>
