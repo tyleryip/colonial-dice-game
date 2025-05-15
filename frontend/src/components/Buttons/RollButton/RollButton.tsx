@@ -42,13 +42,13 @@ const RollButton = (props: RollButtonProps) => {
         }
 
         setTimeout(() => {
-            dispatch(rollDice());
             // Cannot extract and move to roll button because we need to setRolling for the animation
             setRolling(false);
 
         }, rollDurationMilliseconds);
 
         setRolling(true);
+        dispatch(rollDice());
     }
 
     return (
