@@ -9,23 +9,23 @@ import StyledAsset from "../Asset/StyledAsset"
 import { useState } from "react"
 import { ResourceType } from "../../constants/resources"
 import WildcardTradingPopup from "../Popups/WildcardTradingPopup/WildcardTradingPopup"
+import { clearWildcardJokerFlag, selectAllDiceSpent, selectResourceJokerFlag, selectWildcardJokerFlag, setWildcardJokerFlag } from "../../store/slices/diceSlice"
 
 // Light icons
-import wool_joker_light from "../../assets/jokers/light/wool-joker-light.svg"
-import wheat_joker_light from "../../assets/jokers/light/wheat-joker-light.svg"
-import ore_joker_light from "../../assets/jokers/light/ore-joker-light.svg"
-import brick_joker_light from "../../assets/jokers/light/brick-joker-light.svg"
-import wood_joker_light from "../../assets/jokers/light/wood-joker-light.svg"
-import wildcard_joker_light from "../../assets/jokers/light/wildcard-joker-light.svg"
+import wool_joker_light from "/assets/jokers/light/wool-joker-light.svg"
+import wheat_joker_light from "/assets/jokers/light/wheat-joker-light.svg"
+import ore_joker_light from "/assets/jokers/light/ore-joker-light.svg"
+import brick_joker_light from "/assets/jokers/light/brick-joker-light.svg"
+import wood_joker_light from "/assets/jokers/light/wood-joker-light.svg"
+import wildcard_joker_light from "/assets/jokers/light/wildcard-joker-light.svg"
 
 // Dark icons
-import wool_joker_dark from "../../assets/jokers/dark/wool-joker-dark.svg"
-import wheat_joker_dark from "../../assets/jokers/dark/wheat-joker-dark.svg"
-import ore_joker_dark from "../../assets/jokers/dark/ore-joker-dark.svg"
-import wildcard_joker_dark from "../../assets/jokers/dark/wildcard-joker-dark.svg"
-import brick_joker_dark from "../../assets/jokers/dark/brick-joker-dark.svg"
-import wood_joker_dark from "../../assets/jokers/dark/wood-joker-dark.svg"
-import { clearWildcardJokerFlag, selectAllDiceSpent, selectResourceJokerFlag, selectWildcardJokerFlag, setWildcardJokerFlag } from "../../store/slices/diceSlice"
+import wool_joker_dark from "/assets/jokers/dark/wool-joker-dark.svg"
+import wheat_joker_dark from "/assets/jokers/dark/wheat-joker-dark.svg"
+import ore_joker_dark from "/assets/jokers/dark/ore-joker-dark.svg"
+import wildcard_joker_dark from "/assets/jokers/dark/wildcard-joker-dark.svg"
+import brick_joker_dark from "/assets/jokers/dark/brick-joker-dark.svg"
+import wood_joker_dark from "/assets/jokers/dark/wood-joker-dark.svg"
 
 const resourceJokerIconsLight: Readonly<Record<number, string>> = {
     0: ore_joker_light,
@@ -158,7 +158,9 @@ const WildcardResourceJoker = () => {
                 $pulse={canSpendWildcardJoker || canCancelWildcardJoker}
                 $pulseDurationSeconds={pulseDurationSeconds()}
                 $pending={wildcardJokerFlag != null}>
-                <StyledAsset src={icon()} />
+                <StyledAsset
+                    src={icon()}
+                    alt={`Resource joker ${ResourceJokerType.Wildcard}`} />
             </StyledResourceJoker>
         </div>
     )
