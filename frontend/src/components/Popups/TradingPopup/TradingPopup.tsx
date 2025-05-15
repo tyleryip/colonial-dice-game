@@ -5,12 +5,12 @@ import useClickOutside from '../../../hooks/useClickOutside';
 import { ResourceType } from '../../../constants/resources';
 
 // Icons
-import ore_face from "../../../assets/dice/ore-face.svg";
-import wheat_face from "../../../assets/dice/wheat-face.svg";
-import wool_face from "../../../assets/dice/wool-face.svg";
-import wood_face from "../../../assets/dice/wood-face.svg";
-import brick_face from "../../../assets/dice/brick-face.svg";
-import tooltip_arrow from "../../../assets/tooltip/tooltip-arrow.svg"
+import ore_face from "/assets/dice/ore-face.svg";
+import wheat_face from "/assets/dice/wheat-face.svg";
+import wool_face from "/assets/dice/wool-face.svg";
+import wood_face from "/assets/dice/wood-face.svg";
+import brick_face from "/assets/dice/brick-face.svg";
+import tooltip_arrow from "/assets/tooltip/tooltip-arrow.svg"
 
 interface TradingPopupProps {
     disabled: boolean,

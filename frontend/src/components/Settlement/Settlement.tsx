@@ -13,20 +13,20 @@ import { ResourceType } from "../../constants/resources"
 import { addToPendingScore } from "../../store/slices/scoreSlice"
 
 // Light icons
-import settlement_3_light from "../../assets/settlements/light/settlement-3-light.svg"
-import settlement_4_light from "../../assets/settlements/light/settlement-4-light.svg"
-import settlement_5_light from "../../assets/settlements/light/settlement-5-light.svg"
-import settlement_7_light from "../../assets/settlements/light/settlement-7-light.svg"
-import settlement_9_light from "../../assets/settlements/light/settlement-9-light.svg"
-import settlement_11_light from "../../assets/settlements/light/settlement-11-light.svg"
+import settlement_3_light from "/assets/settlements/light/settlement-3-light.svg"
+import settlement_4_light from "/assets/settlements/light/settlement-4-light.svg"
+import settlement_5_light from "/assets/settlements/light/settlement-5-light.svg"
+import settlement_7_light from "/assets/settlements/light/settlement-7-light.svg"
+import settlement_9_light from "/assets/settlements/light/settlement-9-light.svg"
+import settlement_11_light from "/assets/settlements/light/settlement-11-light.svg"
 
 // Dark icons
-import settlement_3_dark from "../../assets/settlements/dark/settlement-3-dark.svg"
-import settlement_4_dark from "../../assets/settlements/dark/settlement-4-dark.svg"
-import settlement_5_dark from "../../assets/settlements/dark/settlement-5-dark.svg"
-import settlement_7_dark from "../../assets/settlements/dark/settlement-7-dark.svg"
-import settlement_9_dark from "../../assets/settlements/dark/settlement-9-dark.svg"
-import settlement_11_dark from "../../assets/settlements/dark/settlement-11-dark.svg"
+import settlement_3_dark from "/assets/settlements/dark/settlement-3-dark.svg"
+import settlement_4_dark from "/assets/settlements/dark/settlement-4-dark.svg"
+import settlement_5_dark from "/assets/settlements/dark/settlement-5-dark.svg"
+import settlement_7_dark from "/assets/settlements/dark/settlement-7-dark.svg"
+import settlement_9_dark from "/assets/settlements/dark/settlement-9-dark.svg"
+import settlement_11_dark from "/assets/settlements/dark/settlement-11-dark.svg"
 
 interface SettlementProps {
     id: number,
@@ -117,7 +117,9 @@ const Settlement = (props: SettlementProps) => {
                 $left={props.left}
                 $pointer={canBuildSettlement}
                 $pulse={canBuildSettlement}>
-                <StyledAsset src={icon} />
+                <StyledAsset
+                    src={icon}
+                    alt={`Settlement ${settlementNumber}`} />
             </StyledSettlement>
             <ResourceCostPopup
                 disabled={disableResourceCostPopup}

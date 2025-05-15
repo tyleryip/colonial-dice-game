@@ -7,8 +7,8 @@ import { addScore } from "../../../store/slices/scoreSlice"
 import { resetDice, resetDiceLocks, setRollCount } from "../../../store/slices/diceSlice"
 
 // Icons
-import build_icon from "../../../assets/buttons/build-icon.svg"
-import dice_icon from "../../../assets/buttons/dice-icon.svg"
+import build_icon from "/assets/buttons/build-icon.svg"
+import dice_icon from "/assets/buttons/dice-icon.svg"
 
 interface BuildButtonProps {
     disabled?: boolean
@@ -61,8 +61,9 @@ const BuildButton = (props: BuildButtonProps) => {
             disabled={disabled}
             onClick={handleClick}>
             <StyledBuildButtonIcon
-                $disabled={disabled}
-                src={icon} />
+                src={icon}
+                alt="Build"
+                $disabled={disabled} />
         </StyledBuildButton>
     )
 }

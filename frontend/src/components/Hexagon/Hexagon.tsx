@@ -6,16 +6,16 @@ import ResourceJoker from '../ResourceJoker/ResourceJoker'
 import City from '../City/City'
 import Settlement from '../Settlement/Settlement'
 import Road from '../Road/Road'
+import WildcardResourceJoker from '../WildcardJoker/WildcardJoker'
 
 // Hexagon icons
-import water_hexagon from "../../assets/hexagons/water-hexagon.svg";
-import ore_hexagon from "../../assets/hexagons/ore-hexagon.svg";
-import wheat_hexagon from "../../assets/hexagons/wheat-hexagon.svg";
-import wool_hexagon from "../../assets/hexagons/wool-hexagon.svg";
-import wood_hexagon from "../../assets/hexagons/wood-hexagon.svg";
-import brick_hexagon from "../../assets/hexagons/brick-hexagon.svg";
-import desert_hexagon from "../../assets/hexagons/desert-hexagon.svg";
-import WildcardResourceJoker from '../WildcardJoker/WildcardJoker'
+import water_hexagon from "/assets/hexagons/water-hexagon.svg";
+import ore_hexagon from "/assets/hexagons/ore-hexagon.svg";
+import wheat_hexagon from "/assets/hexagons/wheat-hexagon.svg";
+import wool_hexagon from "/assets/hexagons/wool-hexagon.svg";
+import wood_hexagon from "/assets/hexagons/wood-hexagon.svg";
+import brick_hexagon from "/assets/hexagons/brick-hexagon.svg";
+import desert_hexagon from "/assets/hexagons/desert-hexagon.svg";
 
 interface HexagonProps {
     type: HexagonType,
@@ -81,7 +81,8 @@ export default function Hexagon(props: HexagonProps) {
             $left={left} >
             <img
                 width={"100%"}
-                src={icon} />
+                src={icon}
+                alt={`Hexagon ${props.type.toString()}`} />
             {props.knightType != undefined
                 && <Knight type={props.knightType} />}
             {props.resourceJokerType != undefined

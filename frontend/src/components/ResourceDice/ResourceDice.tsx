@@ -7,20 +7,20 @@ import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { selectIsGamePhaseBuilding, selectIsGamePhaseRolling } from "../../store/slices/gameSlice";
 import { getResourceType, ResourceType } from "../../constants/resources";
-
-// Dice faces
-import ore_face from "../../assets/dice/ore-face.svg";
-import wheat_face from "../../assets/dice/wheat-face.svg";
-import wool_face from "../../assets/dice/wool-face.svg";
-import wood_face from "../../assets/dice/wood-face.svg";
-import brick_face from "../../assets/dice/brick-face.svg";
-import gold_face from "../../assets/dice/gold-face.svg";
-import blank_face from "../../assets/dice/blank_face.svg";
-import lock from "../../assets/dice/lock.svg"
 import { toggleDiceLock, selectResourceJokerFlag, setDice, clearResourceJokerFlag, SetDicePayload, spendDice, selectWildcardJokerFlag, clearWildcardJokerFlag } from "../../store/slices/diceSlice";
 import { spendResourceJoker } from "../../store/slices/resourceJokerSlice";
 import { ResourceJokerType } from "../../constants/enumerations";
 import { GetResourceJokerId } from "../../constants/mappings";
+
+// Dice faces
+import ore_face from "/assets/dice/ore-face.svg";
+import wheat_face from "/assets/dice/wheat-face.svg";
+import wool_face from "/assets/dice/wool-face.svg";
+import wood_face from "/assets/dice/wood-face.svg";
+import brick_face from "/assets/dice/brick-face.svg";
+import gold_face from "/assets/dice/gold-face.svg";
+import blank_face from "/assets/dice/blank_face.svg";
+import lock from "/assets/dice/lock.svg"
 
 interface ResourceDiceProps {
   id: number;
@@ -175,6 +175,7 @@ const ResourceDice = (props: ResourceDiceProps) => {
         onClose={handleCloseTradePopup} />
       <StyledResourceDiceFace
         src={diceFace}
+        alt={`Dice ${props.id}`}
         onClick={handleClick}
         $width={diceWidth}
         $grayscale={isSpent}
@@ -184,6 +185,7 @@ const ResourceDice = (props: ResourceDiceProps) => {
       <StyledLock
         width={`${diceWidth * 0.25}%`}
         src={lock}
+        alt="Lock"
         $locked={isLocked} />
     </StyledResourceDice>
   );

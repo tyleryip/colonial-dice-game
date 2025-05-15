@@ -8,16 +8,17 @@ import { selectIsKnightBuilt } from "../../store/slices/knightSlice"
 import { selectIsGamePhaseBuilding } from "../../store/slices/gameSlice"
 import { clearResourceJokerFlag, selectAllDiceSpent, selectResourceJokerFlag, selectWildcardJokerFlag, setResourceJokerFlag } from "../../store/slices/diceSlice"
 import { getResourceType } from "../../constants/resources"
-import wool_joker_light from "../../assets/jokers/light/wool-joker-light.svg"
-import wheat_joker_light from "../../assets/jokers/light/wheat-joker-light.svg"
-import ore_joker_light from "../../assets/jokers/light/ore-joker-light.svg"
-import brick_joker_light from "../../assets/jokers/light/brick-joker-light.svg"
-import wood_joker_light from "../../assets/jokers/light/wood-joker-light.svg"
-import wool_joker_dark from "../../assets/jokers/dark/wool-joker-dark.svg"
-import wheat_joker_dark from "../../assets/jokers/dark/wheat-joker-dark.svg"
-import ore_joker_dark from "../../assets/jokers/dark/ore-joker-dark.svg"
-import brick_joker_dark from "../../assets/jokers/dark/brick-joker-dark.svg"
-import wood_joker_dark from "../../assets/jokers/dark/wood-joker-dark.svg"
+
+import wool_joker_light from "/assets/jokers/light/wool-joker-light.svg"
+import wheat_joker_light from "/assets/jokers/light/wheat-joker-light.svg"
+import ore_joker_light from "/assets/jokers/light/ore-joker-light.svg"
+import brick_joker_light from "/assets/jokers/light/brick-joker-light.svg"
+import wood_joker_light from "/assets/jokers/light/wood-joker-light.svg"
+import wool_joker_dark from "/assets/jokers/dark/wool-joker-dark.svg"
+import wheat_joker_dark from "/assets/jokers/dark/wheat-joker-dark.svg"
+import ore_joker_dark from "/assets/jokers/dark/ore-joker-dark.svg"
+import brick_joker_dark from "/assets/jokers/dark/brick-joker-dark.svg"
+import wood_joker_dark from "/assets/jokers/dark/wood-joker-dark.svg"
 
 interface ResourceJokerProps {
     type: ResourceJokerType
@@ -129,7 +130,7 @@ const ResourceJoker = (props: ResourceJokerProps) => {
                 $pulse={canSpendResourceJoker || canCancelResourceJoker}
                 $pulseDurationSeconds={pulseDurationSeconds()}
                 $pending={canCancelResourceJoker}>
-                <StyledAsset src={icon} />
+                <StyledAsset src={icon} alt={`Resource joker ${props.type}`} />
             </StyledResourceJoker>
         </div>
     )

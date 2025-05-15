@@ -13,16 +13,16 @@ import { ResourceType } from "../../constants/resources"
 import { addToPendingScore } from "../../store/slices/scoreSlice"
 
 // Light icons
-import city_7_light from "../../assets/cities/light/city-7-light.svg"
-import city_12_light from "../../assets/cities/light/city-12-light.svg"
-import city_20_light from "../../assets/cities/light/city-20-light.svg"
-import city_30_light from "../../assets/cities/light/city-30-light.svg"
+import city_7_light from "/assets/cities/light/city-7-light.svg"
+import city_12_light from "/assets/cities/light/city-12-light.svg"
+import city_20_light from "/assets/cities/light/city-20-light.svg"
+import city_30_light from "/assets/cities/light/city-30-light.svg"
 
 // Dark icons
-import city_7_dark from "../../assets/cities/dark/city-7-dark.svg"
-import city_12_dark from "../../assets/cities/dark/city-12-dark.svg"
-import city_20_dark from "../../assets/cities/dark/city-20-dark.svg"
-import city_30_dark from "../../assets/cities/dark/city-30-dark.svg"
+import city_7_dark from "/assets/cities/dark/city-7-dark.svg"
+import city_12_dark from "/assets/cities/dark/city-12-dark.svg"
+import city_20_dark from "/assets/cities/dark/city-20-dark.svg"
+import city_30_dark from "/assets/cities/dark/city-30-dark.svg"
 
 interface CityProps {
     id: number,
@@ -109,7 +109,7 @@ const City = (props: CityProps) => {
                 $left={props.left}
                 $pointer={canBuildCity}
                 $pulse={canBuildCity}>
-                <StyledAsset src={icon} />
+                <StyledAsset src={icon} alt={`City ${cityNumber}`} />
             </StyledCity>
             <ResourceCostPopup
                 disabled={disableResourceCostPopup}

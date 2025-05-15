@@ -1,5 +1,5 @@
 import StyledRollButton from './styles/StyledRollButton'
-import dice_icon from "../../../assets/buttons/dice-icon.svg"
+import dice_icon from "/assets/buttons/dice-icon.svg"
 import StyledRollButtonIcon from './styles/StyledRollButtonIcon'
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
 import { selectIsGamePhaseBuilding, setGamePhase } from '../../../store/slices/gameSlice'
@@ -60,6 +60,7 @@ const RollButton = (props: RollButtonProps) => {
                 <StyledRollButtonIcon
                     key={key}
                     src={dice_icon}
+                    alt="Dice"
                     $used={rollCount > key} />
             ))}
         </StyledRollButton>

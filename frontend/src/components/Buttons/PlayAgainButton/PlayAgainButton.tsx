@@ -8,7 +8,7 @@ import { resetStructures } from '../../../store/slices/structureSlice';
 import StyledPlayAgainButton from './styles/StyledPlayAgainButton';
 import StyledPlayAgainButtonIcon from './styles/StyledPlayAgainButtonIcon';
 
-import play_again_icon from "../../../assets/buttons/play-again-icon.svg"
+import play_again_icon from "/assets/buttons/play-again-icon.svg"
 
 const PlayAgainButton = () => {
     // Dispatch
@@ -34,7 +34,9 @@ const PlayAgainButton = () => {
         <StyledPlayAgainButton
             title={tooltip}
             onClick={handleClick}>
-            <StyledPlayAgainButtonIcon src={play_again_icon} />
+            <StyledPlayAgainButtonIcon
+                src={play_again_icon}
+                alt="Play again" />
         </StyledPlayAgainButton>
     )
 }

@@ -3,18 +3,6 @@ import StyledAsset from "../Asset/StyledAsset"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { buildStructure, selectHasPrerequisiteStructuresBuilt, selectIsStructureBuilt } from "../../store/slices/structureSlice"
 import { GetRoadType } from "../../constants/mappings"
-
-// Light icons
-import horizontal_road_light from "../../assets/roads/light/horizontal-road-light.svg"
-import forwardslash_road_light from "../../assets/roads/light/forwardslash-road-light.svg"
-import backwardslash_road_light from "../../assets/roads/light/backslash-road-light.svg"
-
-// Dark icons
-import horizontal_road_dark from "../../assets/roads/dark/horizontal-road-dark.svg"
-import forwardslash_road_dark from "../../assets/roads/dark/forwardslash-road-dark.svg"
-import backwardslash_road_dark from "../../assets/roads/dark/backslash-road-dark.svg"
-
-import starting_road from "../../assets/roads/starting-road.svg"
 import StyledRoad from "./styles/StyledRoad"
 import { useHover } from "@uidotdev/usehooks"
 import { selectIsGamePhaseBuilding } from "../../store/slices/gameSlice"
@@ -23,6 +11,18 @@ import { roadCost } from "../../constants/structures"
 import { selectHasResourcesNeeded, spendDice } from "../../store/slices/diceSlice"
 import { ResourceType } from "../../constants/resources"
 import { addToPendingScore } from "../../store/slices/scoreSlice"
+
+// Light icons
+import horizontal_road_light from "/assets/roads/light/horizontal-road-light.svg"
+import forwardslash_road_light from "/assets/roads/light/forwardslash-road-light.svg"
+import backwardslash_road_light from "/assets/roads/light/backslash-road-light.svg"
+
+// Dark icons
+import starting_road from "/assets/roads/starting-road.svg"
+import horizontal_road_dark from "/assets/roads/dark/horizontal-road-dark.svg"
+import forwardslash_road_dark from "/assets/roads/dark/forwardslash-road-dark.svg"
+import backwardslash_road_dark from "/assets/roads/dark/backslash-road-dark.svg"
+
 
 interface RoadProps {
     id: number // the unique structure id
@@ -133,7 +133,9 @@ const Road = (props: RoadProps) => {
                 $width={props.width}
                 $pointer={canBuildRoad}
                 $pulse={canBuildRoad}>
-                <StyledAsset src={icon} />
+                <StyledAsset
+                    src={icon}
+                    alt="Road" />
             </StyledRoad>
             <ResourceCostPopup
                 disabled={disableResourceCostPopup}
