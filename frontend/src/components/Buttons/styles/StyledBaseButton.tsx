@@ -11,7 +11,6 @@ const StyledBaseButton = styled.button`
     transition-duration: 0.4s;
     
     &:hover {
-        filter: drop-shadow(10px 5px 20px rgba(36, 36, 36, 0.5));
         background-color: #dcc7a1;
         cursor: pointer;
     }
