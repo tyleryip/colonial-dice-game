@@ -7,7 +7,8 @@ import StyledNavbarBrand from "./styles/StyledNavbarBrand";
 import StyledNavbarCollapse from "./styles/StyledNavbarCollapse";
 import StyledNavbarText from "./styles/StyledNavbarText";
 import StyledNavbarButton from "./NavbarButton/styles/StyledNavbarButton";
-import DiceIcon from "../Icons/Buttons/DiceIcon";
+import dice_icon from "/assets/navbar/dice-icon.svg";
+import StyledNavbarBrandIcon from "./styles/StyledNavbarBrandIcon";
 
 const Navbar = () => {
   const [showHowToPlayModal, setShowHowToPlayModal] = useState(false);
@@ -16,8 +17,8 @@ const Navbar = () => {
   return (
     <StyledNavbar expand="sm">
       <StyledNavbarBrand href={"/"}>
-        <DiceIcon width={6} />
-        <h1>{"Colonial Dice Game"}</h1>
+        <StyledNavbarBrandIcon src={dice_icon} />
+        {"Colonial Dice Game"}
       </StyledNavbarBrand>
       <NavbarToggle />
       <StyledNavbarCollapse>

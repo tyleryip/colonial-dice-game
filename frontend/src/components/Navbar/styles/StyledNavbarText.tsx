@@ -2,6 +2,8 @@ import NavbarText from 'react-bootstrap/NavbarText'
 import { styled } from 'styled-components'
 
 const StyledNavbarText = styled(NavbarText)`
+    white-space: nowrap;
+
      @media ${(props) => props.theme.breakpoints.xs} {
         margin-left: 0%;
     }
