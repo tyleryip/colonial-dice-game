@@ -1,14 +1,13 @@
-import dice_icon from "/assets/buttons/dice-icon.svg";
 import NavbarToggle from "react-bootstrap/NavbarToggle";
 import HowToPlayModal from "../Modals/HowToPlayModal/HowToPlayModal";
 import { useState } from "react";
 import SettingsModal from "../Modals/SettingsModal/SettingsModal";
 import StyledNavbar from "./styles/StyledNavbar";
 import StyledNavbarBrand from "./styles/StyledNavbarBrand";
-import StyledNavbarBrandIcon from "./styles/StyledNavbarBrandIcon";
 import StyledNavbarCollapse from "./styles/StyledNavbarCollapse";
 import StyledNavbarText from "./styles/StyledNavbarText";
 import StyledNavbarButton from "./NavbarButton/styles/StyledNavbarButton";
+import DiceIcon from "../../assets/buttons/DiceIcon";
 
 const Navbar = () => {
   const [showHowToPlayModal, setShowHowToPlayModal] = useState(false);
@@ -17,8 +16,8 @@ const Navbar = () => {
   return (
     <StyledNavbar expand="sm">
       <StyledNavbarBrand href={"/"}>
-        <StyledNavbarBrandIcon src={dice_icon} />
-        {"Colonial Dice Game"}
+        <DiceIcon width={6} />
+        <h1>{"Colonial Dice Game"}</h1>
       </StyledNavbarBrand>
       <NavbarToggle />
       <StyledNavbarCollapse>

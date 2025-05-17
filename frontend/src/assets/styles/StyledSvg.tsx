@@ -6,16 +6,14 @@ interface StyledSvgProps {
 }
 
 const StyledSvg = styled.svg<StyledSvgProps>`
-  width: ${(props) =>
-    props.$width &&
-    css`
-      ${props.$width}%
-    `};
+  width: ${(props) => `${props.$width}%`};
   opacity: ${(props) =>
     props.$opacity &&
     css`
       ${props.$opacity}%
     `};
+
+  transition: opacity 250ms ease-out;
 `;
 
 export default StyledSvg;
