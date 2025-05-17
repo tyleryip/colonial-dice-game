@@ -6,7 +6,7 @@ import {
 } from "../../../store/slices/gameSlice";
 import { GamePhase } from "../../../constants/enumerations";
 import { rollDice } from "../../../store/slices/diceSlice";
-import { DiceIcon } from "../../../assets/buttons/DiceIcon";
+import DiceIcon from "../../Icons/Buttons/DiceIcon";
 
 interface RollButtonProps {
   disabled?: boolean;
@@ -37,6 +37,8 @@ const RollButton = (props: RollButtonProps) => {
   const tooltip =
     rollCount === 2 ? "1 roll left" : `${3 - rollCount} rolls left`;
 
+  const opacity = (key: number) => (rollCount > key ? 30 : 100);
+
   // Event handlers
 
   function handleClick() {
@@ -56,7 +58,7 @@ const RollButton = (props: RollButtonProps) => {
   return (
     <StyledRollButton title={tooltip} disabled={disabled} onClick={handleClick}>
       {Array.from({ length: 3 }, (_, key) => (
-        <DiceIcon key={key} opacity={rollCount > key ? 30 : 100} width={24} />
+        <DiceIcon key={key} opacity={opacity(key)} width={24} />
       ))}
     </StyledRollButton>
   );

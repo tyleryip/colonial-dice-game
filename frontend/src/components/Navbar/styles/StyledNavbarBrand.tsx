@@ -1,11 +1,11 @@
-import NavbarBrand from 'react-bootstrap/NavbarBrand'
-import { styled } from 'styled-components'
+import { NavbarBrand } from "react-bootstrap";
+import { styled } from "styled-components";
 
 const StyledNavbarBrand = styled(NavbarBrand)`
-    display: flex;
-    align-items: center;
-    font-size: 20px;
-    font-weight: bold;
-`
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  gap: 1%
+`;
 
-export default StyledNavbarBrand
+export default StyledNavbarBrand;

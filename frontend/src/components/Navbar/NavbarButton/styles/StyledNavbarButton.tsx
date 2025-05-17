@@ -1,12 +1,14 @@
-import { styled } from "styled-components"
+import { styled } from "styled-components";
 
 const StyledNavbarButton = styled.div`
-    &:hover {
-        cursor: pointer;
-        font-weight: bold;
-    }
+  width: 100%;
 
-    transition: font-weight 250ms ease-out;
-`
+  &:hover {
+    cursor: pointer;
+    font-weight: bold;
+  }
 
-export default StyledNavbarButton
+  transition: font-weight 250ms ease-out;
+`;
+
+export default StyledNavbarButton;
