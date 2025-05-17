@@ -1,4 +1,4 @@
-import PlayAgainIcon from "../../../assets/buttons/PlayAgainIcon";
+import PlayAgainIcon from "../../Icons/Buttons/PlayAgainIcon";
 import { useAppDispatch } from "../../../store/hooks";
 import { resetDice } from "../../../store/slices/diceSlice";
 import { resetGame } from "../../../store/slices/gameSlice";

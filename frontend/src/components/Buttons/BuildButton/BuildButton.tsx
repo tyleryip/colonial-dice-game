@@ -13,8 +13,8 @@ import {
   resetDiceLocks,
   setRollCount,
 } from "../../../store/slices/diceSlice";
-import BuildIcon from "../../../assets/buttons/BuildIcon";
-import DiceIcon from "../../../assets/buttons/DiceIcon";
+import BuildIcon from "../../Icons/Buttons/BuildIcon";
+import DiceIcon from "../../Icons/Buttons/DiceIcon";
 
 interface BuildButtonProps {
   disabled?: boolean;

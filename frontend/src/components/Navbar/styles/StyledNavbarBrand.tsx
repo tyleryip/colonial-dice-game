@@ -4,8 +4,6 @@ import { styled } from "styled-components";
 const StyledNavbarBrand = styled(NavbarBrand)`
   display: flex;
   align-items: center;
-  font-size: 20px;
-  font-weight: bold;
 
   > h1 {
     font-size: 20px;

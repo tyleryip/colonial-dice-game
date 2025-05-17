@@ -7,7 +7,7 @@ import StyledNavbarBrand from "./styles/StyledNavbarBrand";
 import StyledNavbarCollapse from "./styles/StyledNavbarCollapse";
 import StyledNavbarText from "./styles/StyledNavbarText";
 import StyledNavbarButton from "./NavbarButton/styles/StyledNavbarButton";
-import DiceIcon from "../../assets/buttons/DiceIcon";
+import DiceIcon from "../Icons/Buttons/DiceIcon";
 
 const Navbar = () => {
   const [showHowToPlayModal, setShowHowToPlayModal] = useState(false);

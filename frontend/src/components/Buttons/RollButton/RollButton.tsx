@@ -6,7 +6,7 @@ import {
 } from "../../../store/slices/gameSlice";
 import { GamePhase } from "../../../constants/enumerations";
 import { rollDice } from "../../../store/slices/diceSlice";
-import DiceIcon from "../../../assets/buttons/DiceIcon";
+import DiceIcon from "../../Icons/Buttons/DiceIcon";
 
 interface RollButtonProps {
   disabled?: boolean;
