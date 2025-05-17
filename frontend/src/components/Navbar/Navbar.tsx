@@ -1,14 +1,14 @@
-import dice_icon from "../../assets/buttons/dice-icon.svg";
 import NavbarToggle from "react-bootstrap/NavbarToggle";
-import StyledNavbarCollapse from "./styles/StyledNavbarCollapse";
-import StyledNavbarText from "./styles/StyledNavbarText";
 import HowToPlayModal from "../Modals/HowToPlayModal/HowToPlayModal";
 import { useState } from "react";
-import StyledNavbarButton from "./NavbarButton/styles/StyledNavbarButton";
 import SettingsModal from "../Modals/SettingsModal/SettingsModal";
-import StyledNavbar from "./styles/StyledNavBar";
-import StyledNavbarBrand from "./styles/StyledNavBarBrand";
-import StyledNavbarBrandIcon from "./styles/StyledNavBarBrandIcon";
+import StyledNavbar from "./styles/StyledNavbar";
+import StyledNavbarBrand from "./styles/StyledNavbarBrand";
+import StyledNavbarCollapse from "./styles/StyledNavbarCollapse";
+import StyledNavbarText from "./styles/StyledNavbarText";
+import StyledNavbarButton from "./NavbarButton/styles/StyledNavbarButton";
+import dice_icon from "/assets/navbar/dice-icon.svg";
+import StyledNavbarBrandIcon from "./styles/StyledNavbarBrandIcon";
 
 const Navbar = () => {
   const [showHowToPlayModal, setShowHowToPlayModal] = useState(false);
