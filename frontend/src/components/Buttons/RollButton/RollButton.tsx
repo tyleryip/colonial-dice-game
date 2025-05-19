@@ -3,9 +3,9 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import {
   selectIsGamePhaseBuilding,
   setGamePhase,
-} from "../../../store/slices/gameSlice";
+} from "../../../store/slices/gameSlice/gameSlice";
 import { GamePhase } from "../../../constants/enumerations";
-import { rollDice } from "../../../store/slices/diceSlice";
+import { rollDice } from "../../../store/slices/diceSlice/diceSlice";
 import DiceIcon from "../../Icons/Buttons/DiceIcon";
 
 interface RollButtonProps {

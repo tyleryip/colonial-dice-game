@@ -1,15 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../store";
-import { ScoreValue } from "../../types/ScoreValue"
+import type { RootState } from "../../store";
+import { ScoreValue } from "../../../types/ScoreValue"
 
-interface scoreState {
+export interface scoreState {
     scores: ScoreValue[]
     pendingScore: ScoreValue
 }
 
 const initialState: scoreState = {
     scores: new Array(15).fill(null),
-    pendingScore: 0
+    pendingScore: null
 }
 
 export const scoreSlice = createSlice({
@@ -26,7 +26,7 @@ export const scoreSlice = createSlice({
             state.scores[index] = state.pendingScore != null && state.pendingScore > 0
                 ? state.pendingScore
                 : -2
-            state.pendingScore = 0
+            state.pendingScore = null
         },
         /**
          * When the pending score is changing after building structures or knights

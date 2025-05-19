@@ -4,15 +4,15 @@ import {
   selectIsGamePhaseBuilding,
   selectIsGamePhaseRolling,
   setGamePhase,
-} from "../../../store/slices/gameSlice";
+} from "../../../store/slices/gameSlice/gameSlice";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { GamePhase } from "../../../constants/enumerations";
-import { addScore } from "../../../store/slices/scoreSlice";
+import { addScore } from "../../../store/slices/scoreSlice/scoreSlice";
 import {
   resetDice,
   resetDiceLocks,
   setRollCount,
-} from "../../../store/slices/diceSlice";
+} from "../../../store/slices/diceSlice/diceSlice";
 import BuildIcon from "../../Icons/Buttons/BuildIcon";
 import DiceIcon from "../../Icons/Buttons/DiceIcon";
 

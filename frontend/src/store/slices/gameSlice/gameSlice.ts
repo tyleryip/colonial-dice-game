@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GamePhase } from "../../constants/enumerations";
-import { RootState } from "../store";
+import { GamePhase } from "../../../constants/enumerations";
+import { RootState } from "../../store";
 
-interface gameState {
+export interface gameState {
     currentGamePhase: GamePhase,
     currentTurn: number
 }

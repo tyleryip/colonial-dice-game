@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { RootState } from "../store"
-import { GetKnightPrerequisite } from "../../constants/knights"
+import { RootState } from "../../store"
+import { GetKnightPrerequisite } from "../../../constants/knights"
 
-interface knightState {
+export interface knightState {
     isBuilt: boolean[]
 }
 

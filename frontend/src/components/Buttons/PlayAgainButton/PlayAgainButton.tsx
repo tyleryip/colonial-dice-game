@@ -1,11 +1,11 @@
 import PlayAgainIcon from "../../Icons/Buttons/PlayAgainIcon";
 import { useAppDispatch } from "../../../store/hooks";
-import { resetDice } from "../../../store/slices/diceSlice";
-import { resetGame } from "../../../store/slices/gameSlice";
-import { resetKnights } from "../../../store/slices/knightSlice";
-import { resetResourceJokers } from "../../../store/slices/resourceJokerSlice";
-import { resetScore } from "../../../store/slices/scoreSlice";
-import { resetStructures } from "../../../store/slices/structureSlice";
+import { resetDice } from "../../../store/slices/diceSlice/diceSlice";
+import { resetGame } from "../../../store/slices/gameSlice/gameSlice";
+import { resetKnights } from "../../../store/slices/knightSlice/knightSlice";
+import { resetResourceJokers } from "../../../store/slices/resourceJokerSlice/resourceJokerSlice";
+import { resetScore } from "../../../store/slices/scoreSlice/scoreSlice";
+import { resetStructures } from "../../../store/slices/structureSlice/structureSlice";
 import StyledPlayAgainButton from "./styles/StyledPlayAgainButton";
 
 const PlayAgainButton = () => {

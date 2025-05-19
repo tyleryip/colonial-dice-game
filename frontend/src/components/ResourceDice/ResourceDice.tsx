@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
   selectIsGamePhaseBuilding,
   selectIsGamePhaseRolling,
-} from "../../store/slices/gameSlice";
+} from "../../store/slices/gameSlice/gameSlice";
 import { getResourceType, ResourceType } from "../../constants/resources";
 import {
   toggleDiceLock,
@@ -17,8 +17,8 @@ import {
   spendDice,
   selectWildcardJokerFlag,
   clearWildcardJokerFlag,
-} from "../../store/slices/diceSlice";
-import { spendResourceJoker } from "../../store/slices/resourceJokerSlice";
+} from "../../store/slices/diceSlice/diceSlice";
+import { spendResourceJoker } from "../../store/slices/resourceJokerSlice/resourceJokerSlice";
 import { ResourceJokerType } from "../../constants/enumerations";
 import { GetResourceJokerId } from "../../constants/mappings";
 import OreFaceIcon from "../Icons/DiceFaces/OreFaceIcon";
