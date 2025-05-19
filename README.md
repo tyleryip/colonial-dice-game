@@ -2,7 +2,7 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/46683f09-d9c3-44a8-ac63-036e9b52b845/deploy-status)](https://app.netlify.com/projects/colonial-dice-game/deploys)
 
-[![CI Status](https://github.com/tyleryip/colonial-dice-game/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/tyleryip/colonial-dice-game/actions/workflows/ci.yaml)
+[![CI](https://github.com/tyleryip/colonial-dice-game/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/tyleryip/colonial-dice-game/actions/workflows/ci.yml)
 
 ## About
 
