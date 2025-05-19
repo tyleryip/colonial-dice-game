@@ -1,7 +1,7 @@
 import Modal from "react-bootstrap/Modal";
 import { useAppSelector } from "../../../store/hooks";
-import { selectIsGamePhaseRolling } from "../../../store/slices/gameSlice";
-import { selectAllScoresFilled, selectTotalScore } from "../../../store/slices/scoreSlice";
+import { selectIsGamePhaseRolling } from "../../../store/slices/gameSlice/gameSlice";
+import { selectAllScoresFilled, selectTotalScore } from "../../../store/slices/scoreSlice/scoreSlice";
 import PlayAgainButton from "../../Buttons/PlayAgainButton/PlayAgainButton";
 import StyledModalFooter from "../styles/StyledModalFooter";
 import StyledModalHeader from "../styles/StyledModalHeader";

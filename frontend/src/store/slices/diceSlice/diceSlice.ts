@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../store"
-import { DiceValue } from "../../types/DiceValue";
-import { Dice } from "../../types/Dice";
-import { ResourceType } from "../../constants/resources";
+import type { RootState } from "../../store"
+import { DiceValue } from "../../../types/DiceValue";
+import { Dice } from "../../../types/Dice";
+import { ResourceType } from "../../../constants/resources";
 
-interface diceState {
+export interface diceState {
     dice: Dice[],
     rollCount: number,
     resourceJokerFlag: number | null,
@@ -199,7 +199,7 @@ function findFirstUnspentIndex(dice: Dice[], resourceType: ResourceType): number
         }
     }
 
-    throw new Error("No unspent gold found")
+    throw new Error(`No unspent ${resourceType.toString()} found`)
 }
 
 function generateNewDiceValues(dice: Dice[]): Dice[] {
@@ -212,6 +212,10 @@ function generateNewDiceValues(dice: Dice[]): Dice[] {
     })
 }
 
+/**
+ * 
+ * @returns a random number between 0 and 5 inclusive
+ */
 function generateRandomDiceValue(): DiceValue {
     return Math.floor(Math.random() * 6) as DiceValue
 }

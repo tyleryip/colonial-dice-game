@@ -1,10 +1,10 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import diceReducer, { diceSlice } from "../store/slices/diceSlice"
-import gameReducer, { gameSlice } from "../store/slices/gameSlice"
-import resourceJokerReducer, { resourceJokerSlice } from "../store/slices/resourceJokerSlice"
-import knightReducer, { knightSlice } from "./slices/knightSlice";
-import scoreReducer, { scoreSlice } from "../store/slices/scoreSlice"
-import structureReducer, { structureSlice } from "../store/slices/structureSlice"
+import diceReducer, { diceSlice } from "./slices/diceSlice/diceSlice"
+import gameReducer, { gameSlice } from "../store/slices/gameSlice/gameSlice"
+import resourceJokerReducer, { resourceJokerSlice } from "../store/slices/resourceJokerSlice/resourceJokerSlice"
+import knightReducer, { knightSlice } from "./slices/knightSlice/knightSlice";
+import scoreReducer, { scoreSlice } from "../store/slices/scoreSlice/scoreSlice"
+import structureReducer, { structureSlice } from "../store/slices/structureSlice/structureSlice"
 import { FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE } from "redux-persist";
 import { persistStore } from "redux-persist";
 import sessionStorage from "redux-persist/lib/storage/session";

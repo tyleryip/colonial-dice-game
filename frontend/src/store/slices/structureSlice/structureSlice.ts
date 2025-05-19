@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { RootState } from "../store"
-import { GetStructurePrerequisites } from "../../constants/structures"
+import { RootState } from "../../store"
+import { GetStructurePrerequisites } from "../../../constants/structures"
 
-interface structureState {
+export interface structureState {
     isBuilt: boolean[]
 }
 
