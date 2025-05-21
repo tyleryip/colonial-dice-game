@@ -44,13 +44,13 @@ export const { resetStructures, buildStructure } = structureSlice.actions;
 
 export const selectIsStructureBuilt = (state: RootState, structureId: number) => {
     validateStructureId(structureId)
-    return state.structure.isBuilt[structureId]
+    return state.session.structure.isBuilt[structureId]
 }
 export const selectHasPrerequisiteStructuresBuilt = (state: RootState, structureId: number) => {
     validateStructureId(structureId)
     const structurePrerequisites = GetStructurePrerequisites(structureId)
     return structurePrerequisites
-        .map((structureId: number) => state.structure.isBuilt[structureId])
+        .map((structureId: number) => state.session.structure.isBuilt[structureId])
         .every((isBuilt: boolean) => isBuilt)
 }
 
