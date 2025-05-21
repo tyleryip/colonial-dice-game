@@ -44,7 +44,7 @@ export const { buildKnight, resetKnights } = knightSlice.actions;
 
 export const selectIsKnightBuilt = (state: RootState, knightId: number) => {
     validateKnightId(knightId)
-    return state.knight.isBuilt[knightId]
+    return state.session.knight.isBuilt[knightId]
 }
 
 export const selectIsKnightPrerequisiteBuilt = (state: RootState, knightId: number) => {
@@ -52,7 +52,7 @@ export const selectIsKnightPrerequisiteBuilt = (state: RootState, knightId: numb
     const knightPrerequisiteId = GetKnightPrerequisite(knightId)
     return knightPrerequisiteId == null
         ? true
-        : state.knight.isBuilt[knightPrerequisiteId];
+        : state.session.knight.isBuilt[knightPrerequisiteId];
 }
 
 // Helper functions
