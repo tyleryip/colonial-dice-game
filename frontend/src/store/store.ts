@@ -3,7 +3,7 @@ import diceReducer, { diceSlice } from "./slices/diceSlice/diceSlice"
 import gameReducer, { gameSlice } from "../store/slices/gameSlice/gameSlice"
 import resourceJokerReducer, { resourceJokerSlice } from "../store/slices/resourceJokerSlice/resourceJokerSlice"
 import knightReducer, { knightSlice } from "./slices/knightSlice/knightSlice";
-import settingsReducer, { settingsState } from "./slices/settingsSlice/settingsSlice"
+import settingsReducer, { settingsSlice } from "./slices/settingsSlice/settingsSlice"
 import scoreReducer, { scoreSlice } from "../store/slices/scoreSlice/scoreSlice"
 import structureReducer, { structureSlice } from "../store/slices/structureSlice/structureSlice"
 import { FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE } from "redux-persist";
@@ -78,6 +78,7 @@ export const store = configureStore({
 
             // Settings actions
             ["Toggle Mute"]: settingsSlice.actions.toggleMute,
+            ["Set Volume"]: settingsSlice.actions.setVolume,
 
             // Score actions
             ["Add Score"]: scoreSlice.actions.addScore,
