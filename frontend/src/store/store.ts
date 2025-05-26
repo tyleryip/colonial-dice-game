@@ -78,6 +78,7 @@ export const store = configureStore({
 
             // Settings actions
             ["Toggle Mute"]: settingsSlice.actions.toggleMute,
+            ["Set Volume"]: settingsSlice.actions.setVolume,
 
             // Score actions
             ["Add Score"]: scoreSlice.actions.addScore,
