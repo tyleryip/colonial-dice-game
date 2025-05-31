@@ -40,13 +40,13 @@ const Scoreboard = () => {
     function getTotalScoreDisplayValue(): string {
         let totalDisplayScore = totalScore
 
-        // Only add pending score if it iis greater than 0, X will be applied on end of turn
+        // Only add pending score if it is greater than 0, X will be applied on end of turn
         if (pendingScore != null && pendingScore > 0) {
             totalDisplayScore += pendingScore
         }
 
         // If total score is 0 and the game just started, don't display total score
-        return totalDisplayScore == 0 && currentTurn == 0 ? "" : `${totalScore}`
+        return totalDisplayScore == 0 && currentTurn == 0 ? "" : `${totalDisplayScore}`
     }
 
     return (
