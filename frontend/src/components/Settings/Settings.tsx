@@ -1,7 +1,7 @@
 import { Form } from 'react-bootstrap'
 import StyledSettings from './styles/StyledSettings'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import { selectMute, selectVolume, setVolume } from '../../store/slices/settingsSlice/settingsSlice'
+import { selectMute, selectEffectiveVolume, setVolume } from '../../store/slices/settingsSlice/settingsSlice'
 import { ChangeEvent } from 'react'
 import VolumeButton from '../Buttons/VolumeButton/VolumeButton'
 import StyledSettingsRow from './styles/StyledSettingsRow'
@@ -12,7 +12,7 @@ const Settings = () => {
     const mute = useAppSelector(state => selectMute(state));
 
     // Scale volume between 0 and 100 for the input control
-    const volume = useAppSelector(state => selectVolume(state)) * 100
+    const volume = useAppSelector(state => selectEffectiveVolume(state)) * 100
 
     // Dispatch
 

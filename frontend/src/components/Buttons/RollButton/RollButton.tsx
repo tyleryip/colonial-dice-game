@@ -7,6 +7,9 @@ import {
 import { GamePhase } from "../../../constants/enumerations";
 import { rollDice } from "../../../store/slices/diceSlice/diceSlice";
 import DiceIcon from "../../Icons/Buttons/DiceIcon";
+import useSound from "use-sound";
+import diceRollSound from '/audio/dice_roll.wav'
+import { selectEffectiveVolume } from "../../../store/slices/settingsSlice/settingsSlice";
 
 interface RollButtonProps {
   disabled?: boolean;
@@ -22,6 +25,7 @@ const RollButton = (props: RollButtonProps) => {
   const rollCount = props.rollCount;
   const setRolling = props.setRolling;
   const rollDurationMilliseconds = props.rollDurationMilliseconds;
+  const volume = useAppSelector(state => selectEffectiveVolume(state))
 
   // Dispatch
 
@@ -39,6 +43,13 @@ const RollButton = (props: RollButtonProps) => {
 
   const opacity = (key: number) => (rollCount > key ? 30 : 100);
 
+  // Sound effects
+
+  const [playDiceRollSound] = useSound(diceRollSound, {
+    volume: volume,
+    interrupt: true
+  })
+
   // Event handlers
 
   function handleClick() {
@@ -51,6 +62,7 @@ const RollButton = (props: RollButtonProps) => {
       setRolling(false);
     }, rollDurationMilliseconds);
 
+    playDiceRollSound()
     setRolling(true);
     dispatch(rollDice());
   }

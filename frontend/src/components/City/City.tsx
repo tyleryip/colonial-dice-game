@@ -11,18 +11,17 @@ import { cityCost } from "../../constants/structures"
 import { selectHasResourcesNeeded, spendDice } from "../../store/slices/diceSlice/diceSlice"
 import { ResourceType } from "../../constants/resources"
 import { addToPendingScore } from "../../store/slices/scoreSlice/scoreSlice"
-
-// Light icons
 import city_7_light from "/assets/cities/light/city-7-light.svg"
 import city_12_light from "/assets/cities/light/city-12-light.svg"
 import city_20_light from "/assets/cities/light/city-20-light.svg"
 import city_30_light from "/assets/cities/light/city-30-light.svg"
-
-// Dark icons
 import city_7_dark from "/assets/cities/dark/city-7-dark.svg"
 import city_12_dark from "/assets/cities/dark/city-12-dark.svg"
 import city_20_dark from "/assets/cities/dark/city-20-dark.svg"
 import city_30_dark from "/assets/cities/dark/city-30-dark.svg"
+import { selectEffectiveVolume } from "../../store/slices/settingsSlice/settingsSlice"
+import buildSound from '/audio/build.wav'
+import useSound from "use-sound"
 
 interface CityProps {
     id: number,
@@ -60,6 +59,7 @@ const City = (props: CityProps) => {
     const isCityBuilt = useAppSelector(state => selectIsStructureBuilt(state, structureId))
     const hasResourcesNeeded = useAppSelector(state => selectHasResourcesNeeded(state, cityCost))
     const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectHasPrerequisiteStructuresBuilt(state, structureId))
+    const volume = useAppSelector(state => selectEffectiveVolume(state))
 
     // Can build conditions
 
@@ -87,10 +87,19 @@ const City = (props: CityProps) => {
 
     const tooltip = canBuildCity ? "Build city" : ""
 
+    // Sound effects
+
+    const [playBuildSound] = useSound(buildSound, {
+        volume: volume,
+        interrupt: false
+    })
+
     // Event handlers
 
     function handleClick() {
         if (canBuildCity) {
+            playBuildSound()
+
             dispatch(buildStructure(structureId))
 
             cityCost.forEach((resourceType: ResourceType) => {

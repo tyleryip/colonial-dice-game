@@ -11,18 +11,16 @@ import { roadCost } from "../../constants/structures"
 import { selectHasResourcesNeeded, spendDice } from "../../store/slices/diceSlice/diceSlice"
 import { ResourceType } from "../../constants/resources"
 import { addToPendingScore } from "../../store/slices/scoreSlice/scoreSlice"
-
-// Light icons
 import horizontal_road_light from "/assets/roads/light/horizontal-road-light.svg"
 import forwardslash_road_light from "/assets/roads/light/forwardslash-road-light.svg"
 import backwardslash_road_light from "/assets/roads/light/backslash-road-light.svg"
-
-// Dark icons
 import starting_road from "/assets/roads/starting-road.svg"
 import horizontal_road_dark from "/assets/roads/dark/horizontal-road-dark.svg"
 import forwardslash_road_dark from "/assets/roads/dark/forwardslash-road-dark.svg"
 import backwardslash_road_dark from "/assets/roads/dark/backslash-road-dark.svg"
-
+import buildSound from '/audio/build.wav'
+import useSound from "use-sound"
+import { selectEffectiveVolume } from "../../store/slices/settingsSlice/settingsSlice"
 
 interface RoadProps {
     id: number // the unique structure id
@@ -82,6 +80,7 @@ const Road = (props: RoadProps) => {
     const isRoadBuilt = useAppSelector(state => selectIsStructureBuilt(state, structureId))
     const hasResourcesNeeded = useAppSelector(state => selectHasResourcesNeeded(state, roadCost))
     const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectHasPrerequisiteStructuresBuilt(state, structureId))
+    const volume = useAppSelector(state => selectEffectiveVolume(state))
 
     // Can build conditions
 
@@ -110,10 +109,19 @@ const Road = (props: RoadProps) => {
 
     const tooltip = canBuildRoad ? "Build road" : ""
 
+    // Sound effects
+
+    const [playBuildSound] = useSound(buildSound, {
+        volume: volume,
+        interrupt: false
+    })
+
     // Event handlers
 
     function handleClick() {
         if (canBuildRoad) {
+            playBuildSound()
+
             dispatch(buildStructure(structureId))
 
             roadCost.forEach((resourceType: ResourceType) => {

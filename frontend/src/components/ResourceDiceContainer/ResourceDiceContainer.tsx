@@ -15,7 +15,7 @@ const ResourceDiceContainer = () => {
     // Props and constants
 
     const [rolling, setRolling] = useState(false)
-    const rollDurationMilliseconds = 750
+    const rollDurationMilliseconds = 1000
 
     // Selectors
 

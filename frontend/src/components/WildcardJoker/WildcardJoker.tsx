@@ -10,22 +10,22 @@ import { useState } from "react"
 import { ResourceType } from "../../constants/resources"
 import WildcardTradingPopup from "../Popups/WildcardTradingPopup/WildcardTradingPopup"
 import { clearWildcardJokerFlag, selectAllDiceSpent, selectResourceJokerFlag, selectWildcardJokerFlag, setWildcardJokerFlag } from "../../store/slices/diceSlice/diceSlice"
-
-// Light icons
 import wool_joker_light from "/assets/jokers/light/wool-joker-light.svg"
 import wheat_joker_light from "/assets/jokers/light/wheat-joker-light.svg"
 import ore_joker_light from "/assets/jokers/light/ore-joker-light.svg"
 import brick_joker_light from "/assets/jokers/light/brick-joker-light.svg"
 import wood_joker_light from "/assets/jokers/light/wood-joker-light.svg"
 import wildcard_joker_light from "/assets/jokers/light/wildcard-joker-light.svg"
-
-// Dark icons
 import wool_joker_dark from "/assets/jokers/dark/wool-joker-dark.svg"
 import wheat_joker_dark from "/assets/jokers/dark/wheat-joker-dark.svg"
 import ore_joker_dark from "/assets/jokers/dark/ore-joker-dark.svg"
 import wildcard_joker_dark from "/assets/jokers/dark/wildcard-joker-dark.svg"
 import brick_joker_dark from "/assets/jokers/dark/brick-joker-dark.svg"
 import wood_joker_dark from "/assets/jokers/dark/wood-joker-dark.svg"
+import { selectEffectiveVolume } from "../../store/slices/settingsSlice/settingsSlice"
+import useSound from "use-sound"
+import selectionOpenSound from '/audio/selection_open.wav'
+import selectionCloseSound from '/audio/selection_close.wav'
 
 const resourceJokerIconsLight: Readonly<Record<number, string>> = {
     0: ore_joker_light,
@@ -47,6 +47,7 @@ const resourceJokerIconsDark: Readonly<Record<number, string>> = {
 
 const WildcardResourceJoker = () => {
     // Props and constants
+
     const resourceJokerId = GetResourceJokerId(ResourceJokerType.Wildcard)
     const [tradingPopupOpen, setTradingPopupOpen] = useState(false);
 
@@ -63,6 +64,7 @@ const WildcardResourceJoker = () => {
     const resourceJokerFlag = useAppSelector(state => selectResourceJokerFlag(state))
     const wildcardJokerFlag = useAppSelector(state => selectWildcardJokerFlag(state))
     const allDiceSpent = useAppSelector(state => selectAllDiceSpent(state))
+    const volume = useAppSelector(state => selectEffectiveVolume(state))
 
     // Can spend conditions
 
@@ -123,14 +125,27 @@ const WildcardResourceJoker = () => {
         return 0
     }
 
+    // Sound effects
+
+    const [playSelectionOpenSound] = useSound(selectionOpenSound, {
+        volume: volume
+    })
+    const [playSelectionCloseSound] = useSound(selectionCloseSound, {
+        volume: volume
+    })
+
     // Event handlers
 
     const handleClick = () => {
         if (canSpendWildcardJoker) {
-            setTradingPopupOpen(!tradingPopupOpen)
+            if (!tradingPopupOpen) {
+                playSelectionOpenSound();
+                setTradingPopupOpen(true)
+            }
         }
 
         if (canCancelWildcardJoker) {
+            playSelectionCloseSound();
             dispatch(clearWildcardJokerFlag())
         }
     }
@@ -138,10 +153,14 @@ const WildcardResourceJoker = () => {
     const handleTradePopupClick = (resourceId: number) => {
         dispatch(setWildcardJokerFlag(resourceId))
 
-        handleCloseTradePopup();
+        setTradingPopupOpen(false);
     }
 
     const handleCloseTradePopup = () => {
+        if (tradingPopupOpen) {
+            playSelectionCloseSound();
+        }
+
         setTradingPopupOpen(false);
     }
 
