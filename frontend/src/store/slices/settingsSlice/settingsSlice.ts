@@ -36,4 +36,15 @@ export const {
 // Selectors
 
 export const selectMute = (state: RootState) => state.local.settings.mute
-export const selectVolume = (state: RootState) => state.local.settings.volume
+
+// DIsplay volume = the volume displayed in the settings modal (if muted, display volume = volume)
+export const selectDisplayVolume = (state: RootState) => state.local.settings.volume
+
+// Effective volume = the volume used to play sound effects (if muted, volume = 0)
+export const selectEffectiveVolume = (state: RootState) => {
+    if (state.local.settings.mute) {
+        return 0
+    }
+
+    return state.local.settings.volume
+}

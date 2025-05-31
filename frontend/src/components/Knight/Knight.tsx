@@ -23,6 +23,9 @@ import knight_3_dark from "/assets/knights/dark/knight-3-dark.svg"
 import knight_4_dark from "/assets/knights/dark/knight-4-dark.svg"
 import knight_5_dark from "/assets/knights/dark/knight-5-dark.svg"
 import knight_6_dark from "/assets/knights/dark/knight-6-dark.svg"
+import buildSound from '/audio/build.wav'
+import { selectEffectiveVolume } from "../../store/slices/settingsSlice/settingsSlice"
+import useSound from "use-sound"
 
 interface KnightProps {
     type: KnightType
@@ -62,6 +65,7 @@ const Knight = (props: KnightProps) => {
     const isKnightBuilt = useAppSelector(state => selectIsKnightBuilt(state, knightId))
     const hasResourcesNeeded = useAppSelector(state => selectHasResourcesNeeded(state, knightCost))
     const hasPrerequisiteBuilt = useAppSelector(state => selectIsKnightPrerequisiteBuilt(state, knightId))
+    const volume = useAppSelector(state => selectEffectiveVolume(state))
 
     // Built and can build conditions
 
@@ -87,10 +91,18 @@ const Knight = (props: KnightProps) => {
 
     const tooltip = canBuildKnight ? "Build knight" : ""
 
+    // Sound effects
+
+    const [playBuildSound] = useSound(buildSound, {
+        volume: volume
+    });
+
     // Event handlers
 
     function handleClick() {
         if (canBuildKnight) {
+            playBuildSound();
+
             dispatch(buildKnight(knightId))
 
             knightCost.forEach((resourceType: ResourceType) => {

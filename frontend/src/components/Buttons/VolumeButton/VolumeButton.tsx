@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
-import { selectMute, selectVolume, toggleMute } from '../../../store/slices/settingsSlice/settingsSlice'
+import { selectMute, selectEffectiveVolume, toggleMute } from '../../../store/slices/settingsSlice/settingsSlice'
 import MuteIcon from '../../Icons/Volume/MuteIcon'
 import SpeakerNoBarsIcon from '../../Icons/Volume/SpeakerNoBarsIcon'
 import SpeakerOneBarIcon from '../../Icons/Volume/SpeakerOneBarIcon'
@@ -10,7 +10,7 @@ const VolumeButton = () => {
     // Constants
 
     const mute = useAppSelector(state => selectMute(state))
-    const volume = useAppSelector(state => selectVolume(state)) * 100
+    const volume = useAppSelector(state => selectEffectiveVolume(state)) * 100
 
     // Dispatch
 
