@@ -17,7 +17,7 @@
   - [x] Rolling functionality
   - [x] Locking functionality
   - [x] Resource state based on roll results
-- [ ] Scoreboard
+- [x] Scoreboard
   - [x] Scoreboard rendering
   - [x] Score tracking functionality
   - [x] Score resetting functionality
@@ -51,26 +51,29 @@
 
 ### Non-Functional Requirements
 
-- [ ] App is responsive
-  - [ ] App fits most mobile devices
-  - [ ] App fits most laptop screens
-  - [ ] App fits most widescreen monitors
-- [ ] Unit tests
-  - [ ] Unit tests for each slice/reducer functions
-- [ ] CICD integration with GitHub Actions
-  - [ ] Automatic test run on PR
-  - [ ] Automatic deployments via Netlify
+- [x] App is responsive
+  - [x] App fits most mobile devices
+  - [x] App fits most laptop screens
+  - [x] App fits most widescreen monitors
+- [x] Unit tests
+  - [x] Unit tests for each slice/reducer functions
+- [x] CICD integration with GitHub Actions
+  - [x] Automatic test run on PR
+  - [x] Automatic deployments via Netlify
 
 ## Phase 2 - Enhancements
 
 - [ ] AI plays Catan Dice game
 - [ ] Store local user high-score in cookies
 - [ ] Island 2
-- [ ] Sound effects
-  - [ ] Dice sound effect on roll
-  - [ ] Building sound effect
-  - [ ] Trading/resource joker sound effect
+- [x] Sound effects
+  - [x] Dice sound effect on roll
+  - [x] Building sound effect
+  - [x] Trading/resource joker sound effect
 - [ ] End of game modal
   - [ ] Show statistics button
-- [ ] Settings modal
-  - [ ] Allow muting and volume adjustment
+- [ ] Show what things gave points on each filled scoreboard
+- [x] Settings modal
+  - [x] Allow muting and volume adjustment
+- [ ] Mobile compatibility
+  - [ ] Use tooltip on press and build on long press

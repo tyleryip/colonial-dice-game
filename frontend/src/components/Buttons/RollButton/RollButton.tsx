@@ -5,7 +5,7 @@ import {
   setGamePhase,
 } from "../../../store/slices/gameSlice/gameSlice";
 import { GamePhase } from "../../../constants/enumerations";
-import { rollDice } from "../../../store/slices/diceSlice/diceSlice";
+import { resetDiceLocks, rollDice } from "../../../store/slices/diceSlice/diceSlice";
 import DiceIcon from "../../Icons/Buttons/DiceIcon";
 import useSound from "use-sound";
 import diceRollSound from '/audio/dice_roll.wav'
@@ -60,6 +60,13 @@ const RollButton = (props: RollButtonProps) => {
     setTimeout(() => {
       // Cannot extract and move to roll button because we need to setRolling for the animation
       setRolling(false);
+
+      // Need to set game phase to building only after the 3rd roll completes, so the rolling
+      // animation doesn't play for locked dice
+      if (rollCount == 2) {
+        dispatch(setGamePhase(GamePhase.Building))
+        dispatch(resetDiceLocks())
+      }
     }, rollDurationMilliseconds);
 
     playDiceRollSound()
