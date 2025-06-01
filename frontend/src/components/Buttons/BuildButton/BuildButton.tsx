@@ -1,20 +1,24 @@
 import StyledBuildButton from "./styles/StyledBuildButton";
 import {
   incrementTurn,
+  selectCurrentTurn,
   selectIsGamePhaseBuilding,
   selectIsGamePhaseRolling,
   setGamePhase,
-} from "../../../store/slices/gameSlice";
+} from "../../../store/slices/gameSlice/gameSlice";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { GamePhase } from "../../../constants/enumerations";
-import { addScore } from "../../../store/slices/scoreSlice";
+import { addScore } from "../../../store/slices/scoreSlice/scoreSlice";
 import {
   resetDice,
   resetDiceLocks,
   setRollCount,
-} from "../../../store/slices/diceSlice";
+} from "../../../store/slices/diceSlice/diceSlice";
 import BuildIcon from "../../Icons/Buttons/BuildIcon";
 import DiceIcon from "../../Icons/Buttons/DiceIcon";
+import gameOverSound from '/audio/game_over.wav'
+import { selectEffectiveVolume } from "../../../store/slices/settingsSlice/settingsSlice";
+import useSound from "use-sound";
 
 interface BuildButtonProps {
   disabled?: boolean;
@@ -31,12 +35,14 @@ const BuildButton = (props: BuildButtonProps) => {
 
   // Selectors
 
-  const gamePhaseRolling = useAppSelector((state) =>
+  const gamePhaseRolling = useAppSelector(state =>
     selectIsGamePhaseRolling(state)
   );
-  const gamePhaseBuilding = useAppSelector((state) =>
+  const gamePhaseBuilding = useAppSelector(state =>
     selectIsGamePhaseBuilding(state)
   );
+  const currentTurn = useAppSelector(state => selectCurrentTurn(state))
+  const volume = useAppSelector(state => selectEffectiveVolume(state))
 
   // Conditional rendering
 
@@ -45,6 +51,12 @@ const BuildButton = (props: BuildButtonProps) => {
     : "End building and roll";
 
   const opacity = disabled ? 30 : 100;
+
+  // Sound effects
+
+  const [playGameOverSound] = useSound(gameOverSound, {
+    volume: volume
+  });
 
   // Event handlers
 
@@ -60,6 +72,10 @@ const BuildButton = (props: BuildButtonProps) => {
       dispatch(addScore());
       dispatch(incrementTurn());
       dispatch(resetDice());
+
+      if (currentTurn >= 14) {
+        playGameOverSound();
+      }
     }
   };
 

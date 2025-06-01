@@ -1,15 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../store";
-import { ScoreValue } from "../../types/ScoreValue"
+import type { RootState } from "../../store";
+import { ScoreValue } from "../../../types/ScoreValue"
 
-interface scoreState {
+export interface scoreState {
     scores: ScoreValue[]
     pendingScore: ScoreValue
 }
 
 const initialState: scoreState = {
     scores: new Array(15).fill(null),
-    pendingScore: 0
+    pendingScore: null
 }
 
 export const scoreSlice = createSlice({
@@ -26,7 +26,7 @@ export const scoreSlice = createSlice({
             state.scores[index] = state.pendingScore != null && state.pendingScore > 0
                 ? state.pendingScore
                 : -2
-            state.pendingScore = 0
+            state.pendingScore = null
         },
         /**
          * When the pending score is changing after building structures or knights
@@ -57,15 +57,15 @@ export const { resetScore, addScore, addToPendingScore } = scoreSlice.actions
 
 // Selectors
 
-export const selectScoreValues = (state: RootState) => state.score.scores
-export const selectPendingScore = (state: RootState) => state.score.pendingScore
+export const selectScoreValues = (state: RootState) => state.session.score.scores
+export const selectPendingScore = (state: RootState) => state.session.score.pendingScore
 
-export const selectTotalScore = (state: RootState) => state.score.scores
+export const selectTotalScore = (state: RootState) => state.session.score.scores
     .reduce((accumulator: number, currentValue: ScoreValue) => {
         return accumulator + (currentValue ?? 0);
     }, 0)
 
-export const selectAllScoresFilled = (state: RootState) => state.score.scores.every(score => typeof score === 'number')
+export const selectAllScoresFilled = (state: RootState) => state.session.score.scores.every(score => typeof score === 'number')
 
 // Helper functions
 

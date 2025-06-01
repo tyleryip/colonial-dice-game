@@ -1,20 +1,22 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import diceReducer, { diceSlice } from "../store/slices/diceSlice"
-import gameReducer, { gameSlice } from "../store/slices/gameSlice"
-import resourceJokerReducer, { resourceJokerSlice } from "../store/slices/resourceJokerSlice"
-import knightReducer, { knightSlice } from "./slices/knightSlice";
-import scoreReducer, { scoreSlice } from "../store/slices/scoreSlice"
-import structureReducer, { structureSlice } from "../store/slices/structureSlice"
+import diceReducer, { diceSlice } from "./slices/diceSlice/diceSlice"
+import gameReducer, { gameSlice } from "../store/slices/gameSlice/gameSlice"
+import resourceJokerReducer, { resourceJokerSlice } from "../store/slices/resourceJokerSlice/resourceJokerSlice"
+import knightReducer, { knightSlice } from "./slices/knightSlice/knightSlice";
+import settingsReducer, { settingsSlice } from "./slices/settingsSlice/settingsSlice"
+import scoreReducer, { scoreSlice } from "../store/slices/scoreSlice/scoreSlice"
+import structureReducer, { structureSlice } from "../store/slices/structureSlice/structureSlice"
 import { FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE } from "redux-persist";
 import { persistStore } from "redux-persist";
 import sessionStorage from "redux-persist/lib/storage/session";
+import localStorage from "redux-persist/lib/storage";
 
-const persistConfig = {
-    key: "root",
+const sessionPersistConfig = {
+    key: "session",
     storage: sessionStorage
 }
 
-const rootReducer = combineReducers({
+const sessionReducer = combineReducers({
     dice: diceReducer,
     game: gameReducer,
     knight: knightReducer,
@@ -23,10 +25,26 @@ const rootReducer = combineReducers({
     structure: structureReducer,
 })
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+const sessionPersistedReducer = persistReducer(sessionPersistConfig, sessionReducer)
+
+const localStoragePersistConfig = {
+    key: "local",
+    storage: localStorage
+}
+
+const localStorageReducer = combineReducers({
+    settings: settingsReducer
+})
+
+const localStoragePersistedReducer = persistReducer(localStoragePersistConfig, localStorageReducer)
+
+const rootReducer = combineReducers({
+    session: sessionPersistedReducer,
+    local: localStoragePersistedReducer
+})
 
 export const store = configureStore({
-    reducer: persistedReducer,
+    reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: {
@@ -57,6 +75,10 @@ export const store = configureStore({
             // Resource joker actions
             ["Reset Resource Jokers"]: resourceJokerSlice.actions.resetResourceJokers,
             ["Spend Resource Joker"]: resourceJokerSlice.actions.spendResourceJoker,
+
+            // Settings actions
+            ["Toggle Mute"]: settingsSlice.actions.toggleMute,
+            ["Set Volume"]: settingsSlice.actions.setVolume,
 
             // Score actions
             ["Add Score"]: scoreSlice.actions.addScore,

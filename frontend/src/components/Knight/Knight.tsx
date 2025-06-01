@@ -1,32 +1,31 @@
 import StyledAsset from "../Asset/StyledAsset"
 import { IconType, KnightType } from "../../constants/enumerations"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { buildKnight, selectIsKnightBuilt, selectIsKnightPrerequisiteBuilt } from "../../store/slices/knightSlice"
+import { buildKnight, selectIsKnightBuilt, selectIsKnightPrerequisiteBuilt } from "../../store/slices/knightSlice/knightSlice"
 import { GetKnightId } from "../../constants/mappings"
 import StyledKnight from "./styles/StyledKnight"
-import { selectIsGamePhaseBuilding } from "../../store/slices/gameSlice"
+import { selectIsGamePhaseBuilding } from "../../store/slices/gameSlice/gameSlice"
 import { useHover } from "@uidotdev/usehooks"
 import ResourceCostPopup from "../Popups/ResourceCostPopup/ResourceCostPopup"
 import { knightCost } from "../../constants/knights"
-import { selectHasResourcesNeeded, spendDice } from "../../store/slices/diceSlice"
+import { selectHasResourcesNeeded, spendDice } from "../../store/slices/diceSlice/diceSlice"
 import { ResourceType } from "../../constants/resources"
-import { addToPendingScore } from "../../store/slices/scoreSlice"
-
-// Light icons
+import { addToPendingScore } from "../../store/slices/scoreSlice/scoreSlice"
 import knight_1_light from "/assets/knights/light/knight-1-light.svg"
 import knight_2_light from "/assets/knights/light/knight-2-light.svg"
 import knight_3_light from "/assets/knights/light/knight-3-light.svg"
 import knight_4_light from "/assets/knights/light/knight-4-light.svg"
 import knight_5_light from "/assets/knights/light/knight-5-light.svg"
 import knight_6_light from "/assets/knights/light/knight-6-light.svg"
-
-// Dark icons
 import knight_1_dark from "/assets/knights/dark/knight-1-dark.svg"
 import knight_2_dark from "/assets/knights/dark/knight-2-dark.svg"
 import knight_3_dark from "/assets/knights/dark/knight-3-dark.svg"
 import knight_4_dark from "/assets/knights/dark/knight-4-dark.svg"
 import knight_5_dark from "/assets/knights/dark/knight-5-dark.svg"
 import knight_6_dark from "/assets/knights/dark/knight-6-dark.svg"
+import buildSound from '/audio/build.wav'
+import { selectEffectiveVolume } from "../../store/slices/settingsSlice/settingsSlice"
+import useSound from "use-sound"
 
 interface KnightProps {
     type: KnightType
@@ -66,6 +65,7 @@ const Knight = (props: KnightProps) => {
     const isKnightBuilt = useAppSelector(state => selectIsKnightBuilt(state, knightId))
     const hasResourcesNeeded = useAppSelector(state => selectHasResourcesNeeded(state, knightCost))
     const hasPrerequisiteBuilt = useAppSelector(state => selectIsKnightPrerequisiteBuilt(state, knightId))
+    const volume = useAppSelector(state => selectEffectiveVolume(state))
 
     // Built and can build conditions
 
@@ -91,10 +91,18 @@ const Knight = (props: KnightProps) => {
 
     const tooltip = canBuildKnight ? "Build knight" : ""
 
+    // Sound effects
+
+    const [playBuildSound] = useSound(buildSound, {
+        volume: volume
+    });
+
     // Event handlers
 
     function handleClick() {
         if (canBuildKnight) {
+            playBuildSound();
+
             dispatch(buildKnight(knightId))
 
             knightCost.forEach((resourceType: ResourceType) => {

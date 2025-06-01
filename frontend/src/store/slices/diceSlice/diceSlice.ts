@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../store"
-import { DiceValue } from "../../types/DiceValue";
-import { Dice } from "../../types/Dice";
-import { ResourceType } from "../../constants/resources";
+import type { RootState } from "../../store"
+import { DiceValue } from "../../../types/DiceValue";
+import { Dice } from "../../../types/Dice";
+import { ResourceType } from "../../../constants/resources";
 
-interface diceState {
+export interface diceState {
     dice: Dice[],
     rollCount: number,
     resourceJokerFlag: number | null,
@@ -153,12 +153,12 @@ export const {
 
 // Selectors
 
-export const selectDice = (state: RootState) => state.dice.dice
-export const selectRollCount = (state: RootState) => state.dice.rollCount
-export const selectResourceJokerFlag = (state: RootState) => state.dice.resourceJokerFlag
-export const selectWildcardJokerFlag = (state: RootState) => state.dice.wildcardJokerFlag
+export const selectDice = (state: RootState) => state.session.dice.dice
+export const selectRollCount = (state: RootState) => state.session.dice.rollCount
+export const selectResourceJokerFlag = (state: RootState) => state.session.dice.resourceJokerFlag
+export const selectWildcardJokerFlag = (state: RootState) => state.session.dice.wildcardJokerFlag
 
-export const selectAllDiceSpent = (state: RootState) => state.dice.dice.every(dice => dice.spent)
+export const selectAllDiceSpent = (state: RootState) => state.session.dice.dice.every(dice => dice.spent)
 
 /**
  * Determines if the user can build this structure or knight based on unspent inventory
@@ -169,7 +169,7 @@ export const selectAllDiceSpent = (state: RootState) => state.dice.dice.every(di
 export const selectHasResourcesNeeded = (state: RootState, cost: ResourceType[]): boolean => {
     // Need to keep track of which dice are spent
     const spentDice: number[] = []
-    state.dice.dice.forEach((dice: Dice, diceId: number) => {
+    state.session.dice.dice.forEach((dice: Dice, diceId: number) => {
         if (dice.spent) {
             spentDice.push(diceId)
         }
@@ -177,7 +177,7 @@ export const selectHasResourcesNeeded = (state: RootState, cost: ResourceType[])
 
     let canBuild = true;
     cost.forEach((resourceType: ResourceType) => {
-        const index = state.dice.dice.findIndex((dice: Dice, index: number) => dice.value == resourceType.id && !spentDice.includes(index))
+        const index = state.session.dice.dice.findIndex((dice: Dice, index: number) => dice.value == resourceType.id && !spentDice.includes(index))
 
         if (index == -1) {
             canBuild = false
@@ -199,7 +199,7 @@ function findFirstUnspentIndex(dice: Dice[], resourceType: ResourceType): number
         }
     }
 
-    throw new Error("No unspent gold found")
+    throw new Error(`No unspent ${resourceType.toString()} found`)
 }
 
 function generateNewDiceValues(dice: Dice[]): Dice[] {
@@ -212,6 +212,10 @@ function generateNewDiceValues(dice: Dice[]): Dice[] {
     })
 }
 
+/**
+ * 
+ * @returns a random number between 0 and 5 inclusive
+ */
 function generateRandomDiceValue(): DiceValue {
     return Math.floor(Math.random() * 6) as DiceValue
 }

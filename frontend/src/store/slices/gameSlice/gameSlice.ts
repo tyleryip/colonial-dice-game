@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GamePhase } from "../../constants/enumerations";
-import { RootState } from "../store";
+import { GamePhase } from "../../../constants/enumerations";
+import { RootState } from "../../store";
 
-interface gameState {
+export interface gameState {
     currentGamePhase: GamePhase,
     currentTurn: number
 }
@@ -50,12 +50,12 @@ export const { incrementTurn, setGamePhase, resetGame } = gameSlice.actions
 
 // Selectors
 
-export const selectCurrentTurn = (state: RootState) => state.game.currentTurn
+export const selectCurrentTurn = (state: RootState) => state.session.game.currentTurn
 
 export function selectIsGamePhaseRolling(state: RootState): boolean {
-    return state.game.currentGamePhase == GamePhase.Rolling
+    return state.session.game.currentGamePhase == GamePhase.Rolling
 }
 
 export function selectIsGamePhaseBuilding(state: RootState): boolean {
-    return state.game.currentGamePhase == GamePhase.Building
+    return state.session.game.currentGamePhase == GamePhase.Building
 }

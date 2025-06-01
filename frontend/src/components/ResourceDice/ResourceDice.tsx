@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
   selectIsGamePhaseBuilding,
   selectIsGamePhaseRolling,
-} from "../../store/slices/gameSlice";
+} from "../../store/slices/gameSlice/gameSlice";
 import { getResourceType, ResourceType } from "../../constants/resources";
 import {
   toggleDiceLock,
@@ -17,8 +17,8 @@ import {
   spendDice,
   selectWildcardJokerFlag,
   clearWildcardJokerFlag,
-} from "../../store/slices/diceSlice";
-import { spendResourceJoker } from "../../store/slices/resourceJokerSlice";
+} from "../../store/slices/diceSlice/diceSlice";
+import { spendResourceJoker } from "../../store/slices/resourceJokerSlice/resourceJokerSlice";
 import { ResourceJokerType } from "../../constants/enumerations";
 import { GetResourceJokerId } from "../../constants/mappings";
 import OreFaceIcon from "../Icons/DiceFaces/OreFaceIcon";
@@ -29,6 +29,14 @@ import BrickFaceIcon from "../Icons/DiceFaces/BrickFaceIcon";
 import GoldFaceIcon from "../Icons/DiceFaces/GoldFaceIcon";
 import BlankFaceIcon from "../Icons/DiceFaces/BlankFaceIcon";
 import LockIcon from "../Icons/DiceFaces/LockIcon";
+import tradeGoldSound from "/audio/trade_gold.wav"
+import lockSound from "/audio/lock.wav";
+import unlockSound from "/audio/unlock.wav";
+import jokerSetDiceSound from "/audio/joker_set_dice.wav";
+import useSound from "use-sound";
+import { selectEffectiveVolume } from "../../store/slices/settingsSlice/settingsSlice";
+import selectionOpenSound from '/audio/selection_open.wav'
+import selectionCloseSound from '/audio/selection_close.wav'
 
 interface ResourceDiceProps {
   id: number;
@@ -57,17 +65,20 @@ const ResourceDice = (props: ResourceDiceProps) => {
 
   // Selectors
 
-  const gamePhaseRolling = useAppSelector((state) =>
+  const gamePhaseRolling = useAppSelector(state =>
     selectIsGamePhaseRolling(state)
   );
-  const gamePhaseBuilding = useAppSelector((state) =>
+  const gamePhaseBuilding = useAppSelector(state =>
     selectIsGamePhaseBuilding(state)
   );
-  const resourceJokerFlag = useAppSelector((state) =>
+  const resourceJokerFlag = useAppSelector(state =>
     selectResourceJokerFlag(state)
   );
-  const wildcardJokerFlag = useAppSelector((state) =>
+  const wildcardJokerFlag = useAppSelector(state =>
     selectWildcardJokerFlag(state)
+  );
+  const volume = useAppSelector(state =>
+    selectEffectiveVolume(state)
   );
 
   // Conditional rendering
@@ -115,17 +126,51 @@ const ResourceDice = (props: ResourceDiceProps) => {
     return `Trade for ${resourceType.name}`;
   };
 
+  // Sound effects
+
+  const [playTradeGoldSound] = useSound(tradeGoldSound, {
+    volume: volume,
+    interrupt: false
+  })
+  const [playLockSound] = useSound(lockSound, {
+    volume: volume,
+    interrupt: false
+  })
+  const [playUnlockSound] = useSound(unlockSound, {
+    volume: volume,
+    interrupt: false
+  })
+  const [playJokerSetDiceSound] = useSound(jokerSetDiceSound, {
+    volume: volume,
+    interrupt: false
+  })
+  const [playSelectionOpenSound] = useSound(selectionOpenSound, {
+    volume: volume
+  })
+  const [playSelectionCloseSound] = useSound(selectionCloseSound, {
+    volume: volume
+  })
+
   // Event handlers
 
   const handleClick = () => {
     if (gamePhaseRolling && diceValue !== null) {
+      if (isLocked) {
+        playUnlockSound();
+      }
+      if (!isLocked) {
+        playLockSound();
+      }
       dispatch(toggleDiceLock(diceId));
       return;
     }
 
     if (gamePhaseBuilding && !isSpent) {
       // Resource and wildcard joker setting takes priority over gold trading
+
       if (wildcardJokerFlag != null) {
+        playJokerSetDiceSound();
+
         dispatch(
           setDice({ id: diceId, value: wildcardJokerFlag as DiceValue })
         );
@@ -137,6 +182,8 @@ const ResourceDice = (props: ResourceDiceProps) => {
       }
 
       if (resourceJokerFlag != null) {
+        playJokerSetDiceSound();
+
         dispatch(
           setDice({ id: diceId, value: resourceJokerFlag as DiceValue })
         );
@@ -146,6 +193,8 @@ const ResourceDice = (props: ResourceDiceProps) => {
       }
 
       if (canOpenTradePopup) {
+        playSelectionOpenSound();
+
         setTradingPopupOpen(!tradingPopupOpen);
       }
     }
@@ -157,14 +206,20 @@ const ResourceDice = (props: ResourceDiceProps) => {
       value: resourceId as DiceValue,
     };
 
-    dispatch(setDice(setDicePayload));
-    dispatch(spendDice(JSON.stringify(ResourceType.GOLD)));
+    playTradeGoldSound()
 
-    handleCloseTradePopup();
+    dispatch(setDice(setDicePayload))
+    dispatch(spendDice(JSON.stringify(ResourceType.GOLD)))
+
+    setTradingPopupOpen(false);
   };
 
   const handleCloseTradePopup = () => {
-    setTradingPopupOpen(false);
+    if (tradingPopupOpen) {
+      playSelectionCloseSound()
+
+      setTradingPopupOpen(false)
+    }
   };
 
   return (

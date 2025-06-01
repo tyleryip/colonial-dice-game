@@ -1,6 +1,6 @@
 import { useAppSelector } from '../../store/hooks'
-import { selectCurrentTurn } from '../../store/slices/gameSlice'
-import { selectPendingScore, selectScoreValues, selectTotalScore } from '../../store/slices/scoreSlice'
+import { selectCurrentTurn } from '../../store/slices/gameSlice/gameSlice'
+import { selectPendingScore, selectScoreValues, selectTotalScore } from '../../store/slices/scoreSlice/scoreSlice'
 import { ScoreValue } from '../../types/ScoreValue'
 import StyledEqualsIcon from './styles/StyledEqualsIcon'
 import StyledScoreboard from './styles/StyledScoreboard'
@@ -40,13 +40,13 @@ const Scoreboard = () => {
     function getTotalScoreDisplayValue(): string {
         let totalDisplayScore = totalScore
 
-        // Only add pending score if it iis greater than 0, X will be applied on end of turn
+        // Only add pending score if it is greater than 0, X will be applied on end of turn
         if (pendingScore != null && pendingScore > 0) {
             totalDisplayScore += pendingScore
         }
 
         // If total score is 0 and the game just started, don't display total score
-        return totalDisplayScore == 0 && currentTurn == 0 ? "" : `${totalScore}`
+        return totalDisplayScore == 0 && currentTurn == 0 ? "" : `${totalDisplayScore}`
     }
 
     return (
