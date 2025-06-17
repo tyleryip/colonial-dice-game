@@ -53,12 +53,12 @@ const Instructions = (props: InstructionProps) => {
         }
 
         if (gamePhaseBuilding) {
-            if (props.canTrade) {
-                return "Click gold to trade."
-            }
-
             if (resourceJokerFlag != null || wildcardJokerFlag != null) {
                 return "Choose the die to set or cancel."
+            }
+
+            if (props.canTrade) {
+                return "Click gold to trade."
             }
 
             // TODO: only show build prompt if the user can actually build with available resources
