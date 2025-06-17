@@ -63,13 +63,14 @@
 
 ## Phase 2 - Enhancements
 
-- [ ] AI plays Catan Dice game
-- [ ] Store local user high-score in cookies
-- [ ] Island 2
 - [x] Sound effects
   - [x] Dice sound effect on roll
   - [x] Building sound effect
   - [x] Trading/resource joker sound effect
+- [ ] Instructions text
+  - [ ] Trading gold
+  - [ ] Tap to build structures
+  - [ ] Setting resource jokers
 - [ ] End of game modal
   - [ ] Show statistics button
 - [ ] Show what things gave points on each filled scoreboard
@@ -77,3 +78,16 @@
   - [x] Allow muting and volume adjustment
 - [ ] Mobile compatibility
   - [ ] Use tooltip on press and build on long press
+
+## Phase 3 - Island 2
+
+- [ ] Island 2
+  - [ ] Navbar tabs for Island 1 and Island 2
+  - [ ] Gameboard adjustments for Island 2
+  - [ ] Scoreboard adjustments for Island 2
+  - [ ] Longest road/largest army checkboxes
+
+## Phase 4 - Enhancements
+
+- [ ] AI plays Catan Dice game
+- [ ] Store local user high-score in cookies

@@ -4,6 +4,7 @@ const StyledScoreboard = styled.div`
     margin-top: 2%;
     display: grid;
     justify-items: stretch;
+    justify-self: center;
     align-items: stretch;
     
     @media ${(props) => props.theme.breakpoints.xs} {

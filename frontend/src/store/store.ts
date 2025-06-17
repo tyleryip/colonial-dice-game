@@ -77,8 +77,9 @@ export const store = configureStore({
             ["Spend Resource Joker"]: resourceJokerSlice.actions.spendResourceJoker,
 
             // Settings actions
-            ["Toggle Mute"]: settingsSlice.actions.toggleMute,
             ["Set Volume"]: settingsSlice.actions.setVolume,
+            ["Toggle Mute"]: settingsSlice.actions.toggleMute,
+            ["Toggle Show Instructions"]: settingsSlice.actions.toggleShowInstructions,
 
             // Score actions
             ["Add Score"]: scoreSlice.actions.addScore,

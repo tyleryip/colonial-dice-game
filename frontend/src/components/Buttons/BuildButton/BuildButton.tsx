@@ -19,6 +19,7 @@ import DiceIcon from "../../Icons/Buttons/DiceIcon";
 import gameOverSound from '/audio/game_over.wav'
 import { selectEffectiveVolume } from "../../../store/slices/settingsSlice/settingsSlice";
 import useSound from "use-sound";
+import { useEffect, useState } from "react";
 
 interface BuildButtonProps {
   disabled?: boolean;
@@ -27,7 +28,8 @@ interface BuildButtonProps {
 const BuildButton = (props: BuildButtonProps) => {
   // Props and constants
 
-  const disabled = props.disabled ?? false;
+  const [disabled, setDisabled] = useState(true)
+  const disabledDelayMilliseconds = 2000
 
   // Dispatch
 
@@ -45,6 +47,21 @@ const BuildButton = (props: BuildButtonProps) => {
   const volume = useAppSelector(state => selectEffectiveVolume(state))
 
   // Conditional rendering
+
+  /**
+   * Disable the build button for a short time after any game phase
+   * changes or prop changes to prevent the user from mis-clicking.
+   */
+  useEffect(() => {
+    // By default, always disable after dependencies change
+    setDisabled(true)
+
+    setTimeout(() => {
+      // After delay, evaluate and update disabled
+      setDisabled(props.disabled ?? false)
+    },
+      disabledDelayMilliseconds)
+  }, [props.disabled, gamePhaseBuilding])
 
   const tooltip = gamePhaseRolling
     ? "End rolling and build"

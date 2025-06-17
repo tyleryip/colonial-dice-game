@@ -2,6 +2,7 @@ import NavbarText from 'react-bootstrap/NavbarText'
 import { styled } from 'styled-components'
 
 const StyledNavbarText = styled(NavbarText)`
+    user-select: none;
     white-space: nowrap;
 
      @media ${(props) => props.theme.breakpoints.xs} {
