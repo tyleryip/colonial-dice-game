@@ -10,6 +10,7 @@ import BuildButton from "../Buttons/BuildButton/BuildButton"
 import { selectIsGamePhaseBuilding, selectIsGamePhaseRolling } from "../../store/slices/gameSlice/gameSlice"
 import { Dice } from "../../types/Dice"
 import { ResourceType } from "../../constants/resources"
+import Instructions from "../Instructions/Instructions"
 
 const ResourceDiceContainer = () => {
     // Props and constants
@@ -68,6 +69,9 @@ const ResourceDiceContainer = () => {
                 <BuildButton
                     disabled={buildButtonDisabled} />
             </StyledButtonTray>
+            <Instructions
+                rolling={rolling}
+                canTrade={isTradeable} />
         </StyledResourceDiceContainer>
     )
 }
