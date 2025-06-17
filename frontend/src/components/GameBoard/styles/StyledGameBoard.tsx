@@ -5,7 +5,6 @@ const StyledGameBoard = styled.div`
     aspect-ratio: 1/1;
     margin-right: auto;
     margin-left: auto;
-    margin-top: 1%;
     margin-bottom: 1%;
 
     @media ${(props) => props.theme.breakpoints.xs} {
