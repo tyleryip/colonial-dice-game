@@ -1,6 +1,6 @@
 import { styled } from 'styled-components'
 
-const StyledVolumeIcon = styled.svg`
+const StyledVolumeIcon = styled.img`
     width: 100%;
     cursor: pointer;
 `

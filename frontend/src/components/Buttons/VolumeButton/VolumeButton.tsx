@@ -1,10 +1,11 @@
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
 import { selectMute, selectEffectiveVolume, toggleMute } from '../../../store/slices/settingsSlice/settingsSlice'
-import MuteIcon from '../../Icons/Volume/MuteIcon'
-import SpeakerNoBarsIcon from '../../Icons/Volume/SpeakerNoBarsIcon'
-import SpeakerOneBarIcon from '../../Icons/Volume/SpeakerOneBarIcon'
-import SpeakerTwoBarsIcon from '../../Icons/Volume/SpeakerTwoBarsIcon'
+import SpeakerMutedIcon from '/assets/settings/volume/speaker-muted.png'
+import SpeakerNoBarsIcon from '/assets/settings/volume/speaker-no-bars.png'
+import SpeakerOneBarIcon from '/assets/settings/volume/speaker-one-bar.png'
+import SpeakerTwoBarsIcon from '/assets/settings/volume/speaker-two-bars.png'
 import StyledVolumeButton from './styles/StyledVolumeButton'
+import StyledVolumeIcon from './styles/StyledVolumeIcon'
 
 const VolumeButton = () => {
     // Constants
@@ -18,9 +19,25 @@ const VolumeButton = () => {
 
     // Conditional rendering
 
-    const showSpeakerNoBars = volume == 0 && !mute
-    const showSpeakerOneBar = volume > 0 && volume <= 50 && !mute
-    const showSpeakerTwoBar = volume > 50 && !mute
+    const getIcon = (): string => {
+        if (mute) {
+            return SpeakerMutedIcon
+        }
+
+        if (volume == 0 && !mute) {
+            return SpeakerNoBarsIcon
+        }
+
+        if (volume > 0 && volume <= 50 && !mute) {
+            return SpeakerOneBarIcon
+        }
+
+        if (volume > 50 && !mute) {
+            return SpeakerTwoBarsIcon
+        }
+
+        return ""
+    }
 
     const tooltip = mute
         ? "Unmute volume"
@@ -34,10 +51,7 @@ const VolumeButton = () => {
 
     return (
         <StyledVolumeButton title={tooltip} onClick={handleClick}>
-            {mute && <MuteIcon />}
-            {showSpeakerNoBars && <SpeakerNoBarsIcon />}
-            {showSpeakerOneBar && <SpeakerOneBarIcon />}
-            {showSpeakerTwoBar && <SpeakerTwoBarsIcon />}
+            <StyledVolumeIcon src={getIcon()} />
         </StyledVolumeButton>
     )
 }
