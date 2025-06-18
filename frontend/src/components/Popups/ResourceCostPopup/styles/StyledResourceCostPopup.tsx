@@ -15,6 +15,7 @@ const StyledResourceCostPopup = styled.div<StyledResourceCostPopupProps>`
     border-radius: 5px;
     overflow: hidden;
     z-index: 3;
+    -webkit-transform: translate3d(0,0,3px);
 
     position: absolute;
     display: flex;

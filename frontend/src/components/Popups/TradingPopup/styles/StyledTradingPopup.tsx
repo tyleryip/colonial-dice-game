@@ -5,6 +5,8 @@ const StyledTradingPopup = styled.div`
   border-radius: 5px;
   overflow: hidden;
   z-index: 3;
+  -webkit-transform: translate3d(0,0,3px);
+
   padding-top: 5%;
   padding-bottom: 5%;
   padding-left: 10%;

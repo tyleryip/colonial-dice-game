@@ -14,6 +14,7 @@ const StyledSettlement = styled.div<StyledSettlementProps>`
     left: ${props => `${props.$left}%`};
     width: 13%;
     z-index: 1;
+    -webkit-transform: translate3d(0,0,1px);
 
     &:hover {
         cursor: ${props => props.$pointer && css`pointer`};

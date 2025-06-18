@@ -12,6 +12,7 @@ const StyledKnight = styled.div<StyledKnightProps>`
     left: 44%;
     width: 12%;
     z-index: 1;
+    -webkit-transform: translate3d(0,0,1px);
 
     &:hover {
         cursor: ${props => props.$pointer && css`pointer`};

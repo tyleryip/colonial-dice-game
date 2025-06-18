@@ -14,6 +14,7 @@ const StyledCity = styled.div<StyledCityProps>`
     left: ${props => `${props.$left}%`};
     width: 15.5%;
     z-index: 1;
+    -webkit-transform: translate3d(0,0,1px);
 
     &:hover {
         cursor: ${props => props.$pointer && css`pointer`};

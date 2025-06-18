@@ -14,6 +14,7 @@ const StyledResourceJoker = styled.div<StyledResourceJokerProps>`
     left: 37%;
     width: 25%;
     z-index: 2;
+    -webkit-transform: translate3d(0,0,2px);
 
     &:hover {
         cursor: ${props => props.$pointer && css`pointer`};
