@@ -1,8 +1,8 @@
 # Takeaways
 
-## SVGs with embedded raster images
+## SVGs with embedded images do not render in Safari on reload or dynamic styling changes
 
-### Problem: SVGs with embedded images do not render in Safari on reload or dynamic styling changes
+### Problem
 
 In general, SVGs should be used over raster-based images so they can be scaled
 appropriately without any loss in resolution. However, I was naive in thinking
