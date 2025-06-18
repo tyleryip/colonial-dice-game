@@ -15,6 +15,7 @@ interface StyledDiceFaceIconProps {
 const StyledDiceFaceIcon = styled.svg<StyledDiceFaceIconProps>`
   width: 100%;
   border-radius: 10%;
+  visibility: visible;
 
   filter: ${(props) =>
     props.$grayscale &&

@@ -13,6 +13,7 @@ interface StyledResourceDiceFaceProps {
 const StyledResourceDiceFace = styled.img<StyledResourceDiceFaceProps>`
     width: ${props => `${props.$width}%`};
     border-radius: 10%;
+    visibility: visible;
 
     filter: ${props =>
         props.$grayscale &&
@@ -26,6 +27,7 @@ const StyledResourceDiceFace = styled.img<StyledResourceDiceFaceProps>`
             30%
         `
     };
+
 
     animation: ${props =>
         (props.$wobble &&

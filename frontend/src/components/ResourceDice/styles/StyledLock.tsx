@@ -9,7 +9,10 @@ const StyledLock = styled.img<StyledLockProps>`
   top: 2%;
   left: 4%;
   opacity: ${(prop) => (prop.$locked ? "100%" : "0%")};
-  transition: opacity 250ms ease-out;
+  z-index: 1;
+  visibility: ${(prop) => (prop.$locked ? "visible" : "hidden")}; // Addresses an issue with Safari
+  
+  transition: opacity 250ms ease-out, visibility 250ms ease-out;
 `;
 
 export default StyledLock;
