@@ -1,9 +1,9 @@
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
 import { selectMute, selectEffectiveVolume, toggleMute } from '../../../store/slices/settingsSlice/settingsSlice'
-import SpeakerMutedIcon from '/assets/settings/volume/speaker-muted.png'
-import SpeakerNoBarsIcon from '/assets/settings/volume/speaker-no-bars.png'
-import SpeakerOneBarIcon from '/assets/settings/volume/speaker-one-bar.png'
-import SpeakerTwoBarsIcon from '/assets/settings/volume/speaker-two-bars.png'
+import speaker_muted from '/assets/settings/volume/speaker-muted.png'
+import speaker_no_bars from '/assets/settings/volume/speaker-no-bars.png'
+import speaker_one_bar from '/assets/settings/volume/speaker-one-bar.png'
+import speaker_two_bars from '/assets/settings/volume/speaker-two-bars.png'
 import StyledVolumeButton from './styles/StyledVolumeButton'
 import StyledVolumeIcon from './styles/StyledVolumeIcon'
 
@@ -21,22 +21,18 @@ const VolumeButton = () => {
 
     const getIcon = (): string => {
         if (mute) {
-            return SpeakerMutedIcon
+            return speaker_muted
         }
 
-        if (volume == 0 && !mute) {
-            return SpeakerNoBarsIcon
+        if (volume == 0) {
+            return speaker_no_bars
         }
 
-        if (volume > 0 && volume <= 50 && !mute) {
-            return SpeakerOneBarIcon
+        if (volume > 0 && volume <= 50) {
+            return speaker_one_bar
         }
 
-        if (volume > 50 && !mute) {
-            return SpeakerTwoBarsIcon
-        }
-
-        return ""
+        return speaker_two_bars
     }
 
     const tooltip = mute
