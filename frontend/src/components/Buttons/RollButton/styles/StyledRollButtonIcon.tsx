@@ -1,15 +1,14 @@
 import { styled, css } from 'styled-components'
 
 interface StyledRollButtonIconProps {
-    $width: number;
-    $opacity: number;
+  $opacity: number;
 }
 
 const StyledRollButtonIcon = styled.img<StyledRollButtonIconProps>`
-  width: ${(props) => `${props.$width}%`};
+  width: 24%;
   opacity: ${(props) =>
-        props.$opacity &&
-        css`
+    props.$opacity &&
+    css`
       ${props.$opacity}%
     `};
 

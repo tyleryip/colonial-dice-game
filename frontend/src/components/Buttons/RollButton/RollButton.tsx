@@ -78,7 +78,7 @@ const RollButton = (props: RollButtonProps) => {
   return (
     <StyledRollButton title={tooltip} disabled={disabled} onClick={handleClick}>
       {Array.from({ length: 3 }, (_, key) => (
-        <StyledRollButtonIcon src={dice_icon} key={key} $opacity={opacity(key)} $width={24} />
+        <StyledRollButtonIcon src={dice_icon} key={key} $opacity={opacity(key)} />
       ))}
     </StyledRollButton>
   );

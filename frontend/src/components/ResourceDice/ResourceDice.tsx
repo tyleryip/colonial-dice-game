@@ -137,8 +137,12 @@ const ResourceDice = (props: ResourceDiceProps) => {
     return `Trade for ${resourceType.name}`;
   };
 
-  const getIcon = (): string => {
-    if ((rolling && !isLocked) || diceValue === null) {
+  /**
+   * Given the dice's state and value, return the face it should render
+   * @returns The appropriate dice face string
+   */
+  const getDiceFace = (): string => {
+    if (diceValue === null || (rolling && !isLocked)) {
       return dice_blank
     }
 
@@ -251,7 +255,7 @@ const ResourceDice = (props: ResourceDiceProps) => {
       />
       <StyledResourceDiceFace
         onClick={handleClick}
-        src={getIcon()}
+        src={getDiceFace()}
         $wobble={wobble}
         $wobbleDurationMilliseconds={rollDurationMilliseconds}
         $pulse={pulse}
