@@ -21,13 +21,6 @@ import {
 import { spendResourceJoker } from "../../store/slices/resourceJokerSlice/resourceJokerSlice";
 import { ResourceJokerType } from "../../constants/enumerations";
 import { GetResourceJokerId } from "../../constants/mappings";
-import OreFaceIcon from "../Icons/DiceFaces/OreFaceIcon";
-import WheatFaceIcon from "../Icons/DiceFaces/WheatFaceIcon";
-import WoolFaceIcon from "../Icons/DiceFaces/WoolFaceIcon";
-import WoodFaceIcon from "../Icons/DiceFaces/WoodFaceIcon";
-import BrickFaceIcon from "../Icons/DiceFaces/BrickFaceIcon";
-import GoldFaceIcon from "../Icons/DiceFaces/GoldFaceIcon";
-import BlankFaceIcon from "../Icons/DiceFaces/BlankFaceIcon";
 import LockIcon from "../Icons/DiceFaces/LockIcon";
 import tradeGoldSound from "/audio/trade_gold.wav"
 import lockSound from "/audio/lock.wav";
@@ -37,6 +30,16 @@ import useSound from "use-sound";
 import { selectEffectiveVolume } from "../../store/slices/settingsSlice/settingsSlice";
 import selectionOpenSound from '/audio/selection_open.wav'
 import selectionCloseSound from '/audio/selection_close.wav'
+import dice_blank from '/assets/dice-faces/dice-blank.png'
+import dice_brick from '/assets/dice-faces/dice-brick.png'
+import dice_gold from '/assets/dice-faces/dice-gold.png'
+import dice_ore from '/assets/dice-faces/dice-ore.png'
+import dice_wheat from '/assets/dice-faces/dice-wheat.png'
+import dice_wood from '/assets/dice-faces/dice-wood.png'
+import dice_wool from '/assets/dice-faces/dice-wool.png'
+import StyledResourceDiceFace from "./styles/StyledResourceDiceFace";
+import StyledLock from "./styles/StyledLock";
+import lock from "/assets/dice-faces/lock.svg";
 
 interface ResourceDiceProps {
   id: number;
@@ -47,6 +50,15 @@ interface ResourceDiceProps {
   isSpent: boolean;
   isTradeable: boolean;
 }
+
+const diceFaces = [
+  dice_ore,
+  dice_wheat,
+  dice_wool,
+  dice_wood,
+  dice_brick,
+  dice_gold
+]
 
 const ResourceDice = (props: ResourceDiceProps) => {
   // Props and constants
@@ -125,6 +137,14 @@ const ResourceDice = (props: ResourceDiceProps) => {
   const getTradingPopupTooltip = (resourceType: ResourceType) => {
     return `Trade for ${resourceType.name}`;
   };
+
+  const getIcon = (): string => {
+    if ((rolling && !isLocked) || diceValue === null) {
+      return dice_blank
+    }
+
+    return diceFaces[diceValue];
+  }
 
   // Sound effects
 
@@ -230,39 +250,14 @@ const ResourceDice = (props: ResourceDiceProps) => {
         onClick={handleTradePopupClick}
         onClose={handleCloseTradePopup}
       />
-      {((rolling && !isLocked) || diceValue === null) && (
-        <BlankFaceIcon
-          wobble={wobble}
-          wobbleDurationMilliseconds={rollDurationMilliseconds}
-        />
-      )}
-      {(!rolling || isLocked) && diceValue === 0 && (
-        <OreFaceIcon onClick={handleClick} grayscale={isSpent} pulse={pulse} />
-      )}
-      {(!rolling || isLocked) && diceValue === 1 && (
-        <WheatFaceIcon
-          onClick={handleClick}
-          grayscale={isSpent}
-          pulse={pulse}
-        />
-      )}
-      {(!rolling || isLocked) && diceValue === 2 && (
-        <WoolFaceIcon onClick={handleClick} grayscale={isSpent} pulse={pulse} />
-      )}
-      {(!rolling || isLocked) && diceValue === 3 && (
-        <WoodFaceIcon onClick={handleClick} grayscale={isSpent} pulse={pulse} />
-      )}
-      {(!rolling || isLocked) && diceValue === 4 && (
-        <BrickFaceIcon
-          onClick={handleClick}
-          grayscale={isSpent}
-          pulse={pulse}
-        />
-      )}
-      {(!rolling || isLocked) && diceValue === 5 && (
-        <GoldFaceIcon onClick={handleClick} grayscale={isSpent} pulse={pulse} />
-      )}
-      <LockIcon locked={isLocked} />
+      <StyledResourceDiceFace
+        onClick={handleClick}
+        src={getIcon()}
+        $wobble={wobble}
+        $wobbleDurationMilliseconds={rollDurationMilliseconds}
+        $pulse={pulse}
+        $grayscale={isSpent} />
+      <StyledLock src={lock} $locked={isLocked} />
     </StyledResourceDice>
   );
 };
