@@ -3,7 +3,6 @@ import wobble from "../../../animations/wobble"
 import pulse from "../../../animations/pulse"
 
 interface StyledResourceDiceFaceProps {
-    $width: number,
     $wobble: boolean
     $wobbleDurationMilliseconds: number
     $grayscale: boolean
@@ -11,7 +10,7 @@ interface StyledResourceDiceFaceProps {
 }
 
 const StyledResourceDiceFace = styled.img<StyledResourceDiceFaceProps>`
-    width: ${props => `${props.$width}%`};
+    width: 100%;
     border-radius: 10%;
 
     filter: ${props =>

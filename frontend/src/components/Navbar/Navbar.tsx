@@ -7,7 +7,7 @@ import StyledNavbarBrand from "./styles/StyledNavbarBrand";
 import StyledNavbarCollapse from "./styles/StyledNavbarCollapse";
 import StyledNavbarText from "./styles/StyledNavbarText";
 import StyledNavbarButton from "./NavbarButton/styles/StyledNavbarButton";
-import dice_icon from "/assets/navbar/dice-icon.svg";
+import dice_icon from "/assets/navbar/dice-icon.png";
 import StyledNavbarBrandIcon from "./styles/StyledNavbarBrandIcon";
 
 const Navbar = () => {

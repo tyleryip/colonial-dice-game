@@ -1,10 +1,11 @@
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
 import { selectMute, selectEffectiveVolume, toggleMute } from '../../../store/slices/settingsSlice/settingsSlice'
-import MuteIcon from '../../Icons/Volume/MuteIcon'
-import SpeakerNoBarsIcon from '../../Icons/Volume/SpeakerNoBarsIcon'
-import SpeakerOneBarIcon from '../../Icons/Volume/SpeakerOneBarIcon'
-import SpeakerTwoBarsIcon from '../../Icons/Volume/SpeakerTwoBarsIcon'
+import speaker_muted from '/assets/settings/volume/speaker-muted.png'
+import speaker_no_bars from '/assets/settings/volume/speaker-no-bars.png'
+import speaker_one_bar from '/assets/settings/volume/speaker-one-bar.png'
+import speaker_two_bars from '/assets/settings/volume/speaker-two-bars.png'
 import StyledVolumeButton from './styles/StyledVolumeButton'
+import StyledVolumeIcon from './styles/StyledVolumeIcon'
 
 const VolumeButton = () => {
     // Constants
@@ -18,9 +19,21 @@ const VolumeButton = () => {
 
     // Conditional rendering
 
-    const showSpeakerNoBars = volume == 0 && !mute
-    const showSpeakerOneBar = volume > 0 && volume <= 50 && !mute
-    const showSpeakerTwoBar = volume > 50 && !mute
+    const getIcon = (): string => {
+        if (mute) {
+            return speaker_muted
+        }
+
+        if (volume == 0) {
+            return speaker_no_bars
+        }
+
+        if (volume > 0 && volume <= 50) {
+            return speaker_one_bar
+        }
+
+        return speaker_two_bars
+    }
 
     const tooltip = mute
         ? "Unmute volume"
@@ -34,10 +47,7 @@ const VolumeButton = () => {
 
     return (
         <StyledVolumeButton title={tooltip} onClick={handleClick}>
-            {mute && <MuteIcon />}
-            {showSpeakerNoBars && <SpeakerNoBarsIcon />}
-            {showSpeakerOneBar && <SpeakerOneBarIcon />}
-            {showSpeakerTwoBar && <SpeakerTwoBarsIcon />}
+            <StyledVolumeIcon src={getIcon()} />
         </StyledVolumeButton>
     )
 }
