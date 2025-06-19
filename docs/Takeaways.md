@@ -1,5 +1,7 @@
 # Takeaways
 
+Lessons learned during the development of Colonial Dice Game.
+
 ## SVGs with embedded images do not render in Safari on reload or dynamic styling changes
 
 ### Problem
