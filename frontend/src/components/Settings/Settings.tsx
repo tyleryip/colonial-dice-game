@@ -6,7 +6,8 @@ import { ChangeEvent } from 'react'
 import VolumeButton from '../Buttons/VolumeButton/VolumeButton'
 import StyledSettingsRow from './styles/StyledSettingsRow'
 import StyledSettingsLabel from './styles/StyledSettingsLabel'
-import InstructionsIcon from '../Icons/Instructions/InstructionsIcon'
+import instructions_icon from '/assets/settings/instructions/instructions.png';
+import StyledSettingsIcon from './styles/StyledSettingsIcon'
 
 const Settings = () => {
     // Constants
@@ -53,7 +54,7 @@ const Settings = () => {
                 <StyledSettingsLabel>
                     Hide Instructions
                 </StyledSettingsLabel>
-                <InstructionsIcon />
+                <StyledSettingsIcon src={instructions_icon} $width={6} />
                 <Form.Check
                     type="switch"
                     reverse
