@@ -21,7 +21,6 @@ import {
 import { spendResourceJoker } from "../../store/slices/resourceJokerSlice/resourceJokerSlice";
 import { ResourceJokerType } from "../../constants/enumerations";
 import { GetResourceJokerId } from "../../constants/mappings";
-import LockIcon from "../Icons/DiceFaces/LockIcon";
 import tradeGoldSound from "/audio/trade_gold.wav"
 import lockSound from "/audio/lock.wav";
 import unlockSound from "/audio/unlock.wav";
