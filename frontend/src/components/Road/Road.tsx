@@ -140,7 +140,7 @@ const Road = (props: RoadProps) => {
                 $left={props.left}
                 $width={props.width}
                 $pointer={canBuildRoad}
-                $pulse={canBuildRoad}>
+                $canBuild={canBuildRoad}>
                 <StyledAsset
                     src={icon}
                     alt="Road" />
