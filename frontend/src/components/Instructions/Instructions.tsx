@@ -79,7 +79,7 @@ const Instructions = (props: InstructionProps) => {
 
     return (
         <StyledInstructions>
-            <p>{getInstructionCopy()}</p>
+            {getInstructionCopy()}
         </StyledInstructions>
     )
 }

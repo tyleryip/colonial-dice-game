@@ -2,7 +2,7 @@ import { useState } from "react"
 import ResourceDice from "../ResourceDice/ResourceDice"
 import StyledButtonTray from "./styles/StyledButtonTray"
 import StyledDiceTray from "./styles/StyledDiceTray"
-import StyledResourceDiceContainer from "./styles/StyledResourceDiceContainer"
+import StyledGameControlsContainer from "./styles/StyledGameControlsContainer"
 import { useAppSelector } from "../../store/hooks"
 import { selectDice, selectResourceJokerFlag, selectRollCount, selectWildcardJokerFlag } from "../../store/slices/diceSlice/diceSlice"
 import RollButton from "../Buttons/RollButton/RollButton"
@@ -12,7 +12,7 @@ import { Dice } from "../../types/Dice"
 import { ResourceType } from "../../constants/resources"
 import Instructions from "../Instructions/Instructions"
 
-const ResourceDiceContainer = () => {
+const GameControlsContainer = () => {
     // Props and constants
 
     const [rolling, setRolling] = useState(false)
@@ -46,7 +46,7 @@ const ResourceDiceContainer = () => {
         .length > 1
 
     return (
-        <StyledResourceDiceContainer>
+        <StyledGameControlsContainer>
             <StyledDiceTray>
                 {dice.map((dice: Dice, id: number) =>
                     <ResourceDice
@@ -72,8 +72,8 @@ const ResourceDiceContainer = () => {
             <Instructions
                 rolling={rolling}
                 canTrade={isTradeable} />
-        </StyledResourceDiceContainer>
+        </StyledGameControlsContainer>
     )
 }
 
-export default ResourceDiceContainer
+export default GameControlsContainer

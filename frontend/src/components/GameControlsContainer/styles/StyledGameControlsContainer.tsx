@@ -1,36 +1,34 @@
 import { styled } from "styled-components"
 
-const StyledDiceTray = styled.div`
+const StyledGameControlsContainer = styled.div`
+    padding: 1%;
     display: flex;
-    flex-direction: row;
-    justify-self: center;
-    justify-content: center; 
+    flex-direction: column;
     align-items: center;
-    gap: 3%;
     
-        @media ${(props) => props.theme.breakpoints.xs} {
-        width: 70%;
+    @media ${(props) => props.theme.breakpoints.xs} {
+        width: 100%;
     }
 
     @media ${(props) => props.theme.breakpoints.s} {
-        width: 60%;
+
     }
 
     @media ${(props) => props.theme.breakpoints.m} {
-        width: 40%;
+
     }
 
     @media ${(props) => props.theme.breakpoints.l} {
-        width: 30%;
+
     }
 
     @media ${(props) => props.theme.breakpoints.xl} {
-        width: 30%;
+        width: 50%;
     }
 
     @media ${(props) => props.theme.breakpoints.xxl} {
-        width: 25%;
+
     }
 `
 
-export default StyledDiceTray;
+export default StyledGameControlsContainer

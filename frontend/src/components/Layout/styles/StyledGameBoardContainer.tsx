@@ -1,18 +1,16 @@
 import { styled } from 'styled-components'
 
-const StyledInstructions = styled.div`
-    min-height: 3rem;
-    margin-top: 2%;
-    
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    color: white;
-
-    user-select: none;
+/**
+ * Contains the GameBoard and ResourceDiceContainer
+ */
+const StyledGameBoardContainer = styled.div`
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     @media ${(props) => props.theme.breakpoints.xs} {
-        width: 90%;
+        flex-direction: column;
     }
 
     @media ${(props) => props.theme.breakpoints.s} {
@@ -20,20 +18,23 @@ const StyledInstructions = styled.div`
     }
 
     @media ${(props) => props.theme.breakpoints.m} {
-
+    
     }
 
     @media ${(props) => props.theme.breakpoints.l} {
-
+      
     }
 
     @media ${(props) => props.theme.breakpoints.xl} {
-
+        flex-direction: row;
+        margin-top: auto;
+        margin-bottom: auto;
+        padding: 1%;
     }
 
     @media ${(props) => props.theme.breakpoints.xxl} {
-
+      
     }
 `
 
-export default StyledInstructions;
+export default StyledGameBoardContainer
