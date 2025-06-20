@@ -1,12 +1,13 @@
 import { css, styled } from "styled-components"
 import pulse from "../../../animations/pulse"
+import colourFlash from "../../../animations/colourFlash"
 
 interface StyledRoadProps {
     $top: number,
     $left: number,
     $width: number,
     $pointer: boolean,
-    $pulse: boolean
+    $canBuild: boolean
 }
 
 const StyledRoad = styled.div<StyledRoadProps>`
@@ -20,9 +21,15 @@ const StyledRoad = styled.div<StyledRoadProps>`
         cursor: ${props => props.$pointer && css`pointer`};
     }
 
+    filter: ${props =>
+    (!props.$canBuild &&
+        css`grayscale(100%)`
+    )
+    };
+
     animation: ${props =>
-    (props.$pulse &&
-        css`${pulse(1.08)} 1s infinite`
+    (props.$canBuild &&
+        css`${pulse(1.08)} 1s infinite, ${colourFlash} 1s infinite`
     )
     };
 `
