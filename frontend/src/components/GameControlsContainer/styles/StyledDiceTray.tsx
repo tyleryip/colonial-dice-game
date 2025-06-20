@@ -1,15 +1,16 @@
 import { styled } from "styled-components"
 
-const StyledButtonTray = styled.div`
+const StyledDiceTray = styled.div`
     display: flex;
-    justify-self: center;
     flex-direction: row;
-    gap: 5%;
+    justify-self: center;
     justify-content: center; 
+    align-items: center;
+    gap: 3%;
     margin-top: 2%;
-
+    
     @media ${(props) => props.theme.breakpoints.xs} {
-        width: 70%;
+        width: 90%;
     }
 
     @media ${(props) => props.theme.breakpoints.s} {
@@ -25,12 +26,12 @@ const StyledButtonTray = styled.div`
     }
 
     @media ${(props) => props.theme.breakpoints.xl} {
-        width: 30%;
+        width: 70%;
     }
 
     @media ${(props) => props.theme.breakpoints.xxl} {
-        width: 25%;
+        width: 60%;
     }
 `
 
-export default StyledButtonTray
+export default StyledDiceTray;

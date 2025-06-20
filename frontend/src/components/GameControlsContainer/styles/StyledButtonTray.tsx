@@ -1,39 +1,36 @@
-import { styled } from 'styled-components'
+import { styled } from "styled-components"
 
-const StyledInstructions = styled.div`
-    min-height: 3rem;
+const StyledButtonTray = styled.div`
+    display: flex;
+    justify-self: center;
+    flex-direction: row;
+    gap: 10%;
+    justify-content: center; 
     margin-top: 2%;
-    
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    color: white;
-
-    user-select: none;
 
     @media ${(props) => props.theme.breakpoints.xs} {
-        width: 90%;
+        width: 70%;
     }
 
     @media ${(props) => props.theme.breakpoints.s} {
-
+        width: 60%;
     }
 
     @media ${(props) => props.theme.breakpoints.m} {
-
+        width: 40%;
     }
 
     @media ${(props) => props.theme.breakpoints.l} {
-
+        width: 30%;
     }
 
     @media ${(props) => props.theme.breakpoints.xl} {
-
+        width: 60%;
     }
 
     @media ${(props) => props.theme.breakpoints.xxl} {
-
+        width: 60%;
     }
 `
 
-export default StyledInstructions;
+export default StyledButtonTray
