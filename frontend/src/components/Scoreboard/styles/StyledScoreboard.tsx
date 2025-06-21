@@ -1,10 +1,11 @@
 import { styled } from "styled-components"
 
 const StyledScoreboard = styled.div`
-    margin-top: 2%;
     display: grid;
     justify-items: stretch;
+    justify-self: center;
     align-items: stretch;
+    padding: 1%;
     
     @media ${(props) => props.theme.breakpoints.xs} {
         grid-template-columns: repeat(9, 1fr);
@@ -28,10 +29,12 @@ const StyledScoreboard = styled.div`
 
     @media ${(props) => props.theme.breakpoints.xl} {
         width: 70%;
+        margin-bottom: 1%;
     }
 
     @media ${(props) => props.theme.breakpoints.xxl} {
         width: 60%;
+        margin-bottom: 1%;
     }
 `
 

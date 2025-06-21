@@ -3,11 +3,13 @@ import { RootState } from "../../store"
 
 export interface settingsState {
     mute: boolean
+    showInstructions: boolean
     volume: number
 }
 
 const initialState: settingsState = {
     mute: false,
+    showInstructions: true,
     volume: 0.5
 }
 
@@ -17,6 +19,9 @@ export const settingsSlice = createSlice({
     reducers: {
         toggleMute: (state) => {
             state.mute = !state.mute
+        },
+        toggleShowInstructions: (state) => {
+            state.showInstructions = !state.showInstructions
         },
         setVolume: (state, action: PayloadAction<number>) => {
             state.volume = action.payload
@@ -30,14 +35,16 @@ export default settingsSlice.reducer
 
 export const {
     setVolume,
-    toggleMute
+    toggleMute,
+    toggleShowInstructions
 } = settingsSlice.actions
 
 // Selectors
 
 export const selectMute = (state: RootState) => state.local.settings.mute
+export const selectShowInstructions = (state: RootState) => state.local.settings.showInstructions
 
-// DIsplay volume = the volume displayed in the settings modal (if muted, display volume = volume)
+// Display volume = the volume displayed in the settings modal (if muted, display volume = volume)
 export const selectDisplayVolume = (state: RootState) => state.local.settings.volume
 
 // Effective volume = the volume used to play sound effects (if muted, volume = 0)

@@ -117,7 +117,7 @@ const City = (props: CityProps) => {
                 $top={props.top}
                 $left={props.left}
                 $pointer={canBuildCity}
-                $pulse={canBuildCity}>
+                $canBuild={canBuildCity}>
                 <StyledAsset src={icon} alt={`City ${cityNumber}`} />
             </StyledCity>
             <ResourceCostPopup

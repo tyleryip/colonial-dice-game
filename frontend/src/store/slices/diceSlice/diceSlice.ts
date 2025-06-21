@@ -158,6 +158,7 @@ export const selectRollCount = (state: RootState) => state.session.dice.rollCoun
 export const selectResourceJokerFlag = (state: RootState) => state.session.dice.resourceJokerFlag
 export const selectWildcardJokerFlag = (state: RootState) => state.session.dice.wildcardJokerFlag
 
+export const selectAnyDiceSpent = (state: RootState) => state.session.dice.dice.some(dice => dice.spent)
 export const selectAllDiceSpent = (state: RootState) => state.session.dice.dice.every(dice => dice.spent)
 
 /**

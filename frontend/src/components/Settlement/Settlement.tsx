@@ -124,7 +124,7 @@ const Settlement = (props: SettlementProps) => {
                 $top={props.top}
                 $left={props.left}
                 $pointer={canBuildSettlement}
-                $pulse={canBuildSettlement}>
+                $canBuild={canBuildSettlement}>
                 <StyledAsset
                     src={icon}
                     alt={`Settlement ${settlementNumber}`} />

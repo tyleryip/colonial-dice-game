@@ -118,7 +118,7 @@ const Knight = (props: KnightProps) => {
             <StyledKnight
                 title={tooltip}
                 $pointer={canBuildKnight}
-                $pulse={canBuildKnight}>
+                $canBuild={canBuildKnight}>
                 <StyledAsset
                     src={icon}
                     alt={`Knight ${knightType}`} />
