@@ -3,8 +3,8 @@ import { styled } from "styled-components"
 const StyledScoreboard = styled.div`
     display: grid;
     justify-items: stretch;
-    justify-self: center;
-    align-items: stretch;
+    margin-left: auto;
+    margin-right: auto;
     padding: 1%;
     
     @media ${(props) => props.theme.breakpoints.xs} {
