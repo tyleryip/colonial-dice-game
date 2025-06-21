@@ -14,11 +14,13 @@ import {
   resetDiceLocks,
   setRollCount,
 } from "../../../store/slices/diceSlice/diceSlice";
-import BuildIcon from "../../Icons/Buttons/BuildIcon";
-import DiceIcon from "../../Icons/Buttons/DiceIcon";
 import gameOverSound from '/audio/game_over.wav'
 import { selectEffectiveVolume } from "../../../store/slices/settingsSlice/settingsSlice";
 import useSound from "use-sound";
+import { useEffect, useState } from "react";
+import build_icon from '/assets/buttons/build-icon.png'
+import dice_icon from '/assets/buttons/dice-icon.png'
+import StyledBuildButtonIcon from "./styles/StyledBuildButtonIcon";
 
 interface BuildButtonProps {
   disabled?: boolean;
@@ -27,7 +29,8 @@ interface BuildButtonProps {
 const BuildButton = (props: BuildButtonProps) => {
   // Props and constants
 
-  const disabled = props.disabled ?? false;
+  const [disabled, setDisabled] = useState(true)
+  const disabledDelayMilliseconds = 2000
 
   // Dispatch
 
@@ -46,11 +49,32 @@ const BuildButton = (props: BuildButtonProps) => {
 
   // Conditional rendering
 
+  /**
+   * Disable the build button for a short time after any game phase
+   * changes or prop changes to prevent the user from mis-clicking.
+   */
+  useEffect(() => {
+    // By default, always disable after dependencies change
+    setDisabled(true)
+
+    setTimeout(() => {
+      // After delay, evaluate and update disabled
+      setDisabled(props.disabled ?? false)
+    },
+      disabledDelayMilliseconds)
+  }, [props.disabled, gamePhaseBuilding])
+
   const tooltip = gamePhaseRolling
     ? "End rolling and build"
     : "End building and roll";
 
   const opacity = disabled ? 30 : 100;
+
+  const getIcon = (): string => {
+    return gamePhaseRolling
+      ? build_icon
+      : dice_icon
+  }
 
   // Sound effects
 
@@ -85,8 +109,7 @@ const BuildButton = (props: BuildButtonProps) => {
       disabled={disabled}
       onClick={handleClick}
     >
-      {gamePhaseRolling && <BuildIcon width={37} opacity={opacity} />}
-      {gamePhaseBuilding && <DiceIcon width={37} opacity={opacity} />}
+      <StyledBuildButtonIcon src={getIcon()} $width={37} $opacity={opacity} />
     </StyledBuildButton>
   );
 };

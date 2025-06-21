@@ -1,4 +1,3 @@
-import PlayAgainIcon from "../../Icons/Buttons/PlayAgainIcon";
 import { useAppDispatch } from "../../../store/hooks";
 import { resetDice } from "../../../store/slices/diceSlice/diceSlice";
 import { resetGame } from "../../../store/slices/gameSlice/gameSlice";
@@ -7,6 +6,8 @@ import { resetResourceJokers } from "../../../store/slices/resourceJokerSlice/re
 import { resetScore } from "../../../store/slices/scoreSlice/scoreSlice";
 import { resetStructures } from "../../../store/slices/structureSlice/structureSlice";
 import StyledPlayAgainButton from "./styles/StyledPlayAgainButton";
+import StyledPlayAgainIcon from "./styles/StyledPlayAgainIcon";
+import play_again from '/assets/buttons/play-again.png'
 
 const PlayAgainButton = () => {
   // Dispatch
@@ -30,7 +31,7 @@ const PlayAgainButton = () => {
 
   return (
     <StyledPlayAgainButton title={tooltip} onClick={handleClick}>
-      <PlayAgainIcon />
+      <StyledPlayAgainIcon src={play_again} />
     </StyledPlayAgainButton>
   );
 };

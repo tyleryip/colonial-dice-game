@@ -6,6 +6,7 @@ interface StyledLockProps {
 
 const StyledLock = styled.img<StyledLockProps>`
   position: absolute;
+  width: 25%;
   top: 2%;
   left: 4%;
   opacity: ${(prop) => (prop.$locked ? "100%" : "0%")};
