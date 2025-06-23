@@ -1,5 +1,5 @@
 import { expect, test } from "vitest"
-import reducer, { clearResourceJokerFlag, diceState, resetDice, resetDiceLocks, rollDice, setDice, setDiceSpent, setResourceJokerFlag, setRollCount, setWildcardJokerFlag, spendDice, toggleDiceLock } from "./diceSlice"
+import reducer, { clearResourceJokerFlag, DiceState, resetDice, resetDiceLocks, rollDice, setDice, setDiceSpent, setResourceJokerFlag, setRollCount, setWildcardJokerFlag, spendDice, toggleDiceLock } from "./diceSlice"
 import { ResourceType } from "../../../constants/resources"
 
 test('should return the initial state', () => {
@@ -114,7 +114,7 @@ test('should roll all dice except locked', () => {
 
 test('should roll all dice except locked', () => {
     // Arrange
-    const previousState: diceState = {
+    const previousState: DiceState = {
         dice: [
             {
                 value: 0,
@@ -365,7 +365,7 @@ test('should reset all dice locks', () => {
 
 // Helper functions
 
-const getInitialState = (): diceState => {
+const getInitialState = (): DiceState => {
     return {
         dice: new Array(6).fill({
             value: null,

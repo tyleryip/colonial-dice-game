@@ -2,12 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { RootState } from "../../store"
 import { GetKnightPrerequisite } from "../../../constants/knights"
 
-export interface knightState {
+export interface KnightState {
     isBuilt: boolean[]
 }
 
-const initialState: knightState = {
-    isBuilt: new Array(6).fill(false)
+const initialState: KnightState = {
+    isBuilt: new Array<boolean>(6).fill(false)
 }
 
 export const knightSlice = createSlice({

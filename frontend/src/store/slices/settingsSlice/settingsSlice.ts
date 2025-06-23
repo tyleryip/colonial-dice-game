@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { RootState } from "../../store"
 
-export interface settingsState {
+export interface SettingsState {
     mute: boolean
     showInstructions: boolean
     volume: number
 }
 
-const initialState: settingsState = {
+const initialState: SettingsState = {
     mute: false,
     showInstructions: true,
     volume: 0.5

@@ -2,11 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { RootState } from "../../store"
 import { GetStructurePrerequisites } from "../../../constants/structures"
 
-export interface structureState {
+export interface StructureState {
     isBuilt: boolean[]
 }
 
-const initialState: structureState = {
+const initialState: StructureState = {
     isBuilt: getInitialState()
 }
 
@@ -57,7 +57,7 @@ export const selectHasPrerequisiteStructuresBuilt = (state: RootState, structure
 // Helper functions
 
 function getInitialState(): boolean[] {
-    const isBuilt = new Array(27).fill(false);
+    const isBuilt = new Array<boolean>(27).fill(false);
     isBuilt[0] = true; // Starting road is always already built
 
     return isBuilt
