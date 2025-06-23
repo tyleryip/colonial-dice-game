@@ -13,7 +13,7 @@
     - [x] Settlements rendering
     - [x] Cities rendering
   - [x] Correct icons display based on structure state from store
-- [ ] Dice
+- [x] Dice
   - [x] Rolling functionality
   - [x] Locking functionality
   - [x] Resource state based on roll results
@@ -63,29 +63,42 @@
 
 ## Phase 2 - Enhancements
 
+### Functional Requirements
+
 - [x] Sound effects
   - [x] Dice sound effect on roll
   - [x] Building sound effect
   - [x] Trading/resource joker sound effect
-- [ ] Instructions text
-  - [ ] Trading gold
-  - [ ] Tap to build structures
-  - [ ] Setting resource jokers
-- [ ] End of game modal
+- [x] Instructions text
+  - [x] Trading gold
+  - [x] Tap to build structures
+  - [x] Setting resource jokers
+- [ ] End of game modal enhancements
   - [ ] Show statistics button
-- [ ] Show what things gave points on each filled scoreboard
+- [ ] Scoreboard enhancements
+  - [ ] Show what things gave points on each filled scoreboard
 - [x] Settings modal
   - [x] Allow muting and volume adjustment
+
+### Non-Functional Requirements
+
+- [x] Responsive design overhaul
+  - [x] Better support for Safari browser
+  - [x] Better layout for desktop
 - [ ] Mobile compatibility
   - [ ] Use tooltip on press and build on long press
+- [ ] README
 
 ## Phase 3 - Island 2
+
+### Functional Requirements
 
 - [ ] Island 2
   - [ ] Navbar tabs for Island 1 and Island 2
   - [ ] Gameboard adjustments for Island 2
   - [ ] Scoreboard adjustments for Island 2
   - [ ] Longest road/largest army checkboxes
+  - [ ] Refactor state to support both islands
 
 ## Phase 4 - Enhancements
 
