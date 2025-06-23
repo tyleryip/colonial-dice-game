@@ -1,39 +1,29 @@
 import { styled } from 'styled-components'
 
 const StyledInstructions = styled.div`
+/** Layout */ 
+
+/** Box Model */ 
     min-height: 3rem;
+    width: 90%;
     margin-top: 2%;
-    
+
+/** Colour + Background */ 
+    color: white;
+
+/** Typography */ 
     font-size: 16px;
     font-weight: bold;
     text-align: center;
-    color: white;
 
+/** Visual Effects */ 
+
+/** Responsive Design */ 
+
+/** Interactivity */ 
     user-select: none;
 
-    @media ${(props) => props.theme.breakpoints.xs} {
-        width: 90%;
-    }
-
-    @media ${(props) => props.theme.breakpoints.s} {
-
-    }
-
-    @media ${(props) => props.theme.breakpoints.m} {
-
-    }
-
-    @media ${(props) => props.theme.breakpoints.l} {
-
-    }
-
-    @media ${(props) => props.theme.breakpoints.xl} {
-
-    }
-
-    @media ${(props) => props.theme.breakpoints.xxl} {
-
-    }
+/** Micellaneous */
 `
 
 export default StyledInstructions;

@@ -7,10 +7,20 @@ interface StyledResourceCostIconProps {
 }
 
 const StyledResourceCostIcon = styled.img<StyledResourceCostIconProps>`
+/** Layout */ 
+
+/** Box Model */ 
+    width: ${props => `${props.$width}%`};
     padding-left: 1%;
     padding-right: 1%;
-    width: ${props => `${props.$width}%`};
 
+/** Colour + Background */ 
+
+/** Typography */ 
+
+/** Visual Effects */ 
+
+/** Responsive Design */ 
     @media ${(props) => props.theme.breakpoints.xs} {
         width: ${props => props.$allowVertical && `${props.$verticalWidth}%`};
     }
@@ -24,7 +34,7 @@ const StyledResourceCostIcon = styled.img<StyledResourceCostIconProps>`
     }
 
     @media ${(props) => props.theme.breakpoints.l} {
-    
+
     }
 
     @media ${(props) => props.theme.breakpoints.xl} {
@@ -32,8 +42,13 @@ const StyledResourceCostIcon = styled.img<StyledResourceCostIconProps>`
     }
 
     @media ${(props) => props.theme.breakpoints.xxl} {
-    
+
     }
+
+/** Interactivity */ 
+
+/** Micellaneous */
+
 `
 
 export default StyledResourceCostIcon

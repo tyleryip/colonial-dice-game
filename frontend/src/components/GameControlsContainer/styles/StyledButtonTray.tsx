@@ -1,13 +1,23 @@
 import { styled } from "styled-components"
 
 const StyledButtonTray = styled.div`
+/** Layout */ 
     display: flex;
     justify-self: center;
     flex-direction: row;
     gap: 10%;
     justify-content: center; 
+
+/** Box Model */ 
     margin-top: 2%;
 
+/** Colour + Background */ 
+
+/** Typography */ 
+
+/** Visual Effects */ 
+
+/** Responsive Design */ 
     @media ${(props) => props.theme.breakpoints.xs} {
         width: 70%;
     }
@@ -31,6 +41,12 @@ const StyledButtonTray = styled.div`
     @media ${(props) => props.theme.breakpoints.xxl} {
         width: 60%;
     }
+
+/** Interactivity */ 
+
+/** Micellaneous */
+
+
 `
 
 export default StyledButtonTray

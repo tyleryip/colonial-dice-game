@@ -5,8 +5,23 @@ interface StyledSettingsIconProps {
 }
 
 const StyledSettingsIcon = styled.img<StyledSettingsIconProps>`
+/** Layout */ 
+
+/** Box Model */ 
     width: ${props => `${props.$width}%`};
     margin-right: 2%;
+
+/** Colour + Background */ 
+
+/** Typography */ 
+
+/** Visual Effects */ 
+
+/** Responsive Design */ 
+
+/** Interactivity */ 
+
+/** Micellaneous */
 `
 
 export default StyledSettingsIcon;

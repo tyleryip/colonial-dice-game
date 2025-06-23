@@ -6,7 +6,7 @@ import ResourceJoker from '../ResourceJoker/ResourceJoker'
 import City from '../City/City'
 import Settlement from '../Settlement/Settlement'
 import Road from '../Road/Road'
-import WildcardResourceJoker from '../WildcardJoker/WildcardJoker'
+import WildcardResourceJoker from '../ResourceJoker/WildcardJoker'
 
 // Hexagon icons
 import water_hexagon from "/assets/hexagons/water-hexagon.svg";

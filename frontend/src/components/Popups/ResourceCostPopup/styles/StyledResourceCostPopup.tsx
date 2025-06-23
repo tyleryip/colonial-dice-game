@@ -11,18 +11,26 @@ interface StyledResourceCostPopupProps {
 }
 
 const StyledResourceCostPopup = styled.div<StyledResourceCostPopupProps>`
-    background-color: #FFFFFF;
-    border-radius: 5px;
-    overflow: hidden;
-    z-index: 3;
-
-    position: absolute;
+/** Layout */ 
     display: flex;
+    position: absolute;
     justify-content: space-around;
     top: ${props => `${props.$top}%`};
     left: ${props => `${props.$left}%`};
     width: ${props => `${props.$width}%`};
+    z-index: 3;
 
+/** Box Model */ 
+    border-radius: 5px;
+
+/** Colour + Background */ 
+    background-color: #FFFFFF;
+
+/** Typography */ 
+
+/** Visual Effects */ 
+
+/** Responsive Design */ 
     @media ${(props) => props.theme.breakpoints.xs} {
         flex-direction: ${props => props.$allowVertical
         && css`column`};
@@ -39,20 +47,26 @@ const StyledResourceCostPopup = styled.div<StyledResourceCostPopupProps>`
     }
 
     @media ${(props) => props.theme.breakpoints.m} {
-   
+
     }
 
     @media ${(props) => props.theme.breakpoints.l} {
-     
+
     }
 
     @media ${(props) => props.theme.breakpoints.xl} {
-    
+
     }
 
     @media ${(props) => props.theme.breakpoints.xxl} {
-     
+
     }
+
+/** Interactivity */ 
+
+/** Micellaneous */
+    overflow: hidden;
+
 `
 
 export default StyledResourceCostPopup

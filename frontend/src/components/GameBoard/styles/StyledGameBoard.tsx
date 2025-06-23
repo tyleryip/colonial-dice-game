@@ -1,11 +1,21 @@
 import { styled } from "styled-components";
 
 const StyledGameBoard = styled.div`
+/** Layout */ 
     position: relative;
     aspect-ratio: 1/1;
+
+/** Box Model */ 
     margin-right: auto;
     width: 100%;
 
+/** Colour + Background */ 
+
+/** Typography */ 
+
+/** Visual Effects */ 
+
+/** Responsive Design */ 
     @media ${(props) => props.theme.breakpoints.xs} {
         width: 80%;
         margin-left: auto;
@@ -31,6 +41,10 @@ const StyledGameBoard = styled.div`
     @media ${(props) => props.theme.breakpoints.xxl} {
         width: 35%;
     }
+
+/** Interactivity */ 
+
+/** Micellaneous */
 `
 
 export default StyledGameBoard
