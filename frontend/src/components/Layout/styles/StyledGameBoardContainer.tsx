@@ -4,11 +4,21 @@ import { styled } from 'styled-components'
  * Contains the GameBoard and ResourceDiceContainer
  */
 const StyledGameBoardContainer = styled.div`
-    width: 100%;
+/** Layout */ 
     display: flex;
     align-items: center;
     justify-content: center;
 
+/** Box Model */ 
+    width: 100%;
+
+/** Colour + Background */ 
+
+/** Typography */ 
+
+/** Visual Effects */ 
+
+/** Responsive Design */ 
     @media ${(props) => props.theme.breakpoints.xs} {
         flex-direction: column;
     }
@@ -18,11 +28,11 @@ const StyledGameBoardContainer = styled.div`
     }
 
     @media ${(props) => props.theme.breakpoints.m} {
-    
+
     }
 
     @media ${(props) => props.theme.breakpoints.l} {
-      
+    
     }
 
     @media ${(props) => props.theme.breakpoints.xl} {
@@ -33,8 +43,12 @@ const StyledGameBoardContainer = styled.div`
     }
 
     @media ${(props) => props.theme.breakpoints.xxl} {
-      
+    
     }
+
+/** Interactivity */ 
+
+/** Micellaneous */
 `
 
 export default StyledGameBoardContainer

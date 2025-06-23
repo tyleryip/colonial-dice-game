@@ -10,16 +10,20 @@ interface StyledSettlementProps {
 }
 
 const StyledSettlement = styled.div<StyledSettlementProps>`
+/** Layout */ 
     position: absolute;
     top: ${props => `${props.$top}%`};
     left: ${props => `${props.$left}%`};
-    width: 13%;
     z-index: 1;
+    
+/** Box Model */ 
+    width: 13%;
 
-    &:hover {
-        cursor: ${props => props.$pointer && css`pointer`};
-    }
+/** Colour + Background */ 
 
+/** Typography */ 
+
+/** Visual Effects */ 
     filter: ${props =>
     (!props.$canBuild &&
         css`grayscale(100%)`
@@ -31,6 +35,17 @@ const StyledSettlement = styled.div<StyledSettlementProps>`
         css`${pulse(1.08)} 1s infinite, ${colourFlash} 1s infinite`
     )
     };
+
+/** Responsive Design */ 
+
+/** Interactivity */ 
+    &:hover {
+        cursor: ${props => props.$pointer && css`pointer`};
+    }
+
+/** Micellaneous */
+
+
 `
 
 export default StyledSettlement

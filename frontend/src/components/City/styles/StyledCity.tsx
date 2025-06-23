@@ -10,16 +10,20 @@ interface StyledCityProps {
 }
 
 const StyledCity = styled.div<StyledCityProps>`
+/** Layout */ 
     position: absolute;
     top: ${props => `${props.$top}%`};
     left: ${props => `${props.$left}%`};
-    width: 15.5%;
     z-index: 1;
 
-    &:hover {
-        cursor: ${props => props.$pointer && css`pointer`};
-    }
+ /** Box Model */ 
+    width: 15.5%;
 
+ /** Colour + Background */ 
+
+ /** Typography */ 
+
+ /** Visual Effects */ 
     filter: ${props =>
     (!props.$canBuild &&
         css`grayscale(100%)`
@@ -31,6 +35,15 @@ const StyledCity = styled.div<StyledCityProps>`
         css`${pulse(1.08)} 1s infinite, ${colourFlash} 1s infinite`
     )
     };
+
+ /** Responsive Design */ 
+
+ /** Interactivity */ 
+    &:hover {
+        cursor: ${props => props.$pointer && css`pointer`};
+    }
+
+ /** Micellaneous */
 `
 
 export default StyledCity
