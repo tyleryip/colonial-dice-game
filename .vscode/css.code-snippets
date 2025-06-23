@@ -1,0 +1,12 @@
+{
+	"Styled Components CSS template": {
+		"prefix": "style",
+		"body": "/** Layout */ \n\n/** Box Model */ \n\n/** Colour + Background */ \n\n/** Typography */ \n\n/** Visual Effects */ \n\n/** Responsive Design */ \n\n/** Interactivity */ \n\n/** Micellaneous */",
+		"description": "Template for styled components CSS"
+	},
+	"Media Query breakpoints": {
+		"prefix": ["breakpoints", "media"],
+		"body": "@media ${(props) => props.theme.breakpoints.xs} {\n\n} \n@media ${(props) => props.theme.breakpoints.s} {\n\n}\n@media ${(props) => props.theme.breakpoints.m} {\n\n}\n@media ${(props) => props.theme.breakpoints.l} {\n\n}\n@media ${(props) => props.theme.breakpoints.xl} {\n\n}\n@media ${(props) => props.theme.breakpoints.xxl} {\n\n}",
+		"description": "Template for media queries"
+	}
+}
