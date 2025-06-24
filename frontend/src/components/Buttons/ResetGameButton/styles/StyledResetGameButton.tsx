@@ -2,6 +2,8 @@ import { styled } from "styled-components";
 import StyledBaseButton from "../../styles/StyledBaseButton";
 
 const StyledResetGameButton = styled(StyledBaseButton)`
+/** Layout */ 
+
 /** Box Model */
   width: 40%;
   padding-left: 2%;
