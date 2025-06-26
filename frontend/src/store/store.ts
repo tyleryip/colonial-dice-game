@@ -10,6 +10,7 @@ import { FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE } fro
 import { persistStore } from "redux-persist";
 import sessionStorage from "redux-persist/lib/storage/session";
 import localStorage from "redux-persist/lib/storage";
+import leaderboardReducer, { leaderboardSlice } from "./slices/leaderboardSlice/leaderboardSlice";
 
 const sessionPersistConfig = {
     key: "session",
@@ -33,7 +34,8 @@ const localStoragePersistConfig = {
 }
 
 const localStorageReducer = combineReducers({
-    settings: settingsReducer
+    settings: settingsReducer,
+    leaderboard: leaderboardReducer
 })
 
 const localStoragePersistedReducer = persistReducer(localStoragePersistConfig, localStorageReducer)
@@ -71,6 +73,9 @@ export const store = configureStore({
             // Knight actions
             ["Build Knight"]: knightSlice.actions.buildKnight,
             ["Reset Knights"]: knightSlice.actions.resetKnights,
+
+            ["Add Leaderboard Entry"]: leaderboardSlice.actions.addLeaderboardEntry,
+            ["Reset Leaderboard"]: leaderboardSlice.actions.resetLeaderboard,
 
             // Resource joker actions
             ["Reset Resource Jokers"]: resourceJokerSlice.actions.resetResourceJokers,

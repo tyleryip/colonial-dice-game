@@ -1,5 +1,5 @@
 import { test, expect } from 'vitest'
-import reducer, { gameState, incrementTurn, resetGame, setGamePhase } from './gameSlice'
+import reducer, { GameState, incrementTurn, resetGame, setGamePhase } from './gameSlice'
 import { GamePhase } from '../../../constants/enumerations'
 
 test('should return the initial state', () => {
@@ -35,7 +35,7 @@ test('should set game phase', () => {
 
 test('should reset game', () => {
     // Arrange
-    const previousState: gameState = {
+    const previousState: GameState = {
         currentGamePhase: GamePhase.Building,
         currentTurn: 14
     }
@@ -50,7 +50,7 @@ test('should reset game', () => {
 
 // Helper functions
 
-const getInitialState = (): gameState => {
+const getInitialState = (): GameState => {
     return {
         currentGamePhase: GamePhase.Rolling,
         currentTurn: 0

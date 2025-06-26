@@ -1,5 +1,5 @@
 import { test, expect } from 'vitest'
-import reducer, { buildKnight, knightState, resetKnights } from './knightSlice'
+import reducer, { buildKnight, KnightState, resetKnights } from './knightSlice'
 
 test('should return the initial state', () => {
     // Act
@@ -23,7 +23,7 @@ test('should build knight', () => {
 
 test('should reset knights', () => {
     // Arrange
-    const previousState: knightState = {
+    const previousState: KnightState = {
         isBuilt: [false, false, true, true, false, false]
     }
 
@@ -37,7 +37,7 @@ test('should reset knights', () => {
 
 // Helper functions
 
-const getInitialState = (): knightState => {
+const getInitialState = (): KnightState => {
     return {
         isBuilt: new Array(6).fill(false)
     }

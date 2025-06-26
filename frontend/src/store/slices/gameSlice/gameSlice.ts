@@ -2,12 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { GamePhase } from "../../../constants/enumerations";
 import { RootState } from "../../store";
 
-export interface gameState {
+export interface GameState {
     currentGamePhase: GamePhase,
     currentTurn: number
 }
 
-const initialState: gameState = {
+const initialState: GameState = {
     currentGamePhase: GamePhase.Rolling,
     currentTurn: 0
 }

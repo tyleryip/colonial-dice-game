@@ -9,6 +9,10 @@ export default defineConfig({
     '__APP_VERSION__': JSON.stringify(process.env.npm_package_version)
   },
   test: {
+    coverage: {
+      enabled: true,
+      include: ['**/slices/**']
+    },
     reporters: [
       'verbose',
       'github-actions'

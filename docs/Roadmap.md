@@ -79,6 +79,11 @@
   - [ ] Show what things gave points on each filled scoreboard
 - [x] Settings modal
   - [x] Allow muting and volume adjustment
+- [ ] Leaderboard
+  - [ ] Add "save to leaderboard" button to end of game modal
+  - [ ] Add leaderboard modal to navbar
+  - [ ] Add leaderboard to store
+  - [ ] Display leaderboard from store in leaderboard modal
 
 ### Non-Functional Requirements
 

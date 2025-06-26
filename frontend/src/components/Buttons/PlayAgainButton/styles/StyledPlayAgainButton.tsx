@@ -6,7 +6,7 @@ const StyledPlayAgainButton = styled(StyledBaseButton)`
   align-self: center;
 
 /** Box Model */
-  width: 40%;
+  width: 50%;
   padding-right: 2%;
   padding-left: 2%;
 

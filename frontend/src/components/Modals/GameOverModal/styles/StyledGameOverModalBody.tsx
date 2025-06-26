@@ -5,6 +5,8 @@ const StyledGameOverModalBody = styled(ModalBody)`
 /** Layout */ 
 
 /** Box Model */ 
+    padding-right: 10%;
+    padding-left: 10%;
 
 /** Colour + Background */ 
 

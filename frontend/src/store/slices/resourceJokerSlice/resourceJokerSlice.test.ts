@@ -1,5 +1,5 @@
 import { test, expect } from 'vitest'
-import reducer, { resetResourceJokers, resourceJokerState, spendResourceJoker } from './resourceJokerSlice'
+import reducer, { resetResourceJokers, ResourceJokerState, spendResourceJoker } from './resourceJokerSlice'
 
 test('should return the initial state', () => {
     // Act
@@ -12,7 +12,7 @@ test('should return the initial state', () => {
 
 test('should reset resource jokers', () => {
     // Arrange
-    const previousState: resourceJokerState = {
+    const previousState: ResourceJokerState = {
         isSpent: [true, false, true, false, true, false]
     }
 
@@ -37,7 +37,7 @@ test('should spend resource joker', () => {
 
 // Helper functions
 
-const getInitialState = (): resourceJokerState => {
+const getInitialState = (): ResourceJokerState => {
     return {
         isSpent: new Array(6).fill(false)
     }

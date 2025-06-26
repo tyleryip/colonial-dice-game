@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import reducer, { settingsState, setVolume, toggleMute, toggleShowInstructions } from './settingsSlice'
+import reducer, { SettingsState, setVolume, toggleMute, toggleShowInstructions } from './settingsSlice'
 
 test('should return the initial state', () => {
     // Act
@@ -68,7 +68,7 @@ test('should set volume', () => {
 
 // Helper functions
 
-const getInitialState = (): settingsState => {
+const getInitialState = (): SettingsState => {
     return {
         mute: false,
         showInstructions: true,

@@ -1,0 +1,7 @@
+{
+    "Slice": {
+        "prefix": "slice",
+        "body": "// Actions \n\n // Selectors \n\n // Helper functions",
+        "description": "Template for a redux slice"
+    }
+}

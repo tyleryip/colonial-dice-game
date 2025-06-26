@@ -5,6 +5,8 @@ import StyledModalFooter from "../styles/StyledModalFooter";
 import StyledVersion from "./styles/StyledVersion";
 import ResetGameButton from "../../Buttons/ResetGameButton/ResetGameButton";
 import Settings from "../../Settings/Settings";
+import ResetLeaderboardButton from "../../Buttons/ResetLeaderboardButton/ResetLeaderboardButton";
+import StyledSettingsButtonTray from "./styles/StyledSettingsButtonTray";
 
 interface SettingsModalProps {
   show: boolean;
@@ -27,7 +29,10 @@ const SettingsModal = (props: SettingsModalProps) => {
       </StyledModalHeader>
       <StyledSettingsModalBody>
         <Settings />
-        <ResetGameButton onReset={() => props.onHide()} />
+        <StyledSettingsButtonTray>
+          <ResetGameButton onReset={() => props.onHide()} />
+          <ResetLeaderboardButton onReset={() => props.onHide()} />
+        </StyledSettingsButtonTray>
       </StyledSettingsModalBody>
       <StyledModalFooter>
         <StyledVersion>{footerCopy}</StyledVersion>
