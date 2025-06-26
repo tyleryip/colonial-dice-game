@@ -18,6 +18,11 @@ const ResetLeaderboardButton = (props: ResetLeaderboardButtonProps) => {
     // Event handlers
 
     function handleClick() {
+        const resetConfirmed = confirm("Do you want to reset your local leaderboard? All leaderboard entries will be lost.")
+        if (!resetConfirmed) {
+            return
+        }
+
         dispatch(resetLeaderboard())
 
         props.onReset();

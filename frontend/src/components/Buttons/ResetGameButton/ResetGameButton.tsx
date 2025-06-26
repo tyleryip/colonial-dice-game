@@ -23,6 +23,11 @@ const ResetGameButton = (props: ResetGameButtonProps) => {
   // Event handlers
 
   function handleClick() {
+    const resetConfirmed = confirm("Do you want to reset the game? All progress will be lost.")
+    if (!resetConfirmed) {
+      return
+    }
+
     dispatch(resetGame());
     dispatch(resetKnights());
     dispatch(resetResourceJokers());

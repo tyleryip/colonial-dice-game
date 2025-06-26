@@ -1,17 +1,16 @@
-import { ModalBody } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 import { styled } from 'styled-components'
 
-const StyledGameOverModalBody = styled(ModalBody)`
+const StyledLeaderboardNameInput = styled(Form.Control)`
 /** Layout */ 
+    justify-self: center;
 
 /** Box Model */ 
-    padding-right: 10%;
-    padding-left: 10%;
+    width: 60%;
 
 /** Colour + Background */ 
 
 /** Typography */ 
-    text-align: center;
 
 /** Visual Effects */ 
 
@@ -22,4 +21,4 @@ const StyledGameOverModalBody = styled(ModalBody)`
 /** Micellaneous */
 `
 
-export default StyledGameOverModalBody
+export default StyledLeaderboardNameInput
