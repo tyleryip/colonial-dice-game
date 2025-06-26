@@ -1,10 +1,10 @@
-import StyledLeaderboardRow from './styles/StyledLeaderboardRow'
-import { LeaderboardEntry } from '../../store/slices/leaderboardSlice/leaderboardSlice'
+import { LeaderboardEntry } from "../../../store/slices/leaderboardSlice/leaderboardSlice"
+import StyledLeaderboardRankIcon from "./styles/StyledLeaderboardRankIcon"
+import StyledLeaderboardRow from "./styles/StyledLeaderboardRow"
+import StyledLeaderboardTableData from "./styles/StyledLeaderboardTableData"
 import first_place_trophy from "/assets/leaderboard/first-place-trophy.png"
 import second_place_trophy from "/assets/leaderboard/second-place-trophy.png"
 import third_place_trophy from "/assets/leaderboard/third-place-trophy.png"
-import StyledLeaderboardRankIcon from './styles/StyledLeaderboardRankIcon'
-import StyledLeaderboardTableData from './styles/StyledLeaderboardTableData'
 
 interface LeaderboardRowProps {
     rank: number,

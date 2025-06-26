@@ -11,7 +11,7 @@ interface LeaderboardModalProps {
 const LeaderboardModal = (props: LeaderboardModalProps) => {
     // Copy
 
-    const headerCopy = "Leaderboard"
+    const headerCopy = "Local Leaderboard"
 
     return (
         <Modal
