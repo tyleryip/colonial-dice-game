@@ -79,11 +79,11 @@
   - [ ] Show what things gave points on each filled scoreboard
 - [x] Settings modal
   - [x] Allow muting and volume adjustment
-- [ ] Leaderboard
-  - [ ] Add "save to leaderboard" button to end of game modal
-  - [ ] Add leaderboard modal to navbar
-  - [ ] Add leaderboard to store
-  - [ ] Display leaderboard from store in leaderboard modal
+- [x] Leaderboard
+  - [x] Add "save to leaderboard" button to end of game modal
+  - [x] Add leaderboard modal to navbar
+  - [x] Add leaderboard to store
+  - [x] Display leaderboard from store in leaderboard modal
 
 ### Non-Functional Requirements
 
@@ -108,4 +108,3 @@
 ## Phase 4 - Enhancements
 
 - [ ] AI plays Catan Dice game
-- [ ] Store local user high-score in cookies
