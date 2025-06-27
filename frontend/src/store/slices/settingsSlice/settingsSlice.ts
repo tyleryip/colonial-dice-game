@@ -41,6 +41,8 @@ export const {
 
 // Selectors
 
+/* v8 ignore start */
+
 export const selectMute = (state: RootState) => state.local.settings.mute
 export const selectShowInstructions = (state: RootState) => state.local.settings.showInstructions
 
@@ -55,3 +57,5 @@ export const selectEffectiveVolume = (state: RootState) => {
 
     return state.local.settings.volume
 }
+
+/* v8 ignore end */

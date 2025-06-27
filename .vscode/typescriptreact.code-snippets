@@ -3,5 +3,10 @@
         "prefix": "slice",
         "body": "// Actions \n\n // Selectors \n\n // Helper functions",
         "description": "Template for a redux slice"
+    },
+    "Arrange Act Assert": {
+        "prefix": "arrange",
+        "body": "// Arrange\n\n// Act\n\n// Assert\n\n",
+        "description": "Template for unit tests"
     }
 }

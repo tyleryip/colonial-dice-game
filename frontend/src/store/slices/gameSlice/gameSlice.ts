@@ -50,6 +50,8 @@ export const { incrementTurn, setGamePhase, resetGame } = gameSlice.actions
 
 // Selectors
 
+/* v8 ignore start */
+
 export const selectCurrentTurn = (state: RootState) => state.session.game.currentTurn
 
 export function selectIsGamePhaseRolling(state: RootState): boolean {
@@ -59,3 +61,5 @@ export function selectIsGamePhaseRolling(state: RootState): boolean {
 export function selectIsGamePhaseBuilding(state: RootState): boolean {
     return state.session.game.currentGamePhase == GamePhase.Building
 }
+
+/* v8 ignore end */

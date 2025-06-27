@@ -25,7 +25,7 @@ test('should add positive pending score', () => {
     expect(result.pendingScore).toEqual(null)
 })
 
-test('should add zero pending score', () => {
+test('should add null pending score', () => {
     // Arrange
     const previousState = getInitialState()
 
@@ -38,7 +38,7 @@ test('should add zero pending score', () => {
     expect(result.pendingScore).toEqual(null)
 })
 
-test('should add to pending score', () => {
+test('should add to empty pending score', () => {
     // Arrange
     const previousState = getInitialState()
 
@@ -47,6 +47,18 @@ test('should add to pending score', () => {
 
     // Assert
     expect(result.pendingScore).toEqual(1)
+})
+
+test('should add to exisiting pending score', () => {
+    // Arrange
+    const previousState = getInitialState()
+    previousState.pendingScore = 1
+
+    // Act
+    const result = reducer(previousState, addToPendingScore(1))
+
+    // Assert
+    expect(result.pendingScore).toEqual(2)
 })
 
 test('should reset score', () => {

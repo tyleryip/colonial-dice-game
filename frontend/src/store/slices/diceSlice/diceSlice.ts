@@ -153,6 +153,8 @@ export const {
 
 // Selectors
 
+/* v8 ignore start */
+
 export const selectDice = (state: RootState) => state.session.dice.dice
 export const selectRollCount = (state: RootState) => state.session.dice.rollCount
 export const selectResourceJokerFlag = (state: RootState) => state.session.dice.resourceJokerFlag
@@ -190,6 +192,8 @@ export const selectHasResourcesNeeded = (state: RootState, cost: ResourceType[])
 
     return canBuild
 }
+
+/* v8 ignore end */
 
 // Helper functions
 

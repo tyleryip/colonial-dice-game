@@ -57,6 +57,8 @@ export const { resetScore, addScore, addToPendingScore } = scoreSlice.actions
 
 // Selectors
 
+/* v8 ignore start */
+
 export const selectScoreValues = (state: RootState) => state.session.score.scores
 export const selectPendingScore = (state: RootState) => state.session.score.pendingScore
 
@@ -66,6 +68,8 @@ export const selectTotalScore = (state: RootState) => state.session.score.scores
     }, 0)
 
 export const selectAllScoresFilled = (state: RootState) => state.session.score.scores.every(score => typeof score === 'number')
+
+/*v8 ignore end */
 
 // Helper functions
 

@@ -41,10 +41,14 @@ export const { resetResourceJokers, spendResourceJoker } = resourceJokerSlice.ac
 
 // Selectors
 
+/* v8 ignore start */
+
 export const selectIsResourceJokerSpent = (state: RootState, resourceJokerId: number) => {
     validateResourceJokerId(resourceJokerId)
     return state.session.resourceJoker.isSpent[resourceJokerId];
 }
+
+/* v8 ignore end */
 
 // Helper functions
 

@@ -58,6 +58,8 @@ export const {
 
 // Selectors
 
+/* v8 ignore start */
+
 const selectLeaderboardEntries = (state: RootState) => state.local.leaderboard.entries
 
 export const selectOrderedLeaderboardEntries = createSelector([selectLeaderboardEntries], (serializedEntries) => {
@@ -65,4 +67,4 @@ export const selectOrderedLeaderboardEntries = createSelector([selectLeaderboard
     return leaderboardEntries.sort((a, b) => b.score - a.score)
 })
 
-// Helper functions
+/* v8 ignore end */

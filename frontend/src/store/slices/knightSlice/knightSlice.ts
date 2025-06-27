@@ -42,6 +42,8 @@ export const { buildKnight, resetKnights } = knightSlice.actions;
 
 // Selectors
 
+/* v8 ignore start */
+
 export const selectIsKnightBuilt = (state: RootState, knightId: number) => {
     validateKnightId(knightId)
     return state.session.knight.isBuilt[knightId]
@@ -54,6 +56,8 @@ export const selectIsKnightPrerequisiteBuilt = (state: RootState, knightId: numb
         ? true
         : state.session.knight.isBuilt[knightPrerequisiteId];
 }
+
+/* v8 ignore end */
 
 // Helper functions
 

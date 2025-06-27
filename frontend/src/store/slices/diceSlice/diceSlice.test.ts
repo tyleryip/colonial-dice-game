@@ -1,5 +1,5 @@
 import { expect, test } from "vitest"
-import reducer, { clearResourceJokerFlag, DiceState, resetDice, resetDiceLocks, rollDice, setDice, setDiceSpent, setResourceJokerFlag, setRollCount, setWildcardJokerFlag, spendDice, toggleDiceLock } from "./diceSlice"
+import reducer, { clearResourceJokerFlag, clearWildcardJokerFlag, DiceState, resetDice, resetDiceLocks, rollDice, setDice, setDiceSpent, setResourceJokerFlag, setRollCount, setWildcardJokerFlag, spendDice, toggleDiceLock } from "./diceSlice"
 import { ResourceType } from "../../../constants/resources"
 
 test('should return the initial state', () => {
@@ -36,7 +36,7 @@ test('should clear wildcard joker flag', () => {
     const previousState = getInitialState()
 
     // Act
-    const result = reducer(previousState, clearResourceJokerFlag())
+    const result = reducer(previousState, clearWildcardJokerFlag())
 
     // Assert
     expect(result).toEqual({

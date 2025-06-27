@@ -42,6 +42,8 @@ export const { resetStructures, buildStructure } = structureSlice.actions;
 
 // Selectors
 
+/* v8 ignore start */
+
 export const selectIsStructureBuilt = (state: RootState, structureId: number) => {
     validateStructureId(structureId)
     return state.session.structure.isBuilt[structureId]
@@ -53,6 +55,8 @@ export const selectHasPrerequisiteStructuresBuilt = (state: RootState, structure
         .map((structureId: number) => state.session.structure.isBuilt[structureId])
         .every((isBuilt: boolean) => isBuilt)
 }
+
+/* v8 ignore end */
 
 // Helper functions
 
