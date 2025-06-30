@@ -2,13 +2,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../store";
 import { ScoreValue } from "../../../types/ScoreValue"
 
-export interface scoreState {
+export interface ScoreState {
     scores: ScoreValue[]
     pendingScore: ScoreValue
 }
 
-const initialState: scoreState = {
-    scores: new Array(15).fill(null),
+const initialState: ScoreState = {
+    scores: new Array<ScoreValue>(15).fill(null),
     pendingScore: null
 }
 

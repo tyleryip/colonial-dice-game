@@ -11,16 +11,20 @@ interface StyledRoadProps {
 }
 
 const StyledRoad = styled.div<StyledRoadProps>`
+/** Layout */ 
     position: absolute;
     top: ${props => `${props.$top}%`};
     left: ${props => `${props.$left}%`};
     width: ${props => `${props.$width}%`};
     z-index: 1;
 
-    &:hover {
-        cursor: ${props => props.$pointer && css`pointer`};
-    }
+/** Box Model */ 
 
+/** Colour + Background */ 
+
+/** Typography */ 
+
+/** Visual Effects */ 
     filter: ${props =>
     (!props.$canBuild &&
         css`grayscale(100%)`
@@ -32,6 +36,15 @@ const StyledRoad = styled.div<StyledRoadProps>`
         css`${pulse(1.08)} 1s infinite, ${colourFlash} 1s infinite`
     )
     };
+
+/** Responsive Design */ 
+
+/** Interactivity */ 
+    &:hover {
+        cursor: ${props => props.$pointer && css`pointer`};
+    }
+
+/** Micellaneous */
 `
 
 export default StyledRoad

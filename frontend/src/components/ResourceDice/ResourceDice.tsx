@@ -259,7 +259,7 @@ const ResourceDice = (props: ResourceDiceProps) => {
         $wobble={wobble}
         $wobbleDurationMilliseconds={rollDurationMilliseconds}
         $pulse={pulse}
-        $grayscale={isSpent} />
+        $isSpent={isSpent} />
       <StyledLock src={lock} $locked={isLocked} />
     </StyledResourceDice>
   );

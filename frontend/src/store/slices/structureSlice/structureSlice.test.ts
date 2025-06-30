@@ -1,5 +1,5 @@
 import { test, expect } from 'vitest'
-import reducer, { buildStructure, resetStructures, structureState } from './structureSlice'
+import reducer, { buildStructure, resetStructures, StructureState } from './structureSlice'
 
 test('should return the initial state', () => {
     // Act
@@ -24,7 +24,7 @@ test('should build structure', () => {
 
 test('should reset structures', () => {
     // Arrange
-    const previousState: structureState = {
+    const previousState: StructureState = {
         isBuilt: new Array(27).fill(true)
     }
 
@@ -37,7 +37,7 @@ test('should reset structures', () => {
 
 // Helper functions
 
-const getInitialState = (): structureState => {
+const getInitialState = (): StructureState => {
     const isBuilt = new Array(27).fill(false);
     isBuilt[0] = true; // Starting road is always already built
 

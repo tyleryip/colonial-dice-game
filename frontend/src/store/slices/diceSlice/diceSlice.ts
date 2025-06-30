@@ -4,15 +4,15 @@ import { DiceValue } from "../../../types/DiceValue";
 import { Dice } from "../../../types/Dice";
 import { ResourceType } from "../../../constants/resources";
 
-export interface diceState {
+export interface DiceState {
     dice: Dice[],
     rollCount: number,
     resourceJokerFlag: number | null,
     wildcardJokerFlag: number | null
 }
 
-const initialState: diceState = {
-    dice: new Array(6).fill(
+const initialState: DiceState = {
+    dice: new Array<Dice>(6).fill(
         {
             value: null,
             locked: false,

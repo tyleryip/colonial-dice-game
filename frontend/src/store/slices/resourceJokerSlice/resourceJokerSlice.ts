@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { RootState } from "../../store"
 
-export interface resourceJokerState {
+export interface ResourceJokerState {
     isSpent: boolean[]
 }
 
-const initialState: resourceJokerState = {
-    isSpent: new Array(6).fill(false)
+const initialState: ResourceJokerState = {
+    isSpent: new Array<boolean>(6).fill(false)
 }
 
 export const resourceJokerSlice = createSlice({

@@ -8,16 +8,20 @@ interface StyledKnightProps {
 }
 
 const StyledKnight = styled.div<StyledKnightProps>`
+/** Layout */ 
     position: absolute;
     top: 14%;
     left: 44%;
     width: 12%;
     z-index: 1;
 
-    &:hover {
-        cursor: ${props => props.$pointer && css`pointer`};
-    }
+/** Box Model */ 
 
+/** Colour + Background */ 
+
+/** Typography */ 
+
+/** Visual Effects */ 
     filter: ${props =>
     (!props.$canBuild &&
         css`grayscale(100%)`
@@ -29,6 +33,15 @@ const StyledKnight = styled.div<StyledKnightProps>`
         css`${pulse(1.08)} 1s infinite, ${colourFlash} 1s infinite`
     )
     };
+
+/** Responsive Design */ 
+
+/** Interactivity */ 
+    &:hover {
+        cursor: ${props => props.$pointer && css`pointer`};
+    }
+
+/** Micellaneous */
 `
 
 export default StyledKnight

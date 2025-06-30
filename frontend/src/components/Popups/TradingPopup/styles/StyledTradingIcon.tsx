@@ -1,11 +1,17 @@
 import { styled } from "styled-components"
 
 const StyledTradingIcon = styled.img`
-    &:hover{
-        cursor: pointer;
-        transform: scale(1.1);
-    }
+/** Layout */ 
 
+/** Box Model */ 
+
+/** Colour + Background */ 
+
+/** Typography */ 
+
+/** Visual Effects */ 
+
+/** Responsive Design */ 
     @media ${(props) => props.theme.breakpoints.xs} {
         width: 90%
     }
@@ -29,6 +35,16 @@ const StyledTradingIcon = styled.img`
     @media ${(props) => props.theme.breakpoints.xxl} {
 
     }
+
+/** Interactivity */ 
+    &:hover{
+        cursor: pointer;
+        transform: scale(1.1);
+    }
+
+/** Micellaneous */
+
+
 `
 
 export default StyledTradingIcon

@@ -9,16 +9,20 @@ interface StyledResourceJokerProps {
 }
 
 const StyledResourceJoker = styled.div<StyledResourceJokerProps>`
+/** Layout */ 
     position: absolute;
     top: 36%;
     left: 37%;
     width: 25%;
     z-index: 2;
 
-    &:hover {
-        cursor: ${props => props.$pointer && css`pointer`};
-    }
+/** Box Model */ 
 
+/** Colour + Background */ 
+
+/** Typography */ 
+
+/** Visual Effects */ 
     animation: ${props =>
     (props.$pulse &&
         css`${pulse(1.08)} ${props.$pulseDurationSeconds}s infinite`
@@ -26,6 +30,17 @@ const StyledResourceJoker = styled.div<StyledResourceJokerProps>`
     };
 
     filter: ${props => (props.$pending && css`grayscale(80%)`)};
+
+/** Responsive Design */ 
+
+/** Interactivity */ 
+    &:hover {
+        cursor: ${props => props.$pointer && css`pointer`};
+    }
+
+/** Micellaneous */
+
+
 `
 
 export default StyledResourceJoker

@@ -1,7 +1,6 @@
 import Hexagon, { HexagonStructure } from '../Hexagon/Hexagon'
 import { HexagonEdge, HexagonType, HexagonVertex, KnightType, ResourceJokerType, StructureType } from '../../constants/enumerations';
 import StyledGameBoard from './styles/StyledGameBoard'
-import GameOverModal from '../Modals/GameOverModal/GameOverModal';
 
 const GameBoard = () => {
 
@@ -76,8 +75,6 @@ const GameBoard = () => {
                 type={HexagonType.Desert}
                 resourceJokerType={ResourceJokerType.Wildcard}
                 knightType={KnightType.Wildcard} />
-
-            <GameOverModal />
 
         </StyledGameBoard>
     )
