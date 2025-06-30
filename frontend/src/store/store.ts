@@ -1,16 +1,25 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import diceReducer, { diceSlice } from "./slices/diceSlice/diceSlice"
-import gameReducer, { gameSlice } from "../store/slices/gameSlice/gameSlice"
-import resourceJokerReducer, { resourceJokerSlice } from "../store/slices/resourceJokerSlice/resourceJokerSlice"
-import knightReducer, { knightSlice } from "./slices/knightSlice/knightSlice";
-import settingsReducer, { settingsSlice } from "./slices/settingsSlice/settingsSlice"
-import scoreReducer, { scoreSlice } from "../store/slices/scoreSlice/scoreSlice"
-import structureReducer, { structureSlice } from "../store/slices/structureSlice/structureSlice"
+import diceReducer, { diceSlice } from "./slices/session/islandOne/diceSlice/diceSlice"
+import gameReducer, { gameSlice } from "./slices/session/islandOne/gameSlice/gameSlice"
+import resourceJokerReducer, { resourceJokerSlice } from "./slices/session/islandOne/resourceJokerSlice/resourceJokerSlice"
+import knightReducer, { knightSlice } from "./slices/session/islandOne/knightSlice/knightSlice";
+import settingsReducer, { settingsSlice } from "./slices/local/settingsSlice/settingsSlice"
+import scoreReducer, { scoreSlice } from "./slices/session/islandOne/scoreSlice/scoreSlice"
+import structureReducer, { structureSlice } from "./slices/session/islandOne/structureSlice/structureSlice"
 import { FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE } from "redux-persist";
 import { persistStore } from "redux-persist";
 import sessionStorage from "redux-persist/lib/storage/session";
 import localStorage from "redux-persist/lib/storage";
-import leaderboardReducer, { leaderboardSlice } from "./slices/leaderboardSlice/leaderboardSlice";
+import leaderboardReducer, { leaderboardSlice } from "./slices/local/leaderboardSlice/leaderboardSlice";
+
+const islandOneReducer = combineReducers({
+    dice: diceReducer,
+    game: gameReducer,
+    knight: knightReducer,
+    resourceJoker: resourceJokerReducer,
+    score: scoreReducer,
+    structure: structureReducer,
+})
 
 const sessionPersistConfig = {
     key: "session",
@@ -18,12 +27,7 @@ const sessionPersistConfig = {
 }
 
 const sessionReducer = combineReducers({
-    dice: diceReducer,
-    game: gameReducer,
-    knight: knightReducer,
-    resourceJoker: resourceJokerReducer,
-    score: scoreReducer,
-    structure: structureReducer,
+    islandOne: islandOneReducer
 })
 
 const sessionPersistedReducer = persistReducer(sessionPersistConfig, sessionReducer)

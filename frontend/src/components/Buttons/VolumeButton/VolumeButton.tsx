@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
-import { selectMute, selectEffectiveVolume, toggleMute } from '../../../store/slices/settingsSlice/settingsSlice'
+import { selectMute, selectEffectiveVolume, toggleMute } from '../../../store/slices/local/settingsSlice/settingsSlice'
 import speaker_muted from '/assets/settings/volume/speaker-muted.png'
 import speaker_no_bars from '/assets/settings/volume/speaker-no-bars.png'
 import speaker_one_bar from '/assets/settings/volume/speaker-one-bar.png'

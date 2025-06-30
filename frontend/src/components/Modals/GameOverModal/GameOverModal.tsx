@@ -1,17 +1,17 @@
 import Modal from "react-bootstrap/Modal";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { resetGame, selectIsGamePhaseRolling } from "../../../store/slices/gameSlice/gameSlice";
-import { resetScore, selectAllScoresFilled, selectTotalScore } from "../../../store/slices/scoreSlice/scoreSlice";
+import { resetGame, selectIsGamePhaseRolling } from "../../../store/slices/session/islandOne/gameSlice/gameSlice";
+import { resetScore, selectAllScoresFilled, selectTotalScore } from "../../../store/slices/session/islandOne/scoreSlice/scoreSlice";
 import PlayAgainButton from "../../Buttons/PlayAgainButton/PlayAgainButton";
 import StyledModalFooter from "../styles/StyledModalFooter";
 import StyledModalHeader from "../styles/StyledModalHeader";
 import StyledGameOverModalBody from "./styles/StyledGameOverModalBody";
 import { useState } from "react";
-import { addLeaderboardEntry, AddLeaderboardEntryPayload } from "../../../store/slices/leaderboardSlice/leaderboardSlice";
-import { resetDice } from "../../../store/slices/diceSlice/diceSlice";
-import { resetKnights } from "../../../store/slices/knightSlice/knightSlice";
-import { resetResourceJokers } from "../../../store/slices/resourceJokerSlice/resourceJokerSlice";
-import { resetStructures } from "../../../store/slices/structureSlice/structureSlice";
+import { addLeaderboardEntry, AddLeaderboardEntryPayload } from "../../../store/slices/local/leaderboardSlice/leaderboardSlice";
+import { resetDice } from "../../../store/slices/session/islandOne/diceSlice/diceSlice";
+import { resetKnights } from "../../../store/slices/session/islandOne/knightSlice/knightSlice";
+import { resetResourceJokers } from "../../../store/slices/session/islandOne/resourceJokerSlice/resourceJokerSlice";
+import { resetStructures } from "../../../store/slices/session/islandOne/structureSlice/structureSlice";
 import StyledLeaderboardNameInput from "./styles/StyledLeaderboardNameInput";
 
 const GameOverModal = () => {

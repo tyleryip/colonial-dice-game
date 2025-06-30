@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../../store";
-import { ScoreValue } from "../../../types/ScoreValue"
+import type { RootState } from "../../../../store";
+import { ScoreValue } from "../../../../../types/ScoreValue"
 
 export interface ScoreState {
     scores: ScoreValue[]
@@ -57,15 +57,15 @@ export const { resetScore, addScore, addToPendingScore } = scoreSlice.actions
 
 // Selectors
 
-export const selectScoreValues = (state: RootState) => state.session.score.scores
-export const selectPendingScore = (state: RootState) => state.session.score.pendingScore
+export const selectScoreValues = (state: RootState) => state.session.islandOne.score.scores
+export const selectPendingScore = (state: RootState) => state.session.islandOne.score.pendingScore
 
-export const selectTotalScore = (state: RootState) => state.session.score.scores
+export const selectTotalScore = (state: RootState) => state.session.islandOne.score.scores
     .reduce((accumulator: number, currentValue: ScoreValue) => {
         return accumulator + (currentValue ?? 0);
     }, 0)
 
-export const selectAllScoresFilled = (state: RootState) => state.session.score.scores.every(score => typeof score === 'number')
+export const selectAllScoresFilled = (state: RootState) => state.session.islandOne.score.scores.every(score => typeof score === 'number')
 
 // Helper functions
 

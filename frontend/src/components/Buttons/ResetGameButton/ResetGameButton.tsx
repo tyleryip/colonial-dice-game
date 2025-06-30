@@ -1,10 +1,10 @@
 import { useAppDispatch } from "../../../store/hooks";
-import { resetDice } from "../../../store/slices/diceSlice/diceSlice";
-import { resetGame } from "../../../store/slices/gameSlice/gameSlice";
-import { resetKnights } from "../../../store/slices/knightSlice/knightSlice";
-import { resetResourceJokers } from "../../../store/slices/resourceJokerSlice/resourceJokerSlice";
-import { resetScore } from "../../../store/slices/scoreSlice/scoreSlice";
-import { resetStructures } from "../../../store/slices/structureSlice/structureSlice";
+import { resetDice } from "../../../store/slices/session/islandOne/diceSlice/diceSlice";
+import { resetGame } from "../../../store/slices/session/islandOne/gameSlice/gameSlice";
+import { resetKnights } from "../../../store/slices/session/islandOne/knightSlice/knightSlice";
+import { resetResourceJokers } from "../../../store/slices/session/islandOne/resourceJokerSlice/resourceJokerSlice";
+import { resetScore } from "../../../store/slices/session/islandOne/scoreSlice/scoreSlice";
+import { resetStructures } from "../../../store/slices/session/islandOne/structureSlice/structureSlice";
 import StyledResetGameButton from "./styles/StyledResetGameButton";
 
 interface ResetGameButtonProps {

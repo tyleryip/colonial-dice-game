@@ -3,12 +3,12 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import {
   selectIsGamePhaseBuilding,
   setGamePhase,
-} from "../../../store/slices/gameSlice/gameSlice";
+} from "../../../store/slices/session/islandOne/gameSlice/gameSlice";
 import { GamePhase } from "../../../constants/enumerations";
-import { resetDiceLocks, rollDice } from "../../../store/slices/diceSlice/diceSlice";
+import { resetDiceLocks, rollDice } from "../../../store/slices/session/islandOne/diceSlice/diceSlice";
 import useSound from "use-sound";
 import diceRollSound from '/audio/dice_roll.wav'
-import { selectEffectiveVolume } from "../../../store/slices/settingsSlice/settingsSlice";
+import { selectEffectiveVolume } from "../../../store/slices/local/settingsSlice/settingsSlice";
 import dice_icon from '/assets/buttons/dice-icon.png'
 import StyledRollButtonIcon from "./styles/StyledRollButtonIcon";
 

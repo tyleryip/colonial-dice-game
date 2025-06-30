@@ -1,6 +1,6 @@
 import Table from 'react-bootstrap/Table'
 import { useAppSelector } from '../../store/hooks'
-import { selectOrderedLeaderboardEntries } from '../../store/slices/leaderboardSlice/leaderboardSlice'
+import { selectOrderedLeaderboardEntries } from '../../store/slices/local/leaderboardSlice/leaderboardSlice'
 import StyledLeaderboard from './styles/StyledLeaderboard'
 import LeaderboardRow from './LeaderboardRow/LeaderboardRow'
 import LeaderboardPlaceholder from './LeaderboardPlaceholder/LeaderboardPlaceholder'

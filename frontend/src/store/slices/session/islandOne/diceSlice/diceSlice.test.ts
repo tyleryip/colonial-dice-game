@@ -1,6 +1,6 @@
 import { expect, test } from "vitest"
 import reducer, { clearResourceJokerFlag, DiceState, resetDice, resetDiceLocks, rollDice, setDice, setDiceSpent, setResourceJokerFlag, setRollCount, setWildcardJokerFlag, spendDice, toggleDiceLock } from "./diceSlice"
-import { ResourceType } from "../../../constants/resources"
+import { ResourceType } from "../../../../../constants/resources"
 
 test('should return the initial state', () => {
     // Act

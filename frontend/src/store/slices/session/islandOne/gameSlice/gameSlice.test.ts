@@ -1,6 +1,6 @@
 import { test, expect } from 'vitest'
 import reducer, { GameState, incrementTurn, resetGame, setGamePhase } from './gameSlice'
-import { GamePhase } from '../../../constants/enumerations'
+import { GamePhase } from '../../../../../constants/enumerations'
 
 test('should return the initial state', () => {
     // Act

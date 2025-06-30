@@ -5,17 +5,17 @@ import {
   selectIsGamePhaseBuilding,
   selectIsGamePhaseRolling,
   setGamePhase,
-} from "../../../store/slices/gameSlice/gameSlice";
+} from "../../../store/slices/session/islandOne/gameSlice/gameSlice";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { GamePhase } from "../../../constants/enumerations";
-import { addScore } from "../../../store/slices/scoreSlice/scoreSlice";
+import { addScore } from "../../../store/slices/session/islandOne/scoreSlice/scoreSlice";
 import {
   resetDice,
   resetDiceLocks,
   setRollCount,
-} from "../../../store/slices/diceSlice/diceSlice";
+} from "../../../store/slices/session/islandOne/diceSlice/diceSlice";
 import gameOverSound from '/audio/game_over.wav'
-import { selectEffectiveVolume } from "../../../store/slices/settingsSlice/settingsSlice";
+import { selectEffectiveVolume } from "../../../store/slices/local/settingsSlice/settingsSlice";
 import useSound from "use-sound";
 import { useEffect, useState } from "react";
 import build_icon from '/assets/buttons/build-icon.png'

@@ -1,5 +1,5 @@
 import { useAppDispatch } from '../../../store/hooks';
-import { resetLeaderboard } from '../../../store/slices/leaderboardSlice/leaderboardSlice';
+import { resetLeaderboard } from '../../../store/slices/local/leaderboardSlice/leaderboardSlice';
 import StyledResetLeaderboardButton from './styles/StyledResetLeaderboardButton'
 
 interface ResetLeaderboardButtonProps {
