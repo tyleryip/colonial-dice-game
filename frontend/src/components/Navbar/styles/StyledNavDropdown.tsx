@@ -1,15 +1,15 @@
-import { styled } from "styled-components";
+import { NavDropdown } from 'react-bootstrap'
+import { styled } from 'styled-components'
 
-const StyledNavbarButton = styled.div`
+const StyledNavDropdown = styled(NavDropdown)`
 /** Layout */ 
 
 /** Box Model */ 
-  width: 100%;
 
 /** Colour + Background */ 
-  color: black;
 
 /** Typography */ 
+color: black;
 
 /** Visual Effects */ 
   transition: font-weight 250ms ease-out;
@@ -23,8 +23,6 @@ const StyledNavbarButton = styled.div`
   }
 
 /** Micellaneous */
+`
 
-
-`;
-
-export default StyledNavbarButton;
+export default StyledNavDropdown

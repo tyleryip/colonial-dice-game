@@ -10,6 +10,8 @@ import StyledNavbarButton from "./NavbarButton/styles/StyledNavbarButton";
 import dice_icon from "/assets/navbar/dice-icon.png";
 import StyledNavbarBrandIcon from "./styles/StyledNavbarBrandIcon";
 import LeaderboardModal from "../Modals/LeaderboardModal/LeaderboardModal";
+import { NavDropdown } from "react-bootstrap";
+import StyledNavDropdown from "./styles/StyledNavDropdown";
 
 const Navbar = () => {
   const [showLeaderboardModal, setShowLeaderboardModal] = useState(false);
@@ -18,12 +20,17 @@ const Navbar = () => {
 
   return (
     <StyledNavbar expand="sm">
-      <StyledNavbarBrand href={"/"}>
+      <StyledNavbarBrand>
         <StyledNavbarBrandIcon src={dice_icon} />
         {"Colonial Dice Game"}
       </StyledNavbarBrand>
       <NavbarToggle />
       <StyledNavbarCollapse>
+        <StyledNavDropdown title="Islands">
+          <NavDropdown.Item href="/" >Island 1</NavDropdown.Item>
+          <NavDropdown.Divider />
+          <NavDropdown.Item href="/island-2" >Island 2</NavDropdown.Item>
+        </StyledNavDropdown>
         <StyledNavbarText>
           <StyledNavbarButton onClick={() => setShowLeaderboardModal(true)}>
             {"Leaderboard"}
