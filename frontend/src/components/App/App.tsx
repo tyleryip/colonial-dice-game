@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from 'react-router'
-import GameOverModal from '../Modals/GameOverModal/GameOverModal'
 import Navbar from '../Navbar/Navbar'
 import StyledApp from './styles/StyledApp'
 import IslandOne from '../IslandOne/IslandOne'
@@ -8,7 +7,6 @@ import IslandTwo from '../IslandTwo/IslandTwo'
 export default function App() {
   return (
     <StyledApp>
-      <GameOverModal />
       <Navbar />
       <BrowserRouter>
         <Routes>
