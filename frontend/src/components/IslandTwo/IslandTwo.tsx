@@ -1,8 +1,10 @@
+import Layout from "../Layout/Layout"
+
 const IslandTwo = () => {
     return (
-        <div>
-            This is a placeholder for Island 2!
-        </div>
+        <Layout>
+
+        </Layout>
     )
 }
 
