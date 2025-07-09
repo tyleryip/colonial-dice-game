@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
   selectIsGamePhaseBuilding,
   selectIsGamePhaseRolling,
-} from "../../store/slices/gameSlice/gameSlice";
+} from "../../store/slices/session/islandOne/gameSlice/gameSlice";
 import { getResourceType, ResourceType } from "../../constants/resources";
 import {
   toggleDiceLock,
@@ -17,8 +17,8 @@ import {
   spendDice,
   selectWildcardJokerFlag,
   clearWildcardJokerFlag,
-} from "../../store/slices/diceSlice/diceSlice";
-import { spendResourceJoker } from "../../store/slices/resourceJokerSlice/resourceJokerSlice";
+} from "../../store/slices/session/islandOne/diceSlice/diceSlice";
+import { spendResourceJoker } from "../../store/slices/session/islandOne/resourceJokerSlice/resourceJokerSlice";
 import { ResourceJokerType } from "../../constants/enumerations";
 import { GetResourceJokerId } from "../../constants/mappings";
 import tradeGoldSound from "/audio/trade_gold.wav"
@@ -26,7 +26,7 @@ import lockSound from "/audio/lock.wav";
 import unlockSound from "/audio/unlock.wav";
 import jokerSetDiceSound from "/audio/joker_set_dice.wav";
 import useSound from "use-sound";
-import { selectEffectiveVolume } from "../../store/slices/settingsSlice/settingsSlice";
+import { selectEffectiveVolume } from "../../store/slices/local/settingsSlice/settingsSlice";
 import selectionOpenSound from '/audio/selection_open.wav'
 import selectionCloseSound from '/audio/selection_close.wav'
 import dice_blank from '/assets/dice-faces/dice-blank.png'

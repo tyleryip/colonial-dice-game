@@ -1,6 +1,6 @@
 import { useAppSelector } from '../../store/hooks'
-import { selectCurrentTurn } from '../../store/slices/gameSlice/gameSlice'
-import { selectPendingScore, selectScoreValues, selectTotalScore } from '../../store/slices/scoreSlice/scoreSlice'
+import { selectCurrentTurn } from '../../store/slices/session/islandOne/gameSlice/gameSlice'
+import { selectPendingScore, selectScoreValues, selectTotalScore } from '../../store/slices/session/islandOne/scoreSlice/scoreSlice'
 import { ScoreValue } from '../../types/ScoreValue'
 import StyledEqualsIcon from './styles/StyledEqualsIcon'
 import StyledScoreboard from './styles/StyledScoreboard'

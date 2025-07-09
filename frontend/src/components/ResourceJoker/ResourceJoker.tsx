@@ -1,12 +1,12 @@
 import StyledAsset from "../Asset/StyledAsset"
 import { IconType, ResourceJokerType } from "../../constants/enumerations"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { selectIsResourceJokerSpent } from "../../store/slices/resourceJokerSlice/resourceJokerSlice"
+import { selectIsResourceJokerSpent } from "../../store/slices/session/islandOne/resourceJokerSlice/resourceJokerSlice"
 import { GetResourceJokerId } from "../../constants/mappings"
 import StyledResourceJoker from "./styles/StyledResourceJoker"
-import { selectIsKnightBuilt } from "../../store/slices/knightSlice/knightSlice"
-import { selectIsGamePhaseBuilding } from "../../store/slices/gameSlice/gameSlice"
-import { clearResourceJokerFlag, selectAllDiceSpent, selectResourceJokerFlag, selectWildcardJokerFlag, setResourceJokerFlag } from "../../store/slices/diceSlice/diceSlice"
+import { selectIsKnightBuilt } from "../../store/slices/session/islandOne/knightSlice/knightSlice"
+import { selectIsGamePhaseBuilding } from "../../store/slices/session/islandOne/gameSlice/gameSlice"
+import { clearResourceJokerFlag, selectAllDiceSpent, selectResourceJokerFlag, selectWildcardJokerFlag, setResourceJokerFlag } from "../../store/slices/session/islandOne/diceSlice/diceSlice"
 import { getResourceType } from "../../constants/resources"
 import wool_joker_light from "/assets/jokers/light/wool-joker-light.png"
 import wheat_joker_light from "/assets/jokers/light/wheat-joker-light.png"
@@ -21,7 +21,7 @@ import wood_joker_dark from "/assets/jokers/dark/wood-joker-dark.png"
 import selectionOpenSound from '/audio/selection_open.wav'
 import selectionCloseSound from '/audio/selection_close.wav'
 import useSound from "use-sound"
-import { selectEffectiveVolume } from "../../store/slices/settingsSlice/settingsSlice"
+import { selectEffectiveVolume } from "../../store/slices/local/settingsSlice/settingsSlice"
 
 interface ResourceJokerProps {
     type: ResourceJokerType

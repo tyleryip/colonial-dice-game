@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../../store"
-import { DiceValue } from "../../../types/DiceValue";
-import { Dice } from "../../../types/Dice";
-import { ResourceType } from "../../../constants/resources";
+import type { RootState } from "../../../../store"
+import { DiceValue } from "../../../../../types/DiceValue";
+import { Dice } from "../../../../../types/Dice";
+import { ResourceType } from "../../../../../constants/resources";
 
 export interface DiceState {
     dice: Dice[],
@@ -153,13 +153,13 @@ export const {
 
 // Selectors
 
-export const selectDice = (state: RootState) => state.session.dice.dice
-export const selectRollCount = (state: RootState) => state.session.dice.rollCount
-export const selectResourceJokerFlag = (state: RootState) => state.session.dice.resourceJokerFlag
-export const selectWildcardJokerFlag = (state: RootState) => state.session.dice.wildcardJokerFlag
+export const selectDice = (state: RootState) => state.session.islandOne.dice.dice
+export const selectRollCount = (state: RootState) => state.session.islandOne.dice.rollCount
+export const selectResourceJokerFlag = (state: RootState) => state.session.islandOne.dice.resourceJokerFlag
+export const selectWildcardJokerFlag = (state: RootState) => state.session.islandOne.dice.wildcardJokerFlag
 
-export const selectAnyDiceSpent = (state: RootState) => state.session.dice.dice.some(dice => dice.spent)
-export const selectAllDiceSpent = (state: RootState) => state.session.dice.dice.every(dice => dice.spent)
+export const selectAnyDiceSpent = (state: RootState) => state.session.islandOne.dice.dice.some(dice => dice.spent)
+export const selectAllDiceSpent = (state: RootState) => state.session.islandOne.dice.dice.every(dice => dice.spent)
 
 /**
  * Determines if the user can build this structure or knight based on unspent inventory
@@ -170,7 +170,7 @@ export const selectAllDiceSpent = (state: RootState) => state.session.dice.dice.
 export const selectHasResourcesNeeded = (state: RootState, cost: ResourceType[]): boolean => {
     // Need to keep track of which dice are spent
     const spentDice: number[] = []
-    state.session.dice.dice.forEach((dice: Dice, diceId: number) => {
+    state.session.islandOne.dice.dice.forEach((dice: Dice, diceId: number) => {
         if (dice.spent) {
             spentDice.push(diceId)
         }
@@ -178,7 +178,7 @@ export const selectHasResourcesNeeded = (state: RootState, cost: ResourceType[])
 
     let canBuild = true;
     cost.forEach((resourceType: ResourceType) => {
-        const index = state.session.dice.dice.findIndex((dice: Dice, index: number) => dice.value == resourceType.id && !spentDice.includes(index))
+        const index = state.session.islandOne.dice.dice.findIndex((dice: Dice, index: number) => dice.value == resourceType.id && !spentDice.includes(index))
 
         if (index == -1) {
             canBuild = false
@@ -186,7 +186,6 @@ export const selectHasResourcesNeeded = (state: RootState, cost: ResourceType[])
 
         spentDice.push(index)
     })
-
 
     return canBuild
 }

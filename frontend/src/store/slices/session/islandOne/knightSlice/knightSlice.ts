@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { RootState } from "../../store"
-import { GetKnightPrerequisite } from "../../../constants/knights"
+import { RootState } from "../../../../store"
+import { GetKnightPrerequisite } from "../../../../../constants/knights"
 
 export interface KnightState {
     isBuilt: boolean[]
@@ -44,7 +44,7 @@ export const { buildKnight, resetKnights } = knightSlice.actions;
 
 export const selectIsKnightBuilt = (state: RootState, knightId: number) => {
     validateKnightId(knightId)
-    return state.session.knight.isBuilt[knightId]
+    return state.session.islandOne.knight.isBuilt[knightId]
 }
 
 export const selectIsKnightPrerequisiteBuilt = (state: RootState, knightId: number) => {
@@ -52,7 +52,7 @@ export const selectIsKnightPrerequisiteBuilt = (state: RootState, knightId: numb
     const knightPrerequisiteId = GetKnightPrerequisite(knightId)
     return knightPrerequisiteId == null
         ? true
-        : state.session.knight.isBuilt[knightPrerequisiteId];
+        : state.session.islandOne.knight.isBuilt[knightPrerequisiteId];
 }
 
 // Helper functions

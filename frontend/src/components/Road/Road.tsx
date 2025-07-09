@@ -1,16 +1,16 @@
 import { IconType, RoadType } from "../../constants/enumerations"
 import StyledAsset from "../Asset/StyledAsset"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { buildStructure, selectHasPrerequisiteStructuresBuilt, selectIsStructureBuilt } from "../../store/slices/structureSlice/structureSlice"
+import { buildStructure, selectHasPrerequisiteStructuresBuilt, selectIsStructureBuilt } from "../../store/slices/session/islandOne/structureSlice/structureSlice"
 import { GetRoadType } from "../../constants/mappings"
 import StyledRoad from "./styles/StyledRoad"
 import { useHover } from "@uidotdev/usehooks"
-import { selectIsGamePhaseBuilding } from "../../store/slices/gameSlice/gameSlice"
+import { selectIsGamePhaseBuilding } from "../../store/slices/session/islandOne/gameSlice/gameSlice"
 import ResourceCostPopup from "../Popups/ResourceCostPopup/ResourceCostPopup"
 import { roadCost } from "../../constants/structures"
-import { selectHasResourcesNeeded, spendDice } from "../../store/slices/diceSlice/diceSlice"
+import { selectHasResourcesNeeded, spendDice } from "../../store/slices/session/islandOne/diceSlice/diceSlice"
 import { ResourceType } from "../../constants/resources"
-import { addToPendingScore } from "../../store/slices/scoreSlice/scoreSlice"
+import { addToPendingScore } from "../../store/slices/session/islandOne/scoreSlice/scoreSlice"
 import horizontal_road_light from "/assets/roads/light/horizontal-road-light.svg"
 import forwardslash_road_light from "/assets/roads/light/forwardslash-road-light.svg"
 import backwardslash_road_light from "/assets/roads/light/backslash-road-light.svg"
@@ -20,7 +20,7 @@ import forwardslash_road_dark from "/assets/roads/dark/forwardslash-road-dark.sv
 import backwardslash_road_dark from "/assets/roads/dark/backslash-road-dark.svg"
 import buildSound from '/audio/build.wav'
 import useSound from "use-sound"
-import { selectEffectiveVolume } from "../../store/slices/settingsSlice/settingsSlice"
+import { selectEffectiveVolume } from "../../store/slices/local/settingsSlice/settingsSlice"
 
 interface RoadProps {
     id: number // the unique structure id

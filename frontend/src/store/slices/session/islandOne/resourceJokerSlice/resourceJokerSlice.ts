@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { RootState } from "../../store"
+import { RootState } from "../../../../store"
 
 export interface ResourceJokerState {
     isSpent: boolean[]
@@ -43,7 +43,7 @@ export const { resetResourceJokers, spendResourceJoker } = resourceJokerSlice.ac
 
 export const selectIsResourceJokerSpent = (state: RootState, resourceJokerId: number) => {
     validateResourceJokerId(resourceJokerId)
-    return state.session.resourceJoker.isSpent[resourceJokerId];
+    return state.session.islandOne.resourceJoker.isSpent[resourceJokerId];
 }
 
 // Helper functions

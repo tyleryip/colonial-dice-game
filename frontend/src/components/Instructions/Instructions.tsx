@@ -1,7 +1,7 @@
 import { useAppSelector } from "../../store/hooks"
-import { selectAllDiceSpent, selectAnyDiceSpent, selectResourceJokerFlag, selectRollCount, selectWildcardJokerFlag } from "../../store/slices/diceSlice/diceSlice"
-import { selectIsGamePhaseBuilding, selectIsGamePhaseRolling } from "../../store/slices/gameSlice/gameSlice"
-import { selectShowInstructions } from "../../store/slices/settingsSlice/settingsSlice"
+import { selectAllDiceSpent, selectAnyDiceSpent, selectResourceJokerFlag, selectRollCount, selectWildcardJokerFlag } from "../../store/slices/session/islandOne/diceSlice/diceSlice"
+import { selectIsGamePhaseBuilding, selectIsGamePhaseRolling } from "../../store/slices/session/islandOne/gameSlice/gameSlice"
+import { selectShowInstructions } from "../../store/slices/local/settingsSlice/settingsSlice"
 import StyledInstructions from "./styles/StyledInstructions"
 
 interface InstructionProps {

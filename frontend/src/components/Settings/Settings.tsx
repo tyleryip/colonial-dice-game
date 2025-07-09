@@ -1,7 +1,7 @@
 import { Form } from 'react-bootstrap'
 import StyledSettings from './styles/StyledSettings'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import { selectMute, selectEffectiveVolume, setVolume, selectShowInstructions, toggleShowInstructions } from '../../store/slices/settingsSlice/settingsSlice'
+import { selectMute, selectEffectiveVolume, setVolume, selectShowInstructions, toggleShowInstructions } from '../../store/slices/local/settingsSlice/settingsSlice'
 import { ChangeEvent } from 'react'
 import VolumeButton from '../Buttons/VolumeButton/VolumeButton'
 import StyledSettingsRow from './styles/StyledSettingsRow'
