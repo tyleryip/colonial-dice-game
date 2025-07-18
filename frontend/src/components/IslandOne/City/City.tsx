@@ -8,7 +8,7 @@ import { useHover } from "@uidotdev/usehooks"
 import { selectIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/gameSlice"
 import ResourceCostPopup from "../../Popups/ResourceCostPopup/ResourceCostPopup"
 import { cityCost } from "../../../constants/structures"
-import { selectHasResourcesNeeded, spendDice } from "../../../store/slices/session/islandOne/diceSlice/diceSlice"
+import { selectIslandOneHasResourcesNeeded, islandOneSpendDice } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice"
 import { ResourceType } from "../../../constants/resources"
 import { addToPendingScore } from "../../../store/slices/session/islandOne/scoreSlice/scoreSlice"
 import city_7_light from "/assets/cities/light/city-7-light.svg"
@@ -57,7 +57,7 @@ const City = (props: CityProps) => {
 
     const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
     const isCityBuilt = useAppSelector(state => selectIsStructureBuilt(state, structureId))
-    const hasResourcesNeeded = useAppSelector(state => selectHasResourcesNeeded(state, cityCost))
+    const hasResourcesNeeded = useAppSelector(state => selectIslandOneHasResourcesNeeded(state, cityCost))
     const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectHasPrerequisiteStructuresBuilt(state, structureId))
     const volume = useAppSelector(state => selectEffectiveVolume(state))
 
@@ -103,7 +103,7 @@ const City = (props: CityProps) => {
             dispatch(buildStructure(structureId))
 
             cityCost.forEach((resourceType: ResourceType) => {
-                dispatch(spendDice(JSON.stringify(resourceType)))
+                dispatch(islandOneSpendDice(JSON.stringify(resourceType)))
             })
 
             dispatch(addToPendingScore(cityNumber))

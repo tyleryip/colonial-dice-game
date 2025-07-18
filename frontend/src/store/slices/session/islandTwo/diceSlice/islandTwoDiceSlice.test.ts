@@ -1,5 +1,5 @@
 import { expect, test } from "vitest"
-import reducer, { clearResourceJokerFlag, DiceState, resetDice, resetDiceLocks, rollDice, setDice, setDiceSpent, setResourceJokerFlag, setRollCount, setWildcardJokerFlag, spendDice, toggleDiceLock } from "./diceSlice"
+import reducer, { islandTwoClearResourceJokerFlag, IslandTwoDiceState, islandTwoResetDice, islandTwoResetDiceLocks, islandTwoRollDice, islandTwoSetDice, islandTwoSetDiceSpent, islandTwoSetResourceJokerFlag, islandTwoSetRollCount, islandTwoSetWildcardJokerFlag, islandTwoSpendDice, islandTwoToggleDiceLock } from "./islandTwoDiceSlice"
 import { ResourceType } from "../../../../../constants/resources"
 
 test('should return the initial state', () => {
@@ -16,7 +16,7 @@ test('should clear resource joker flag', () => {
     const previousState = getInitialState()
 
     // Act
-    const result = reducer(previousState, clearResourceJokerFlag())
+    const result = reducer(previousState, islandTwoClearResourceJokerFlag())
 
     // Assert
     expect(result).toEqual({
@@ -36,7 +36,7 @@ test('should clear wildcard joker flag', () => {
     const previousState = getInitialState()
 
     // Act
-    const result = reducer(previousState, clearResourceJokerFlag())
+    const result = reducer(previousState, islandTwoClearResourceJokerFlag())
 
     // Assert
     expect(result).toEqual({
@@ -56,7 +56,7 @@ test('should roll all dice', () => {
     const previousState = getInitialState()
 
     // Act
-    const result = reducer(previousState, rollDice())
+    const result = reducer(previousState, islandTwoRollDice())
 
     // Assert
     expect(result.dice.every(dice => dice.value != null))
@@ -102,7 +102,7 @@ test('should roll all dice except locked', () => {
     ]
 
     // Act
-    const result = reducer(previousState, rollDice())
+    const result = reducer(previousState, islandTwoRollDice())
 
     // Assert
     expect(result.dice.every(dice => dice.value != null))
@@ -114,7 +114,7 @@ test('should roll all dice except locked', () => {
 
 test('should roll all dice except locked', () => {
     // Arrange
-    const previousState: DiceState = {
+    const previousState: IslandTwoDiceState = {
         dice: [
             {
                 value: 0,
@@ -153,7 +153,7 @@ test('should roll all dice except locked', () => {
     }
 
     // Act
-    const result = reducer(previousState, resetDice())
+    const result = reducer(previousState, islandTwoResetDice())
 
     // Assert
     expect(result).toEqual(getInitialState())
@@ -164,7 +164,7 @@ test('should set dice', () => {
     const previousState = getInitialState()
 
     // Act
-    const result = reducer(previousState, setDice({
+    const result = reducer(previousState, islandTwoSetDice({
         id: 0,
         value: 1
     }))
@@ -178,7 +178,7 @@ test('should set roll count', () => {
     const previousState = getInitialState()
 
     // Act
-    const result = reducer(previousState, setRollCount(1))
+    const result = reducer(previousState, islandTwoSetRollCount(1))
 
     // Assert
     expect(result.rollCount).toEqual(1)
@@ -189,7 +189,7 @@ test('should set dice spent', () => {
     const previousState = getInitialState()
 
     // Act
-    const result = reducer(previousState, setDiceSpent(0))
+    const result = reducer(previousState, islandTwoSetDiceSpent(0))
 
     // Assert
     expect(result.dice[0].spent).toEqual(true)
@@ -200,7 +200,7 @@ test('should set resource joker flag', () => {
     const previousState = getInitialState()
 
     // Act
-    const result = reducer(previousState, setResourceJokerFlag(0))
+    const result = reducer(previousState, islandTwoSetResourceJokerFlag(0))
 
     // Assert
     expect(result.resourceJokerFlag).toEqual(0)
@@ -211,7 +211,7 @@ test('should set wildcard joker flag', () => {
     const previousState = getInitialState()
 
     // Act
-    const result = reducer(previousState, setWildcardJokerFlag(0))
+    const result = reducer(previousState, islandTwoSetWildcardJokerFlag(0))
 
     // Assert
     expect(result.wildcardJokerFlag).toEqual(0)
@@ -256,7 +256,7 @@ test('should spend dice', () => {
     ]
 
     // Act
-    const result = reducer(previousState, spendDice(JSON.stringify(ResourceType.WHEAT)))
+    const result = reducer(previousState, islandTwoSpendDice(JSON.stringify(ResourceType.WHEAT)))
 
     // Assert
     expect(result.dice[4].spent).toEqual(true)
@@ -301,7 +301,7 @@ test('should throw no unspent resource found error', () => {
     ]
 
     // Act
-    const result = () => reducer(previousState, spendDice(JSON.stringify(ResourceType.GOLD)))
+    const result = () => reducer(previousState, islandTwoSpendDice(JSON.stringify(ResourceType.GOLD)))
 
     // Assert
     expect(result).toThrowError();
@@ -312,7 +312,7 @@ test('should toggle dice lock', () => {
     const previousState = getInitialState()
 
     // Act
-    const result = reducer(previousState, toggleDiceLock(0))
+    const result = reducer(previousState, islandTwoToggleDiceLock(0))
 
     // Assert
     expect(result.dice[0].locked).toEqual(true)
@@ -357,7 +357,7 @@ test('should reset all dice locks', () => {
     ]
 
     // Act
-    const result = reducer(previousState, resetDiceLocks())
+    const result = reducer(previousState, islandTwoResetDiceLocks())
 
     // Assert
     expect(result.dice.every(dice => dice.locked == false))
@@ -365,7 +365,7 @@ test('should reset all dice locks', () => {
 
 // Helper functions
 
-const getInitialState = (): DiceState => {
+const getInitialState = (): IslandTwoDiceState => {
     return {
         dice: new Array(6).fill({
             value: null,

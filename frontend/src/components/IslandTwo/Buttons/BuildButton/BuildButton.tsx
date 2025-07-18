@@ -5,22 +5,18 @@ import {
   selectIsGamePhaseBuilding,
   selectIsGamePhaseRolling,
   setGamePhase,
-} from "../../../store/slices/session/islandOne/gameSlice/gameSlice";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { GamePhase } from "../../../constants/enumerations";
-import { addScore } from "../../../store/slices/session/islandOne/scoreSlice/scoreSlice";
-import {
-  resetDice,
-  resetDiceLocks,
-  setRollCount,
-} from "../../../store/slices/session/islandOne/diceSlice/diceSlice";
+} from "../../../../store/slices/session/islandOne/gameSlice/gameSlice";
+import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
+import { GamePhase } from "../../../../constants/enumerations";
+import { addScore } from "../../../../store/slices/session/islandOne/scoreSlice/scoreSlice";
 import gameOverSound from '/audio/game_over.wav'
-import { selectEffectiveVolume } from "../../../store/slices/local/settingsSlice/settingsSlice";
+import { selectEffectiveVolume } from "../../../../store/slices/local/settingsSlice/settingsSlice";
 import useSound from "use-sound";
 import { useEffect, useState } from "react";
 import build_icon from '/assets/buttons/build-icon.png'
 import dice_icon from '/assets/buttons/dice-icon.png'
 import StyledBuildButtonIcon from "./styles/StyledBuildButtonIcon";
+import { islandTwoResetDice, islandTwoResetDiceLocks, islandTwoSetRollCount } from "../../../../store/slices/session/islandTwo/diceSlice/islandTwoDiceSlice";
 
 interface BuildButtonProps {
   disabled?: boolean;
@@ -87,15 +83,15 @@ const BuildButton = (props: BuildButtonProps) => {
   const handleClick = () => {
     if (gamePhaseRolling) {
       dispatch(setGamePhase(GamePhase.Building));
-      dispatch(resetDiceLocks());
-      dispatch(setRollCount(3));
+      dispatch(islandTwoResetDiceLocks());
+      dispatch(islandTwoSetRollCount(3));
     }
 
     if (gamePhaseBuilding) {
       dispatch(setGamePhase(GamePhase.Rolling));
       dispatch(addScore());
       dispatch(incrementTurn());
-      dispatch(resetDice());
+      dispatch(islandTwoResetDice());
 
       if (currentTurn >= 14) {
         playGameOverSound();

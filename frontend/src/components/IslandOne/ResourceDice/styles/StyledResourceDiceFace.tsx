@@ -1,6 +1,6 @@
 import { styled, css } from "styled-components"
-import wobble from "../../../animations/wobble"
-import pulse from "../../../animations/pulse"
+import wobble from "../../../../animations/wobble"
+import pulse from "../../../../animations/pulse"
 
 interface StyledResourceDiceFaceProps {
     $wobble: boolean

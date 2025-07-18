@@ -6,7 +6,7 @@ import { GetIslandOneResourceJokerType as GetIslandOneResourceJokerType } from "
 import StyledResourceJoker from "./styles/StyledResourceJoker"
 import { selectIsKnightBuilt } from "../../../store/slices/session/islandOne/knightSlice/knightSlice"
 import { selectIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/gameSlice"
-import { clearResourceJokerFlag, selectAllDiceSpent, selectResourceJokerFlag, selectWildcardJokerFlag, setResourceJokerFlag } from "../../../store/slices/session/islandOne/diceSlice/diceSlice"
+import { islandOneClearResourceJokerFlag, selectIslandOneAllDiceSpent, selectIslandOneResourceJokerFlag, selectIslandOneWildcardJokerFlag, islandOneSetResourceJokerFlag } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice"
 import { getResourceType } from "../../../constants/resources"
 import wool_joker_light from "/assets/jokers/light/wool-joker-light.png"
 import wheat_joker_light from "/assets/jokers/light/wheat-joker-light.png"
@@ -59,9 +59,9 @@ const ResourceJoker = (props: ResourceJokerProps) => {
     // Each resource joker will line up with its corresponding knight (ex. knightId 1 = resourceJokerId 1)
     const resourceJokerAvailable = useAppSelector(state => selectIsKnightBuilt(state, resourceJokerId))
     const resourceJokerIsSpent = useAppSelector(state => selectIsResourceJokerSpent(state, resourceJokerId))
-    const resourceJokerFlag = useAppSelector(state => selectResourceJokerFlag(state))
-    const wildcardJokerFlag = useAppSelector(state => selectWildcardJokerFlag(state))
-    const allDiceSpent = useAppSelector(state => selectAllDiceSpent(state))
+    const resourceJokerFlag = useAppSelector(state => selectIslandOneResourceJokerFlag(state))
+    const wildcardJokerFlag = useAppSelector(state => selectIslandOneWildcardJokerFlag(state))
+    const allDiceSpent = useAppSelector(state => selectIslandOneAllDiceSpent(state))
     const volume = useAppSelector(state => selectEffectiveVolume(state))
 
     // Can spend conditions
@@ -127,13 +127,13 @@ const ResourceJoker = (props: ResourceJokerProps) => {
     const handleClick = () => {
         if (canSpendResourceJoker) {
             playSelectionOpenSound()
-            dispatch(setResourceJokerFlag(resourceJokerId))
+            dispatch(islandOneSetResourceJokerFlag(resourceJokerId))
             return
         }
 
         if (canCancelResourceJoker) {
             playSelectionCloseSound()
-            dispatch(clearResourceJokerFlag())
+            dispatch(islandOneClearResourceJokerFlag())
             return
         }
     }

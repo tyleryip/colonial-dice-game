@@ -1,5 +1,5 @@
 import { styled } from "styled-components"
-import StyledBaseButton from "../../styles/StyledBaseButton"
+import StyledBaseButton from "../../../../Buttons/styles/StyledBaseButton"
 
 const StyledBuildButton = styled(StyledBaseButton)`
 /** Layout */

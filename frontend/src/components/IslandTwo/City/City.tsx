@@ -7,7 +7,6 @@ import { useHover } from "@uidotdev/usehooks"
 import { selectIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/gameSlice"
 import ResourceCostPopup from "../../Popups/ResourceCostPopup/ResourceCostPopup"
 import { cityCost } from "../../../constants/structures"
-import { selectHasResourcesNeeded, spendDice } from "../../../store/slices/session/islandOne/diceSlice/diceSlice"
 import { ResourceType } from "../../../constants/resources"
 import { addToPendingScore } from "../../../store/slices/session/islandOne/scoreSlice/scoreSlice"
 import city_light from "/assets/cities/light/city-light.svg"
@@ -16,6 +15,7 @@ import { selectEffectiveVolume } from "../../../store/slices/local/settingsSlice
 import buildSound from '/audio/build.wav'
 import useSound from "use-sound"
 import { GetIslandOneCityNumber } from "../../../constants/mappings"
+import { islandTwoSpendDice, selectIslandTwoHasResourcesNeeded } from "../../../store/slices/session/islandTwo/diceSlice/islandTwoDiceSlice"
 
 interface CityProps {
     id: number,
@@ -37,7 +37,7 @@ const City = (props: CityProps) => {
 
     const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
     const isCityBuilt = false
-    const hasResourcesNeeded = useAppSelector(state => selectHasResourcesNeeded(state, cityCost))
+    const hasResourcesNeeded = useAppSelector(state => selectIslandTwoHasResourcesNeeded(state, cityCost))
     const hasPrerequisiteStructuresBuilt = false
     const volume = useAppSelector(state => selectEffectiveVolume(state))
 
@@ -91,7 +91,7 @@ const City = (props: CityProps) => {
             dispatch(buildStructure(structureId))
 
             cityCost.forEach((resourceType: ResourceType) => {
-                dispatch(spendDice(JSON.stringify(resourceType)))
+                dispatch(islandTwoSpendDice(JSON.stringify(resourceType)))
             })
 
             dispatch(addToPendingScore(cityNumber))

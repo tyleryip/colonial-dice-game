@@ -1,32 +1,31 @@
 import StyledResourceDice from "./styles/StyledResourceDice";
-import { DiceValue } from "../../types/DiceValue";
-import TradingPopup from "../Popups/TradingPopup/TradingPopup";
+import { DiceValue } from "../../../types/DiceValue";
+import TradingPopup from "../../Popups/TradingPopup/TradingPopup";
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import {
   selectIsGamePhaseBuilding,
   selectIsGamePhaseRolling,
-} from "../../store/slices/session/islandOne/gameSlice/gameSlice";
-import { getResourceType, ResourceType } from "../../constants/resources";
+} from "../../../store/slices/session/islandOne/gameSlice/gameSlice";
+import { getResourceType, ResourceType } from "../../../constants/resources";
 import {
-  toggleDiceLock,
-  selectResourceJokerFlag,
-  setDice,
-  clearResourceJokerFlag,
-  SetDicePayload,
-  spendDice,
-  selectWildcardJokerFlag,
-  clearWildcardJokerFlag,
-} from "../../store/slices/session/islandOne/diceSlice/diceSlice";
-import { spendResourceJoker } from "../../store/slices/session/islandOne/resourceJokerSlice/resourceJokerSlice";
-import { ResourceJokerType } from "../../constants/enumerations";
-import { GetIslandOneResourceJokerType } from "../../constants/mappings";
+  islandOneToggleDiceLock,
+  selectIslandOneResourceJokerFlag,
+  islandOneSetDice,
+  islandOneClearResourceJokerFlag,
+  islandOneSpendDice,
+  selectIslandOneWildcardJokerFlag,
+  islandOneClearWildcardJokerFlag,
+} from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice";
+import { spendResourceJoker } from "../../../store/slices/session/islandOne/resourceJokerSlice/resourceJokerSlice";
+import { ResourceJokerType } from "../../../constants/enumerations";
+import { GetIslandOneResourceJokerType } from "../../../constants/mappings";
 import tradeGoldSound from "/audio/trade_gold.wav"
 import lockSound from "/audio/lock.wav";
 import unlockSound from "/audio/unlock.wav";
 import jokerSetDiceSound from "/audio/joker_set_dice.wav";
 import useSound from "use-sound";
-import { selectEffectiveVolume } from "../../store/slices/local/settingsSlice/settingsSlice";
+import { selectEffectiveVolume } from "../../../store/slices/local/settingsSlice/settingsSlice";
 import selectionOpenSound from '/audio/selection_open.wav'
 import selectionCloseSound from '/audio/selection_close.wav'
 import dice_blank from '/assets/dice-faces/dice-blank.png'
@@ -39,6 +38,7 @@ import dice_wool from '/assets/dice-faces/dice-wool.png'
 import StyledResourceDiceFace from "./styles/StyledResourceDiceFace";
 import StyledLock from "./styles/StyledLock";
 import lock from "/assets/dice-faces/lock.svg";
+import { SetDicePayload } from "../../../store/slices/session/shared/diceSlice";
 
 interface ResourceDiceProps {
   id: number;
@@ -83,10 +83,10 @@ const ResourceDice = (props: ResourceDiceProps) => {
     selectIsGamePhaseBuilding(state)
   );
   const resourceJokerFlag = useAppSelector(state =>
-    selectResourceJokerFlag(state)
+    selectIslandOneResourceJokerFlag(state)
   );
   const wildcardJokerFlag = useAppSelector(state =>
-    selectWildcardJokerFlag(state)
+    selectIslandOneWildcardJokerFlag(state)
   );
   const volume = useAppSelector(state =>
     selectEffectiveVolume(state)
@@ -184,7 +184,7 @@ const ResourceDice = (props: ResourceDiceProps) => {
       if (!isLocked) {
         playLockSound();
       }
-      dispatch(toggleDiceLock(diceId));
+      dispatch(islandOneToggleDiceLock(diceId));
       return;
     }
 
@@ -195,9 +195,9 @@ const ResourceDice = (props: ResourceDiceProps) => {
         playJokerSetDiceSound();
 
         dispatch(
-          setDice({ id: diceId, value: wildcardJokerFlag as DiceValue })
+          islandOneSetDice({ id: diceId, value: wildcardJokerFlag as DiceValue })
         );
-        dispatch(clearWildcardJokerFlag());
+        dispatch(islandOneClearWildcardJokerFlag());
         dispatch(
           spendResourceJoker(GetIslandOneResourceJokerType(ResourceJokerType.Wildcard))
         );
@@ -208,9 +208,9 @@ const ResourceDice = (props: ResourceDiceProps) => {
         playJokerSetDiceSound();
 
         dispatch(
-          setDice({ id: diceId, value: resourceJokerFlag as DiceValue })
+          islandOneSetDice({ id: diceId, value: resourceJokerFlag as DiceValue })
         );
-        dispatch(clearResourceJokerFlag());
+        dispatch(islandOneClearResourceJokerFlag());
         dispatch(spendResourceJoker(resourceJokerFlag));
         return; // Prevent setting a gold dice from also opening up the trading popup
       }
@@ -231,8 +231,8 @@ const ResourceDice = (props: ResourceDiceProps) => {
 
     playTradeGoldSound()
 
-    dispatch(setDice(setDicePayload))
-    dispatch(spendDice(JSON.stringify(ResourceType.GOLD)))
+    dispatch(islandOneSetDice(setDicePayload))
+    dispatch(islandOneSpendDice(JSON.stringify(ResourceType.GOLD)))
 
     setTradingPopupOpen(false);
   };

@@ -3,14 +3,15 @@ import ResourceDice from "../ResourceDice/ResourceDice"
 import StyledButtonTray from "./styles/StyledButtonTray"
 import StyledDiceTray from "./styles/StyledDiceTray"
 import StyledGameControlsContainer from "./styles/StyledGameControlsContainer"
-import { useAppSelector } from "../../store/hooks"
-import { selectDice, selectResourceJokerFlag, selectRollCount, selectWildcardJokerFlag } from "../../store/slices/session/islandOne/diceSlice/diceSlice"
+import { useAppSelector } from "../../../store/hooks"
+import { selectIslandOneResourceJokerFlag, selectIslandOneWildcardJokerFlag } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice"
 import RollButton from "../Buttons/RollButton/RollButton"
 import BuildButton from "../Buttons/BuildButton/BuildButton"
-import { selectIsGamePhaseBuilding, selectIsGamePhaseRolling } from "../../store/slices/session/islandOne/gameSlice/gameSlice"
-import { Dice } from "../../types/Dice"
-import { ResourceType } from "../../constants/resources"
-import Instructions from "../Instructions/Instructions"
+import { selectIsGamePhaseBuilding, selectIsGamePhaseRolling } from "../../../store/slices/session/islandOne/gameSlice/gameSlice"
+import { Dice } from "../../../types/Dice"
+import { ResourceType } from "../../../constants/resources"
+import Instructions from "../../Instructions/Instructions"
+import { selectIslandTwoDice, selectIslandTwoRollCount } from "../../../store/slices/session/islandTwo/diceSlice/islandTwoDiceSlice"
 
 const GameControlsContainer = () => {
     // Props and constants
@@ -20,12 +21,12 @@ const GameControlsContainer = () => {
 
     // Selectors
 
-    const dice = useAppSelector(state => selectDice(state))
-    const rollCount = useAppSelector(state => selectRollCount(state))
+    const dice = useAppSelector(state => selectIslandTwoDice(state))
+    const rollCount = useAppSelector(state => selectIslandTwoRollCount(state))
     const gamePhaseRolling = useAppSelector(state => selectIsGamePhaseRolling(state))
     const gamePhaseBuilding = useAppSelector(state => selectIsGamePhaseBuilding(state))
-    const resourceJokerFlag = useAppSelector(state => selectResourceJokerFlag(state))
-    const wildcardJokerFlag = useAppSelector(state => selectWildcardJokerFlag(state))
+    const resourceJokerFlag = useAppSelector(state => selectIslandOneResourceJokerFlag(state))
+    const wildcardJokerFlag = useAppSelector(state => selectIslandOneWildcardJokerFlag(state))
 
     // Conditional rendering
 

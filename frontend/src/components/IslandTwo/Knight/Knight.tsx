@@ -8,7 +8,6 @@ import { selectIsGamePhaseBuilding } from "../../../store/slices/session/islandO
 import { useHover } from "@uidotdev/usehooks"
 import ResourceCostPopup from "../../Popups/ResourceCostPopup/ResourceCostPopup"
 import { knightCost } from "../../../constants/knights"
-import { selectHasResourcesNeeded, spendDice } from "../../../store/slices/session/islandOne/diceSlice/diceSlice"
 import { ResourceType } from "../../../constants/resources"
 import { addToPendingScore } from "../../../store/slices/session/islandOne/scoreSlice/scoreSlice"
 import knight_light from "/assets/knights/light/knight-light.svg"
@@ -16,6 +15,7 @@ import knight_dark from "/assets/knights/dark/knight-dark.svg"
 import buildSound from '/audio/build.wav'
 import { selectEffectiveVolume } from "../../../store/slices/local/settingsSlice/settingsSlice"
 import useSound from "use-sound"
+import { islandTwoSpendDice, selectIslandTwoHasResourcesNeeded } from "../../../store/slices/session/islandTwo/diceSlice/islandTwoDiceSlice"
 
 interface KnightProps {
     id: KnightType,
@@ -37,7 +37,7 @@ const Knight = (props: KnightProps) => {
 
     const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
     const isKnightBuilt = false
-    const hasResourcesNeeded = useAppSelector(state => selectHasResourcesNeeded(state, knightCost))
+    const hasResourcesNeeded = useAppSelector(state => selectIslandTwoHasResourcesNeeded(state, knightCost))
     const volume = useAppSelector(state => selectEffectiveVolume(state))
 
 
@@ -97,7 +97,7 @@ const Knight = (props: KnightProps) => {
             dispatch(buildKnight(knightId))
 
             knightCost.forEach((resourceType: ResourceType) => {
-                dispatch(spendDice(JSON.stringify(resourceType)))
+                dispatch(islandTwoSpendDice(JSON.stringify(resourceType)))
             })
 
             dispatch(addToPendingScore(knightPoints))

@@ -6,7 +6,7 @@ import StyledAsset from "../../Asset/StyledAsset"
 import { useState } from "react"
 import { ResourceType } from "../../../constants/resources"
 import WildcardTradingPopup from "../../Popups/WildcardTradingPopup/WildcardTradingPopup"
-import { clearWildcardJokerFlag, selectAllDiceSpent, selectResourceJokerFlag, selectWildcardJokerFlag, setWildcardJokerFlag } from "../../../store/slices/session/islandOne/diceSlice/diceSlice"
+import { islandOneClearWildcardJokerFlag, selectIslandOneAllDiceSpent, selectIslandOneResourceJokerFlag, selectIslandOneWildcardJokerFlag, islandOneSetWildcardJokerFlag } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice"
 import wool_joker_light from "/assets/jokers/light/wool-joker-light.png"
 import wheat_joker_light from "/assets/jokers/light/wheat-joker-light.png"
 import ore_joker_light from "/assets/jokers/light/ore-joker-light.png"
@@ -63,7 +63,7 @@ const WildcardResourceJoker = (props: WildcardJokerProps) => {
     const resourceJokerIsSpent = false
     const resourceJokerFlag = null
     const wildcardJokerFlag = null
-    const allDiceSpent = useAppSelector(state => selectAllDiceSpent(state))
+    const allDiceSpent = useAppSelector(state => selectIslandOneAllDiceSpent(state))
     const volume = useAppSelector(state => selectEffectiveVolume(state))
 
     /*
@@ -147,12 +147,12 @@ const WildcardResourceJoker = (props: WildcardJokerProps) => {
 
         if (canCancelWildcardJoker) {
             playSelectionCloseSound();
-            dispatch(clearWildcardJokerFlag())
+            dispatch(islandOneClearWildcardJokerFlag())
         }
     }
 
     const handleTradePopupClick = (resourceId: number) => {
-        dispatch(setWildcardJokerFlag(resourceId))
+        dispatch(islandOneSetWildcardJokerFlag(resourceId))
 
         setTradingPopupOpen(false);
     }

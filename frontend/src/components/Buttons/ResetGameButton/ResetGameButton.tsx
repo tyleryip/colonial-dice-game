@@ -1,5 +1,5 @@
 import { useAppDispatch } from "../../../store/hooks";
-import { resetDice } from "../../../store/slices/session/islandOne/diceSlice/diceSlice";
+import { islandOneResetDice } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice";
 import { resetGame } from "../../../store/slices/session/islandOne/gameSlice/gameSlice";
 import { resetKnights } from "../../../store/slices/session/islandOne/knightSlice/knightSlice";
 import { resetResourceJokers } from "../../../store/slices/session/islandOne/resourceJokerSlice/resourceJokerSlice";
@@ -33,7 +33,7 @@ const ResetGameButton = (props: ResetGameButtonProps) => {
     dispatch(resetResourceJokers());
     dispatch(resetStructures());
     dispatch(resetScore());
-    dispatch(resetDice());
+    dispatch(islandOneResetDice());
 
     props.onReset();
   }

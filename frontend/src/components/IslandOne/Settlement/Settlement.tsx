@@ -8,7 +8,7 @@ import { selectIsGamePhaseBuilding } from "../../../store/slices/session/islandO
 import { useHover } from "@uidotdev/usehooks"
 import ResourceCostPopup from "../../Popups/ResourceCostPopup/ResourceCostPopup"
 import { settlementCost } from "../../../constants/structures"
-import { selectHasResourcesNeeded, spendDice } from "../../../store/slices/session/islandOne/diceSlice/diceSlice"
+import { selectIslandOneHasResourcesNeeded, islandOneSpendDice } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice"
 import { ResourceType } from "../../../constants/resources"
 import { addToPendingScore } from "../../../store/slices/session/islandOne/scoreSlice/scoreSlice"
 import settlement_3_light from "/assets/settlements/light/settlement-3-light.svg"
@@ -66,7 +66,7 @@ const Settlement = (props: SettlementProps) => {
     const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
     const isSettlementBuilt = useAppSelector(state => selectIsStructureBuilt(state, structureId))
     const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectHasPrerequisiteStructuresBuilt(state, structureId))
-    const hasResourcesNeeded = useAppSelector(state => selectHasResourcesNeeded(state, settlementCost))
+    const hasResourcesNeeded = useAppSelector(state => selectIslandOneHasResourcesNeeded(state, settlementCost))
     const volume = useAppSelector(state => selectEffectiveVolume(state))
 
     // Built and can build conditions
@@ -110,7 +110,7 @@ const Settlement = (props: SettlementProps) => {
             dispatch(buildStructure(props.id))
 
             settlementCost.forEach((resourceType: ResourceType) => {
-                dispatch(spendDice(JSON.stringify(resourceType)))
+                dispatch(islandOneSpendDice(JSON.stringify(resourceType)))
             })
 
             dispatch(addToPendingScore(settlementNumber))

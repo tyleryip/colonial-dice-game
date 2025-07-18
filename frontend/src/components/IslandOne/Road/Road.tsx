@@ -8,7 +8,7 @@ import { useHover } from "@uidotdev/usehooks"
 import { selectIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/gameSlice"
 import ResourceCostPopup from "../../Popups/ResourceCostPopup/ResourceCostPopup"
 import { roadCost } from "../../../constants/structures"
-import { selectHasResourcesNeeded, spendDice } from "../../../store/slices/session/islandOne/diceSlice/diceSlice"
+import { selectIslandOneHasResourcesNeeded, islandOneSpendDice } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice"
 import { ResourceType } from "../../../constants/resources"
 import { addToPendingScore } from "../../../store/slices/session/islandOne/scoreSlice/scoreSlice"
 import horizontal_road_1_light from "/assets/roads/light/horizontal-road-1-light.svg"
@@ -78,7 +78,7 @@ const Road = (props: RoadProps) => {
 
     const gamePhaseBuilding = useAppSelector(state => selectIsGamePhaseBuilding(state))
     const isRoadBuilt = useAppSelector(state => selectIsStructureBuilt(state, structureId))
-    const hasResourcesNeeded = useAppSelector(state => selectHasResourcesNeeded(state, roadCost))
+    const hasResourcesNeeded = useAppSelector(state => selectIslandOneHasResourcesNeeded(state, roadCost))
     const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectHasPrerequisiteStructuresBuilt(state, structureId))
     const volume = useAppSelector(state => selectEffectiveVolume(state))
 
@@ -125,7 +125,7 @@ const Road = (props: RoadProps) => {
             dispatch(buildStructure(structureId))
 
             roadCost.forEach((resourceType: ResourceType) => {
-                dispatch(spendDice(JSON.stringify(resourceType)))
+                dispatch(islandOneSpendDice(JSON.stringify(resourceType)))
             })
 
             dispatch(addToPendingScore(roadPoints))

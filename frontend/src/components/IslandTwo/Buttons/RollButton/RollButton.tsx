@@ -1,16 +1,16 @@
 import StyledRollButton from "./styles/StyledRollButton";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import {
   selectIsGamePhaseBuilding,
   setGamePhase,
-} from "../../../store/slices/session/islandOne/gameSlice/gameSlice";
-import { GamePhase } from "../../../constants/enumerations";
-import { resetDiceLocks, rollDice } from "../../../store/slices/session/islandOne/diceSlice/diceSlice";
+} from "../../../../store/slices/session/islandOne/gameSlice/gameSlice";
+import { GamePhase } from "../../../../constants/enumerations";
 import useSound from "use-sound";
 import diceRollSound from '/audio/dice_roll.wav'
-import { selectEffectiveVolume } from "../../../store/slices/local/settingsSlice/settingsSlice";
+import { selectEffectiveVolume } from "../../../../store/slices/local/settingsSlice/settingsSlice";
 import dice_icon from '/assets/buttons/dice-icon.png'
 import StyledRollButtonIcon from "./styles/StyledRollButtonIcon";
+import { islandTwoResetDiceLocks, islandTwoRollDice } from "../../../../store/slices/session/islandTwo/diceSlice/islandTwoDiceSlice";
 
 interface RollButtonProps {
   disabled?: boolean;
@@ -66,13 +66,13 @@ const RollButton = (props: RollButtonProps) => {
       // animation doesn't play for locked dice
       if (rollCount == 2) {
         dispatch(setGamePhase(GamePhase.Building))
-        dispatch(resetDiceLocks())
+        dispatch(islandTwoResetDiceLocks())
       }
     }, rollDurationMilliseconds);
 
     playDiceRollSound()
     setRolling(true);
-    dispatch(rollDice());
+    dispatch(islandTwoRollDice());
   }
 
   return (

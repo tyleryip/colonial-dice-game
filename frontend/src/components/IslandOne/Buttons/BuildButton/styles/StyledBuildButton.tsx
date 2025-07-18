@@ -1,15 +1,14 @@
 import { styled } from "styled-components"
-import StyledBaseButton from "../../styles/StyledBaseButton";
+import StyledBaseButton from "../../../../Buttons/styles/StyledBaseButton"
 
-const StyledRollButton = styled(StyledBaseButton)`
+const StyledBuildButton = styled(StyledBaseButton)`
 /** Layout */
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 3%;
-    
+
 /** Box Model */
-    width: 35%;
+    width: 23%;
 
 /** Colour + Background */
 
@@ -24,4 +23,4 @@ const StyledRollButton = styled(StyledBaseButton)`
 /** Micellaneous */
 `
 
-export default StyledRollButton;
+export default StyledBuildButton

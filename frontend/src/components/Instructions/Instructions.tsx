@@ -1,5 +1,5 @@
 import { useAppSelector } from "../../store/hooks"
-import { selectAllDiceSpent, selectAnyDiceSpent, selectResourceJokerFlag, selectRollCount, selectWildcardJokerFlag } from "../../store/slices/session/islandOne/diceSlice/diceSlice"
+import { selectIslandOneAllDiceSpent, selectIslandOneAnyDiceSpent, selectIslandOneResourceJokerFlag, selectIslandOneRollCount, selectIslandOneWildcardJokerFlag } from "../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice"
 import { selectIsGamePhaseBuilding, selectIsGamePhaseRolling } from "../../store/slices/session/islandOne/gameSlice/gameSlice"
 import { selectShowInstructions } from "../../store/slices/local/settingsSlice/settingsSlice"
 import StyledInstructions from "./styles/StyledInstructions"
@@ -20,15 +20,15 @@ const Instructions = (props: InstructionProps) => {
         selectIsGamePhaseBuilding(state)
     );
     const rollCount = useAppSelector(state =>
-        selectRollCount(state)
+        selectIslandOneRollCount(state)
     );
-    const anyDiceSpent = useAppSelector(state => selectAnyDiceSpent(state))
-    const allDiceSpent = useAppSelector(state => selectAllDiceSpent(state))
+    const anyDiceSpent = useAppSelector(state => selectIslandOneAnyDiceSpent(state))
+    const allDiceSpent = useAppSelector(state => selectIslandOneAllDiceSpent(state))
     const resourceJokerFlag = useAppSelector(state =>
-        selectResourceJokerFlag(state)
+        selectIslandOneResourceJokerFlag(state)
     );
     const wildcardJokerFlag = useAppSelector(state =>
-        selectWildcardJokerFlag(state)
+        selectIslandOneWildcardJokerFlag(state)
     );
 
     // Conditional rendering

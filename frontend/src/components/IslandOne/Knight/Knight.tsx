@@ -8,7 +8,7 @@ import { selectIsGamePhaseBuilding } from "../../../store/slices/session/islandO
 import { useHover } from "@uidotdev/usehooks"
 import ResourceCostPopup from "../../Popups/ResourceCostPopup/ResourceCostPopup"
 import { knightCost } from "../../../constants/knights"
-import { selectHasResourcesNeeded, spendDice } from "../../../store/slices/session/islandOne/diceSlice/diceSlice"
+import { selectIslandOneHasResourcesNeeded, islandOneSpendDice } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice"
 import { ResourceType } from "../../../constants/resources"
 import { addToPendingScore } from "../../../store/slices/session/islandOne/scoreSlice/scoreSlice"
 import knight_1_light from "/assets/knights/light/knight-1-light.svg"
@@ -63,7 +63,7 @@ const Knight = (props: KnightProps) => {
 
     const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
     const isKnightBuilt = useAppSelector(state => selectIsKnightBuilt(state, knightId))
-    const hasResourcesNeeded = useAppSelector(state => selectHasResourcesNeeded(state, knightCost))
+    const hasResourcesNeeded = useAppSelector(state => selectIslandOneHasResourcesNeeded(state, knightCost))
     const hasPrerequisiteBuilt = useAppSelector(state => selectIsKnightPrerequisiteBuilt(state, knightId))
     const volume = useAppSelector(state => selectEffectiveVolume(state))
 
@@ -106,7 +106,7 @@ const Knight = (props: KnightProps) => {
             dispatch(buildKnight(knightId))
 
             knightCost.forEach((resourceType: ResourceType) => {
-                dispatch(spendDice(JSON.stringify(resourceType)))
+                dispatch(islandOneSpendDice(JSON.stringify(resourceType)))
             })
 
             dispatch(addToPendingScore(knightPoints))
