@@ -20,7 +20,7 @@ import {
 } from "../../store/slices/session/islandOne/diceSlice/diceSlice";
 import { spendResourceJoker } from "../../store/slices/session/islandOne/resourceJokerSlice/resourceJokerSlice";
 import { ResourceJokerType } from "../../constants/enumerations";
-import { GetResourceJokerId } from "../../constants/mappings";
+import { GetIslandOneResourceJokerType } from "../../constants/mappings";
 import tradeGoldSound from "/audio/trade_gold.wav"
 import lockSound from "/audio/lock.wav";
 import unlockSound from "/audio/unlock.wav";
@@ -199,7 +199,7 @@ const ResourceDice = (props: ResourceDiceProps) => {
         );
         dispatch(clearWildcardJokerFlag());
         dispatch(
-          spendResourceJoker(GetResourceJokerId(ResourceJokerType.Wildcard))
+          spendResourceJoker(GetIslandOneResourceJokerType(ResourceJokerType.Wildcard))
         );
         return; // Prevent setting a gold dice from also opening up the trading popup
       }

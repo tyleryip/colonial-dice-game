@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { RootState } from "../../../../store"
-import { GetStructurePrerequisites } from "../../../../../constants/structures"
+import { GetIslandOneStructurePrerequisites } from "../../../../../constants/structures"
 
 export interface StructureState {
     isBuilt: boolean[]
@@ -48,7 +48,7 @@ export const selectIsStructureBuilt = (state: RootState, structureId: number) =>
 }
 export const selectHasPrerequisiteStructuresBuilt = (state: RootState, structureId: number) => {
     validateStructureId(structureId)
-    const structurePrerequisites = GetStructurePrerequisites(structureId)
+    const structurePrerequisites = GetIslandOneStructurePrerequisites(structureId)
     return structurePrerequisites
         .map((structureId: number) => state.session.islandOne.structure.isBuilt[structureId])
         .every((isBuilt: boolean) => isBuilt)
