@@ -16,6 +16,7 @@ import wool_hexagon from "/assets/hexagons/wool-hexagon.svg";
 import wood_hexagon from "/assets/hexagons/wood-hexagon.svg";
 import brick_hexagon from "/assets/hexagons/brick-hexagon.svg";
 import desert_hexagon from "/assets/hexagons/desert-hexagon.svg";
+import { GetIslandTwoResourceJokerType } from '../../../constants/mappings'
 
 interface HexagonProps {
     id: number,
@@ -50,24 +51,24 @@ const hexagonIcons: { -readonly [key in HexagonType]: string } = {
 const verticalCenter = 33.5
 const verticalOffset = 16
 const verticalOffsets: Readonly<Record<number, number>> = {
-    0: verticalCenter,
-    1: verticalCenter - verticalOffset,
-    2: verticalCenter + verticalOffset,
-    3: verticalCenter + 2 * verticalOffset,
-    4: verticalCenter + verticalOffset,
-    5: verticalCenter - verticalOffset,
-    6: verticalCenter - 2 * verticalOffset
+    0: verticalCenter - verticalOffset,
+    1: verticalCenter + verticalOffset,
+    2: verticalCenter + 2 * verticalOffset,
+    3: verticalCenter + verticalOffset,
+    4: verticalCenter - verticalOffset,
+    5: verticalCenter - 2 * verticalOffset,
+    6: verticalCenter
 }
 
 const horizontalCenter = 31
 const horizontalOffset = 27
 const horizontalOffsets: Readonly<Record<number, number>> = {
-    0: horizontalCenter,
+    0: horizontalCenter - horizontalOffset,
     1: horizontalCenter - horizontalOffset,
-    2: horizontalCenter - horizontalOffset,
-    3: horizontalCenter,
+    2: horizontalCenter,
+    3: horizontalCenter + horizontalOffset,
     4: horizontalCenter + horizontalOffset,
-    5: horizontalCenter + horizontalOffset,
+    5: horizontalCenter,
     6: horizontalCenter
 }
 
@@ -77,6 +78,12 @@ export default function Hexagon(props: HexagonProps) {
     const icon = hexagonIcons[props.type]
     const top = verticalOffsets[props.id]
     const left = horizontalOffsets[props.id]
+
+    // Conditional rendering
+
+    const resourceJokerType = props.resourceJokerId != null ?
+        GetIslandTwoResourceJokerType(props.resourceJokerId)
+        : null
 
     return (
         <StyledHexagon
@@ -93,11 +100,12 @@ export default function Hexagon(props: HexagonProps) {
             {props.rightKnightId != undefined
                 && <Knight id={props.rightKnightId} isRight />}
             {props.resourceJokerId != undefined
-                && props.resourceJokerId != ResourceJokerType.Wildcard
+                && resourceJokerType != ResourceJokerType.Wildcard
+                && resourceJokerType != null
                 && <ResourceJoker id={props.resourceJokerId} />}
             {props.resourceJokerId != undefined
-                && props.resourceJokerId == ResourceJokerType.Wildcard
-                && <WildcardResourceJoker />}
+                && resourceJokerType == ResourceJokerType.Wildcard
+                && <WildcardResourceJoker id={props.resourceJokerId} />}
             {props.structures != undefined
                 && props.structures.map((s) => AddStructure(s))}
         </StyledHexagon>

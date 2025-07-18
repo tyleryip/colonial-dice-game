@@ -8,15 +8,8 @@ const GameBoard = () => {
         <StyledGameBoard>
             <Hexagon
                 id={0}
-                type={HexagonType.Desert}
-                leftKnightId={7}
-                rightKnightId={8}
-                resourceJokerId={ResourceJokerType.Wildcard} />
-
-            <Hexagon
-                id={1}
                 type={HexagonType.Ore}
-                resourceJokerId={ResourceJokerType.Ore}
+                resourceJokerId={0}
                 knightId={0}
                 structures={[
                     CreateRoad(0, HexagonEdge.NorthEast),
@@ -27,9 +20,9 @@ const GameBoard = () => {
                 ]} />
 
             <Hexagon
-                id={2}
+                id={1}
                 type={HexagonType.Wheat}
-                resourceJokerId={ResourceJokerType.Wheat}
+                resourceJokerId={1}
                 knightId={1}
                 structures={[
                     CreateRoad(5, HexagonEdge.NorthEast),
@@ -40,9 +33,9 @@ const GameBoard = () => {
                 ]} />
 
             <Hexagon
-                id={3}
+                id={2}
                 type={HexagonType.Wool}
-                resourceJokerId={ResourceJokerType.Wool}
+                resourceJokerId={2}
                 knightId={2}
                 structures={[
                     CreateRoad(10, HexagonEdge.SouthWest),
@@ -53,9 +46,9 @@ const GameBoard = () => {
                 ]} />
 
             <Hexagon
-                id={4}
+                id={3}
                 type={HexagonType.Wood}
-                resourceJokerId={ResourceJokerType.Wood}
+                resourceJokerId={3}
                 knightId={3}
                 structures={[
                     CreateRoad(15, HexagonEdge.South),
@@ -67,9 +60,9 @@ const GameBoard = () => {
                 ]} />
 
             <Hexagon
-                id={5}
+                id={4}
                 type={HexagonType.Brick}
-                resourceJokerId={ResourceJokerType.Brick}
+                resourceJokerId={4}
                 knightId={4}
                 structures={[
                     CreateRoad(21, HexagonEdge.SouthEast),
@@ -80,7 +73,7 @@ const GameBoard = () => {
                 ]} />
 
             <Hexagon
-                id={6}
+                id={5}
                 type={HexagonType.Desert}
                 resourceJokerId={ResourceJokerType.Wildcard}
                 leftKnightId={5}
@@ -91,6 +84,13 @@ const GameBoard = () => {
                     CreateSettlement(28, HexagonVertex.NorthWest)
                 ]}
             />
+
+            <Hexagon
+                id={6}
+                type={HexagonType.Desert}
+                leftKnightId={7}
+                rightKnightId={8}
+                resourceJokerId={6} />
 
             <GameOverModal />
 

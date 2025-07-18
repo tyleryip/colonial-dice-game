@@ -189,8 +189,6 @@ const islandTwoResourceJokerMappings: Readonly<Record<number, ResourceJokerType>
     4: ResourceJokerType.Brick,
     5: ResourceJokerType.Wildcard,
     6: ResourceJokerType.Wildcard,
-    7: ResourceJokerType.Wildcard,
-    8: ResourceJokerType.Wildcard
 }
 
 /**
@@ -199,7 +197,7 @@ const islandTwoResourceJokerMappings: Readonly<Record<number, ResourceJokerType>
  * @returns resource joker id
  */
 export function GetIslandTwoResourceJokerType(resourceJokerId: number): ResourceJokerType {
-    if (resourceJokerId < 0 || resourceJokerId > 8) {
+    if (resourceJokerId < 0 || resourceJokerId > 6) {
         throw Error(`Resource joker with id=${resourceJokerId} not found`)
     }
 

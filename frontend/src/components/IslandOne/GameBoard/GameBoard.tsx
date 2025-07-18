@@ -7,10 +7,9 @@ const GameBoard = () => {
 
     return (
         <StyledGameBoard>
-            <Hexagon
-                type={HexagonType.Water} />
 
             <Hexagon
+                id={0}
                 type={HexagonType.Ore}
                 resourceJokerId={ResourceJokerType.Ore}
                 knightId={KnightType.Ore}
@@ -23,6 +22,7 @@ const GameBoard = () => {
                 ]} />
 
             <Hexagon
+                id={1}
                 type={HexagonType.Wheat}
                 resourceJokerId={ResourceJokerType.Wheat}
                 knightId={KnightType.Wheat}
@@ -35,6 +35,7 @@ const GameBoard = () => {
                 ]} />
 
             <Hexagon
+                id={2}
                 type={HexagonType.Wool}
                 resourceJokerId={ResourceJokerType.Wool}
                 knightId={KnightType.Wool}
@@ -48,6 +49,7 @@ const GameBoard = () => {
                 ]} />
 
             <Hexagon
+                id={3}
                 type={HexagonType.Wood}
                 resourceJokerId={ResourceJokerType.Wood}
                 knightId={KnightType.Wood}
@@ -60,6 +62,7 @@ const GameBoard = () => {
                 ]} />
 
             <Hexagon
+                id={4}
                 type={HexagonType.Brick}
                 resourceJokerId={ResourceJokerType.Brick}
                 knightId={KnightType.Brick}
@@ -73,9 +76,14 @@ const GameBoard = () => {
                 ]} />
 
             <Hexagon
+                id={5}
                 type={HexagonType.Desert}
                 resourceJokerId={ResourceJokerType.Wildcard}
                 knightId={KnightType.Wildcard} />
+
+            <Hexagon
+                id={6}
+                type={HexagonType.Water} />
 
             <GameOverModal />
 

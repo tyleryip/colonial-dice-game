@@ -52,53 +52,6 @@ export function GetIslandOneStructurePrerequisites(structureId: number): number[
 }
 
 /**
- * Maps a structure id to its point value
- * Ex. Settlement with an id of A has a point value of 7 --> [A]: 7
- */
-const islandOnePoints: Readonly<Record<number, number>> = {
-    0: 0,
-    1: 3,
-    2: 1,
-    3: 1,
-    4: 7,
-    5: 1,
-    6: 4,
-    7: 1,
-    8: 1,
-    9: 12,
-    10: 1,
-    11: 5,
-    12: 1,
-    13: 1,
-    14: 7,
-    15: 1,
-    16: 1,
-    17: 20,
-    18: 1,
-    19: 1,
-    20: 30,
-    21: 1,
-    22: 1,
-    23: 9,
-    24: 1,
-    25: 1,
-    26: 11
-}
-
-/**
- * Given a structureId, return its point value
- * @param structureId 
- * @returns the number of points for building the structure
- */
-export function GetIslandOneStructurePoints(structureId: number): number {
-    if (structureId < 0 || structureId > 26) {
-        throw new Error(`Structure with structureId=${structureId} not found`)
-    }
-
-    return islandOnePoints[structureId]
-}
-
-/**
  * Maps a structure id to its StructureType
  */
 const islandOneStructureTypes: Readonly<Record<number, StructureType>> = {

@@ -18,6 +18,7 @@ import brick_hexagon from "/assets/hexagons/brick-hexagon.svg";
 import desert_hexagon from "/assets/hexagons/desert-hexagon.svg";
 
 interface HexagonProps {
+    id: number,
     type: HexagonType,
     knightId?: number
     resourceJokerId?: number
@@ -46,34 +47,34 @@ const hexagonIcons: { -readonly [key in HexagonType]: string } = {
 
 const verticalCenter = 33.5
 const verticalOffset = 16
-const verticalOffsets: { -readonly [key in HexagonType]: number } = {
-    [HexagonType.Water]: verticalCenter,
-    [HexagonType.Ore]: verticalCenter - verticalOffset,
-    [HexagonType.Wheat]: verticalCenter + verticalOffset,
-    [HexagonType.Wool]: verticalCenter + 2 * verticalOffset,
-    [HexagonType.Wood]: verticalCenter + verticalOffset,
-    [HexagonType.Brick]: verticalCenter - verticalOffset,
-    [HexagonType.Desert]: verticalCenter - 2 * verticalOffset
+const verticalOffsets: Readonly<Record<number, number>> = {
+    0: verticalCenter - verticalOffset,
+    1: verticalCenter + verticalOffset,
+    2: verticalCenter + 2 * verticalOffset,
+    3: verticalCenter + verticalOffset,
+    4: verticalCenter - verticalOffset,
+    5: verticalCenter - 2 * verticalOffset,
+    6: verticalCenter
 }
 
 const horizontalCenter = 31
 const horizontalOffset = 27
-const horizontalOffsets: { -readonly [key in HexagonType]: number } = {
-    [HexagonType.Water]: horizontalCenter,
-    [HexagonType.Ore]: horizontalCenter - horizontalOffset,
-    [HexagonType.Wheat]: horizontalCenter - horizontalOffset,
-    [HexagonType.Wool]: horizontalCenter,
-    [HexagonType.Wood]: horizontalCenter + horizontalOffset,
-    [HexagonType.Brick]: horizontalCenter + horizontalOffset,
-    [HexagonType.Desert]: horizontalCenter
+const horizontalOffsets: Readonly<Record<number, number>> = {
+    0: horizontalCenter - horizontalOffset,
+    1: horizontalCenter - horizontalOffset,
+    2: horizontalCenter,
+    3: horizontalCenter + horizontalOffset,
+    4: horizontalCenter + horizontalOffset,
+    5: horizontalCenter,
+    6: horizontalCenter
 }
 
 export default function Hexagon(props: HexagonProps) {
     // Props and constants
 
     const icon = hexagonIcons[props.type]
-    const top = verticalOffsets[props.type]
-    const left = horizontalOffsets[props.type]
+    const top = verticalOffsets[props.id]
+    const left = horizontalOffsets[props.id]
 
     return (
         <StyledHexagon

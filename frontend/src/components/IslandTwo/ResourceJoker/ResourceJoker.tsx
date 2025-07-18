@@ -2,7 +2,7 @@ import StyledAsset from "../../Asset/StyledAsset"
 import { IconType, ResourceJokerType } from "../../../constants/enumerations"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import { selectIsResourceJokerSpent } from "../../../store/slices/session/islandOne/resourceJokerSlice/resourceJokerSlice"
-import { GetIslandOneResourceJokerType as GetIslandOneResourceJokerType } from "../../../constants/mappings"
+import { GetIslandTwoResourceJokerType } from "../../../constants/mappings"
 import StyledResourceJoker from "./styles/StyledResourceJoker"
 import { selectIsKnightBuilt } from "../../../store/slices/session/islandOne/knightSlice/knightSlice"
 import { selectIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/gameSlice"
@@ -47,7 +47,7 @@ const ResourceJoker = (props: ResourceJokerProps) => {
     // Props and constants
 
     const resourceJokerId = props.id
-    const resourceJokerType = GetIslandOneResourceJokerType(resourceJokerId)
+    const resourceJokerType = GetIslandTwoResourceJokerType(resourceJokerId)
 
     // Dispatch
 
