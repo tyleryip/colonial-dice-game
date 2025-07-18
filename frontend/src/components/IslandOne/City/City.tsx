@@ -1,6 +1,6 @@
 import StyledAsset from "../../Asset/StyledAsset"
 import { IconType } from "../../../constants/enumerations"
-import { buildStructure, selectHasPrerequisiteStructuresBuilt, selectIsStructureBuilt } from "../../../store/slices/session/islandOne/structureSlice/structureSlice"
+import { islandOneBuildStructure, selectIslandOneHasPrerequisiteStructuresBuilt, selectIslandOneIsStructureBuilt } from "../../../store/slices/session/islandOne/structureSlice/islandOneStructureSlice"
 import { GetIslandOneCityNumber } from "../../../constants/mappings"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import StyledCity from "./styles/StyledCity"
@@ -56,9 +56,9 @@ const City = (props: CityProps) => {
     // Selectors
 
     const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
-    const isCityBuilt = useAppSelector(state => selectIsStructureBuilt(state, structureId))
+    const isCityBuilt = useAppSelector(state => selectIslandOneIsStructureBuilt(state, structureId))
     const hasResourcesNeeded = useAppSelector(state => selectIslandOneHasResourcesNeeded(state, cityCost))
-    const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectHasPrerequisiteStructuresBuilt(state, structureId))
+    const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectIslandOneHasPrerequisiteStructuresBuilt(state, structureId))
     const volume = useAppSelector(state => selectEffectiveVolume(state))
 
     // Can build conditions
@@ -100,7 +100,7 @@ const City = (props: CityProps) => {
         if (canBuildCity) {
             playBuildSound()
 
-            dispatch(buildStructure(structureId))
+            dispatch(islandOneBuildStructure(structureId))
 
             cityCost.forEach((resourceType: ResourceType) => {
                 dispatch(islandOneSpendDice(JSON.stringify(resourceType)))

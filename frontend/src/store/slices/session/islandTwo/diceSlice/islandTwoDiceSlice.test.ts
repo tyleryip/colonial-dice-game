@@ -1,6 +1,7 @@
 import { expect, test } from "vitest"
-import reducer, { islandTwoClearResourceJokerFlag, IslandTwoDiceState, islandTwoResetDice, islandTwoResetDiceLocks, islandTwoRollDice, islandTwoSetDice, islandTwoSetDiceSpent, islandTwoSetResourceJokerFlag, islandTwoSetRollCount, islandTwoSetWildcardJokerFlag, islandTwoSpendDice, islandTwoToggleDiceLock } from "./islandTwoDiceSlice"
+import reducer, { islandTwoClearResourceJokerFlag, islandTwoResetDice, islandTwoResetDiceLocks, islandTwoRollDice, islandTwoSetDice, islandTwoSetDiceSpent, islandTwoSetResourceJokerFlag, islandTwoSetRollCount, islandTwoSetWildcardJokerFlag, islandTwoSpendDice, islandTwoToggleDiceLock } from "./islandTwoDiceSlice"
 import { ResourceType } from "../../../../../constants/resources"
+import { DiceState } from "../../shared/diceSlice"
 
 test('should return the initial state', () => {
     // Act
@@ -114,7 +115,7 @@ test('should roll all dice except locked', () => {
 
 test('should roll all dice except locked', () => {
     // Arrange
-    const previousState: IslandTwoDiceState = {
+    const previousState: DiceState = {
         dice: [
             {
                 value: 0,
@@ -365,7 +366,7 @@ test('should reset all dice locks', () => {
 
 // Helper functions
 
-const getInitialState = (): IslandTwoDiceState => {
+const getInitialState = (): DiceState => {
     return {
         dice: new Array(6).fill({
             value: null,

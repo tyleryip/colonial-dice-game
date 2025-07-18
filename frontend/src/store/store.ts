@@ -6,7 +6,8 @@ import resourceJokerReducer, { resourceJokerSlice } from "./slices/session/islan
 import knightReducer, { knightSlice } from "./slices/session/islandOne/knightSlice/knightSlice";
 import settingsReducer, { settingsSlice } from "./slices/local/settingsSlice/settingsSlice"
 import scoreReducer, { scoreSlice } from "./slices/session/islandOne/scoreSlice/scoreSlice"
-import structureReducer, { structureSlice } from "./slices/session/islandOne/structureSlice/structureSlice"
+import islandOneStructureReducer, { islandOneStructureSlice } from "./slices/session/islandOne/structureSlice/islandOneStructureSlice"
+import islandTwoStructureReducer, { islandTwoStructureSlice } from "./slices/session/islandTwo/structureSlice/islandTwoStructureSlice"
 import { FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE } from "redux-persist";
 import { persistStore } from "redux-persist";
 import sessionStorage from "redux-persist/lib/storage/session";
@@ -19,11 +20,12 @@ const islandOneReducer = combineReducers({
     knight: knightReducer,
     resourceJoker: resourceJokerReducer,
     score: scoreReducer,
-    structure: structureReducer,
+    structure: islandOneStructureReducer,
 })
 
 const islandTwoReducer = combineReducers({
-    dice: islandTwoDiceReducer
+    dice: islandTwoDiceReducer,
+    structure: islandTwoStructureReducer
 })
 
 const sessionPersistConfig = {
@@ -107,8 +109,8 @@ export const store = configureStore({
             ["Reset Score"]: scoreSlice.actions.resetScore,
 
             // Structure actions
-            ["Build Structure"]: structureSlice.actions.buildStructure,
-            ["Reset Structures"]: structureSlice.actions.resetStructures,
+            ["Island One - Build Structure"]: islandOneStructureSlice.actions.islandOneBuildStructure,
+            ["Island One - Reset Structures"]: islandOneStructureSlice.actions.islandOneResetStructures,
 
             // ISLAND 2
 
@@ -121,6 +123,10 @@ export const store = configureStore({
             ["Island Two - Set Dice Spent"]: islandTwoDiceSlice.actions.islandTwoSetDiceSpent,
             ["Island Two - Spend Dice"]: islandTwoDiceSlice.actions.islandTwoSpendDice,
             ["Island Two - Toggle Dice Lock"]: islandTwoDiceSlice.actions.islandTwoToggleDiceLock,
+
+            // Structure actions
+            ["Island 2 - Build Structure"]: islandTwoStructureSlice.actions.islandTwoBuildStructure,
+            ["Island 2 - Reset Structures"]: islandTwoStructureSlice.actions.islandTwoResetStructures,
         }
     }
 });

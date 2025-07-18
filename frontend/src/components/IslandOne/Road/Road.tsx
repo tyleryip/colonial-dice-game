@@ -1,7 +1,7 @@
 import { IconType, RoadType } from "../../../constants/enumerations"
 import StyledAsset from "../../Asset/StyledAsset"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
-import { buildStructure, selectHasPrerequisiteStructuresBuilt, selectIsStructureBuilt } from "../../../store/slices/session/islandOne/structureSlice/structureSlice"
+import { islandOneBuildStructure, selectIslandOneHasPrerequisiteStructuresBuilt, selectIslandOneIsStructureBuilt } from "../../../store/slices/session/islandOne/structureSlice/islandOneStructureSlice"
 import { GetIslandOneRoadType } from "../../../constants/mappings"
 import StyledRoad from "./styles/StyledRoad"
 import { useHover } from "@uidotdev/usehooks"
@@ -77,9 +77,9 @@ const Road = (props: RoadProps) => {
     // Selectors
 
     const gamePhaseBuilding = useAppSelector(state => selectIsGamePhaseBuilding(state))
-    const isRoadBuilt = useAppSelector(state => selectIsStructureBuilt(state, structureId))
+    const isRoadBuilt = useAppSelector(state => selectIslandOneIsStructureBuilt(state, structureId))
     const hasResourcesNeeded = useAppSelector(state => selectIslandOneHasResourcesNeeded(state, roadCost))
-    const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectHasPrerequisiteStructuresBuilt(state, structureId))
+    const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectIslandOneHasPrerequisiteStructuresBuilt(state, structureId))
     const volume = useAppSelector(state => selectEffectiveVolume(state))
 
     // Can build conditions
@@ -122,7 +122,7 @@ const Road = (props: RoadProps) => {
         if (canBuildRoad) {
             playBuildSound()
 
-            dispatch(buildStructure(structureId))
+            dispatch(islandOneBuildStructure(structureId))
 
             roadCost.forEach((resourceType: ResourceType) => {
                 dispatch(islandOneSpendDice(JSON.stringify(resourceType)))

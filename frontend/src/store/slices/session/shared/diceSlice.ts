@@ -2,6 +2,15 @@ import { ResourceType } from "../../../../constants/resources"
 import { Dice } from "../../../../types/Dice"
 import { DiceValue } from "../../../../types/DiceValue"
 
+// State
+
+export interface DiceState {
+    dice: Dice[],
+    rollCount: number,
+    resourceJokerFlag: number | null,
+    wildcardJokerFlag: number | null
+}
+
 // Action payloads
 
 export interface SetDicePayload {
@@ -27,6 +36,11 @@ export const FindFirstUnspentIndex = (dice: Dice[], resourceType: ResourceType):
     throw new Error(`No unspent ${resourceType.toString()} found`)
 }
 
+/**
+ * Set all dice locked state to false
+ * @param dice an array of dice
+ * @returns the updated array of dice
+ */
 export const UnlockAllDice = (dice: Dice[]): Dice[] => {
     return dice.map((d: Dice) => {
         return {
@@ -37,6 +51,11 @@ export const UnlockAllDice = (dice: Dice[]): Dice[] => {
     })
 }
 
+/**
+ * Generates new values for all unlocked dice
+ * @param dice an array of dice
+ * @returns the updated array of dice
+ */
 export const GenerateNewDiceValues = (dice: Dice[]): Dice[] => {
     return dice.map((d: Dice) => {
         return {

@@ -2,16 +2,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../../../store"
 import { Dice } from "../../../../../types/Dice";
 import { ResourceType } from "../../../../../constants/resources";
-import { FindFirstUnspentIndex, GenerateNewDiceValues, SetDicePayload, UnlockAllDice } from "../../shared/diceSlice";
+import { DiceState, FindFirstUnspentIndex, GenerateNewDiceValues, SetDicePayload, UnlockAllDice } from "../../shared/diceSlice";
 
-export interface IslandTwoDiceState {
-    dice: Dice[],
-    rollCount: number,
-    resourceJokerFlag: number | null,
-    wildcardJokerFlag: number | null
-}
-
-const initialState: IslandTwoDiceState = {
+const initialState: DiceState = {
     dice: new Array<Dice>(6).fill(
         {
             value: null,

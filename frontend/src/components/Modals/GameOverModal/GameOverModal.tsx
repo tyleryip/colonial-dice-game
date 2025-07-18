@@ -11,7 +11,7 @@ import { addLeaderboardEntry, AddLeaderboardEntryPayload } from "../../../store/
 import { islandOneResetDice } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice";
 import { resetKnights } from "../../../store/slices/session/islandOne/knightSlice/knightSlice";
 import { resetResourceJokers } from "../../../store/slices/session/islandOne/resourceJokerSlice/resourceJokerSlice";
-import { resetStructures } from "../../../store/slices/session/islandOne/structureSlice/structureSlice";
+import { islandOneResetStructures } from "../../../store/slices/session/islandOne/structureSlice/islandOneStructureSlice";
 import StyledLeaderboardNameInput from "./styles/StyledLeaderboardNameInput";
 
 const GameOverModal = () => {
@@ -59,7 +59,7 @@ const GameOverModal = () => {
         dispatch(resetGame());
         dispatch(resetKnights());
         dispatch(resetResourceJokers());
-        dispatch(resetStructures());
+        dispatch(islandOneResetStructures());
         dispatch(resetScore());
         dispatch(islandOneResetDice());
     }

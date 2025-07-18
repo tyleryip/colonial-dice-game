@@ -4,7 +4,7 @@ import { resetGame } from "../../../store/slices/session/islandOne/gameSlice/gam
 import { resetKnights } from "../../../store/slices/session/islandOne/knightSlice/knightSlice";
 import { resetResourceJokers } from "../../../store/slices/session/islandOne/resourceJokerSlice/resourceJokerSlice";
 import { resetScore } from "../../../store/slices/session/islandOne/scoreSlice/scoreSlice";
-import { resetStructures } from "../../../store/slices/session/islandOne/structureSlice/structureSlice";
+import { islandOneResetStructures } from "../../../store/slices/session/islandOne/structureSlice/islandOneStructureSlice";
 import StyledResetGameButton from "./styles/StyledResetGameButton";
 
 interface ResetGameButtonProps {
@@ -31,7 +31,7 @@ const ResetGameButton = (props: ResetGameButtonProps) => {
     dispatch(resetGame());
     dispatch(resetKnights());
     dispatch(resetResourceJokers());
-    dispatch(resetStructures());
+    dispatch(islandOneResetStructures());
     dispatch(resetScore());
     dispatch(islandOneResetDice());
 

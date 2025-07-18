@@ -1,17 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { RootState } from "../../../../store"
 import { GetIslandOneStructurePrerequisites } from "../../../../../constants/structures"
-
-export interface StructureState {
-    isBuilt: boolean[]
-}
+import { StructureState } from "../../shared/structureSlice"
 
 const initialState: StructureState = {
     isBuilt: getInitialState()
 }
 
-export const structureSlice = createSlice({
-    name: 'structure',
+export const islandOneStructureSlice = createSlice({
+    name: 'islandOneStructure',
     initialState: initialState,
     reducers: {
         /**
@@ -19,7 +16,7 @@ export const structureSlice = createSlice({
          * @param state 
          * @param action 
          */
-        buildStructure: (state, action: PayloadAction<number>) => {
+        islandOneBuildStructure: (state, action: PayloadAction<number>) => {
             const structureId = action.payload
             validateStructureId(structureId)
             state.isBuilt[structureId] = true
@@ -28,25 +25,28 @@ export const structureSlice = createSlice({
          * When the game is reset so the board is restored to initial state
          * @param state 
          */
-        resetStructures: (state) => {
+        islandOneResetStructures: (state) => {
             state.isBuilt = initialState.isBuilt
         }
     }
 })
 
-export default structureSlice.reducer;
+export default islandOneStructureSlice.reducer;
 
 // Actions
 
-export const { resetStructures, buildStructure } = structureSlice.actions;
+export const {
+    islandOneResetStructures,
+    islandOneBuildStructure
+} = islandOneStructureSlice.actions;
 
 // Selectors
 
-export const selectIsStructureBuilt = (state: RootState, structureId: number) => {
+export const selectIslandOneIsStructureBuilt = (state: RootState, structureId: number) => {
     validateStructureId(structureId)
     return state.session.islandOne.structure.isBuilt[structureId]
 }
-export const selectHasPrerequisiteStructuresBuilt = (state: RootState, structureId: number) => {
+export const selectIslandOneHasPrerequisiteStructuresBuilt = (state: RootState, structureId: number) => {
     validateStructureId(structureId)
     const structurePrerequisites = GetIslandOneStructurePrerequisites(structureId)
     return structurePrerequisites

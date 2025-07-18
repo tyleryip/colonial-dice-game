@@ -1,7 +1,7 @@
 import StyledAsset from "../../Asset/StyledAsset"
 import { IconType } from "../../../constants/enumerations"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
-import { buildStructure, selectHasPrerequisiteStructuresBuilt, selectIsStructureBuilt } from "../../../store/slices/session/islandOne/structureSlice/structureSlice"
+import { islandOneBuildStructure, selectIslandOneHasPrerequisiteStructuresBuilt, selectIslandOneIsStructureBuilt } from "../../../store/slices/session/islandOne/structureSlice/islandOneStructureSlice"
 import { GetIslandOneSettlementNumber } from "../../../constants/mappings"
 import StyledSettlement from "./styles/StyledSettlement"
 import { selectIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/gameSlice"
@@ -64,8 +64,8 @@ const Settlement = (props: SettlementProps) => {
     // Selectors
 
     const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
-    const isSettlementBuilt = useAppSelector(state => selectIsStructureBuilt(state, structureId))
-    const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectHasPrerequisiteStructuresBuilt(state, structureId))
+    const isSettlementBuilt = useAppSelector(state => selectIslandOneIsStructureBuilt(state, structureId))
+    const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectIslandOneHasPrerequisiteStructuresBuilt(state, structureId))
     const hasResourcesNeeded = useAppSelector(state => selectIslandOneHasResourcesNeeded(state, settlementCost))
     const volume = useAppSelector(state => selectEffectiveVolume(state))
 
@@ -107,7 +107,7 @@ const Settlement = (props: SettlementProps) => {
     function handleClick() {
         if (canBuildSettlement) {
             playBuildSound()
-            dispatch(buildStructure(props.id))
+            dispatch(islandOneBuildStructure(props.id))
 
             settlementCost.forEach((resourceType: ResourceType) => {
                 dispatch(islandOneSpendDice(JSON.stringify(resourceType)))
