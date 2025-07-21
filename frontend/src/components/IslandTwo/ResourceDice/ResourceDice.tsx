@@ -4,7 +4,7 @@ import TradingPopup from "../../Popups/TradingPopup/TradingPopup";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { getResourceType, ResourceType } from "../../../constants/resources";
-import { spendResourceJoker } from "../../../store/slices/session/islandOne/resourceJokerSlice/resourceJokerSlice";
+import { islandOneSpendResourceJoker } from "../../../store/slices/session/islandOne/resourceJokerSlice/resourceJokerSlice";
 import { ResourceJokerType } from "../../../constants/enumerations";
 import { GetIslandTwoResourceJokerType } from "../../../constants/mappings";
 import tradeGoldSound from "/audio/trade_gold.wav"
@@ -188,7 +188,7 @@ const ResourceDice = (props: ResourceDiceProps) => {
         );
         dispatch(islandTwoClearWildcardJokerFlag());
         dispatch(
-          spendResourceJoker(GetIslandTwoResourceJokerType(ResourceJokerType.Wildcard))
+          islandOneSpendResourceJoker(GetIslandTwoResourceJokerType(ResourceJokerType.Wildcard))
         );
         return; // Prevent setting a gold dice from also opening up the trading popup
       }
@@ -200,7 +200,7 @@ const ResourceDice = (props: ResourceDiceProps) => {
           islandTwoSetDice({ id: diceId, value: resourceJokerFlag as DiceValue })
         );
         dispatch(islandTwoClearResourceJokerFlag());
-        dispatch(spendResourceJoker(resourceJokerFlag));
+        dispatch(islandOneSpendResourceJoker(resourceJokerFlag));
         return; // Prevent setting a gold dice from also opening up the trading popup
       }
 

@@ -1,7 +1,6 @@
 import StyledAsset from "../../Asset/StyledAsset"
 import { IconType, ResourceJokerType } from "../../../constants/enumerations"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
-import { selectIsResourceJokerSpent } from "../../../store/slices/session/islandOne/resourceJokerSlice/resourceJokerSlice"
 import { GetIslandTwoResourceJokerType } from "../../../constants/mappings"
 import StyledResourceJoker from "./styles/StyledResourceJoker"
 import { getResourceType } from "../../../constants/resources"
@@ -22,6 +21,7 @@ import { selectEffectiveVolume } from "../../../store/slices/local/settingsSlice
 import { selectIslandTwoIsGamePhaseBuilding } from "../../../store/slices/session/islandTwo/gameSlice/islandTwoGameSlice"
 import { selectIslandTwoIsKnightBuilt } from "../../../store/slices/session/islandTwo/knightSlice/islandTwoKnightSlice"
 import { islandTwoClearResourceJokerFlag, islandTwoSetResourceJokerFlag, selectIslandTwoAllDiceSpent, selectIslandTwoResourceJokerFlag, selectIslandTwoWildcardJokerFlag } from "../../../store/slices/session/islandTwo/diceSlice/islandTwoDiceSlice"
+import { selectIslandTwoIsResourceJokerSpent } from "../../../store/slices/session/islandTwo/resourceJokerSlice/resourceJokerSlice"
 
 interface ResourceJokerProps {
     id: ResourceJokerType
@@ -58,7 +58,7 @@ const ResourceJoker = (props: ResourceJokerProps) => {
     const gamePhaseBuilding = useAppSelector((state) => selectIslandTwoIsGamePhaseBuilding(state))
     // Each resource joker will line up with its corresponding knight (ex. knightId 1 = resourceJokerId 1)
     const resourceJokerAvailable = useAppSelector(state => selectIslandTwoIsKnightBuilt(state, resourceJokerId))
-    const resourceJokerIsSpent = useAppSelector(state => selectIsResourceJokerSpent(state, resourceJokerId))
+    const resourceJokerIsSpent = useAppSelector(state => selectIslandTwoIsResourceJokerSpent(state, resourceJokerId))
     const resourceJokerFlag = useAppSelector(state => selectIslandTwoResourceJokerFlag(state))
     const wildcardJokerFlag = useAppSelector(state => selectIslandTwoWildcardJokerFlag(state))
     const allDiceSpent = useAppSelector(state => selectIslandTwoAllDiceSpent(state))

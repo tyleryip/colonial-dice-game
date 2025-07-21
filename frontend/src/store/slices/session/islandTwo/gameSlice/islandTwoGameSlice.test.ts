@@ -1,6 +1,7 @@
 import { test, expect } from 'vitest'
-import reducer, { GameState, islandTwoIncrementTurn, islandTwoResetGame, islandTwoSetGamePhase } from './islandTwoGameSlice'
+import reducer, { islandTwoIncrementTurn, islandTwoResetGame, islandTwoSetGamePhase } from './islandTwoGameSlice'
 import { GamePhase } from '../../../../../constants/enumerations'
+import { GameState } from '../../shared/gameSlice'
 
 test('should return the initial state', () => {
     // Act

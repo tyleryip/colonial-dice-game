@@ -10,7 +10,7 @@ import { useState } from "react";
 import { addLeaderboardEntry, AddLeaderboardEntryPayload } from "../../../store/slices/local/leaderboardSlice/leaderboardSlice";
 import { islandOneResetDice } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice";
 import { islandOneResetKnights } from "../../../store/slices/session/islandOne/knightSlice/islandOneKnightSlice";
-import { resetResourceJokers } from "../../../store/slices/session/islandOne/resourceJokerSlice/resourceJokerSlice";
+import { islandOneResetResourceJokers } from "../../../store/slices/session/islandOne/resourceJokerSlice/resourceJokerSlice";
 import { islandOneResetStructures } from "../../../store/slices/session/islandOne/structureSlice/islandOneStructureSlice";
 import StyledLeaderboardNameInput from "./styles/StyledLeaderboardNameInput";
 
@@ -58,7 +58,7 @@ const GameOverModal = () => {
 
         dispatch(islandOneResetGame());
         dispatch(islandOneResetKnights());
-        dispatch(resetResourceJokers());
+        dispatch(islandOneResetResourceJokers());
         dispatch(islandOneResetStructures());
         dispatch(resetScore());
         dispatch(islandOneResetDice());

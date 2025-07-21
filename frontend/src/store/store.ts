@@ -3,7 +3,8 @@ import islandOneDiceReducer, { islandOneDiceSlice } from "./slices/session/islan
 import islandTwoDiceReducer, { islandTwoDiceSlice } from "./slices/session/islandTwo/diceSlice/islandTwoDiceSlice"
 import islandOneGameReducer, { islandOneGameSlice } from "./slices/session/islandOne/gameSlice/islandOneGameSlice"
 import islandTwoGameReducer, { islandTwoGameSlice } from "./slices/session/islandTwo/gameSlice/islandTwoGameSlice"
-import resourceJokerReducer, { resourceJokerSlice } from "./slices/session/islandOne/resourceJokerSlice/resourceJokerSlice"
+import islandOneResourceJokerReducer, { islandOneResourceJokerSlice } from "./slices/session/islandOne/resourceJokerSlice/resourceJokerSlice"
+import islandTwoResourceJokerReducer, { islandTwoResourceJokerSlice } from "./slices/session/islandTwo/resourceJokerSlice/resourceJokerSlice";
 import islandOneKnightReducer, { islandOneKnightSlice } from "./slices/session/islandOne/knightSlice/islandOneKnightSlice";
 import islandTwoKnightReducer, { islandTwoKnightSlice } from "./slices/session/islandTwo/knightSlice/islandTwoKnightSlice";
 import settingsReducer, { settingsSlice } from "./slices/local/settingsSlice/settingsSlice"
@@ -20,7 +21,7 @@ const islandOneReducer = combineReducers({
     dice: islandOneDiceReducer,
     game: islandOneGameReducer,
     knight: islandOneKnightReducer,
-    resourceJoker: resourceJokerReducer,
+    resourceJoker: islandOneResourceJokerReducer,
     score: scoreReducer,
     structure: islandOneStructureReducer,
 })
@@ -29,6 +30,7 @@ const islandTwoReducer = combineReducers({
     dice: islandTwoDiceReducer,
     game: islandTwoGameReducer,
     knight: islandTwoKnightReducer,
+    resourceJoker: islandTwoResourceJokerReducer,
     structure: islandTwoStructureReducer
 })
 
@@ -104,8 +106,8 @@ export const store = configureStore({
             ["Island One - Reset Knights"]: islandOneKnightSlice.actions.islandOneResetKnights,
 
             // Resource joker actions
-            ["Reset Resource Jokers"]: resourceJokerSlice.actions.resetResourceJokers,
-            ["Spend Resource Joker"]: resourceJokerSlice.actions.spendResourceJoker,
+            ["Island One - Reset Resource Jokers"]: islandOneResourceJokerSlice.actions.islandOneResetResourceJokers,
+            ["Island One - Spend Resource Joker"]: islandOneResourceJokerSlice.actions.islandOneSpendResourceJoker,
 
             // Score actions
             ["Add Score"]: scoreSlice.actions.addScore,
@@ -136,6 +138,10 @@ export const store = configureStore({
             // Knight actions
             ["Island Two - Build Knight"]: islandTwoKnightSlice.actions.islandTwoBuildKnight,
             ["Island Two - Reset Knights"]: islandTwoKnightSlice.actions.islandTwoResetKnights,
+
+            // Resource joker actions
+            ["Island Two - Reset Resource Jokers"]: islandTwoResourceJokerSlice.actions.islandTwoResetResourceJokers,
+            ["Island Two - Spend Resource Joker"]: islandTwoResourceJokerSlice.actions.islandTwoSpendResourceJoker,
 
             // Structure actions
             ["Island Two - Build Structure"]: islandTwoStructureSlice.actions.islandTwoBuildStructure,

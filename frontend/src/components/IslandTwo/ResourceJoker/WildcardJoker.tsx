@@ -24,6 +24,8 @@ import selectionOpenSound from '/audio/selection_open.wav'
 import selectionCloseSound from '/audio/selection_close.wav'
 import { selectIslandTwoIsGamePhaseBuilding } from "../../../store/slices/session/islandTwo/gameSlice/islandTwoGameSlice"
 import { selectIslandTwoAllDiceSpent, islandTwoClearWildcardJokerFlag, islandTwoSetWildcardJokerFlag, selectIslandTwoWildcardJokerFlag, selectIslandTwoResourceJokerFlag } from "../../../store/slices/session/islandTwo/diceSlice/islandTwoDiceSlice"
+import { selectIslandTwoIsKnightBuilt } from "../../../store/slices/session/islandTwo/knightSlice/islandTwoKnightSlice"
+import { selectIslandTwoIsResourceJokerSpent } from "../../../store/slices/session/islandTwo/resourceJokerSlice/resourceJokerSlice"
 
 interface WildcardJokerProps {
     id: number
@@ -59,23 +61,12 @@ const WildcardResourceJoker = (props: WildcardJokerProps) => {
 
     const gamePhaseBuilding = useAppSelector((state) => selectIslandTwoIsGamePhaseBuilding(state))
     // Each resource joker will line up with its corresponding knight (ex. knightId 1 = resourceJokerId 1)
-    const resourceJokerAvailable = false
-    const resourceJokerIsSpent = false
+    const resourceJokerAvailable = useAppSelector(state => selectIslandTwoIsKnightBuilt(state, resourceJokerId))
+    const resourceJokerIsSpent = useAppSelector(state => selectIslandTwoIsResourceJokerSpent(state, resourceJokerId))
     const resourceJokerFlag = useAppSelector(state => selectIslandTwoResourceJokerFlag(state))
     const wildcardJokerFlag = useAppSelector(state => selectIslandTwoWildcardJokerFlag(state))
     const allDiceSpent = useAppSelector(state => selectIslandTwoAllDiceSpent(state))
     const volume = useAppSelector(state => selectEffectiveVolume(state))
-
-    /*
-    const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
-    // Each resource joker will line up with its corresponding knight (ex. knightId 1 = resourceJokerId 1)
-    const resourceJokerAvailable = useAppSelector(state => selectIsKnightBuilt(state, resourceJokerId))
-    const resourceJokerIsSpent = useAppSelector(state => selectIsResourceJokerSpent(state, resourceJokerId))
-    const resourceJokerFlag = useAppSelector(state => selectResourceJokerFlag(state))
-    const wildcardJokerFlag = useAppSelector(state => selectWildcardJokerFlag(state))
-    const allDiceSpent = useAppSelector(state => selectAllDiceSpent(state))
-    const volume = useAppSelector(state => selectEffectiveVolume(state))
-    */
 
     // Can spend conditions
 
