@@ -1,11 +1,4 @@
 import StyledBuildButton from "./styles/StyledBuildButton";
-import {
-  incrementTurn,
-  selectCurrentTurn,
-  selectIsGamePhaseBuilding,
-  selectIsGamePhaseRolling,
-  setGamePhase,
-} from "../../../../store/slices/session/islandOne/gameSlice/gameSlice";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import { GamePhase } from "../../../../constants/enumerations";
 import { addScore } from "../../../../store/slices/session/islandOne/scoreSlice/scoreSlice";
@@ -17,6 +10,7 @@ import build_icon from '/assets/buttons/build-icon.png'
 import dice_icon from '/assets/buttons/dice-icon.png'
 import StyledBuildButtonIcon from "./styles/StyledBuildButtonIcon";
 import { islandTwoResetDice, islandTwoResetDiceLocks, islandTwoSetRollCount } from "../../../../store/slices/session/islandTwo/diceSlice/islandTwoDiceSlice";
+import { selectIslandTwoIsGamePhaseRolling, selectIslandTwoIsGamePhaseBuilding, selectIslandTwoCurrentTurn, islandTwoSetGamePhase, islandTwoIncrementTurn } from "../../../../store/slices/session/islandTwo/gameSlice/islandTwoGameSlice";
 
 interface BuildButtonProps {
   disabled?: boolean;
@@ -35,12 +29,12 @@ const BuildButton = (props: BuildButtonProps) => {
   // Selectors
 
   const gamePhaseRolling = useAppSelector(state =>
-    selectIsGamePhaseRolling(state)
+    selectIslandTwoIsGamePhaseRolling(state)
   );
   const gamePhaseBuilding = useAppSelector(state =>
-    selectIsGamePhaseBuilding(state)
+    selectIslandTwoIsGamePhaseBuilding(state)
   );
-  const currentTurn = useAppSelector(state => selectCurrentTurn(state))
+  const currentTurn = useAppSelector(state => selectIslandTwoCurrentTurn(state))
   const volume = useAppSelector(state => selectEffectiveVolume(state))
 
   // Conditional rendering
@@ -82,15 +76,15 @@ const BuildButton = (props: BuildButtonProps) => {
 
   const handleClick = () => {
     if (gamePhaseRolling) {
-      dispatch(setGamePhase(GamePhase.Building));
+      dispatch(islandTwoSetGamePhase(GamePhase.Building));
       dispatch(islandTwoResetDiceLocks());
       dispatch(islandTwoSetRollCount(3));
     }
 
     if (gamePhaseBuilding) {
-      dispatch(setGamePhase(GamePhase.Rolling));
+      dispatch(islandTwoSetGamePhase(GamePhase.Rolling));
       dispatch(addScore());
-      dispatch(incrementTurn());
+      dispatch(islandTwoIncrementTurn());
       dispatch(islandTwoResetDice());
 
       if (currentTurn >= 14) {

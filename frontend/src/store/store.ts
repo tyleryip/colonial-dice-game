@@ -1,7 +1,8 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import islandOneDiceReducer, { islandOneDiceSlice } from "./slices/session/islandOne/diceSlice/islandOneDiceSlice"
 import islandTwoDiceReducer, { islandTwoDiceSlice } from "./slices/session/islandTwo/diceSlice/islandTwoDiceSlice"
-import gameReducer, { gameSlice } from "./slices/session/islandOne/gameSlice/gameSlice"
+import islandOneGameReducer, { islandOneGameSlice } from "./slices/session/islandOne/gameSlice/islandOneGameSlice"
+import islandTwoGameReducer, { islandTwoGameSlice } from "./slices/session/islandTwo/gameSlice/islandTwoGameSlice"
 import resourceJokerReducer, { resourceJokerSlice } from "./slices/session/islandOne/resourceJokerSlice/resourceJokerSlice"
 import knightReducer, { knightSlice } from "./slices/session/islandOne/knightSlice/knightSlice";
 import settingsReducer, { settingsSlice } from "./slices/local/settingsSlice/settingsSlice"
@@ -16,7 +17,7 @@ import leaderboardReducer, { leaderboardSlice } from "./slices/local/leaderboard
 
 const islandOneReducer = combineReducers({
     dice: islandOneDiceReducer,
-    game: gameReducer,
+    game: islandOneGameReducer,
     knight: knightReducer,
     resourceJoker: resourceJokerReducer,
     score: scoreReducer,
@@ -25,6 +26,7 @@ const islandOneReducer = combineReducers({
 
 const islandTwoReducer = combineReducers({
     dice: islandTwoDiceReducer,
+    game: islandTwoGameReducer,
     structure: islandTwoStructureReducer
 })
 
@@ -91,9 +93,9 @@ export const store = configureStore({
             ["Island One - Toggle Dice Lock"]: islandOneDiceSlice.actions.islandOneToggleDiceLock,
 
             // Game actions
-            ["Increment Turn"]: gameSlice.actions.incrementTurn,
-            ["Set Game Phase"]: gameSlice.actions.setGamePhase,
-            ["Reset Game"]: gameSlice.actions.resetGame,
+            ["Island One - Increment Turn"]: islandOneGameSlice.actions.islandOneIncrementTurn,
+            ["Island One - Set Game Phase"]: islandOneGameSlice.actions.islandOneSetGamePhase,
+            ["Island One - Reset Game"]: islandOneGameSlice.actions.islandOneResetGame,
 
             // Knight actions
             ["Build Knight"]: knightSlice.actions.buildKnight,
@@ -123,6 +125,11 @@ export const store = configureStore({
             ["Island Two - Set Dice Spent"]: islandTwoDiceSlice.actions.islandTwoSetDiceSpent,
             ["Island Two - Spend Dice"]: islandTwoDiceSlice.actions.islandTwoSpendDice,
             ["Island Two - Toggle Dice Lock"]: islandTwoDiceSlice.actions.islandTwoToggleDiceLock,
+
+            // Game actions
+            ["Island Two - Increment Turn"]: islandTwoGameSlice.actions.islandTwoIncrementTurn,
+            ["Island Two - Set Game Phase"]: islandTwoGameSlice.actions.islandTwoSetGamePhase,
+            ["Island Two - Reset Game"]: islandTwoGameSlice.actions.islandTwoResetGame,
 
             // Structure actions
             ["Island 2 - Build Structure"]: islandTwoStructureSlice.actions.islandTwoBuildStructure,

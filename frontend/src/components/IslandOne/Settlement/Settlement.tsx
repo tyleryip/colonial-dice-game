@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import { islandOneBuildStructure, selectIslandOneHasPrerequisiteStructuresBuilt, selectIslandOneIsStructureBuilt } from "../../../store/slices/session/islandOne/structureSlice/islandOneStructureSlice"
 import { GetIslandOneSettlementNumber } from "../../../constants/mappings"
 import StyledSettlement from "./styles/StyledSettlement"
-import { selectIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/gameSlice"
+import { selectIslandOneIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/islandOneGameSlice"
 import { useHover } from "@uidotdev/usehooks"
 import ResourceCostPopup from "../../Popups/ResourceCostPopup/ResourceCostPopup"
 import { settlementCost } from "../../../constants/structures"
@@ -63,7 +63,7 @@ const Settlement = (props: SettlementProps) => {
 
     // Selectors
 
-    const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
+    const gamePhaseBuilding = useAppSelector((state) => selectIslandOneIsGamePhaseBuilding(state))
     const isSettlementBuilt = useAppSelector(state => selectIslandOneIsStructureBuilt(state, structureId))
     const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectIslandOneHasPrerequisiteStructuresBuilt(state, structureId))
     const hasResourcesNeeded = useAppSelector(state => selectIslandOneHasResourcesNeeded(state, settlementCost))

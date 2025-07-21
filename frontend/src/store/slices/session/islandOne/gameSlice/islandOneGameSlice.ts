@@ -1,26 +1,22 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { GamePhase } from "../../../../../constants/enumerations";
 import { RootState } from "../../../../store";
-
-export interface GameState {
-    currentGamePhase: GamePhase,
-    currentTurn: number
-}
+import { GameState } from "../../shared/gameSlice";
 
 const initialState: GameState = {
     currentGamePhase: GamePhase.Rolling,
     currentTurn: 0
 }
 
-export const gameSlice = createSlice({
-    name: 'game',
+export const islandOneGameSlice = createSlice({
+    name: 'islandOneGame',
     initialState: initialState,
     reducers: {
         /**
          * When a turn has passed
          * @param state 
          */
-        incrementTurn: (state) => {
+        islandOneIncrementTurn: (state) => {
             state.currentTurn += 1
         },
         /**
@@ -28,34 +24,38 @@ export const gameSlice = createSlice({
          * @param state 
          * @param action 
          */
-        setGamePhase: (state, action: PayloadAction<GamePhase>) => {
+        islandOneSetGamePhase: (state, action: PayloadAction<GamePhase>) => {
             state.currentGamePhase = action.payload
         },
         /**
          * When the game is reset, set phase back to starting phase
          * @param state 
          */
-        resetGame: (state) => {
+        islandOneResetGame: (state) => {
             state.currentGamePhase = GamePhase.Rolling
             state.currentTurn = 0
         }
     }
 })
 
-export default gameSlice.reducer
+export default islandOneGameSlice.reducer
 
 // Actions
 
-export const { incrementTurn, setGamePhase, resetGame } = gameSlice.actions
+export const {
+    islandOneIncrementTurn,
+    islandOneSetGamePhase,
+    islandOneResetGame
+} = islandOneGameSlice.actions
 
 // Selectors
 
-export const selectCurrentTurn = (state: RootState) => state.session.islandOne.game.currentTurn
+export const selectIslandOneCurrentTurn = (state: RootState) => state.session.islandOne.game.currentTurn
 
-export function selectIsGamePhaseRolling(state: RootState): boolean {
+export function selectIslandOneIsGamePhaseRolling(state: RootState): boolean {
     return state.session.islandOne.game.currentGamePhase == GamePhase.Rolling
 }
 
-export function selectIsGamePhaseBuilding(state: RootState): boolean {
+export function selectIslandOneIsGamePhaseBuilding(state: RootState): boolean {
     return state.session.islandOne.game.currentGamePhase == GamePhase.Building
 }

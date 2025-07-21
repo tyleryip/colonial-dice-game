@@ -7,10 +7,10 @@ import { useAppSelector } from "../../../store/hooks"
 import { selectIslandOneDice, selectIslandOneResourceJokerFlag, selectIslandOneRollCount, selectIslandOneWildcardJokerFlag } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice"
 import RollButton from "../Buttons/RollButton/RollButton"
 import BuildButton from "../Buttons/BuildButton/BuildButton"
-import { selectIsGamePhaseBuilding, selectIsGamePhaseRolling } from "../../../store/slices/session/islandOne/gameSlice/gameSlice"
+import { selectIslandOneIsGamePhaseBuilding, selectIslandOneIsGamePhaseRolling } from "../../../store/slices/session/islandOne/gameSlice/islandOneGameSlice"
 import { Dice } from "../../../types/Dice"
 import { ResourceType } from "../../../constants/resources"
-import Instructions from "../../Instructions/Instructions"
+import Instructions from "../Instructions/Instructions"
 
 const GameControlsContainer = () => {
     // Props and constants
@@ -22,8 +22,8 @@ const GameControlsContainer = () => {
 
     const dice = useAppSelector(state => selectIslandOneDice(state))
     const rollCount = useAppSelector(state => selectIslandOneRollCount(state))
-    const gamePhaseRolling = useAppSelector(state => selectIsGamePhaseRolling(state))
-    const gamePhaseBuilding = useAppSelector(state => selectIsGamePhaseBuilding(state))
+    const gamePhaseRolling = useAppSelector(state => selectIslandOneIsGamePhaseRolling(state))
+    const gamePhaseBuilding = useAppSelector(state => selectIslandOneIsGamePhaseBuilding(state))
     const resourceJokerFlag = useAppSelector(state => selectIslandOneResourceJokerFlag(state))
     const wildcardJokerFlag = useAppSelector(state => selectIslandOneWildcardJokerFlag(state))
 

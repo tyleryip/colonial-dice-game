@@ -5,7 +5,7 @@ import { GetIslandOneCityNumber } from "../../../constants/mappings"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import StyledCity from "./styles/StyledCity"
 import { useHover } from "@uidotdev/usehooks"
-import { selectIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/gameSlice"
+import { selectIslandOneIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/islandOneGameSlice"
 import ResourceCostPopup from "../../Popups/ResourceCostPopup/ResourceCostPopup"
 import { cityCost } from "../../../constants/structures"
 import { selectIslandOneHasResourcesNeeded, islandOneSpendDice } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice"
@@ -55,7 +55,7 @@ const City = (props: CityProps) => {
 
     // Selectors
 
-    const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
+    const gamePhaseBuilding = useAppSelector((state) => selectIslandOneIsGamePhaseBuilding(state))
     const isCityBuilt = useAppSelector(state => selectIslandOneIsStructureBuilt(state, structureId))
     const hasResourcesNeeded = useAppSelector(state => selectIslandOneHasResourcesNeeded(state, cityCost))
     const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectIslandOneHasPrerequisiteStructuresBuilt(state, structureId))

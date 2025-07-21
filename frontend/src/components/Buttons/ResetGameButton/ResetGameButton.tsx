@@ -1,6 +1,6 @@
 import { useAppDispatch } from "../../../store/hooks";
 import { islandOneResetDice } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice";
-import { resetGame } from "../../../store/slices/session/islandOne/gameSlice/gameSlice";
+import { islandOneResetGame } from "../../../store/slices/session/islandOne/gameSlice/islandOneGameSlice";
 import { resetKnights } from "../../../store/slices/session/islandOne/knightSlice/knightSlice";
 import { resetResourceJokers } from "../../../store/slices/session/islandOne/resourceJokerSlice/resourceJokerSlice";
 import { resetScore } from "../../../store/slices/session/islandOne/scoreSlice/scoreSlice";
@@ -28,7 +28,7 @@ const ResetGameButton = (props: ResetGameButtonProps) => {
       return
     }
 
-    dispatch(resetGame());
+    dispatch(islandOneResetGame());
     dispatch(resetKnights());
     dispatch(resetResourceJokers());
     dispatch(islandOneResetStructures());

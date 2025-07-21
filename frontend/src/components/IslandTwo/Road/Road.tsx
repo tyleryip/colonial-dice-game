@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import { GetIslandTwoRoadType } from "../../../constants/mappings"
 import StyledRoad from "./styles/StyledRoad"
 import { useHover } from "@uidotdev/usehooks"
-import { selectIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/gameSlice"
 import ResourceCostPopup from "../../Popups/ResourceCostPopup/ResourceCostPopup"
 import { roadCost } from "../../../constants/structures"
 import { ResourceType } from "../../../constants/resources"
@@ -20,6 +19,7 @@ import useSound from "use-sound"
 import { selectEffectiveVolume } from "../../../store/slices/local/settingsSlice/settingsSlice"
 import { islandTwoBuildStructure, selectIslandTwoHasPrerequisiteStructuresBuilt, selectIslandTwoIsStructureBuilt } from "../../../store/slices/session/islandTwo/structureSlice/islandTwoStructureSlice"
 import { islandTwoSpendDice, selectIslandTwoHasResourcesNeeded } from "../../../store/slices/session/islandTwo/diceSlice/islandTwoDiceSlice"
+import { selectIslandTwoIsGamePhaseBuilding } from "../../../store/slices/session/islandTwo/gameSlice/islandTwoGameSlice"
 
 interface RoadProps {
     id: number // the unique structure id
@@ -74,7 +74,7 @@ const Road = (props: RoadProps) => {
 
     // Selectors
 
-    const gamePhaseBuilding = useAppSelector(state => selectIsGamePhaseBuilding(state))
+    const gamePhaseBuilding = useAppSelector(state => selectIslandTwoIsGamePhaseBuilding(state))
     const isRoadBuilt = useAppSelector(state => selectIslandTwoIsStructureBuilt(state, structureId))
     const hasResourcesNeeded = useAppSelector(state => selectIslandTwoHasResourcesNeeded(state, roadCost))
     const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectIslandTwoHasPrerequisiteStructuresBuilt(state, structureId))

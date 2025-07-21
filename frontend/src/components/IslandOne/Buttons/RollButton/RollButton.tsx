@@ -1,9 +1,9 @@
 import StyledRollButton from "./styles/StyledRollButton";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import {
-  selectIsGamePhaseBuilding,
-  setGamePhase,
-} from "../../../../store/slices/session/islandOne/gameSlice/gameSlice";
+  selectIslandOneIsGamePhaseBuilding,
+  islandOneSetGamePhase,
+} from "../../../../store/slices/session/islandOne/gameSlice/islandOneGameSlice";
 import { GamePhase } from "../../../../constants/enumerations";
 import { islandOneResetDiceLocks, islandOneRollDice } from "../../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice";
 import useSound from "use-sound";
@@ -34,7 +34,7 @@ const RollButton = (props: RollButtonProps) => {
 
   // Selectors
   const gamePhaseBuilding = useAppSelector((state) =>
-    selectIsGamePhaseBuilding(state)
+    selectIslandOneIsGamePhaseBuilding(state)
   );
 
   // Conditional rendering
@@ -55,7 +55,7 @@ const RollButton = (props: RollButtonProps) => {
 
   function handleClick() {
     if (gamePhaseBuilding) {
-      dispatch(setGamePhase(GamePhase.Rolling));
+      dispatch(islandOneSetGamePhase(GamePhase.Rolling));
     }
 
     setTimeout(() => {
@@ -65,7 +65,7 @@ const RollButton = (props: RollButtonProps) => {
       // Need to set game phase to building only after the 3rd roll completes, so the rolling
       // animation doesn't play for locked dice
       if (rollCount == 2) {
-        dispatch(setGamePhase(GamePhase.Building))
+        dispatch(islandOneSetGamePhase(GamePhase.Building))
         dispatch(islandOneResetDiceLocks())
       }
     }, rollDurationMilliseconds);

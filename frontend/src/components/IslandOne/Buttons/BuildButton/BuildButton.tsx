@@ -1,11 +1,11 @@
 import StyledBuildButton from "./styles/StyledBuildButton";
 import {
-  incrementTurn,
-  selectCurrentTurn,
-  selectIsGamePhaseBuilding,
-  selectIsGamePhaseRolling,
-  setGamePhase,
-} from "../../../../store/slices/session/islandOne/gameSlice/gameSlice";
+  islandOneIncrementTurn,
+  selectIslandOneCurrentTurn,
+  selectIslandOneIsGamePhaseBuilding,
+  selectIslandOneIsGamePhaseRolling,
+  islandOneSetGamePhase,
+} from "../../../../store/slices/session/islandOne/gameSlice/islandOneGameSlice";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import { GamePhase } from "../../../../constants/enumerations";
 import { addScore } from "../../../../store/slices/session/islandOne/scoreSlice/scoreSlice";
@@ -39,12 +39,12 @@ const BuildButton = (props: BuildButtonProps) => {
   // Selectors
 
   const gamePhaseRolling = useAppSelector(state =>
-    selectIsGamePhaseRolling(state)
+    selectIslandOneIsGamePhaseRolling(state)
   );
   const gamePhaseBuilding = useAppSelector(state =>
-    selectIsGamePhaseBuilding(state)
+    selectIslandOneIsGamePhaseBuilding(state)
   );
-  const currentTurn = useAppSelector(state => selectCurrentTurn(state))
+  const currentTurn = useAppSelector(state => selectIslandOneCurrentTurn(state))
   const volume = useAppSelector(state => selectEffectiveVolume(state))
 
   // Conditional rendering
@@ -86,15 +86,15 @@ const BuildButton = (props: BuildButtonProps) => {
 
   const handleClick = () => {
     if (gamePhaseRolling) {
-      dispatch(setGamePhase(GamePhase.Building));
+      dispatch(islandOneSetGamePhase(GamePhase.Building));
       dispatch(islandOneResetDiceLocks());
       dispatch(islandOneSetRollCount(3));
     }
 
     if (gamePhaseBuilding) {
-      dispatch(setGamePhase(GamePhase.Rolling));
+      dispatch(islandOneSetGamePhase(GamePhase.Rolling));
       dispatch(addScore());
-      dispatch(incrementTurn());
+      dispatch(islandOneIncrementTurn());
       dispatch(islandOneResetDice());
 
       if (currentTurn >= 14) {

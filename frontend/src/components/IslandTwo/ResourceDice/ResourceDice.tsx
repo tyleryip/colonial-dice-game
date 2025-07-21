@@ -3,10 +3,6 @@ import { DiceValue } from "../../../types/DiceValue";
 import TradingPopup from "../../Popups/TradingPopup/TradingPopup";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import {
-  selectIsGamePhaseBuilding,
-  selectIsGamePhaseRolling,
-} from "../../../store/slices/session/islandOne/gameSlice/gameSlice";
 import { getResourceType, ResourceType } from "../../../constants/resources";
 import { spendResourceJoker } from "../../../store/slices/session/islandOne/resourceJokerSlice/resourceJokerSlice";
 import { ResourceJokerType } from "../../../constants/enumerations";
@@ -31,6 +27,7 @@ import StyledLock from "./styles/StyledLock";
 import lock from "/assets/dice-faces/lock.svg";
 import { SetDicePayload } from "../../../store/slices/session/shared/diceSlice";
 import { islandTwoToggleDiceLock, islandTwoSetDice, islandTwoClearResourceJokerFlag, islandTwoSpendDice, selectIslandTwoResourceJokerFlag, selectIslandTwoWildcardJokerFlag, islandTwoClearWildcardJokerFlag } from "../../../store/slices/session/islandTwo/diceSlice/islandTwoDiceSlice";
+import { selectIslandTwoIsGamePhaseRolling, selectIslandTwoIsGamePhaseBuilding } from "../../../store/slices/session/islandTwo/gameSlice/islandTwoGameSlice";
 
 interface ResourceDiceProps {
   id: number;
@@ -69,10 +66,10 @@ const ResourceDice = (props: ResourceDiceProps) => {
   // Selectors
 
   const gamePhaseRolling = useAppSelector(state =>
-    selectIsGamePhaseRolling(state)
+    selectIslandTwoIsGamePhaseRolling(state)
   );
   const gamePhaseBuilding = useAppSelector(state =>
-    selectIsGamePhaseBuilding(state)
+    selectIslandTwoIsGamePhaseBuilding(state)
   );
   const resourceJokerFlag = useAppSelector(state =>
     selectIslandTwoResourceJokerFlag(state)

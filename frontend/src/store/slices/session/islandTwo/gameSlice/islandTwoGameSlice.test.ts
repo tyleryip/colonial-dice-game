@@ -1,5 +1,5 @@
 import { test, expect } from 'vitest'
-import reducer, { GameState, incrementTurn, resetGame, setGamePhase } from './gameSlice'
+import reducer, { GameState, islandTwoIncrementTurn, islandTwoResetGame, islandTwoSetGamePhase } from './islandTwoGameSlice'
 import { GamePhase } from '../../../../../constants/enumerations'
 
 test('should return the initial state', () => {
@@ -16,7 +16,7 @@ test('should increment turn', () => {
     const previousState = getInitialState()
 
     // Act
-    const result = reducer(previousState, incrementTurn())
+    const result = reducer(previousState, islandTwoIncrementTurn())
 
     // Assert
     expect(result.currentTurn).toEqual(1)
@@ -27,7 +27,7 @@ test('should set game phase', () => {
     const previousState = getInitialState()
 
     // Act
-    const result = reducer(previousState, setGamePhase(GamePhase.Building))
+    const result = reducer(previousState, islandTwoSetGamePhase(GamePhase.Building))
 
     // Assert
     expect(result.currentGamePhase).toEqual(GamePhase.Building)
@@ -41,7 +41,7 @@ test('should reset game', () => {
     }
 
     // Act
-    const result = reducer(previousState, resetGame())
+    const result = reducer(previousState, islandTwoResetGame())
 
     // Assert
     expect(result).toEqual(getInitialState())

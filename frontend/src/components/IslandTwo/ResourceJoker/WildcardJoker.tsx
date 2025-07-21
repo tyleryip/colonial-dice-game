@@ -1,6 +1,5 @@
 import { ResourceJokerType } from "../../../constants/enumerations"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
-import { selectIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/gameSlice"
 import StyledResourceJoker from "./styles/StyledResourceJoker"
 import StyledAsset from "../../Asset/StyledAsset"
 import { useState } from "react"
@@ -24,6 +23,7 @@ import { selectEffectiveVolume } from "../../../store/slices/local/settingsSlice
 import useSound from "use-sound"
 import selectionOpenSound from '/audio/selection_open.wav'
 import selectionCloseSound from '/audio/selection_close.wav'
+import { selectIslandTwoIsGamePhaseBuilding } from "../../../store/slices/session/islandTwo/gameSlice/islandTwoGameSlice"
 
 interface WildcardJokerProps {
     id: number
@@ -57,7 +57,7 @@ const WildcardResourceJoker = (props: WildcardJokerProps) => {
 
     // Selectors
 
-    const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
+    const gamePhaseBuilding = useAppSelector((state) => selectIslandTwoIsGamePhaseBuilding(state))
     // Each resource joker will line up with its corresponding knight (ex. knightId 1 = resourceJokerId 1)
     const resourceJokerAvailable = false
     const resourceJokerIsSpent = false

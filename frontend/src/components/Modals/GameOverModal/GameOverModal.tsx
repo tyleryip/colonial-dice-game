@@ -1,6 +1,6 @@
 import Modal from "react-bootstrap/Modal";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { resetGame, selectIsGamePhaseRolling } from "../../../store/slices/session/islandOne/gameSlice/gameSlice";
+import { islandOneResetGame, selectIslandOneIsGamePhaseRolling } from "../../../store/slices/session/islandOne/gameSlice/islandOneGameSlice";
 import { resetScore, selectAllScoresFilled, selectTotalScore } from "../../../store/slices/session/islandOne/scoreSlice/scoreSlice";
 import PlayAgainButton from "../../Buttons/PlayAgainButton/PlayAgainButton";
 import StyledModalFooter from "../styles/StyledModalFooter";
@@ -25,7 +25,7 @@ const GameOverModal = () => {
 
     // Selectors
 
-    const gamePhaseRolling = useAppSelector(state => selectIsGamePhaseRolling(state))
+    const gamePhaseRolling = useAppSelector(state => selectIslandOneIsGamePhaseRolling(state))
     const allScoresFilled = useAppSelector(state => selectAllScoresFilled(state))
     const totalScore = useAppSelector(state => selectTotalScore(state))
 
@@ -56,7 +56,7 @@ const GameOverModal = () => {
             setLeaderboardName("")
         }
 
-        dispatch(resetGame());
+        dispatch(islandOneResetGame());
         dispatch(resetKnights());
         dispatch(resetResourceJokers());
         dispatch(islandOneResetStructures());

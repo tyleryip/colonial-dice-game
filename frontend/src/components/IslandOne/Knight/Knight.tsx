@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import { buildKnight, selectIsKnightBuilt, selectIsKnightPrerequisiteBuilt } from "../../../store/slices/session/islandOne/knightSlice/knightSlice"
 import { GetIslandOneKnightType } from "../../../constants/mappings"
 import StyledKnight from "./styles/StyledKnight"
-import { selectIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/gameSlice"
+import { selectIslandOneIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/islandOneGameSlice"
 import { useHover } from "@uidotdev/usehooks"
 import ResourceCostPopup from "../../Popups/ResourceCostPopup/ResourceCostPopup"
 import { knightCost } from "../../../constants/knights"
@@ -61,7 +61,7 @@ const Knight = (props: KnightProps) => {
 
     // Selectors
 
-    const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
+    const gamePhaseBuilding = useAppSelector((state) => selectIslandOneIsGamePhaseBuilding(state))
     const isKnightBuilt = useAppSelector(state => selectIsKnightBuilt(state, knightId))
     const hasResourcesNeeded = useAppSelector(state => selectIslandOneHasResourcesNeeded(state, knightCost))
     const hasPrerequisiteBuilt = useAppSelector(state => selectIsKnightPrerequisiteBuilt(state, knightId))

@@ -5,7 +5,7 @@ import { islandOneBuildStructure, selectIslandOneHasPrerequisiteStructuresBuilt,
 import { GetIslandOneRoadType } from "../../../constants/mappings"
 import StyledRoad from "./styles/StyledRoad"
 import { useHover } from "@uidotdev/usehooks"
-import { selectIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/gameSlice"
+import { selectIslandOneIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/islandOneGameSlice"
 import ResourceCostPopup from "../../Popups/ResourceCostPopup/ResourceCostPopup"
 import { roadCost } from "../../../constants/structures"
 import { selectIslandOneHasResourcesNeeded, islandOneSpendDice } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice"
@@ -76,7 +76,7 @@ const Road = (props: RoadProps) => {
 
     // Selectors
 
-    const gamePhaseBuilding = useAppSelector(state => selectIsGamePhaseBuilding(state))
+    const gamePhaseBuilding = useAppSelector(state => selectIslandOneIsGamePhaseBuilding(state))
     const isRoadBuilt = useAppSelector(state => selectIslandOneIsStructureBuilt(state, structureId))
     const hasResourcesNeeded = useAppSelector(state => selectIslandOneHasResourcesNeeded(state, roadCost))
     const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectIslandOneHasPrerequisiteStructuresBuilt(state, structureId))

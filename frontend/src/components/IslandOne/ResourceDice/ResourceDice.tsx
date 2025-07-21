@@ -4,9 +4,9 @@ import TradingPopup from "../../Popups/TradingPopup/TradingPopup";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import {
-  selectIsGamePhaseBuilding,
-  selectIsGamePhaseRolling,
-} from "../../../store/slices/session/islandOne/gameSlice/gameSlice";
+  selectIslandOneIsGamePhaseBuilding,
+  selectIslandOneIsGamePhaseRolling,
+} from "../../../store/slices/session/islandOne/gameSlice/islandOneGameSlice";
 import { getResourceType, ResourceType } from "../../../constants/resources";
 import {
   islandOneToggleDiceLock,
@@ -77,10 +77,10 @@ const ResourceDice = (props: ResourceDiceProps) => {
   // Selectors
 
   const gamePhaseRolling = useAppSelector(state =>
-    selectIsGamePhaseRolling(state)
+    selectIslandOneIsGamePhaseRolling(state)
   );
   const gamePhaseBuilding = useAppSelector(state =>
-    selectIsGamePhaseBuilding(state)
+    selectIslandOneIsGamePhaseBuilding(state)
   );
   const resourceJokerFlag = useAppSelector(state =>
     selectIslandOneResourceJokerFlag(state)

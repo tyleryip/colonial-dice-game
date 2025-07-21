@@ -5,7 +5,6 @@ import { selectIsResourceJokerSpent } from "../../../store/slices/session/island
 import { GetIslandTwoResourceJokerType } from "../../../constants/mappings"
 import StyledResourceJoker from "./styles/StyledResourceJoker"
 import { selectIsKnightBuilt } from "../../../store/slices/session/islandOne/knightSlice/knightSlice"
-import { selectIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/gameSlice"
 import { islandOneClearResourceJokerFlag, selectIslandOneAllDiceSpent, selectIslandOneResourceJokerFlag, selectIslandOneWildcardJokerFlag, islandOneSetResourceJokerFlag } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice"
 import { getResourceType } from "../../../constants/resources"
 import wool_joker_light from "/assets/jokers/light/wool-joker-light.png"
@@ -22,6 +21,7 @@ import selectionOpenSound from '/audio/selection_open.wav'
 import selectionCloseSound from '/audio/selection_close.wav'
 import useSound from "use-sound"
 import { selectEffectiveVolume } from "../../../store/slices/local/settingsSlice/settingsSlice"
+import { selectIslandTwoIsGamePhaseBuilding } from "../../../store/slices/session/islandTwo/gameSlice/islandTwoGameSlice"
 
 interface ResourceJokerProps {
     id: ResourceJokerType
@@ -55,7 +55,7 @@ const ResourceJoker = (props: ResourceJokerProps) => {
 
     // Selectors
 
-    const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
+    const gamePhaseBuilding = useAppSelector((state) => selectIslandTwoIsGamePhaseBuilding(state))
     // Each resource joker will line up with its corresponding knight (ex. knightId 1 = resourceJokerId 1)
     const resourceJokerAvailable = useAppSelector(state => selectIsKnightBuilt(state, resourceJokerId))
     const resourceJokerIsSpent = useAppSelector(state => selectIsResourceJokerSpent(state, resourceJokerId))

@@ -2,7 +2,6 @@ import StyledAsset from "../../Asset/StyledAsset"
 import { IconType } from "../../../constants/enumerations"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import StyledSettlement from "./styles/StyledSettlement"
-import { selectIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/gameSlice"
 import { useHover } from "@uidotdev/usehooks"
 import ResourceCostPopup from "../../Popups/ResourceCostPopup/ResourceCostPopup"
 import { settlementCost } from "../../../constants/structures"
@@ -15,6 +14,7 @@ import buildSound from '/audio/build.wav'
 import useSound from "use-sound"
 import { islandTwoBuildStructure, selectIslandTwoHasPrerequisiteStructuresBuilt, selectIslandTwoIsStructureBuilt } from "../../../store/slices/session/islandTwo/structureSlice/islandTwoStructureSlice"
 import { islandTwoSpendDice, selectIslandTwoHasResourcesNeeded } from "../../../store/slices/session/islandTwo/diceSlice/islandTwoDiceSlice"
+import { selectIslandTwoIsGamePhaseBuilding } from "../../../store/slices/session/islandTwo/gameSlice/islandTwoGameSlice"
 
 interface SettlementProps {
     id: number,
@@ -33,7 +33,7 @@ const Settlement = (props: SettlementProps) => {
 
     // Selectors
 
-    const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
+    const gamePhaseBuilding = useAppSelector((state) => selectIslandTwoIsGamePhaseBuilding(state))
     const isSettlementBuilt = useAppSelector(state => selectIslandTwoIsStructureBuilt(state, structureId))
     const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectIslandTwoHasPrerequisiteStructuresBuilt(state, structureId))
     const hasResourcesNeeded = useAppSelector(state => selectIslandTwoHasResourcesNeeded(state, settlementCost))

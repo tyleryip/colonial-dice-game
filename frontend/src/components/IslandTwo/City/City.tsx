@@ -3,7 +3,6 @@ import { IconType } from "../../../constants/enumerations"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import StyledCity from "./styles/StyledCity"
 import { useHover } from "@uidotdev/usehooks"
-import { selectIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/gameSlice"
 import ResourceCostPopup from "../../Popups/ResourceCostPopup/ResourceCostPopup"
 import { cityCost } from "../../../constants/structures"
 import { ResourceType } from "../../../constants/resources"
@@ -15,6 +14,7 @@ import buildSound from '/audio/build.wav'
 import useSound from "use-sound"
 import { islandTwoSpendDice, selectIslandTwoHasResourcesNeeded } from "../../../store/slices/session/islandTwo/diceSlice/islandTwoDiceSlice"
 import { islandTwoBuildStructure, selectIslandTwoHasPrerequisiteStructuresBuilt, selectIslandTwoIsStructureBuilt } from "../../../store/slices/session/islandTwo/structureSlice/islandTwoStructureSlice"
+import { selectIslandTwoIsGamePhaseBuilding } from "../../../store/slices/session/islandTwo/gameSlice/islandTwoGameSlice"
 
 interface CityProps {
     id: number,
@@ -33,7 +33,7 @@ const City = (props: CityProps) => {
 
     // Selectors
 
-    const gamePhaseBuilding = useAppSelector(state => selectIsGamePhaseBuilding(state))
+    const gamePhaseBuilding = useAppSelector(state => selectIslandTwoIsGamePhaseBuilding(state))
     const isCityBuilt = useAppSelector(state => selectIslandTwoIsStructureBuilt(state, structureId))
     const hasResourcesNeeded = useAppSelector(state => selectIslandTwoHasResourcesNeeded(state, cityCost))
     const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectIslandTwoHasPrerequisiteStructuresBuilt(state, structureId))
