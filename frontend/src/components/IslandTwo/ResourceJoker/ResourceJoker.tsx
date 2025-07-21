@@ -4,8 +4,6 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import { selectIsResourceJokerSpent } from "../../../store/slices/session/islandOne/resourceJokerSlice/resourceJokerSlice"
 import { GetIslandTwoResourceJokerType } from "../../../constants/mappings"
 import StyledResourceJoker from "./styles/StyledResourceJoker"
-import { selectIsKnightBuilt } from "../../../store/slices/session/islandOne/knightSlice/knightSlice"
-import { islandOneClearResourceJokerFlag, selectIslandOneAllDiceSpent, selectIslandOneResourceJokerFlag, selectIslandOneWildcardJokerFlag, islandOneSetResourceJokerFlag } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice"
 import { getResourceType } from "../../../constants/resources"
 import wool_joker_light from "/assets/jokers/light/wool-joker-light.png"
 import wheat_joker_light from "/assets/jokers/light/wheat-joker-light.png"
@@ -22,6 +20,8 @@ import selectionCloseSound from '/audio/selection_close.wav'
 import useSound from "use-sound"
 import { selectEffectiveVolume } from "../../../store/slices/local/settingsSlice/settingsSlice"
 import { selectIslandTwoIsGamePhaseBuilding } from "../../../store/slices/session/islandTwo/gameSlice/islandTwoGameSlice"
+import { selectIslandTwoIsKnightBuilt } from "../../../store/slices/session/islandTwo/knightSlice/islandTwoKnightSlice"
+import { islandTwoClearResourceJokerFlag, islandTwoSetResourceJokerFlag, selectIslandTwoAllDiceSpent, selectIslandTwoResourceJokerFlag, selectIslandTwoWildcardJokerFlag } from "../../../store/slices/session/islandTwo/diceSlice/islandTwoDiceSlice"
 
 interface ResourceJokerProps {
     id: ResourceJokerType
@@ -57,11 +57,11 @@ const ResourceJoker = (props: ResourceJokerProps) => {
 
     const gamePhaseBuilding = useAppSelector((state) => selectIslandTwoIsGamePhaseBuilding(state))
     // Each resource joker will line up with its corresponding knight (ex. knightId 1 = resourceJokerId 1)
-    const resourceJokerAvailable = useAppSelector(state => selectIsKnightBuilt(state, resourceJokerId))
+    const resourceJokerAvailable = useAppSelector(state => selectIslandTwoIsKnightBuilt(state, resourceJokerId))
     const resourceJokerIsSpent = useAppSelector(state => selectIsResourceJokerSpent(state, resourceJokerId))
-    const resourceJokerFlag = useAppSelector(state => selectIslandOneResourceJokerFlag(state))
-    const wildcardJokerFlag = useAppSelector(state => selectIslandOneWildcardJokerFlag(state))
-    const allDiceSpent = useAppSelector(state => selectIslandOneAllDiceSpent(state))
+    const resourceJokerFlag = useAppSelector(state => selectIslandTwoResourceJokerFlag(state))
+    const wildcardJokerFlag = useAppSelector(state => selectIslandTwoWildcardJokerFlag(state))
+    const allDiceSpent = useAppSelector(state => selectIslandTwoAllDiceSpent(state))
     const volume = useAppSelector(state => selectEffectiveVolume(state))
 
     // Can spend conditions
@@ -127,13 +127,13 @@ const ResourceJoker = (props: ResourceJokerProps) => {
     const handleClick = () => {
         if (canSpendResourceJoker) {
             playSelectionOpenSound()
-            dispatch(islandOneSetResourceJokerFlag(resourceJokerId))
+            dispatch(islandTwoSetResourceJokerFlag(resourceJokerId))
             return
         }
 
         if (canCancelResourceJoker) {
             playSelectionCloseSound()
-            dispatch(islandOneClearResourceJokerFlag())
+            dispatch(islandTwoClearResourceJokerFlag())
             return
         }
     }

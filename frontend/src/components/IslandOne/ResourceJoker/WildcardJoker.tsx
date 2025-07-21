@@ -2,7 +2,7 @@ import { IconType, ResourceJokerType } from "../../../constants/enumerations"
 import { GetIslandOneResourceJokerType } from "../../../constants/mappings"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import { selectIslandOneIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/islandOneGameSlice"
-import { selectIsKnightBuilt } from "../../../store/slices/session/islandOne/knightSlice/knightSlice"
+import { selectIslandOneIsKnightBuilt } from "../../../store/slices/session/islandOne/knightSlice/islandOneKnightSlice"
 import { selectIsResourceJokerSpent } from "../../../store/slices/session/islandOne/resourceJokerSlice/resourceJokerSlice"
 import StyledResourceJoker from "./styles/StyledResourceJoker"
 import StyledAsset from "../../Asset/StyledAsset"
@@ -59,7 +59,7 @@ const WildcardResourceJoker = () => {
 
     const gamePhaseBuilding = useAppSelector((state) => selectIslandOneIsGamePhaseBuilding(state))
     // Each resource joker will line up with its corresponding knight (ex. knightId 1 = resourceJokerId 1)
-    const resourceJokerAvailable = useAppSelector(state => selectIsKnightBuilt(state, resourceJokerId))
+    const resourceJokerAvailable = useAppSelector(state => selectIslandOneIsKnightBuilt(state, resourceJokerId))
     const resourceJokerIsSpent = useAppSelector(state => selectIsResourceJokerSpent(state, resourceJokerId))
     const resourceJokerFlag = useAppSelector(state => selectIslandOneResourceJokerFlag(state))
     const wildcardJokerFlag = useAppSelector(state => selectIslandOneWildcardJokerFlag(state))

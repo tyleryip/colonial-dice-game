@@ -1,7 +1,7 @@
 import StyledAsset from "../../Asset/StyledAsset"
 import { IconType, KnightType } from "../../../constants/enumerations"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
-import { buildKnight, selectIsKnightBuilt, selectIsKnightPrerequisiteBuilt } from "../../../store/slices/session/islandOne/knightSlice/knightSlice"
+import { islandOneBuildKnight, selectIslandOneIsKnightBuilt, selectIslandOneIsKnightPrerequisiteBuilt } from "../../../store/slices/session/islandOne/knightSlice/islandOneKnightSlice"
 import { GetIslandOneKnightType } from "../../../constants/mappings"
 import StyledKnight from "./styles/StyledKnight"
 import { selectIslandOneIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/islandOneGameSlice"
@@ -62,9 +62,9 @@ const Knight = (props: KnightProps) => {
     // Selectors
 
     const gamePhaseBuilding = useAppSelector((state) => selectIslandOneIsGamePhaseBuilding(state))
-    const isKnightBuilt = useAppSelector(state => selectIsKnightBuilt(state, knightId))
+    const isKnightBuilt = useAppSelector(state => selectIslandOneIsKnightBuilt(state, knightId))
     const hasResourcesNeeded = useAppSelector(state => selectIslandOneHasResourcesNeeded(state, knightCost))
-    const hasPrerequisiteBuilt = useAppSelector(state => selectIsKnightPrerequisiteBuilt(state, knightId))
+    const hasPrerequisiteBuilt = useAppSelector(state => selectIslandOneIsKnightPrerequisiteBuilt(state, knightId))
     const volume = useAppSelector(state => selectEffectiveVolume(state))
 
     // Built and can build conditions
@@ -103,7 +103,7 @@ const Knight = (props: KnightProps) => {
         if (canBuildKnight) {
             playBuildSound();
 
-            dispatch(buildKnight(knightId))
+            dispatch(islandOneBuildKnight(knightId))
 
             knightCost.forEach((resourceType: ResourceType) => {
                 dispatch(islandOneSpendDice(JSON.stringify(resourceType)))

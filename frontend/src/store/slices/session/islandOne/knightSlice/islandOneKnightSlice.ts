@@ -1,17 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { RootState } from "../../../../store"
 import { GetKnightPrerequisite } from "../../../../../constants/knights"
-
-export interface KnightState {
-    isBuilt: boolean[]
-}
+import { KnightState } from "../../shared/knightSlice"
 
 const initialState: KnightState = {
     isBuilt: new Array<boolean>(6).fill(false)
 }
 
-export const knightSlice = createSlice({
-    name: 'knight',
+export const islandOneKnightSlice = createSlice({
+    name: 'islandOneKnight',
     initialState: initialState,
     reducers: {
         /**
@@ -19,7 +16,7 @@ export const knightSlice = createSlice({
          * @param state 
          * @param action 
          */
-        buildKnight: (state, action: PayloadAction<number>) => {
+        islandOneBuildKnight: (state, action: PayloadAction<number>) => {
             const knightId = action.payload
             validateKnightId(knightId)
             state.isBuilt[knightId] = true
@@ -28,26 +25,29 @@ export const knightSlice = createSlice({
          * When the game is reset so the board is restored to initial state
          * @param state 
          */
-        resetKnights: (state) => {
+        islandOneResetKnights: (state) => {
             state.isBuilt = initialState.isBuilt
         }
     }
 })
 
-export default knightSlice.reducer
+export default islandOneKnightSlice.reducer
 
 // Actions
 
-export const { buildKnight, resetKnights } = knightSlice.actions;
+export const {
+    islandOneBuildKnight,
+    islandOneResetKnights
+} = islandOneKnightSlice.actions;
 
 // Selectors
 
-export const selectIsKnightBuilt = (state: RootState, knightId: number) => {
+export const selectIslandOneIsKnightBuilt = (state: RootState, knightId: number) => {
     validateKnightId(knightId)
     return state.session.islandOne.knight.isBuilt[knightId]
 }
 
-export const selectIsKnightPrerequisiteBuilt = (state: RootState, knightId: number) => {
+export const selectIslandOneIsKnightPrerequisiteBuilt = (state: RootState, knightId: number) => {
     validateKnightId(knightId)
     const knightPrerequisiteId = GetKnightPrerequisite(knightId)
     return knightPrerequisiteId == null

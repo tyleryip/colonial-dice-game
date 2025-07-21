@@ -9,7 +9,7 @@ import StyledGameOverModalBody from "./styles/StyledGameOverModalBody";
 import { useState } from "react";
 import { addLeaderboardEntry, AddLeaderboardEntryPayload } from "../../../store/slices/local/leaderboardSlice/leaderboardSlice";
 import { islandOneResetDice } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice";
-import { resetKnights } from "../../../store/slices/session/islandOne/knightSlice/knightSlice";
+import { islandOneResetKnights } from "../../../store/slices/session/islandOne/knightSlice/islandOneKnightSlice";
 import { resetResourceJokers } from "../../../store/slices/session/islandOne/resourceJokerSlice/resourceJokerSlice";
 import { islandOneResetStructures } from "../../../store/slices/session/islandOne/structureSlice/islandOneStructureSlice";
 import StyledLeaderboardNameInput from "./styles/StyledLeaderboardNameInput";
@@ -57,7 +57,7 @@ const GameOverModal = () => {
         }
 
         dispatch(islandOneResetGame());
-        dispatch(resetKnights());
+        dispatch(islandOneResetKnights());
         dispatch(resetResourceJokers());
         dispatch(islandOneResetStructures());
         dispatch(resetScore());
