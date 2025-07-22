@@ -4,7 +4,7 @@ import StyledButtonTray from "./styles/StyledButtonTray"
 import StyledDiceTray from "./styles/StyledDiceTray"
 import StyledGameControlsContainer from "./styles/StyledGameControlsContainer"
 import { useAppSelector } from "../../../store/hooks"
-import { selectIslandOneDice, selectIslandOneResourceJokerFlag, selectIslandOneRollCount, selectIslandOneWildcardJokerFlag } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice"
+import { selectIslandOneDice, selectIslandOneResourceJokerFlag, selectIslandOneRollCount } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice"
 import RollButton from "../Buttons/RollButton/RollButton"
 import BuildButton from "../Buttons/BuildButton/BuildButton"
 import { selectIslandOneIsGamePhaseBuilding, selectIslandOneIsGamePhaseRolling } from "../../../store/slices/session/islandOne/gameSlice/islandOneGameSlice"
@@ -25,7 +25,6 @@ const GameControlsContainer = () => {
     const gamePhaseRolling = useAppSelector(state => selectIslandOneIsGamePhaseRolling(state))
     const gamePhaseBuilding = useAppSelector(state => selectIslandOneIsGamePhaseBuilding(state))
     const resourceJokerFlag = useAppSelector(state => selectIslandOneResourceJokerFlag(state))
-    const wildcardJokerFlag = useAppSelector(state => selectIslandOneWildcardJokerFlag(state))
 
     // Conditional rendering
 
@@ -37,7 +36,6 @@ const GameControlsContainer = () => {
     const buildButtonDisabled =
         (gamePhaseRolling && rollCount == 0)
         || resourceJokerFlag != null
-        || wildcardJokerFlag != null
 
     // Tradeable = more than 1 unspent gold dice
     const isTradeable = dice

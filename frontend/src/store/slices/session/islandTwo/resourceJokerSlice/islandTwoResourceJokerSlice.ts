@@ -1,11 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { RootState } from "../../../../store"
+import { ResourceJokerState } from "../../shared/resourceJokerSlice"
 
-export interface IslandTwoResourceJokerState {
-    activeResourceJoker: number | null
-}
-
-const initialState: IslandTwoResourceJokerState = {
+const initialState: ResourceJokerState = {
     activeResourceJoker: null
 }
 

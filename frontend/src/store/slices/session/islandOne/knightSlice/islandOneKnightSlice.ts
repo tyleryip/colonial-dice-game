@@ -1,13 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { RootState } from "../../../../store"
 import { GetKnightPrerequisite } from "../../../../../constants/knights"
+import { KnightState } from "../../shared/knightSlice"
 
-export interface IslandOneKnightState {
-    isBuilt: boolean[]
-}
-
-const initialState: IslandOneKnightState = {
+const initialState: KnightState = {
     isBuilt: new Array<boolean>(6).fill(false),
+    isSpent: new Array<boolean>(6).fill(false)
 }
 
 export const islandOneKnightSlice = createSlice({
@@ -30,6 +28,16 @@ export const islandOneKnightSlice = createSlice({
          */
         islandOneResetKnights: (state) => {
             state.isBuilt = initialState.isBuilt
+        },
+        /**
+         * When a user spends the resource joker associated with this knight
+         * @param state 
+         * @param action 
+         */
+        islandOneSpendKnight: (state, action: PayloadAction<number>) => {
+            const knightId = action.payload
+            validateKnightId(knightId)
+            state.isSpent[knightId] = true
         }
     }
 })
@@ -40,7 +48,8 @@ export default islandOneKnightSlice.reducer
 
 export const {
     islandOneBuildKnight,
-    islandOneResetKnights
+    islandOneResetKnights,
+    islandOneSpendKnight
 } = islandOneKnightSlice.actions;
 
 // Selectors
@@ -48,6 +57,11 @@ export const {
 export const selectIslandOneIsKnightBuilt = (state: RootState, knightId: number) => {
     validateKnightId(knightId)
     return state.session.islandOne.knight.isBuilt[knightId]
+}
+
+export const selectIslandOneIsKnightSpent = (state: RootState, knightId: number) => {
+    validateKnightId(knightId)
+    return state.session.islandOne.knight.isSpent[knightId]
 }
 
 export const selectIslandOneIsKnightPrerequisiteBuilt = (state: RootState, knightId: number) => {

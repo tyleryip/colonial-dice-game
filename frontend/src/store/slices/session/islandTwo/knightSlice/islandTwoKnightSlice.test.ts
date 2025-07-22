@@ -1,5 +1,6 @@
 import { test, expect } from 'vitest'
-import reducer, { islandTwoBuildKnight, islandTwoResetKnights, islandTwoSpendKnight, IslandTwoKnightState } from './islandTwoKnightSlice'
+import reducer, { islandTwoBuildKnight, islandTwoResetKnights, islandTwoSpendKnight } from './islandTwoKnightSlice'
+import { KnightState } from '../../shared/knightSlice'
 
 test('should return the initial state', () => {
     // Act
@@ -23,7 +24,7 @@ test('should build knight', () => {
 
 test('should reset knights', () => {
     // Arrange
-    const previousState: IslandTwoKnightState = {
+    const previousState: KnightState = {
         isBuilt: [false, false, true, true, false, false],
         isSpent: [true, true, true, true, false, true]
     }
@@ -69,7 +70,7 @@ test('should spend first unspent knight', () => {
 
 // Helper functions
 
-const getInitialState = (): IslandTwoKnightState => {
+const getInitialState = (): KnightState => {
     return {
         isBuilt: new Array(9).fill(false),
         isSpent: new Array(9).fill(false)

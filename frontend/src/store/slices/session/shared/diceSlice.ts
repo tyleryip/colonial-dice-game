@@ -7,8 +7,7 @@ import { DiceValue } from "../../../../types/DiceValue"
 export interface DiceState {
     dice: Dice[],
     rollCount: number,
-    resourceJokerFlag: number | null,
-    wildcardJokerFlag: number | null
+    resourceJokerFlag: number | null
 }
 
 // Action payloads

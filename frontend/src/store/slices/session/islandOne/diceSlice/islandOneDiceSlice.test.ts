@@ -1,5 +1,5 @@
 import { expect, test } from "vitest"
-import reducer, { islandOneClearResourceJokerFlag, islandOneResetDice, islandOneResetDiceLocks, islandOneRollDice, islandOneSetDice, islandOneSetDiceSpent, islandOneSetResourceJokerFlag, islandOneSetRollCount, islandOneSetWildcardJokerFlag, islandOneSpendDice, islandOneToggleDiceLock } from "./islandOneDiceSlice"
+import reducer, { islandOneClearResourceJokerFlag, islandOneResetDice, islandOneResetDiceLocks, islandOneRollDice, islandOneSetDice, islandOneSetDiceSpent, islandOneSetResourceJokerFlag, islandOneSetRollCount, islandOneSpendDice, islandOneToggleDiceLock } from "./islandOneDiceSlice"
 import { ResourceType } from "../../../../../constants/resources"
 import { DiceState } from "../../shared/diceSlice"
 
@@ -28,27 +28,6 @@ test('should clear resource joker flag', () => {
         }),
         rollCount: 0,
         resourceJokerFlag: null,
-        wildcardJokerFlag: null
-    })
-})
-
-test('should clear wildcard joker flag', () => {
-    // Arrange
-    const previousState = getInitialState()
-
-    // Act
-    const result = reducer(previousState, islandOneClearResourceJokerFlag())
-
-    // Assert
-    expect(result).toEqual({
-        dice: new Array(6).fill({
-            value: null,
-            locked: false,
-            spent: false
-        }),
-        rollCount: 0,
-        resourceJokerFlag: null,
-        wildcardJokerFlag: null
     })
 })
 
@@ -149,8 +128,7 @@ test('should roll all dice except locked', () => {
             }
         ],
         rollCount: 2,
-        resourceJokerFlag: null,
-        wildcardJokerFlag: null
+        resourceJokerFlag: null
     }
 
     // Act
@@ -205,17 +183,6 @@ test('should set resource joker flag', () => {
 
     // Assert
     expect(result.resourceJokerFlag).toEqual(0)
-})
-
-test('should set wildcard joker flag', () => {
-    // Arrange
-    const previousState = getInitialState()
-
-    // Act
-    const result = reducer(previousState, islandOneSetWildcardJokerFlag(0))
-
-    // Assert
-    expect(result.wildcardJokerFlag).toEqual(0)
 })
 
 test('should spend dice', () => {
@@ -374,7 +341,6 @@ const getInitialState = (): DiceState => {
             spent: false
         }),
         rollCount: 0,
-        resourceJokerFlag: null,
-        wildcardJokerFlag: null
+        resourceJokerFlag: null
     }
 }

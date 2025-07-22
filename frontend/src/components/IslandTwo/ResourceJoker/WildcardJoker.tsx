@@ -51,7 +51,7 @@ const WildcardResourceJoker = (props: WildcardJokerProps) => {
     const gamePhaseBuilding = useAppSelector((state) => selectIslandTwoIsGamePhaseBuilding(state))
     const knightsBuilt = useAppSelector(state => selectIslandTwoKnightsBuiltCount(state, knightIds))
     const knightsSpent = useAppSelector(state => selectIslandTwoKnightsSpentCount(state, knightIds))
-    const activeResourceJokerId = useAppSelector(state => selectIslandTwoActiveResourceJoker(state))
+    const activeResourceJoker = useAppSelector(state => selectIslandTwoActiveResourceJoker(state))
     const resourceJokerFlag = useAppSelector(state => selectIslandTwoResourceJokerFlag(state))
     const allDiceSpent = useAppSelector(state => selectIslandTwoAllDiceSpent(state))
     const volume = useAppSelector(state => selectEffectiveVolume(state))
@@ -64,19 +64,19 @@ const WildcardResourceJoker = (props: WildcardJokerProps) => {
         gamePhaseBuilding
         && resourceJokerAvailable
         && resourceJokerFlag == null
-        && activeResourceJokerId == null
+        && activeResourceJoker == null
         && !allDiceSpent
 
     const canCancelWildcardJoker =
         gamePhaseBuilding
         && resourceJokerAvailable
         && resourceJokerFlag != null
-        && activeResourceJokerId == resourceJokerId
+        && activeResourceJoker == resourceJokerId
 
     // Conditional rendering
 
     const icon = (): string => {
-        if (activeResourceJokerId == resourceJokerId && resourceJokerFlag != null) {
+        if (activeResourceJoker == resourceJokerId && resourceJokerFlag != null) {
             return resourceJokerIconsLight[resourceJokerFlag];
         }
 
@@ -133,9 +133,9 @@ const WildcardResourceJoker = (props: WildcardJokerProps) => {
     const handleClick = () => {
         if (canSpendWildcardJoker) {
             if (!tradingPopupOpen) {
+                dispatch(islandTwoSetActiveResourceJoker(resourceJokerId))
                 playSelectionOpenSound();
                 setTradingPopupOpen(true)
-                dispatch(islandTwoSetActiveResourceJoker(resourceJokerId))
             }
         }
 
@@ -173,7 +173,7 @@ const WildcardResourceJoker = (props: WildcardJokerProps) => {
                 $pointer={canSpendWildcardJoker || canCancelWildcardJoker}
                 $pulse={canSpendWildcardJoker || canCancelWildcardJoker}
                 $pulseDurationSeconds={pulseDurationSeconds()}
-                $pending={activeResourceJokerId == resourceJokerId}>
+                $pending={activeResourceJoker == resourceJokerId}>
                 <StyledAsset
                     src={icon()}
                     alt={`Resource joker ${ResourceJokerType.Wildcard}`} />

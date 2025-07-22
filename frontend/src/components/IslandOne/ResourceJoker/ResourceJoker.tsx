@@ -3,9 +3,9 @@ import { IconType, ResourceJokerType } from "../../../constants/enumerations"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import { GetIslandOneResourceJokerType } from "../../../constants/mappings"
 import StyledResourceJoker from "./styles/StyledResourceJoker"
-import { selectIslandOneIsKnightBuilt } from "../../../store/slices/session/islandOne/knightSlice/islandOneKnightSlice"
+import { selectIslandOneIsKnightBuilt, selectIslandOneIsKnightSpent } from "../../../store/slices/session/islandOne/knightSlice/islandOneKnightSlice"
 import { selectIslandOneIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/islandOneGameSlice"
-import { islandOneClearResourceJokerFlag, selectIslandOneAllDiceSpent, selectIslandOneResourceJokerFlag, selectIslandOneWildcardJokerFlag, islandOneSetResourceJokerFlag } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice"
+import { islandOneClearResourceJokerFlag, selectIslandOneAllDiceSpent, selectIslandOneResourceJokerFlag, islandOneSetResourceJokerFlag } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice"
 import { getResourceType } from "../../../constants/resources"
 import wool_joker_light from "/assets/jokers/light/wool-joker-light.png"
 import wheat_joker_light from "/assets/jokers/light/wheat-joker-light.png"
@@ -21,7 +21,7 @@ import selectionOpenSound from '/audio/selection_open.wav'
 import selectionCloseSound from '/audio/selection_close.wav'
 import useSound from "use-sound"
 import { selectEffectiveVolume } from "../../../store/slices/local/settingsSlice/settingsSlice"
-import { selectIslandOneIsResourceJokerSpent } from "../../../store/slices/session/islandOne/resourceJokerSlice/islandOneResourceJokerSlice"
+import { islandOneResetActiveResourceJoker, islandOneSetActiveResourceJoker, selectIslandOneActiveResourceJoker } from "../../../store/slices/session/islandOne/resourceJokerSlice/islandOneResourceJokerSlice"
 
 interface ResourceJokerProps {
     id: ResourceJokerType
@@ -56,32 +56,32 @@ const ResourceJoker = (props: ResourceJokerProps) => {
     // Selectors
 
     const gamePhaseBuilding = useAppSelector((state) => selectIslandOneIsGamePhaseBuilding(state))
-    // Each resource joker will line up with its corresponding knight (ex. knightId 1 = resourceJokerId 1)
-    const resourceJokerAvailable = useAppSelector(state => selectIslandOneIsKnightBuilt(state, resourceJokerId))
-    const resourceJokerIsSpent = useAppSelector(state => selectIslandOneIsResourceJokerSpent(state, resourceJokerId))
+    const isKnightBuilt = useAppSelector(state => selectIslandOneIsKnightBuilt(state, resourceJokerId))
+    const isKnightSpent = useAppSelector(state => selectIslandOneIsKnightSpent(state, resourceJokerId))
+    const activeResourceJokerId = useAppSelector(state => selectIslandOneActiveResourceJoker(state))
     const resourceJokerFlag = useAppSelector(state => selectIslandOneResourceJokerFlag(state))
-    const wildcardJokerFlag = useAppSelector(state => selectIslandOneWildcardJokerFlag(state))
     const allDiceSpent = useAppSelector(state => selectIslandOneAllDiceSpent(state))
     const volume = useAppSelector(state => selectEffectiveVolume(state))
 
     // Can spend conditions
 
+    const resourceJokerAvailable = isKnightBuilt && !isKnightSpent
+
     const canSpendResourceJoker =
         gamePhaseBuilding
-        && !resourceJokerIsSpent
         && resourceJokerAvailable
         && resourceJokerFlag == null
-        && wildcardJokerFlag == null
+        && activeResourceJokerId == null
         && !allDiceSpent
 
     const canCancelResourceJoker =
         gamePhaseBuilding
-        && !resourceJokerIsSpent
-        && resourceJokerFlag == resourceJokerId
+        && resourceJokerAvailable
+        && activeResourceJokerId == resourceJokerId
 
     // Conditional rendering
 
-    const iconType = resourceJokerIsSpent
+    const iconType = isKnightSpent
         ? IconType.Dark
         : IconType.Light
 
@@ -128,12 +128,14 @@ const ResourceJoker = (props: ResourceJokerProps) => {
         if (canSpendResourceJoker) {
             playSelectionOpenSound()
             dispatch(islandOneSetResourceJokerFlag(resourceJokerId))
+            dispatch(islandOneSetActiveResourceJoker(resourceJokerId))
             return
         }
 
         if (canCancelResourceJoker) {
             playSelectionCloseSound()
             dispatch(islandOneClearResourceJokerFlag())
+            dispatch(islandOneResetActiveResourceJoker())
             return
         }
     }

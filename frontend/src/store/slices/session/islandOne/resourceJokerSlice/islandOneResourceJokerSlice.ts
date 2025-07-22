@@ -1,12 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { RootState } from "../../../../store"
+import { ResourceJokerState } from "../../shared/resourceJokerSlice"
 
-export interface IslandOneResourceJokerState {
-    isSpent: boolean[]
-}
-
-const initialState: IslandOneResourceJokerState = {
-    isSpent: new Array<boolean>(6).fill(false)
+const initialState: ResourceJokerState = {
+    activeResourceJoker: null
 }
 
 export const islandOneResourceJokerSlice = createSlice({
@@ -14,21 +11,21 @@ export const islandOneResourceJokerSlice = createSlice({
     initialState: initialState,
     reducers: {
         /**
-         * When the game is reset so the board is restored to initial state
-         * @param state 
-        */
-        islandOneResetResourceJokers: (state) => {
-            state.isSpent = initialState.isSpent
-        },
-        /**
-         * When the user spends a resource joker
+         * When the user clicks on a resource joker to use it
          * @param state 
          * @param action 
          */
-        islandOneSpendResourceJoker: (state, action: PayloadAction<number>) => {
+        islandOneSetActiveResourceJoker: (state, action: PayloadAction<number>) => {
             const resourceJokerId = action.payload
             validateResourceJokerId(resourceJokerId)
-            state.isSpent[resourceJokerId] = true
+            state.activeResourceJoker = action.payload
+        },
+        /**
+         * When the user cancels or spends the resource joker
+         * @param state 
+         */
+        islandOneResetActiveResourceJoker: (state) => {
+            state.activeResourceJoker = null
         }
     }
 })
@@ -38,15 +35,14 @@ export default islandOneResourceJokerSlice.reducer;
 // Action 
 
 export const {
-    islandOneResetResourceJokers,
-    islandOneSpendResourceJoker
+    islandOneResetActiveResourceJoker,
+    islandOneSetActiveResourceJoker
 } = islandOneResourceJokerSlice.actions;
 
 // Selectors
 
-export const selectIslandOneIsResourceJokerSpent = (state: RootState, resourceJokerId: number) => {
-    validateResourceJokerId(resourceJokerId)
-    return state.session.islandOne.resourceJoker.isSpent[resourceJokerId];
+export const selectIslandOneActiveResourceJoker = (state: RootState) => {
+    return state.session.islandOne.resourceJoker.activeResourceJoker;
 }
 
 // Helper functions

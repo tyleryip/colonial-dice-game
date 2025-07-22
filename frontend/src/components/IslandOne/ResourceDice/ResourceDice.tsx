@@ -14,12 +14,7 @@ import {
   islandOneSetDice,
   islandOneClearResourceJokerFlag,
   islandOneSpendDice,
-  selectIslandOneWildcardJokerFlag,
-  islandOneClearWildcardJokerFlag,
 } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice";
-import { islandOneSpendResourceJoker } from "../../../store/slices/session/islandOne/resourceJokerSlice/islandOneResourceJokerSlice";
-import { ResourceJokerType } from "../../../constants/enumerations";
-import { GetIslandOneResourceJokerType } from "../../../constants/mappings";
 import tradeGoldSound from "/audio/trade_gold.wav"
 import lockSound from "/audio/lock.wav";
 import unlockSound from "/audio/unlock.wav";
@@ -39,6 +34,8 @@ import StyledResourceDiceFace from "./styles/StyledResourceDiceFace";
 import StyledLock from "./styles/StyledLock";
 import lock from "/assets/dice-faces/lock.svg";
 import { SetDicePayload } from "../../../store/slices/session/shared/diceSlice";
+import { islandOneResetActiveResourceJoker, selectIslandOneActiveResourceJoker } from "../../../store/slices/session/islandOne/resourceJokerSlice/islandOneResourceJokerSlice";
+import { islandOneSpendKnight } from "../../../store/slices/session/islandOne/knightSlice/islandOneKnightSlice";
 
 interface ResourceDiceProps {
   id: number;
@@ -85,9 +82,9 @@ const ResourceDice = (props: ResourceDiceProps) => {
   const resourceJokerFlag = useAppSelector(state =>
     selectIslandOneResourceJokerFlag(state)
   );
-  const wildcardJokerFlag = useAppSelector(state =>
-    selectIslandOneWildcardJokerFlag(state)
-  );
+  const activeResourceJoker = useAppSelector(state =>
+    selectIslandOneActiveResourceJoker(state)
+  )
   const volume = useAppSelector(state =>
     selectEffectiveVolume(state)
   );
@@ -101,21 +98,20 @@ const ResourceDice = (props: ResourceDiceProps) => {
     isTradeable;
 
   const canSetWithResourceJoker =
-    gamePhaseBuilding && resourceJokerFlag != null && !isSpent;
-
-  const canSetWithWildcardJoker =
-    gamePhaseBuilding && wildcardJokerFlag != null && !isSpent;
+    gamePhaseBuilding &&
+    resourceJokerFlag != null &&
+    activeResourceJoker != null &&
+    !isSpent;
 
   const wobble = rolling && !isLocked;
 
   const pulse =
-    canOpenTradePopup || canSetWithResourceJoker || canSetWithWildcardJoker;
+    canOpenTradePopup || canSetWithResourceJoker;
 
   const pointer =
     (gamePhaseRolling && diceValue !== null) ||
     canOpenTradePopup ||
-    canSetWithResourceJoker ||
-    canSetWithWildcardJoker;
+    canSetWithResourceJoker;
 
   const getTooltip = (): string => {
     if (gamePhaseRolling && diceValue != null) {
@@ -124,10 +120,6 @@ const ResourceDice = (props: ResourceDiceProps) => {
 
     if (gamePhaseBuilding && resourceJokerFlag != null && !isSpent) {
       return `Set to ${getResourceType(resourceJokerFlag).toString()}`;
-    }
-
-    if (gamePhaseBuilding && wildcardJokerFlag != null && !isSpent) {
-      return `Set to ${getResourceType(wildcardJokerFlag).toString()}`;
     }
 
     return canOpenTradePopup ? "Trade gold" : "";
@@ -191,27 +183,22 @@ const ResourceDice = (props: ResourceDiceProps) => {
     if (gamePhaseBuilding && !isSpent) {
       // Resource and wildcard joker setting takes priority over gold trading
 
-      if (wildcardJokerFlag != null) {
-        playJokerSetDiceSound();
 
-        dispatch(
-          islandOneSetDice({ id: diceId, value: wildcardJokerFlag as DiceValue })
-        );
-        dispatch(islandOneClearWildcardJokerFlag());
-        dispatch(
-          islandOneSpendResourceJoker(GetIslandOneResourceJokerType(ResourceJokerType.Wildcard))
-        );
-        return; // Prevent setting a gold dice from also opening up the trading popup
-      }
-
-      if (resourceJokerFlag != null) {
+      if (resourceJokerFlag != null && activeResourceJoker != null) {
         playJokerSetDiceSound();
 
         dispatch(
           islandOneSetDice({ id: diceId, value: resourceJokerFlag as DiceValue })
         );
+
+        // After setting the dice, we can safely clear the resource joker flag
         dispatch(islandOneClearResourceJokerFlag());
-        dispatch(islandOneSpendResourceJoker(resourceJokerFlag));
+
+        dispatch(islandOneSpendKnight(activeResourceJoker));
+
+        // After spending the knight, we can safely clear the active resource joker
+        dispatch(islandOneResetActiveResourceJoker());
+
         return; // Prevent setting a gold dice from also opening up the trading popup
       }
 

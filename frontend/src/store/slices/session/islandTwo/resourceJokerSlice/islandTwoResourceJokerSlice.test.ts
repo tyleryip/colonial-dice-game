@@ -1,5 +1,6 @@
 import { test, expect } from 'vitest'
-import reducer, { islandTwoResetActiveResourceJoker, IslandTwoResourceJokerState, islandTwoSetActiveResourceJoker } from './islandTwoResourceJokerSlice'
+import reducer, { islandTwoResetActiveResourceJoker, islandTwoSetActiveResourceJoker } from './islandTwoResourceJokerSlice'
+import { ResourceJokerState } from '../../shared/resourceJokerSlice'
 
 test('should return the initial state', () => {
     // Act
@@ -12,7 +13,7 @@ test('should return the initial state', () => {
 
 test('should reset active resource joker', () => {
     // Arrange
-    const previousState: IslandTwoResourceJokerState = {
+    const previousState: ResourceJokerState = {
         activeResourceJoker: 0
     }
 
@@ -35,7 +36,7 @@ test('should set active resource joker', () => {
 
 // Helper functions
 
-const getInitialState = (): IslandTwoResourceJokerState => {
+const getInitialState = (): ResourceJokerState => {
     return {
         activeResourceJoker: null
     }

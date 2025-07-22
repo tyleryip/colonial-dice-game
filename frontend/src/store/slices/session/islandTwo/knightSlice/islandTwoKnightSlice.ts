@@ -1,12 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { RootState } from "../../../../store"
+import { KnightState } from "../../shared/knightSlice"
 
-export interface IslandTwoKnightState {
-    isBuilt: boolean[],
-    isSpent: boolean[]
-}
-
-const initialState: IslandTwoKnightState = {
+const initialState: KnightState = {
     isBuilt: new Array<boolean>(9).fill(false),
     isSpent: new Array<boolean>(9).fill(false)
 }
@@ -93,7 +89,7 @@ export const selectIslandTwoKnightsSpentCount = (state: RootState, knightIds: nu
 
 // Helper functions
 
-function findFirstUnspentBuiltKnight(state: IslandTwoKnightState, knightIds: number[]): number {
+function findFirstUnspentBuiltKnight(state: KnightState, knightIds: number[]): number {
     for (const knightId of knightIds) {
         if (state.isBuilt[knightId] && !state.isSpent[knightId]) {
             return knightId

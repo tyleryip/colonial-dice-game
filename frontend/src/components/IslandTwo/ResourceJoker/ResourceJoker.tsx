@@ -77,7 +77,6 @@ const ResourceJoker = (props: ResourceJokerProps) => {
     const canCancelResourceJoker =
         gamePhaseBuilding
         && resourceJokerAvailable
-        && resourceJokerFlag == resourceJokerId
         && activeResourceJokerId == resourceJokerId
 
     // Conditional rendering

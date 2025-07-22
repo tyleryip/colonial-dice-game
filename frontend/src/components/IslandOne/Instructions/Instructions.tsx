@@ -1,5 +1,5 @@
 import { useAppSelector } from "../../../store/hooks"
-import { selectIslandOneAllDiceSpent, selectIslandOneAnyDiceSpent, selectIslandOneResourceJokerFlag, selectIslandOneRollCount, selectIslandOneWildcardJokerFlag } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice"
+import { selectIslandOneAllDiceSpent, selectIslandOneAnyDiceSpent, selectIslandOneResourceJokerFlag, selectIslandOneRollCount } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice"
 import { selectIslandOneIsGamePhaseBuilding, selectIslandOneIsGamePhaseRolling } from "../../../store/slices/session/islandOne/gameSlice/islandOneGameSlice"
 import { selectShowInstructions } from "../../../store/slices/local/settingsSlice/settingsSlice"
 import StyledInstructions from "./styles/StyledInstructions"
@@ -27,9 +27,6 @@ const Instructions = (props: InstructionProps) => {
     const resourceJokerFlag = useAppSelector(state =>
         selectIslandOneResourceJokerFlag(state)
     );
-    const wildcardJokerFlag = useAppSelector(state =>
-        selectIslandOneWildcardJokerFlag(state)
-    );
 
     // Conditional rendering
 
@@ -53,7 +50,7 @@ const Instructions = (props: InstructionProps) => {
         }
 
         if (gamePhaseBuilding) {
-            if (resourceJokerFlag != null || wildcardJokerFlag != null) {
+            if (resourceJokerFlag != null) {
                 return "Choose the die to set or cancel."
             }
 

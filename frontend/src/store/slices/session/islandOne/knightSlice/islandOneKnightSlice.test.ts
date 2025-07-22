@@ -1,5 +1,6 @@
 import { test, expect } from 'vitest'
-import reducer, { islandOneBuildKnight, IslandOneKnightState, islandOneResetKnights } from './islandOneKnightSlice'
+import reducer, { islandOneBuildKnight, islandOneResetKnights, islandOneSpendKnight } from './islandOneKnightSlice'
+import { KnightState } from '../../shared/knightSlice'
 
 test('should return the initial state', () => {
     // Act
@@ -23,8 +24,9 @@ test('should build knight', () => {
 
 test('should reset knights', () => {
     // Arrange
-    const previousState: IslandOneKnightState = {
-        isBuilt: [false, false, true, true, false, false]
+    const previousState: KnightState = {
+        isBuilt: [false, false, true, true, false, false],
+        isSpent: [false, true, true, false, true, false]
     }
 
     // Act
@@ -32,13 +34,26 @@ test('should reset knights', () => {
 
     // Assert
     expect(result.isBuilt.every(built => built == false))
+    expect(result.isSpent.every(spent => spent == false))
 })
 
+test('should spend knight', () => {
+    // Arrange
+    const previousState = getInitialState()
+    previousState.isBuilt[0] = true
+
+    // Act
+    const result = reducer(previousState, islandOneSpendKnight(0))
+
+    // Assert
+    expect(result.isSpent[0]).toEqual(true)
+})
 
 // Helper functions
 
-const getInitialState = (): IslandOneKnightState => {
+const getInitialState = (): KnightState => {
     return {
-        isBuilt: new Array(6).fill(false)
+        isBuilt: new Array(6).fill(false),
+        isSpent: new Array(6).fill(false)
     }
 }

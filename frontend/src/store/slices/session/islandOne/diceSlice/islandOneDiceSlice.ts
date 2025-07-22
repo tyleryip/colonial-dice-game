@@ -12,8 +12,7 @@ const initialState: DiceState = {
             spent: false
         }),
     rollCount: 0,
-    resourceJokerFlag: null,
-    wildcardJokerFlag: null
+    resourceJokerFlag: null
 }
 
 export const islandOneDiceSlice = createSlice({
@@ -26,13 +25,6 @@ export const islandOneDiceSlice = createSlice({
          */
         islandOneClearResourceJokerFlag: (state) => {
             state.resourceJokerFlag = null
-        },
-        /**
-         * When the user has made a selection for which dice the want to set with the wildcard joker, or cancel
-         * @param state 
-         */
-        islandOneClearWildcardJokerFlag: (state) => {
-            state.wildcardJokerFlag = null
         },
         /**
          * When the user clicks the roll button
@@ -50,7 +42,6 @@ export const islandOneDiceSlice = createSlice({
             state.dice = initialState.dice;
             state.rollCount = initialState.rollCount;
             state.resourceJokerFlag = null;
-            state.wildcardJokerFlag = null;
         },
         /**
          * When the user trades their gold in for a resource of their choice
@@ -83,14 +74,6 @@ export const islandOneDiceSlice = createSlice({
          */
         islandOneSetResourceJokerFlag: (state, action: PayloadAction<number>) => {
             state.resourceJokerFlag = action.payload
-        },
-        /**
-         * When the user clicks a resource joker and wants to pick a dice to set
-         * @param state 
-         * @param action 
-         */
-        islandOneSetWildcardJokerFlag: (state, action: PayloadAction<number>) => {
-            state.wildcardJokerFlag = action.payload
         },
         /**
          * When the user trades two gold in for a resource of their choice, set one of the gold to spent
@@ -126,7 +109,6 @@ export default islandOneDiceSlice.reducer;
 
 export const {
     islandOneClearResourceJokerFlag,
-    islandOneClearWildcardJokerFlag,
     islandOneRollDice,
     islandOneResetDice,
     islandOneResetDiceLocks,
@@ -134,7 +116,6 @@ export const {
     islandOneSetRollCount,
     islandOneSetDiceSpent,
     islandOneSetResourceJokerFlag,
-    islandOneSetWildcardJokerFlag,
     islandOneSpendDice,
     islandOneToggleDiceLock,
 } = islandOneDiceSlice.actions
@@ -144,7 +125,6 @@ export const {
 export const selectIslandOneDice = (state: RootState) => state.session.islandOne.dice.dice
 export const selectIslandOneRollCount = (state: RootState) => state.session.islandOne.dice.rollCount
 export const selectIslandOneResourceJokerFlag = (state: RootState) => state.session.islandOne.dice.resourceJokerFlag
-export const selectIslandOneWildcardJokerFlag = (state: RootState) => state.session.islandOne.dice.wildcardJokerFlag
 
 export const selectIslandOneAnyDiceSpent = (state: RootState) => state.session.islandOne.dice.dice.some(dice => dice.spent)
 export const selectIslandOneAllDiceSpent = (state: RootState) => state.session.islandOne.dice.dice.every(dice => dice.spent)
