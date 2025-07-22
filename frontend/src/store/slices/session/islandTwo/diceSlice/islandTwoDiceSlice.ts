@@ -28,13 +28,6 @@ export const islandTwoDiceSlice = createSlice({
             state.resourceJokerFlag = null
         },
         /**
-         * When the user has made a selection for which dice the want to set with the wildcard joker, or cancel
-         * @param state 
-         */
-        islandTwoClearWildcardJokerFlag: (state) => {
-            state.wildcardJokerFlag = null
-        },
-        /**
          * When the user clicks the roll button
          * @param state 
          */
@@ -85,14 +78,6 @@ export const islandTwoDiceSlice = createSlice({
             state.resourceJokerFlag = action.payload
         },
         /**
-         * When the user clicks a resource joker and wants to pick a dice to set
-         * @param state 
-         * @param action 
-         */
-        islandTwoSetWildcardJokerFlag: (state, action: PayloadAction<number>) => {
-            state.wildcardJokerFlag = action.payload
-        },
-        /**
          * When the user trades two gold in for a resource of their choice, set one of the gold to spent
          * @param state 
          * @param action
@@ -126,7 +111,6 @@ export default islandTwoDiceSlice.reducer;
 
 export const {
     islandTwoClearResourceJokerFlag,
-    islandTwoClearWildcardJokerFlag,
     islandTwoRollDice,
     islandTwoResetDice,
     islandTwoResetDiceLocks,
@@ -134,7 +118,6 @@ export const {
     islandTwoSetRollCount,
     islandTwoSetDiceSpent,
     islandTwoSetResourceJokerFlag,
-    islandTwoSetWildcardJokerFlag,
     islandTwoSpendDice,
     islandTwoToggleDiceLock
 } = islandTwoDiceSlice.actions

@@ -6,7 +6,6 @@ import { useHover } from "@uidotdev/usehooks"
 import ResourceCostPopup from "../../Popups/ResourceCostPopup/ResourceCostPopup"
 import { cityCost } from "../../../constants/structures"
 import { ResourceType } from "../../../constants/resources"
-import { addToPendingScore } from "../../../store/slices/session/islandOne/scoreSlice/scoreSlice"
 import city_light from "/assets/cities/light/city-light.svg"
 import city_dark from "/assets/cities/dark/city-dark.svg"
 import { selectEffectiveVolume } from "../../../store/slices/local/settingsSlice/settingsSlice"
@@ -15,6 +14,7 @@ import useSound from "use-sound"
 import { islandTwoSpendDice, selectIslandTwoHasResourcesNeeded } from "../../../store/slices/session/islandTwo/diceSlice/islandTwoDiceSlice"
 import { islandTwoBuildStructure, selectIslandTwoHasPrerequisiteStructuresBuilt, selectIslandTwoIsStructureBuilt } from "../../../store/slices/session/islandTwo/structureSlice/islandTwoStructureSlice"
 import { selectIslandTwoIsGamePhaseBuilding } from "../../../store/slices/session/islandTwo/gameSlice/islandTwoGameSlice"
+import { islandTwoAddToPendingScore } from "../../../store/slices/session/islandTwo/scoreSlice/islandTwoScoreSlice"
 
 interface CityProps {
     id: number,
@@ -84,7 +84,7 @@ const City = (props: CityProps) => {
                 dispatch(islandTwoSpendDice(JSON.stringify(resourceType)))
             })
 
-            dispatch(addToPendingScore(2))
+            dispatch(islandTwoAddToPendingScore(2))
         }
     }
 

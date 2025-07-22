@@ -1,10 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { RootState } from "../../../../store"
 import { GetKnightPrerequisite } from "../../../../../constants/knights"
-import { KnightState } from "../../shared/knightSlice"
 
-const initialState: KnightState = {
-    isBuilt: new Array<boolean>(6).fill(false)
+export interface IslandOneKnightState {
+    isBuilt: boolean[]
+}
+
+const initialState: IslandOneKnightState = {
+    isBuilt: new Array<boolean>(6).fill(false),
 }
 
 export const islandOneKnightSlice = createSlice({

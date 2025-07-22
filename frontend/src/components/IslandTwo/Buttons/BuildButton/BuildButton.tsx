@@ -1,7 +1,6 @@
 import StyledBuildButton from "./styles/StyledBuildButton";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import { GamePhase } from "../../../../constants/enumerations";
-import { addScore } from "../../../../store/slices/session/islandOne/scoreSlice/scoreSlice";
 import gameOverSound from '/audio/game_over.wav'
 import { selectEffectiveVolume } from "../../../../store/slices/local/settingsSlice/settingsSlice";
 import useSound from "use-sound";
@@ -11,6 +10,7 @@ import dice_icon from '/assets/buttons/dice-icon.png'
 import StyledBuildButtonIcon from "./styles/StyledBuildButtonIcon";
 import { islandTwoResetDice, islandTwoResetDiceLocks, islandTwoSetRollCount } from "../../../../store/slices/session/islandTwo/diceSlice/islandTwoDiceSlice";
 import { selectIslandTwoIsGamePhaseRolling, selectIslandTwoIsGamePhaseBuilding, selectIslandTwoCurrentTurn, islandTwoSetGamePhase, islandTwoIncrementTurn } from "../../../../store/slices/session/islandTwo/gameSlice/islandTwoGameSlice";
+import { islandTwoAddScore } from "../../../../store/slices/session/islandTwo/scoreSlice/islandTwoScoreSlice";
 
 interface BuildButtonProps {
   disabled?: boolean;
@@ -83,7 +83,7 @@ const BuildButton = (props: BuildButtonProps) => {
 
     if (gamePhaseBuilding) {
       dispatch(islandTwoSetGamePhase(GamePhase.Rolling));
-      dispatch(addScore());
+      dispatch(islandTwoAddScore());
       dispatch(islandTwoIncrementTurn());
       dispatch(islandTwoResetDice());
 

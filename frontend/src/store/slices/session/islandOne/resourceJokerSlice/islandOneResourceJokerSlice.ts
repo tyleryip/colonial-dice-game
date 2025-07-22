@@ -1,20 +1,23 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { RootState } from "../../../../store"
-import { ResourceJokerState } from "../../shared/resourceJokerSlice"
 
-const initialState: ResourceJokerState = {
-    isSpent: new Array<boolean>(9).fill(false)
+export interface IslandOneResourceJokerState {
+    isSpent: boolean[]
 }
 
-export const islandTwoResourceJokerSlice = createSlice({
-    name: 'islandTwoResourceJoker',
+const initialState: IslandOneResourceJokerState = {
+    isSpent: new Array<boolean>(6).fill(false)
+}
+
+export const islandOneResourceJokerSlice = createSlice({
+    name: 'islandOneResourceJoker',
     initialState: initialState,
     reducers: {
         /**
          * When the game is reset so the board is restored to initial state
          * @param state 
         */
-        islandTwoResetResourceJokers: (state) => {
+        islandOneResetResourceJokers: (state) => {
             state.isSpent = initialState.isSpent
         },
         /**
@@ -22,7 +25,7 @@ export const islandTwoResourceJokerSlice = createSlice({
          * @param state 
          * @param action 
          */
-        islandTwoSpendResourceJoker: (state, action: PayloadAction<number>) => {
+        islandOneSpendResourceJoker: (state, action: PayloadAction<number>) => {
             const resourceJokerId = action.payload
             validateResourceJokerId(resourceJokerId)
             state.isSpent[resourceJokerId] = true
@@ -30,26 +33,26 @@ export const islandTwoResourceJokerSlice = createSlice({
     }
 })
 
-export default islandTwoResourceJokerSlice.reducer;
+export default islandOneResourceJokerSlice.reducer;
 
 // Action 
 
 export const {
-    islandTwoResetResourceJokers,
-    islandTwoSpendResourceJoker
-} = islandTwoResourceJokerSlice.actions;
+    islandOneResetResourceJokers,
+    islandOneSpendResourceJoker
+} = islandOneResourceJokerSlice.actions;
 
 // Selectors
 
-export const selectIslandTwoIsResourceJokerSpent = (state: RootState, resourceJokerId: number) => {
+export const selectIslandOneIsResourceJokerSpent = (state: RootState, resourceJokerId: number) => {
     validateResourceJokerId(resourceJokerId)
-    return state.session.islandTwo.resourceJoker.isSpent[resourceJokerId];
+    return state.session.islandOne.resourceJoker.isSpent[resourceJokerId];
 }
 
 // Helper functions
 
 function validateResourceJokerId(resourceJokerId: number) {
-    if (resourceJokerId < 0 || resourceJokerId > 8) {
+    if (resourceJokerId < 0 || resourceJokerId > 5) {
         throw new Error(`Resource joker with id=${resourceJokerId} not found`)
     }
 }

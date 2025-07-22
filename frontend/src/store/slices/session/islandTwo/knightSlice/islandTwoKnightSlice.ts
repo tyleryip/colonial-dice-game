@@ -1,10 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { RootState } from "../../../../store"
-import { GetKnightPrerequisite } from "../../../../../constants/knights"
-import { KnightState } from "../../shared/knightSlice"
 
-const initialState: KnightState = {
-    isBuilt: new Array<boolean>(9).fill(false)
+export interface IslandTwoKnightState {
+    isBuilt: boolean[],
+    isSpent: boolean[]
+}
+
+const initialState: IslandTwoKnightState = {
+    isBuilt: new Array<boolean>(9).fill(false),
+    isSpent: new Array<boolean>(9).fill(false)
 }
 
 export const islandTwoKnightSlice = createSlice({
@@ -27,6 +31,18 @@ export const islandTwoKnightSlice = createSlice({
          */
         islandTwoResetKnights: (state) => {
             state.isBuilt = initialState.isBuilt
+            state.isSpent = initialState.isSpent
+        },
+        /**
+         * When a user spends the resource joker associated with this knight
+         * @param state 
+         * @param action 
+         */
+        islandTwoSpendKnight: (state, action: PayloadAction<number[]>) => {
+            const knightIds = action.payload
+            knightIds.forEach(knightId => validateKnightId(knightId))
+            const firstUnspentBuiltIndex = findFirstUnspentBuiltKnight(state, knightIds)
+            state.isSpent[firstUnspentBuiltIndex] = true
         }
     }
 })
@@ -37,7 +53,8 @@ export default islandTwoKnightSlice.reducer
 
 export const {
     islandTwoBuildKnight,
-    islandTwoResetKnights
+    islandTwoResetKnights,
+    islandTwoSpendKnight
 } = islandTwoKnightSlice.actions;
 
 // Selectors
@@ -47,15 +64,44 @@ export const selectIslandTwoIsKnightBuilt = (state: RootState, knightId: number)
     return state.session.islandTwo.knight.isBuilt[knightId]
 }
 
-export const selectIslandTwoIsKnightPrerequisiteBuilt = (state: RootState, knightId: number) => {
+export const selectIslandTwoIsKnightSpent = (state: RootState, knightId: number) => {
     validateKnightId(knightId)
-    const knightPrerequisiteId = GetKnightPrerequisite(knightId)
-    return knightPrerequisiteId == null
-        ? true
-        : state.session.islandTwo.knight.isBuilt[knightPrerequisiteId];
+    return state.session.islandTwo.knight.isSpent[knightId]
+}
+
+/**
+ * Given a list of knightIds, return the number of built knights
+ * @param state 
+ * @param knightIds 
+ * @returns 
+ */
+export const selectIslandTwoKnightsBuiltCount = (state: RootState, knightIds: number[]) => {
+    knightIds.forEach(knightId => validateKnightId(knightId))
+    return knightIds.map(knightId => state.session.islandTwo.knight.isBuilt[knightId]).filter(isBuilt => isBuilt).length
+}
+
+/**
+ * Given a list of knightIds, return the number of spent knights
+ * @param state 
+ * @param knightIds 
+ * @returns 
+ */
+export const selectIslandTwoKnightsSpentCount = (state: RootState, knightIds: number[]) => {
+    knightIds.forEach(knightId => validateKnightId(knightId))
+    return knightIds.map(knightId => state.session.islandTwo.knight.isSpent[knightId]).filter(isSpent => isSpent).length
 }
 
 // Helper functions
+
+function findFirstUnspentBuiltKnight(state: IslandTwoKnightState, knightIds: number[]): number {
+    for (const knightId of knightIds) {
+        if (state.isBuilt[knightId] && !state.isSpent[knightId]) {
+            return knightId
+        }
+    }
+
+    throw new Error("No unspent built knights found")
+}
 
 function validateKnightId(knightId: number) {
     if (knightId < 0 || knightId > 8) {

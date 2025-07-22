@@ -1,8 +1,7 @@
 import StyledAsset from "../../Asset/StyledAsset"
 import { IconType, ResourceJokerType } from "../../../constants/enumerations"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
-import { selectIslandOneIsResourceJokerSpent } from "../../../store/slices/session/islandOne/resourceJokerSlice/resourceJokerSlice"
-import { GetIslandOneResourceJokerType as GetIslandOneResourceJokerType } from "../../../constants/mappings"
+import { GetIslandOneResourceJokerType } from "../../../constants/mappings"
 import StyledResourceJoker from "./styles/StyledResourceJoker"
 import { selectIslandOneIsKnightBuilt } from "../../../store/slices/session/islandOne/knightSlice/islandOneKnightSlice"
 import { selectIslandOneIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/islandOneGameSlice"
@@ -22,6 +21,7 @@ import selectionOpenSound from '/audio/selection_open.wav'
 import selectionCloseSound from '/audio/selection_close.wav'
 import useSound from "use-sound"
 import { selectEffectiveVolume } from "../../../store/slices/local/settingsSlice/settingsSlice"
+import { selectIslandOneIsResourceJokerSpent } from "../../../store/slices/session/islandOne/resourceJokerSlice/islandOneResourceJokerSlice"
 
 interface ResourceJokerProps {
     id: ResourceJokerType

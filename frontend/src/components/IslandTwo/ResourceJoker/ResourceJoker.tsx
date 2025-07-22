@@ -1,5 +1,5 @@
 import StyledAsset from "../../Asset/StyledAsset"
-import { IconType, ResourceJokerType } from "../../../constants/enumerations"
+import { IconType } from "../../../constants/enumerations"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import { GetIslandTwoResourceJokerType } from "../../../constants/mappings"
 import StyledResourceJoker from "./styles/StyledResourceJoker"
@@ -19,12 +19,12 @@ import selectionCloseSound from '/audio/selection_close.wav'
 import useSound from "use-sound"
 import { selectEffectiveVolume } from "../../../store/slices/local/settingsSlice/settingsSlice"
 import { selectIslandTwoIsGamePhaseBuilding } from "../../../store/slices/session/islandTwo/gameSlice/islandTwoGameSlice"
-import { selectIslandTwoIsKnightBuilt } from "../../../store/slices/session/islandTwo/knightSlice/islandTwoKnightSlice"
-import { islandTwoClearResourceJokerFlag, islandTwoSetResourceJokerFlag, selectIslandTwoAllDiceSpent, selectIslandTwoResourceJokerFlag, selectIslandTwoWildcardJokerFlag } from "../../../store/slices/session/islandTwo/diceSlice/islandTwoDiceSlice"
-import { selectIslandTwoIsResourceJokerSpent } from "../../../store/slices/session/islandTwo/resourceJokerSlice/resourceJokerSlice"
+import { selectIslandTwoIsKnightBuilt, selectIslandTwoIsKnightSpent } from "../../../store/slices/session/islandTwo/knightSlice/islandTwoKnightSlice"
+import { islandTwoClearResourceJokerFlag, islandTwoSetResourceJokerFlag, selectIslandTwoAllDiceSpent, selectIslandTwoResourceJokerFlag } from "../../../store/slices/session/islandTwo/diceSlice/islandTwoDiceSlice"
+import { islandTwoResetActiveResourceJoker, islandTwoSetActiveResourceJoker, selectIslandTwoActiveResourceJoker } from "../../../store/slices/session/islandTwo/resourceJokerSlice/islandTwoResourceJokerSlice"
 
 interface ResourceJokerProps {
-    id: ResourceJokerType
+    id: number
 }
 
 const resourceJokerIconsLight: Readonly<Record<number, string>> = {
@@ -56,32 +56,33 @@ const ResourceJoker = (props: ResourceJokerProps) => {
     // Selectors
 
     const gamePhaseBuilding = useAppSelector((state) => selectIslandTwoIsGamePhaseBuilding(state))
-    // Each resource joker will line up with its corresponding knight (ex. knightId 1 = resourceJokerId 1)
-    const resourceJokerAvailable = useAppSelector(state => selectIslandTwoIsKnightBuilt(state, resourceJokerId))
-    const resourceJokerIsSpent = useAppSelector(state => selectIslandTwoIsResourceJokerSpent(state, resourceJokerId))
+    const isKnightBuilt = useAppSelector(state => selectIslandTwoIsKnightBuilt(state, resourceJokerId))
+    const isKnightSpent = useAppSelector(state => selectIslandTwoIsKnightSpent(state, resourceJokerId))
+    const activeResourceJokerId = useAppSelector(state => selectIslandTwoActiveResourceJoker(state))
     const resourceJokerFlag = useAppSelector(state => selectIslandTwoResourceJokerFlag(state))
-    const wildcardJokerFlag = useAppSelector(state => selectIslandTwoWildcardJokerFlag(state))
     const allDiceSpent = useAppSelector(state => selectIslandTwoAllDiceSpent(state))
     const volume = useAppSelector(state => selectEffectiveVolume(state))
 
     // Can spend conditions
 
+    const resourceJokerAvailable = isKnightBuilt && !isKnightSpent
+
     const canSpendResourceJoker =
         gamePhaseBuilding
-        && !resourceJokerIsSpent
         && resourceJokerAvailable
         && resourceJokerFlag == null
-        && wildcardJokerFlag == null
+        && activeResourceJokerId == null
         && !allDiceSpent
 
     const canCancelResourceJoker =
         gamePhaseBuilding
-        && !resourceJokerIsSpent
+        && resourceJokerAvailable
         && resourceJokerFlag == resourceJokerId
+        && activeResourceJokerId == resourceJokerId
 
     // Conditional rendering
 
-    const iconType = resourceJokerIsSpent
+    const iconType = isKnightSpent
         ? IconType.Dark
         : IconType.Light
 
@@ -128,12 +129,14 @@ const ResourceJoker = (props: ResourceJokerProps) => {
         if (canSpendResourceJoker) {
             playSelectionOpenSound()
             dispatch(islandTwoSetResourceJokerFlag(resourceJokerId))
+            dispatch(islandTwoSetActiveResourceJoker(resourceJokerId))
             return
         }
 
         if (canCancelResourceJoker) {
             playSelectionCloseSound()
             dispatch(islandTwoClearResourceJokerFlag())
+            dispatch(islandTwoResetActiveResourceJoker())
             return
         }
     }

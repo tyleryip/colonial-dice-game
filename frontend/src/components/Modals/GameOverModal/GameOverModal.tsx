@@ -1,7 +1,7 @@
 import Modal from "react-bootstrap/Modal";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { islandOneResetGame, selectIslandOneIsGamePhaseRolling } from "../../../store/slices/session/islandOne/gameSlice/islandOneGameSlice";
-import { resetScore, selectAllScoresFilled, selectTotalScore } from "../../../store/slices/session/islandOne/scoreSlice/scoreSlice";
+import { islandOneResetScore, selectIslandOneAllScoresFilled, selectIslandOneTotalScore } from "../../../store/slices/session/islandOne/scoreSlice/islandOneScoreSlice";
 import PlayAgainButton from "../../Buttons/PlayAgainButton/PlayAgainButton";
 import StyledModalFooter from "../styles/StyledModalFooter";
 import StyledModalHeader from "../styles/StyledModalHeader";
@@ -10,7 +10,7 @@ import { useState } from "react";
 import { addLeaderboardEntry, AddLeaderboardEntryPayload } from "../../../store/slices/local/leaderboardSlice/leaderboardSlice";
 import { islandOneResetDice } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice";
 import { islandOneResetKnights } from "../../../store/slices/session/islandOne/knightSlice/islandOneKnightSlice";
-import { islandOneResetResourceJokers } from "../../../store/slices/session/islandOne/resourceJokerSlice/resourceJokerSlice";
+import { islandOneResetResourceJokers } from "../../../store/slices/session/islandOne/resourceJokerSlice/islandOneResourceJokerSlice";
 import { islandOneResetStructures } from "../../../store/slices/session/islandOne/structureSlice/islandOneStructureSlice";
 import StyledLeaderboardNameInput from "./styles/StyledLeaderboardNameInput";
 
@@ -26,8 +26,8 @@ const GameOverModal = () => {
     // Selectors
 
     const gamePhaseRolling = useAppSelector(state => selectIslandOneIsGamePhaseRolling(state))
-    const allScoresFilled = useAppSelector(state => selectAllScoresFilled(state))
-    const totalScore = useAppSelector(state => selectTotalScore(state))
+    const allScoresFilled = useAppSelector(state => selectIslandOneAllScoresFilled(state))
+    const totalScore = useAppSelector(state => selectIslandOneTotalScore(state))
 
     // Conditional rendering
 
@@ -60,7 +60,7 @@ const GameOverModal = () => {
         dispatch(islandOneResetKnights());
         dispatch(islandOneResetResourceJokers());
         dispatch(islandOneResetStructures());
-        dispatch(resetScore());
+        dispatch(islandOneResetScore());
         dispatch(islandOneResetDice());
     }
 

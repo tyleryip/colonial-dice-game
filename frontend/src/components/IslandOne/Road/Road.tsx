@@ -10,7 +10,7 @@ import ResourceCostPopup from "../../Popups/ResourceCostPopup/ResourceCostPopup"
 import { roadCost } from "../../../constants/structures"
 import { selectIslandOneHasResourcesNeeded, islandOneSpendDice } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice"
 import { ResourceType } from "../../../constants/resources"
-import { addToPendingScore } from "../../../store/slices/session/islandOne/scoreSlice/scoreSlice"
+import { islandOneAddToPendingScore } from "../../../store/slices/session/islandOne/scoreSlice/islandOneScoreSlice"
 import horizontal_road_1_light from "/assets/roads/light/horizontal-road-1-light.svg"
 import forwardslash_road_1_light from "/assets/roads/light/forwardslash-road-1-light.svg"
 import backwardslash_road_1_light from "/assets/roads/light/backslash-road-1-light.svg"
@@ -128,7 +128,7 @@ const Road = (props: RoadProps) => {
                 dispatch(islandOneSpendDice(JSON.stringify(resourceType)))
             })
 
-            dispatch(addToPendingScore(roadPoints))
+            dispatch(islandOneAddToPendingScore(roadPoints))
         }
     }
 

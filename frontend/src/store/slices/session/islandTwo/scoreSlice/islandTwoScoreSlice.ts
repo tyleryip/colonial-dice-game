@@ -12,8 +12,8 @@ const initialState: ScoreState = {
     pendingScore: null
 }
 
-export const scoreSlice = createSlice({
-    name: 'score',
+export const islandTwoScoreSlice = createSlice({
+    name: 'islandTwoScore',
     initialState: initialState,
     reducers: {
         /**
@@ -21,7 +21,7 @@ export const scoreSlice = createSlice({
          * @param state 
          * @param action 
          */
-        addScore: (state) => {
+        islandTwoAddScore: (state) => {
             const index = findFirstEmptyScoreIndex(state.scores)
             state.scores[index] = state.pendingScore != null && state.pendingScore > 0
                 ? state.pendingScore
@@ -33,7 +33,7 @@ export const scoreSlice = createSlice({
          * @param state 
          * @param action the number of points to add to the pending score
          */
-        addToPendingScore: (state, action: PayloadAction<number>) => {
+        islandTwoAddToPendingScore: (state, action: PayloadAction<number>) => {
             state.pendingScore = state.pendingScore == null || state.pendingScore == 0
                 ? action.payload
                 : state.pendingScore + action.payload
@@ -42,30 +42,34 @@ export const scoreSlice = createSlice({
          * When the game is reset
          * @param state 
          */
-        resetScore: (state) => {
+        islandTwoResetScore: (state) => {
             state.scores = new Array(15).fill(null)
             state.pendingScore = null
         }
     }
 })
 
-export default scoreSlice.reducer;
+export default islandTwoScoreSlice.reducer;
 
 // Actions
 
-export const { resetScore, addScore, addToPendingScore } = scoreSlice.actions
+export const {
+    islandTwoResetScore,
+    islandTwoAddScore,
+    islandTwoAddToPendingScore
+} = islandTwoScoreSlice.actions
 
 // Selectors
 
-export const selectScoreValues = (state: RootState) => state.session.islandOne.score.scores
-export const selectPendingScore = (state: RootState) => state.session.islandOne.score.pendingScore
+export const selectIslandTwoScoreValues = (state: RootState) => state.session.islandTwo.score.scores
+export const selectIslandTwoPendingScore = (state: RootState) => state.session.islandTwo.score.pendingScore
 
-export const selectTotalScore = (state: RootState) => state.session.islandOne.score.scores
+export const selectIslandTwoTotalScore = (state: RootState) => state.session.islandTwo.score.scores
     .reduce((accumulator: number, currentValue: ScoreValue) => {
         return accumulator + (currentValue ?? 0);
     }, 0)
 
-export const selectAllScoresFilled = (state: RootState) => state.session.islandOne.score.scores.every(score => typeof score === 'number')
+export const selectIslandTwoAllScoresFilled = (state: RootState) => state.session.islandTwo.score.scores.every(score => typeof score === 'number')
 
 // Helper functions
 

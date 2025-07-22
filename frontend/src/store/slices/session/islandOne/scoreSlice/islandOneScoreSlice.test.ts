@@ -1,5 +1,5 @@
 import { test, expect } from 'vitest'
-import reducer, { addScore, addToPendingScore, resetScore, ScoreState } from './scoreSlice'
+import reducer, { islandOneAddScore, islandOneAddToPendingScore, islandOneResetScore, ScoreState } from './islandOneScoreSlice'
 
 test('should return the initial state', () => {
     // Act
@@ -17,7 +17,7 @@ test('should add positive pending score', () => {
     }
 
     // Act
-    const result = reducer(previousState, addScore())
+    const result = reducer(previousState, islandOneAddScore())
 
     // Assert
     expect(result.scores[0]).toEqual(4)
@@ -30,7 +30,7 @@ test('should add zero pending score', () => {
     const previousState = getInitialState()
 
     // Act
-    const result = reducer(previousState, addScore())
+    const result = reducer(previousState, islandOneAddScore())
 
     // Assert
     expect(result.scores[0]).toEqual(-2)
@@ -43,7 +43,7 @@ test('should add to pending score', () => {
     const previousState = getInitialState()
 
     // Act
-    const result = reducer(previousState, addToPendingScore(1))
+    const result = reducer(previousState, islandOneAddToPendingScore(1))
 
     // Assert
     expect(result.pendingScore).toEqual(1)
@@ -57,7 +57,7 @@ test('should reset score', () => {
     }
 
     // Act
-    const result = reducer(previousState, resetScore())
+    const result = reducer(previousState, islandOneResetScore())
 
     // Assert
     expect(result.scores.every(score => score == null))

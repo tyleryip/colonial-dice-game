@@ -6,7 +6,6 @@ import { useHover } from "@uidotdev/usehooks"
 import ResourceCostPopup from "../../Popups/ResourceCostPopup/ResourceCostPopup"
 import { settlementCost } from "../../../constants/structures"
 import { ResourceType } from "../../../constants/resources"
-import { addToPendingScore } from "../../../store/slices/session/islandOne/scoreSlice/scoreSlice"
 import settlement_light from "/assets/settlements/light/settlement-light.svg"
 import settlement_dark from "/assets/settlements/dark/settlement-dark.svg"
 import { selectEffectiveVolume } from "../../../store/slices/local/settingsSlice/settingsSlice"
@@ -15,6 +14,7 @@ import useSound from "use-sound"
 import { islandTwoBuildStructure, selectIslandTwoHasPrerequisiteStructuresBuilt, selectIslandTwoIsStructureBuilt } from "../../../store/slices/session/islandTwo/structureSlice/islandTwoStructureSlice"
 import { islandTwoSpendDice, selectIslandTwoHasResourcesNeeded } from "../../../store/slices/session/islandTwo/diceSlice/islandTwoDiceSlice"
 import { selectIslandTwoIsGamePhaseBuilding } from "../../../store/slices/session/islandTwo/gameSlice/islandTwoGameSlice"
+import { islandTwoAddToPendingScore } from "../../../store/slices/session/islandTwo/scoreSlice/islandTwoScoreSlice"
 
 interface SettlementProps {
     id: number,
@@ -83,7 +83,7 @@ const Settlement = (props: SettlementProps) => {
                 dispatch(islandTwoSpendDice(JSON.stringify(resourceType)))
             })
 
-            dispatch(addToPendingScore(1))
+            dispatch(islandTwoAddToPendingScore(1))
         }
     }
 

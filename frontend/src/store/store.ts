@@ -3,12 +3,13 @@ import islandOneDiceReducer, { islandOneDiceSlice } from "./slices/session/islan
 import islandTwoDiceReducer, { islandTwoDiceSlice } from "./slices/session/islandTwo/diceSlice/islandTwoDiceSlice"
 import islandOneGameReducer, { islandOneGameSlice } from "./slices/session/islandOne/gameSlice/islandOneGameSlice"
 import islandTwoGameReducer, { islandTwoGameSlice } from "./slices/session/islandTwo/gameSlice/islandTwoGameSlice"
-import islandOneResourceJokerReducer, { islandOneResourceJokerSlice } from "./slices/session/islandOne/resourceJokerSlice/resourceJokerSlice"
-import islandTwoResourceJokerReducer, { islandTwoResourceJokerSlice } from "./slices/session/islandTwo/resourceJokerSlice/resourceJokerSlice";
+import islandOneResourceJokerReducer, { islandOneResourceJokerSlice } from "./slices/session/islandOne/resourceJokerSlice/islandOneResourceJokerSlice"
+import islandTwoResourceJokerReducer, { islandTwoResourceJokerSlice } from "./slices/session/islandTwo/resourceJokerSlice/islandTwoResourceJokerSlice";
 import islandOneKnightReducer, { islandOneKnightSlice } from "./slices/session/islandOne/knightSlice/islandOneKnightSlice";
 import islandTwoKnightReducer, { islandTwoKnightSlice } from "./slices/session/islandTwo/knightSlice/islandTwoKnightSlice";
 import settingsReducer, { settingsSlice } from "./slices/local/settingsSlice/settingsSlice"
-import scoreReducer, { scoreSlice } from "./slices/session/islandOne/scoreSlice/scoreSlice"
+import islandOneScoreReducer, { islandOneScoreSlice } from "./slices/session/islandOne/scoreSlice/islandOneScoreSlice"
+import islandTwoScoreReducer, { islandTwoScoreSlice } from "./slices/session/islandTwo/scoreSlice/islandTwoScoreSlice"
 import islandOneStructureReducer, { islandOneStructureSlice } from "./slices/session/islandOne/structureSlice/islandOneStructureSlice"
 import islandTwoStructureReducer, { islandTwoStructureSlice } from "./slices/session/islandTwo/structureSlice/islandTwoStructureSlice"
 import { FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE } from "redux-persist";
@@ -22,7 +23,7 @@ const islandOneReducer = combineReducers({
     game: islandOneGameReducer,
     knight: islandOneKnightReducer,
     resourceJoker: islandOneResourceJokerReducer,
-    score: scoreReducer,
+    score: islandOneScoreReducer,
     structure: islandOneStructureReducer,
 })
 
@@ -31,6 +32,7 @@ const islandTwoReducer = combineReducers({
     game: islandTwoGameReducer,
     knight: islandTwoKnightReducer,
     resourceJoker: islandTwoResourceJokerReducer,
+    score: islandTwoScoreReducer,
     structure: islandTwoStructureReducer
 })
 
@@ -110,9 +112,9 @@ export const store = configureStore({
             ["Island One - Spend Resource Joker"]: islandOneResourceJokerSlice.actions.islandOneSpendResourceJoker,
 
             // Score actions
-            ["Add Score"]: scoreSlice.actions.addScore,
-            ["Add To Pending Score"]: scoreSlice.actions.addToPendingScore,
-            ["Reset Score"]: scoreSlice.actions.resetScore,
+            ["Island One - Add Score"]: islandOneScoreSlice.actions.islandOneAddScore,
+            ["Island One - Add To Pending Score"]: islandOneScoreSlice.actions.islandOneAddToPendingScore,
+            ["Island One - Reset Score"]: islandOneScoreSlice.actions.islandOneResetScore,
 
             // Structure actions
             ["Island One - Build Structure"]: islandOneStructureSlice.actions.islandOneBuildStructure,
@@ -142,6 +144,11 @@ export const store = configureStore({
             // Resource joker actions
             ["Island Two - Reset Resource Jokers"]: islandTwoResourceJokerSlice.actions.islandTwoResetResourceJokers,
             ["Island Two - Spend Resource Joker"]: islandTwoResourceJokerSlice.actions.islandTwoSpendResourceJoker,
+
+            // Score actions
+            ["Island Two - Add Score"]: islandTwoScoreSlice.actions.islandTwoAddScore,
+            ["Island Two - Add To Pending Score"]: islandTwoScoreSlice.actions.islandTwoAddToPendingScore,
+            ["Island Two - Reset Score"]: islandTwoScoreSlice.actions.islandTwoResetScore,
 
             // Structure actions
             ["Island Two - Build Structure"]: islandTwoStructureSlice.actions.islandTwoBuildStructure,

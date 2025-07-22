@@ -17,7 +17,7 @@ import {
   selectIslandOneWildcardJokerFlag,
   islandOneClearWildcardJokerFlag,
 } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice";
-import { islandOneSpendResourceJoker } from "../../../store/slices/session/islandOne/resourceJokerSlice/resourceJokerSlice";
+import { islandOneSpendResourceJoker } from "../../../store/slices/session/islandOne/resourceJokerSlice/islandOneResourceJokerSlice";
 import { ResourceJokerType } from "../../../constants/enumerations";
 import { GetIslandOneResourceJokerType } from "../../../constants/mappings";
 import tradeGoldSound from "/audio/trade_gold.wav"

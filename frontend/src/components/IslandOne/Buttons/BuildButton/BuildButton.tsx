@@ -8,7 +8,7 @@ import {
 } from "../../../../store/slices/session/islandOne/gameSlice/islandOneGameSlice";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import { GamePhase } from "../../../../constants/enumerations";
-import { addScore } from "../../../../store/slices/session/islandOne/scoreSlice/scoreSlice";
+import { islandOneAddScore } from "../../../../store/slices/session/islandOne/scoreSlice/islandOneScoreSlice";
 import {
   islandOneResetDice,
   islandOneResetDiceLocks,
@@ -93,7 +93,7 @@ const BuildButton = (props: BuildButtonProps) => {
 
     if (gamePhaseBuilding) {
       dispatch(islandOneSetGamePhase(GamePhase.Rolling));
-      dispatch(addScore());
+      dispatch(islandOneAddScore());
       dispatch(islandOneIncrementTurn());
       dispatch(islandOneResetDice());
 

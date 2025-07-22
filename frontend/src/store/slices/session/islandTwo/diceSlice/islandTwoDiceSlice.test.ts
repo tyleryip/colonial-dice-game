@@ -1,5 +1,5 @@
 import { expect, test } from "vitest"
-import reducer, { islandTwoClearResourceJokerFlag, islandTwoResetDice, islandTwoResetDiceLocks, islandTwoRollDice, islandTwoSetDice, islandTwoSetDiceSpent, islandTwoSetResourceJokerFlag, islandTwoSetRollCount, islandTwoSetWildcardJokerFlag, islandTwoSpendDice, islandTwoToggleDiceLock } from "./islandTwoDiceSlice"
+import reducer, { islandTwoClearResourceJokerFlag, islandTwoResetDice, islandTwoResetDiceLocks, islandTwoRollDice, islandTwoSetDice, islandTwoSetDiceSpent, islandTwoSetResourceJokerFlag, islandTwoSetRollCount, islandTwoSpendDice, islandTwoToggleDiceLock } from "./islandTwoDiceSlice"
 import { ResourceType } from "../../../../../constants/resources"
 import { DiceState } from "../../shared/diceSlice"
 
@@ -205,17 +205,6 @@ test('should set resource joker flag', () => {
 
     // Assert
     expect(result.resourceJokerFlag).toEqual(0)
-})
-
-test('should set wildcard joker flag', () => {
-    // Arrange
-    const previousState = getInitialState()
-
-    // Act
-    const result = reducer(previousState, islandTwoSetWildcardJokerFlag(0))
-
-    // Assert
-    expect(result.wildcardJokerFlag).toEqual(0)
 })
 
 test('should spend dice', () => {

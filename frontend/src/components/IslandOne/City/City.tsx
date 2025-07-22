@@ -10,7 +10,7 @@ import ResourceCostPopup from "../../Popups/ResourceCostPopup/ResourceCostPopup"
 import { cityCost } from "../../../constants/structures"
 import { selectIslandOneHasResourcesNeeded, islandOneSpendDice } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice"
 import { ResourceType } from "../../../constants/resources"
-import { addToPendingScore } from "../../../store/slices/session/islandOne/scoreSlice/scoreSlice"
+import { islandOneAddToPendingScore } from "../../../store/slices/session/islandOne/scoreSlice/islandOneScoreSlice"
 import city_7_light from "/assets/cities/light/city-7-light.svg"
 import city_12_light from "/assets/cities/light/city-12-light.svg"
 import city_20_light from "/assets/cities/light/city-20-light.svg"
@@ -106,7 +106,7 @@ const City = (props: CityProps) => {
                 dispatch(islandOneSpendDice(JSON.stringify(resourceType)))
             })
 
-            dispatch(addToPendingScore(cityNumber))
+            dispatch(islandOneAddToPendingScore(cityNumber))
         }
     }
 

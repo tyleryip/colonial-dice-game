@@ -10,7 +10,7 @@ import ResourceCostPopup from "../../Popups/ResourceCostPopup/ResourceCostPopup"
 import { knightCost } from "../../../constants/knights"
 import { selectIslandOneHasResourcesNeeded, islandOneSpendDice } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice"
 import { ResourceType } from "../../../constants/resources"
-import { addToPendingScore } from "../../../store/slices/session/islandOne/scoreSlice/scoreSlice"
+import { islandOneAddToPendingScore } from "../../../store/slices/session/islandOne/scoreSlice/islandOneScoreSlice"
 import knight_1_light from "/assets/knights/light/knight-1-light.svg"
 import knight_2_light from "/assets/knights/light/knight-2-light.svg"
 import knight_3_light from "/assets/knights/light/knight-3-light.svg"
@@ -109,7 +109,7 @@ const Knight = (props: KnightProps) => {
                 dispatch(islandOneSpendDice(JSON.stringify(resourceType)))
             })
 
-            dispatch(addToPendingScore(knightPoints))
+            dispatch(islandOneAddToPendingScore(knightPoints))
         }
     }
 

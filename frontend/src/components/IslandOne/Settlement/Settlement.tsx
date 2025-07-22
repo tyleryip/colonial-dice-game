@@ -10,7 +10,7 @@ import ResourceCostPopup from "../../Popups/ResourceCostPopup/ResourceCostPopup"
 import { settlementCost } from "../../../constants/structures"
 import { selectIslandOneHasResourcesNeeded, islandOneSpendDice } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice"
 import { ResourceType } from "../../../constants/resources"
-import { addToPendingScore } from "../../../store/slices/session/islandOne/scoreSlice/scoreSlice"
+import { islandOneAddToPendingScore } from "../../../store/slices/session/islandOne/scoreSlice/islandOneScoreSlice"
 import settlement_3_light from "/assets/settlements/light/settlement-3-light.svg"
 import settlement_4_light from "/assets/settlements/light/settlement-4-light.svg"
 import settlement_5_light from "/assets/settlements/light/settlement-5-light.svg"
@@ -113,7 +113,7 @@ const Settlement = (props: SettlementProps) => {
                 dispatch(islandOneSpendDice(JSON.stringify(resourceType)))
             })
 
-            dispatch(addToPendingScore(settlementNumber))
+            dispatch(islandOneAddToPendingScore(settlementNumber))
         }
     }
 
