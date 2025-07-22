@@ -173,7 +173,7 @@ const WildcardResourceJoker = (props: WildcardJokerProps) => {
                 $pointer={canSpendWildcardJoker || canCancelWildcardJoker}
                 $pulse={canSpendWildcardJoker || canCancelWildcardJoker}
                 $pulseDurationSeconds={pulseDurationSeconds()}
-                $pending={activeResourceJoker == resourceJokerId}>
+                $pending={canCancelWildcardJoker}>
                 <StyledAsset
                     src={icon()}
                     alt={`Resource joker ${ResourceJokerType.Wildcard}`} />
