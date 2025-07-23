@@ -1,7 +1,7 @@
 import Hexagon, { HexagonStructure } from '../../IslandTwo/Hexagon/Hexagon'
 import { HexagonEdge, HexagonType, HexagonVertex, ResourceJokerType, StructureType } from '../../../constants/enumerations';
 import StyledGameBoard from './styles/StyledGameBoard'
-import GameOverModal from '../../Modals/GameOverModal/GameOverModal';
+import GameOverModal from '../../IslandOne/Modals/GameOverModal/GameOverModal';
 
 const GameBoard = () => {
     return (

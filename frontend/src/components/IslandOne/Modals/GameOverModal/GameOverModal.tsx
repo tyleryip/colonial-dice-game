@@ -1,18 +1,18 @@
 import Modal from "react-bootstrap/Modal";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { islandOneResetGame, selectIslandOneIsGamePhaseRolling } from "../../../store/slices/session/islandOne/gameSlice/islandOneGameSlice";
-import { islandOneResetScore, selectIslandOneAllScoresFilled, selectIslandOneTotalScore } from "../../../store/slices/session/islandOne/scoreSlice/islandOneScoreSlice";
-import PlayAgainButton from "../../Buttons/PlayAgainButton/PlayAgainButton";
-import StyledModalFooter from "../styles/StyledModalFooter";
-import StyledModalHeader from "../styles/StyledModalHeader";
+import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
+import { islandOneResetGame, selectIslandOneIsGamePhaseRolling } from "../../../../store/slices/session/islandOne/gameSlice/islandOneGameSlice";
+import { islandOneResetScore, selectIslandOneAllScoresFilled, selectIslandOneTotalScore } from "../../../../store/slices/session/islandOne/scoreSlice/islandOneScoreSlice";
+import PlayAgainButton from "../../../Buttons/PlayAgainButton/PlayAgainButton";
+import StyledModalFooter from "../../../Modals/styles/StyledModalFooter";
+import StyledModalHeader from "../../../Modals/styles/StyledModalHeader";
 import StyledGameOverModalBody from "./styles/StyledGameOverModalBody";
 import { useState } from "react";
-import { addLeaderboardEntry, AddLeaderboardEntryPayload } from "../../../store/slices/local/leaderboardSlice/leaderboardSlice";
-import { islandOneResetDice } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice";
-import { islandOneResetKnights } from "../../../store/slices/session/islandOne/knightSlice/islandOneKnightSlice";
-import { islandOneResetStructures } from "../../../store/slices/session/islandOne/structureSlice/islandOneStructureSlice";
+import { addLeaderboardEntry, AddLeaderboardEntryPayload } from "../../../../store/slices/local/leaderboardSlice/leaderboardSlice";
+import { islandOneResetDice } from "../../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice";
+import { islandOneResetKnights } from "../../../../store/slices/session/islandOne/knightSlice/islandOneKnightSlice";
+import { islandOneResetStructures } from "../../../../store/slices/session/islandOne/structureSlice/islandOneStructureSlice";
 import StyledLeaderboardNameInput from "./styles/StyledLeaderboardNameInput";
-import { islandOneResetActiveResourceJoker } from "../../../store/slices/session/islandOne/resourceJokerSlice/islandOneResourceJokerSlice";
+import { islandOneResetActiveResourceJoker } from "../../../../store/slices/session/islandOne/resourceJokerSlice/islandOneResourceJokerSlice";
 
 const GameOverModal = () => {
     // Props and constants
