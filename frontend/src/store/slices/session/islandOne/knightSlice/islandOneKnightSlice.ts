@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { RootState } from "../../../../store"
-import { GetKnightPrerequisite } from "../../../../../constants/knights"
+import { GetislandOneKnightPrerequisite } from "../../../../../constants/knights"
 import { KnightState } from "../../shared/knightSlice"
 
 const initialState: KnightState = {
@@ -66,7 +66,7 @@ export const selectIslandOneIsKnightSpent = (state: RootState, knightId: number)
 
 export const selectIslandOneIsKnightPrerequisiteBuilt = (state: RootState, knightId: number) => {
     validateKnightId(knightId)
-    const knightPrerequisiteId = GetKnightPrerequisite(knightId)
+    const knightPrerequisiteId = GetislandOneKnightPrerequisite(knightId)
     return knightPrerequisiteId == null
         ? true
         : state.session.islandOne.knight.isBuilt[knightPrerequisiteId];

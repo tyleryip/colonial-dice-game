@@ -57,7 +57,7 @@ export const selectIslandTwoHasPrerequisiteStructuresBuilt = (state: RootState, 
 // Helper functions
 
 function getInitialState(): boolean[] {
-    const isBuilt = new Array<boolean>(28).fill(false);
+    const isBuilt = new Array<boolean>(29).fill(false);
     isBuilt[0] = true; // Starting road is always already built
 
     return isBuilt

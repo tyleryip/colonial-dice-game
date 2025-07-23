@@ -26,7 +26,7 @@ test('should build structure', () => {
 test('should reset structures', () => {
     // Arrange
     const previousState: StructureState = {
-        isBuilt: new Array(28).fill(true)
+        isBuilt: new Array(29).fill(true)
     }
 
     // Act
@@ -39,7 +39,7 @@ test('should reset structures', () => {
 // Helper functions
 
 const getInitialState = (): StructureState => {
-    const isBuilt = new Array(28).fill(false);
+    const isBuilt = new Array(29).fill(false);
     isBuilt[0] = true; // Starting road is always already built
 
     return {

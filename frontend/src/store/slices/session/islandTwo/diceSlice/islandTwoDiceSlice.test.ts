@@ -27,8 +27,7 @@ test('should clear resource joker flag', () => {
             spent: false
         }),
         rollCount: 0,
-        resourceJokerFlag: null,
-        wildcardJokerFlag: null
+        resourceJokerFlag: null
     })
 })
 
@@ -47,8 +46,7 @@ test('should clear wildcard joker flag', () => {
             spent: false
         }),
         rollCount: 0,
-        resourceJokerFlag: null,
-        wildcardJokerFlag: null
+        resourceJokerFlag: null
     })
 })
 
@@ -149,8 +147,7 @@ test('should roll all dice except locked', () => {
             }
         ],
         rollCount: 2,
-        resourceJokerFlag: null,
-        wildcardJokerFlag: null
+        resourceJokerFlag: null
     }
 
     // Act
@@ -363,7 +360,6 @@ const getInitialState = (): DiceState => {
             spent: false
         }),
         rollCount: 0,
-        resourceJokerFlag: null,
-        wildcardJokerFlag: null
+        resourceJokerFlag: null
     }
 }

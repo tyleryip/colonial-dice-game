@@ -20,6 +20,35 @@ export interface SetDicePayload {
 // Helper functions
 
 /**
+ * Determines if the user can build this structure or knight based on unspent inventory
+ * @param dice: the user's current inventory 
+ * @param cost the cost of the structure or knight
+ * @returns true if the user can build, false otherwise
+ */
+export const HasResourcesNeeded = (dice: Dice[], cost: ResourceType[]): boolean => {
+    // Need to keep track of which dice are spent
+    const spentDice: number[] = []
+    dice.forEach((dice: Dice, diceId: number) => {
+        if (dice.spent) {
+            spentDice.push(diceId)
+        }
+    })
+
+    let canBuild = true;
+    cost.forEach((resourceType: ResourceType) => {
+        const index = dice.findIndex((dice: Dice, index: number) => dice.value == resourceType.id && !spentDice.includes(index))
+
+        if (index == -1) {
+            canBuild = false
+        }
+
+        spentDice.push(index)
+    })
+
+    return canBuild
+}
+
+/**
  * Returns the index of the first unspent dice of a specific ResourceType, otherwise throws an error
  * @param dice an array of dice
  * @param resourceType the resource to find

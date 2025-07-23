@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../../../store"
 import { Dice } from "../../../../../types/Dice";
 import { ResourceType } from "../../../../../constants/resources";
-import { DiceState, FindFirstUnspentIndex, GenerateNewDiceValues, SetDicePayload, UnlockAllDice } from "../../shared/diceSlice";
+import { DiceState, FindFirstUnspentIndex, GenerateNewDiceValues, HasResourcesNeeded, SetDicePayload, UnlockAllDice } from "../../shared/diceSlice";
 
 const initialState: DiceState = {
     dice: new Array<Dice>(6).fill(
@@ -129,31 +129,6 @@ export const selectIslandOneResourceJokerFlag = (state: RootState) => state.sess
 export const selectIslandOneAnyDiceSpent = (state: RootState) => state.session.islandOne.dice.dice.some(dice => dice.spent)
 export const selectIslandOneAllDiceSpent = (state: RootState) => state.session.islandOne.dice.dice.every(dice => dice.spent)
 
-/**
- * Determines if the user can build this structure or knight based on unspent inventory
- * @param state 
- * @param cost the cost of the structure or knight
- * @returns true if the user can build, false otherwise
- */
 export const selectIslandOneHasResourcesNeeded = (state: RootState, cost: ResourceType[]): boolean => {
-    // Need to keep track of which dice are spent
-    const spentDice: number[] = []
-    state.session.islandOne.dice.dice.forEach((dice: Dice, diceId: number) => {
-        if (dice.spent) {
-            spentDice.push(diceId)
-        }
-    })
-
-    let canBuild = true;
-    cost.forEach((resourceType: ResourceType) => {
-        const index = state.session.islandOne.dice.dice.findIndex((dice: Dice, index: number) => dice.value == resourceType.id && !spentDice.includes(index))
-
-        if (index == -1) {
-            canBuild = false
-        }
-
-        spentDice.push(index)
-    })
-
-    return canBuild
+    return HasResourcesNeeded(state.session.islandOne.dice.dice, cost)
 }
