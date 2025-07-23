@@ -1,5 +1,6 @@
 import { expect, test } from 'vitest'
 import reducer, { addLeaderboardEntry, AddLeaderboardEntryPayload, LeaderboardState, resetLeaderboard } from './leaderboardSlice'
+import { GameMode } from '../../../../constants/enumerations'
 
 test('should return the initial state', () => {
     // Act
@@ -16,6 +17,7 @@ test('should add leaderboard entry', () => {
 
     const addLeaderboardEntryPayload: AddLeaderboardEntryPayload = {
         name: "John Smith",
+        mode: GameMode.IslandOne,
         score: 69
     }
 
@@ -38,18 +40,21 @@ test('should reset leaderboard', () => {
         JSON.stringify(
             {
                 name: "John Smith",
+                mode: GameMode.IslandOne,
                 score: 69,
                 date: new Date()
             }),
         JSON.stringify(
             {
                 name: "Alice Brown",
+                mode: GameMode.IslandOne,
                 score: 59,
                 date: new Date()
             }),
         JSON.stringify(
             {
                 name: "Brown John",
+                mode: GameMode.IslandOne,
                 score: 49,
                 date: new Date()
             })

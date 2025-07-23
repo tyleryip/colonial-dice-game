@@ -13,6 +13,7 @@ import { islandOneResetKnights } from "../../../../store/slices/session/islandOn
 import { islandOneResetStructures } from "../../../../store/slices/session/islandOne/structureSlice/islandOneStructureSlice";
 import StyledLeaderboardNameInput from "./styles/StyledLeaderboardNameInput";
 import { islandOneResetActiveResourceJoker } from "../../../../store/slices/session/islandOne/resourceJokerSlice/islandOneResourceJokerSlice";
+import { GameMode } from "../../../../constants/enumerations";
 
 const GameOverModal = () => {
     // Props and constants
@@ -47,6 +48,7 @@ const GameOverModal = () => {
         if (saveToLeaderboard) {
             const addLeaderboardEntryPayload: AddLeaderboardEntryPayload = {
                 name: leaderboardName,
+                mode: GameMode.IslandOne,
                 score: totalScore
             }
 
