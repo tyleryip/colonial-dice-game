@@ -1,15 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../../../store";
-import { ScoreValue } from "../../../../../types/ScoreValue"
 
-export interface ScoreState {
-    scores: ScoreValue[]
-    pendingScore: ScoreValue
+export interface IslandTwoScoreState {
+    score: number,
+    hasLongestRoad: boolean,
+    hasLargestArmy: boolean
 }
 
-const initialState: ScoreState = {
-    scores: new Array<ScoreValue>(15).fill(null),
-    pendingScore: null
+const initialState: IslandTwoScoreState = {
+    score: 0,
+    hasLongestRoad: false,
+    hasLargestArmy: false
 }
 
 export const islandTwoScoreSlice = createSlice({
@@ -17,34 +18,51 @@ export const islandTwoScoreSlice = createSlice({
     initialState: initialState,
     reducers: {
         /**
-         * When the pending score should be published to the scoreboard at the end of the build phase
+         * When a structure is built and points should be added to the score
          * @param state 
          * @param action 
          */
-        islandTwoAddScore: (state) => {
-            const index = findFirstEmptyScoreIndex(state.scores)
-            state.scores[index] = state.pendingScore != null && state.pendingScore > 0
-                ? state.pendingScore
-                : -2
-            state.pendingScore = null
+        islandTwoAddScore: (state, action: PayloadAction<number>) => {
+            state.score = state.score + action.payload
         },
         /**
-         * When the pending score is changing after building structures or knights
+         * Toggle whether the player has achieved or lost the longest road
          * @param state 
-         * @param action the number of points to add to the pending score
          */
-        islandTwoAddToPendingScore: (state, action: PayloadAction<number>) => {
-            state.pendingScore = state.pendingScore == null || state.pendingScore == 0
-                ? action.payload
-                : state.pendingScore + action.payload
+        islandTwoToggleLongestRoad: (state) => {
+            if (state.hasLongestRoad) {
+                state.score = state.score - 2
+            }
+
+            if (!state.hasLongestRoad) {
+                state.score = state.score + 2
+            }
+
+            state.hasLongestRoad = !state.hasLongestRoad
+        },
+        /**
+         * Toggle whether the player has achieved or lost the largest army
+         * @param state 
+         */
+        islandTwoToggleLargestArmy: (state) => {
+            if (state.hasLargestArmy) {
+                state.score = state.score - 2
+            }
+
+            if (!state.hasLargestArmy) {
+                state.score = state.score + 2
+            }
+
+            state.hasLargestArmy = !state.hasLargestArmy
         },
         /**
          * When the game is reset
          * @param state 
          */
         islandTwoResetScore: (state) => {
-            state.scores = new Array(15).fill(null)
-            state.pendingScore = null
+            state.score = initialState.score
+            state.hasLongestRoad = false
+            state.hasLargestArmy = false
         }
     }
 })
@@ -56,23 +74,12 @@ export default islandTwoScoreSlice.reducer;
 export const {
     islandTwoResetScore,
     islandTwoAddScore,
-    islandTwoAddToPendingScore
+    islandTwoToggleLargestArmy,
+    islandTwoToggleLongestRoad
 } = islandTwoScoreSlice.actions
 
 // Selectors
 
-export const selectIslandTwoScoreValues = (state: RootState) => state.session.islandTwo.score.scores
-export const selectIslandTwoPendingScore = (state: RootState) => state.session.islandTwo.score.pendingScore
-
-export const selectIslandTwoTotalScore = (state: RootState) => state.session.islandTwo.score.scores
-    .reduce((accumulator: number, currentValue: ScoreValue) => {
-        return accumulator + (currentValue ?? 0);
-    }, 0)
-
-export const selectIslandTwoAllScoresFilled = (state: RootState) => state.session.islandTwo.score.scores.every(score => typeof score === 'number')
-
-// Helper functions
-
-function findFirstEmptyScoreIndex(scores: ScoreValue[]): number {
-    return scores.findIndex(score => score == null)
-}
+export const selectIslandTwoScore = (state: RootState) => state.session.islandTwo.score.score
+export const selectIslandTwoHasLongestRoad = (state: RootState) => state.session.islandTwo.score.hasLongestRoad
+export const selectIslandTwoHasLargestArmy = (state: RootState) => state.session.islandTwo.score.hasLargestArmy
