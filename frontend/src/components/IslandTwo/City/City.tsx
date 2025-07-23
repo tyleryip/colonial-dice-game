@@ -14,7 +14,7 @@ import useSound from "use-sound"
 import { islandTwoSpendDice, selectIslandTwoHasResourcesNeeded } from "../../../store/slices/session/islandTwo/diceSlice/islandTwoDiceSlice"
 import { islandTwoBuildStructure, selectIslandTwoHasPrerequisiteStructuresBuilt, selectIslandTwoIsStructureBuilt } from "../../../store/slices/session/islandTwo/structureSlice/islandTwoStructureSlice"
 import { selectIslandTwoIsGamePhaseBuilding } from "../../../store/slices/session/islandTwo/gameSlice/islandTwoGameSlice"
-import { islandTwoAddToPendingScore } from "../../../store/slices/session/islandTwo/scoreSlice/islandTwoScoreSlice"
+import { islandTwoAddScore } from "../../../store/slices/session/islandTwo/scoreSlice/islandTwoScoreSlice"
 
 interface CityProps {
     id: number,
@@ -84,7 +84,7 @@ const City = (props: CityProps) => {
                 dispatch(islandTwoSpendDice(JSON.stringify(resourceType)))
             })
 
-            dispatch(islandTwoAddToPendingScore(2))
+            dispatch(islandTwoAddScore(2))
         }
     }
 

@@ -10,7 +10,6 @@ import dice_icon from '/assets/buttons/dice-icon.png'
 import StyledBuildButtonIcon from "./styles/StyledBuildButtonIcon";
 import { islandTwoResetDice, islandTwoResetDiceLocks, islandTwoSetRollCount } from "../../../../store/slices/session/islandTwo/diceSlice/islandTwoDiceSlice";
 import { selectIslandTwoIsGamePhaseRolling, selectIslandTwoIsGamePhaseBuilding, selectIslandTwoCurrentTurn, islandTwoSetGamePhase, islandTwoIncrementTurn } from "../../../../store/slices/session/islandTwo/gameSlice/islandTwoGameSlice";
-import { islandTwoAddScore } from "../../../../store/slices/session/islandTwo/scoreSlice/islandTwoScoreSlice";
 
 interface BuildButtonProps {
   disabled?: boolean;
@@ -83,7 +82,6 @@ const BuildButton = (props: BuildButtonProps) => {
 
     if (gamePhaseBuilding) {
       dispatch(islandTwoSetGamePhase(GamePhase.Rolling));
-      dispatch(islandTwoAddScore());
       dispatch(islandTwoIncrementTurn());
       dispatch(islandTwoResetDice());
 
