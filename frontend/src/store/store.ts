@@ -108,8 +108,8 @@ export const store = configureStore({
             ["Island One - Reset Knights"]: islandOneKnightSlice.actions.islandOneResetKnights,
 
             // Resource joker actions
-            ["Island One - Reset Resource Jokers"]: islandOneResourceJokerSlice.actions.islandOneResetResourceJokers,
-            ["Island One - Spend Resource Joker"]: islandOneResourceJokerSlice.actions.islandOneSpendResourceJoker,
+            ["Island One - Set Active Resource Joker"]: islandOneResourceJokerSlice.actions.islandOneSetActiveResourceJoker,
+            ["Island One - Reset Active Resource Joker"]: islandOneResourceJokerSlice.actions.islandOneResetActiveResourceJoker,
 
             // Score actions
             ["Island One - Add Score"]: islandOneScoreSlice.actions.islandOneAddScore,
@@ -142,14 +142,14 @@ export const store = configureStore({
             ["Island Two - Reset Knights"]: islandTwoKnightSlice.actions.islandTwoResetKnights,
 
             // Resource joker actions
-            ["Island Two - Reset Resource Jokers"]: islandTwoResourceJokerSlice.actions.islandTwoResetResourceJokers,
-            ["Island Two - Spend Resource Joker"]: islandTwoResourceJokerSlice.actions.islandTwoSpendResourceJoker,
+            ["Island Two - Set Active Resource Joker"]: islandTwoResourceJokerSlice.actions.islandTwoSetActiveResourceJoker,
+            ["Island Two - Reset Active Resource Joker"]: islandTwoResourceJokerSlice.actions.islandTwoResetActiveResourceJoker,
 
             // Score actions
             ["Island Two - Add Score"]: islandTwoScoreSlice.actions.islandTwoAddScore,
-            ["Island Two - Add To Pending Score"]: islandTwoScoreSlice.actions.islandTwoAddToPendingScore,
             ["Island Two - Reset Score"]: islandTwoScoreSlice.actions.islandTwoResetScore,
-
+            ["Island Two - Toggle Largest Army"]: islandTwoScoreSlice.actions.islandTwoToggleLargestArmy,
+            ["Island Two - Toggle Longest Road"]: islandTwoScoreSlice.actions.islandTwoToggleLongestRoad,
             // Structure actions
             ["Island Two - Build Structure"]: islandTwoStructureSlice.actions.islandTwoBuildStructure,
             ["Island Two - Reset Structures"]: islandTwoStructureSlice.actions.islandTwoResetStructures,
