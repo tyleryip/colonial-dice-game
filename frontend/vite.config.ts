@@ -11,7 +11,8 @@ export default defineConfig({
   test: {
     coverage: {
       enabled: true,
-      include: ['**/slices/**']
+      include: ['**/slices/**'],
+      exclude: ['**/slices/session/shared']
     },
     reporters: [
       'verbose',
