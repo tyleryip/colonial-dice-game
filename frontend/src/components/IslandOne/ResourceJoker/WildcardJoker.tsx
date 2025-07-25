@@ -1,15 +1,14 @@
 import { IconType, ResourceJokerType } from "../../../constants/enumerations"
 import { GetIslandOneResourceJokerType } from "../../../constants/mappings"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
-import { selectIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/gameSlice"
-import { selectIsKnightBuilt } from "../../../store/slices/session/islandOne/knightSlice/knightSlice"
-import { selectIsResourceJokerSpent } from "../../../store/slices/session/islandOne/resourceJokerSlice/resourceJokerSlice"
+import { selectIslandOneIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/islandOneGameSlice"
+import { selectIslandOneIsKnightBuilt, selectIslandOneIsKnightSpent } from "../../../store/slices/session/islandOne/knightSlice/islandOneKnightSlice"
 import StyledResourceJoker from "./styles/StyledResourceJoker"
 import StyledAsset from "../../Asset/StyledAsset"
 import { useState } from "react"
 import { ResourceType } from "../../../constants/resources"
 import WildcardTradingPopup from "../../Popups/WildcardTradingPopup/WildcardTradingPopup"
-import { clearWildcardJokerFlag, selectAllDiceSpent, selectResourceJokerFlag, selectWildcardJokerFlag, setWildcardJokerFlag } from "../../../store/slices/session/islandOne/diceSlice/diceSlice"
+import { selectIslandOneAllDiceSpent, selectIslandOneResourceJokerFlag, islandOneClearResourceJokerFlag, islandOneSetResourceJokerFlag } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice"
 import wool_joker_light from "/assets/jokers/light/wool-joker-light.png"
 import wheat_joker_light from "/assets/jokers/light/wheat-joker-light.png"
 import ore_joker_light from "/assets/jokers/light/ore-joker-light.png"
@@ -26,6 +25,7 @@ import { selectEffectiveVolume } from "../../../store/slices/local/settingsSlice
 import useSound from "use-sound"
 import selectionOpenSound from '/audio/selection_open.wav'
 import selectionCloseSound from '/audio/selection_close.wav'
+import { islandOneResetActiveResourceJoker, islandOneSetActiveResourceJoker, selectIslandOneActiveResourceJoker } from "../../../store/slices/session/islandOne/resourceJokerSlice/islandOneResourceJokerSlice"
 
 const resourceJokerIconsLight: Readonly<Record<number, string>> = {
     0: ore_joker_light,
@@ -57,39 +57,40 @@ const WildcardResourceJoker = () => {
 
     // Selectors
 
-    const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
-    // Each resource joker will line up with its corresponding knight (ex. knightId 1 = resourceJokerId 1)
-    const resourceJokerAvailable = useAppSelector(state => selectIsKnightBuilt(state, resourceJokerId))
-    const resourceJokerIsSpent = useAppSelector(state => selectIsResourceJokerSpent(state, resourceJokerId))
-    const resourceJokerFlag = useAppSelector(state => selectResourceJokerFlag(state))
-    const wildcardJokerFlag = useAppSelector(state => selectWildcardJokerFlag(state))
-    const allDiceSpent = useAppSelector(state => selectAllDiceSpent(state))
+    const gamePhaseBuilding = useAppSelector((state) => selectIslandOneIsGamePhaseBuilding(state))
+    const isKnightBuilt = useAppSelector(state => selectIslandOneIsKnightBuilt(state, resourceJokerId))
+    const isKnightSpent = useAppSelector(state => selectIslandOneIsKnightSpent(state, resourceJokerId))
+    const activeResourceJoker = useAppSelector(state => selectIslandOneActiveResourceJoker(state))
+    const resourceJokerFlag = useAppSelector(state => selectIslandOneResourceJokerFlag(state))
+    const allDiceSpent = useAppSelector(state => selectIslandOneAllDiceSpent(state))
     const volume = useAppSelector(state => selectEffectiveVolume(state))
 
     // Can spend conditions
 
+    const resourceJokerAvailable = isKnightBuilt && !isKnightSpent
+
     const canSpendWildcardJoker =
         gamePhaseBuilding
-        && !resourceJokerIsSpent
         && resourceJokerAvailable
         && resourceJokerFlag == null
-        && wildcardJokerFlag == null
+        && activeResourceJoker == null
         && !allDiceSpent
 
     const canCancelWildcardJoker =
         gamePhaseBuilding
-        && !resourceJokerIsSpent
-        && wildcardJokerFlag != null
+        && resourceJokerAvailable
+        && resourceJokerFlag != null
+        && activeResourceJoker == resourceJokerId
 
     // Conditional rendering
 
-    const iconType = resourceJokerIsSpent
+    const iconType = isKnightSpent
         ? IconType.Dark
         : IconType.Light
 
     const icon = (): string => {
-        if (wildcardJokerFlag != null) {
-            return resourceJokerIconsLight[wildcardJokerFlag]
+        if (resourceJokerFlag != null && activeResourceJoker == resourceJokerId) {
+            return resourceJokerIconsLight[resourceJokerFlag]
         }
 
         return iconType === IconType.Light
@@ -118,7 +119,7 @@ const WildcardResourceJoker = () => {
             return 1
         }
 
-        if (wildcardJokerFlag != null) {
+        if (resourceJokerFlag != null) {
             return 1.5
         }
 
@@ -139,6 +140,7 @@ const WildcardResourceJoker = () => {
     const handleClick = () => {
         if (canSpendWildcardJoker) {
             if (!tradingPopupOpen) {
+                dispatch(islandOneSetActiveResourceJoker(resourceJokerId))
                 playSelectionOpenSound();
                 setTradingPopupOpen(true)
             }
@@ -146,18 +148,20 @@ const WildcardResourceJoker = () => {
 
         if (canCancelWildcardJoker) {
             playSelectionCloseSound();
-            dispatch(clearWildcardJokerFlag())
+            dispatch(islandOneClearResourceJokerFlag())
+            dispatch(islandOneResetActiveResourceJoker())
         }
     }
 
     const handleTradePopupClick = (resourceId: number) => {
-        dispatch(setWildcardJokerFlag(resourceId))
+        dispatch(islandOneSetResourceJokerFlag(resourceId))
 
         setTradingPopupOpen(false);
     }
 
     const handleCloseTradePopup = () => {
         if (tradingPopupOpen) {
+            dispatch(islandOneResetActiveResourceJoker())
             playSelectionCloseSound();
         }
 
@@ -176,7 +180,7 @@ const WildcardResourceJoker = () => {
                 $pointer={canSpendWildcardJoker || canCancelWildcardJoker}
                 $pulse={canSpendWildcardJoker || canCancelWildcardJoker}
                 $pulseDurationSeconds={pulseDurationSeconds()}
-                $pending={wildcardJokerFlag != null}>
+                $pending={canCancelWildcardJoker}>
                 <StyledAsset
                     src={icon()}
                     alt={`Resource joker ${ResourceJokerType.Wildcard}`} />

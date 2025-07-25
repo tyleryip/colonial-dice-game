@@ -1,6 +1,6 @@
 import { useAppSelector } from '../../../store/hooks'
-import { selectCurrentTurn } from '../../../store/slices/session/islandOne/gameSlice/gameSlice'
-import { selectPendingScore, selectScoreValues, selectTotalScore } from '../../../store/slices/session/islandOne/scoreSlice/scoreSlice'
+import { selectIslandOneCurrentTurn } from '../../../store/slices/session/islandOne/gameSlice/islandOneGameSlice'
+import { selectIslandOnePendingScore, selectIslandOneScoreValues, selectIslandOneTotalScore } from '../../../store/slices/session/islandOne/scoreSlice/islandOneScoreSlice'
 import { ScoreValue } from '../../../types/ScoreValue'
 import StyledEqualsIcon from './styles/StyledEqualsIcon'
 import StyledScoreboard from './styles/StyledScoreboard'
@@ -10,10 +10,10 @@ import StyledTotalScore from './styles/StyledTotalScore'
 const Scoreboard = () => {
     // Selectors
 
-    const scores = useAppSelector(state => selectScoreValues(state))
-    const totalScore = useAppSelector(state => selectTotalScore(state))
-    const pendingScore = useAppSelector(state => selectPendingScore(state))
-    const currentTurn = useAppSelector(state => selectCurrentTurn(state))
+    const scores = useAppSelector(state => selectIslandOneScoreValues(state))
+    const totalScore = useAppSelector(state => selectIslandOneTotalScore(state))
+    const pendingScore = useAppSelector(state => selectIslandOnePendingScore(state))
+    const currentTurn = useAppSelector(state => selectIslandOneCurrentTurn(state))
 
     // Helper functions
 

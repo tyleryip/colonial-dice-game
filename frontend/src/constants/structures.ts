@@ -150,28 +150,6 @@ export function GetIslandTwoStructurePrerequisites(structureId: number): number[
 }
 
 /**
- * Given a structureId, return its point value
- * @param structureId 
- * @returns the number of points for building the structure
- */
-export function GetIslandTwoStructurePoints(structureId: number): number {
-    if (structureId < 0 || structureId > 28) {
-        throw new Error(`Structure with structureId=${structureId} not found`)
-    }
-
-    switch (GetIslandTwoStructureType(structureId)) {
-        case StructureType.Road:
-            return 0
-        case StructureType.Settlement:
-            return 1
-        case StructureType.City:
-            return 2
-        default:
-            return 0
-    }
-}
-
-/**
  * Maps a structure id to its StructureType
  */
 const islandTwoStructureTypes: Readonly<Record<number, StructureType>> = {

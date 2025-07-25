@@ -1,16 +1,16 @@
 import StyledAsset from "../../Asset/StyledAsset"
 import { IconType } from "../../../constants/enumerations"
-import { buildStructure, selectHasPrerequisiteStructuresBuilt, selectIsStructureBuilt } from "../../../store/slices/session/islandOne/structureSlice/structureSlice"
+import { islandOneBuildStructure, selectIslandOneHasPrerequisiteStructuresBuilt, selectIslandOneIsStructureBuilt } from "../../../store/slices/session/islandOne/structureSlice/islandOneStructureSlice"
 import { GetIslandOneCityNumber } from "../../../constants/mappings"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import StyledCity from "./styles/StyledCity"
 import { useHover } from "@uidotdev/usehooks"
-import { selectIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/gameSlice"
+import { selectIslandOneIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/islandOneGameSlice"
 import ResourceCostPopup from "../../Popups/ResourceCostPopup/ResourceCostPopup"
 import { cityCost } from "../../../constants/structures"
-import { selectHasResourcesNeeded, spendDice } from "../../../store/slices/session/islandOne/diceSlice/diceSlice"
+import { selectIslandOneHasResourcesNeeded, islandOneSpendDice } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice"
 import { ResourceType } from "../../../constants/resources"
-import { addToPendingScore } from "../../../store/slices/session/islandOne/scoreSlice/scoreSlice"
+import { islandOneAddToPendingScore } from "../../../store/slices/session/islandOne/scoreSlice/islandOneScoreSlice"
 import city_7_light from "/assets/cities/light/city-7-light.svg"
 import city_12_light from "/assets/cities/light/city-12-light.svg"
 import city_20_light from "/assets/cities/light/city-20-light.svg"
@@ -55,10 +55,10 @@ const City = (props: CityProps) => {
 
     // Selectors
 
-    const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
-    const isCityBuilt = useAppSelector(state => selectIsStructureBuilt(state, structureId))
-    const hasResourcesNeeded = useAppSelector(state => selectHasResourcesNeeded(state, cityCost))
-    const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectHasPrerequisiteStructuresBuilt(state, structureId))
+    const gamePhaseBuilding = useAppSelector((state) => selectIslandOneIsGamePhaseBuilding(state))
+    const isCityBuilt = useAppSelector(state => selectIslandOneIsStructureBuilt(state, structureId))
+    const hasResourcesNeeded = useAppSelector(state => selectIslandOneHasResourcesNeeded(state, cityCost))
+    const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectIslandOneHasPrerequisiteStructuresBuilt(state, structureId))
     const volume = useAppSelector(state => selectEffectiveVolume(state))
 
     // Can build conditions
@@ -100,13 +100,13 @@ const City = (props: CityProps) => {
         if (canBuildCity) {
             playBuildSound()
 
-            dispatch(buildStructure(structureId))
+            dispatch(islandOneBuildStructure(structureId))
 
             cityCost.forEach((resourceType: ResourceType) => {
-                dispatch(spendDice(JSON.stringify(resourceType)))
+                dispatch(islandOneSpendDice(JSON.stringify(resourceType)))
             })
 
-            dispatch(addToPendingScore(cityNumber))
+            dispatch(islandOneAddToPendingScore(cityNumber))
         }
     }
 

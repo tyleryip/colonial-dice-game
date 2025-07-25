@@ -87,3 +87,8 @@ export enum GamePhase {
      */
     Building
 }
+
+export enum GameMode {
+    IslandOne,
+    IslandTwo
+}

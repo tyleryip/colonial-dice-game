@@ -1,21 +1,20 @@
 import StyledAsset from "../../Asset/StyledAsset"
 import { IconType } from "../../../constants/enumerations"
-import { buildStructure } from "../../../store/slices/session/islandOne/structureSlice/structureSlice"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import StyledCity from "./styles/StyledCity"
 import { useHover } from "@uidotdev/usehooks"
-import { selectIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/gameSlice"
 import ResourceCostPopup from "../../Popups/ResourceCostPopup/ResourceCostPopup"
 import { cityCost } from "../../../constants/structures"
-import { selectHasResourcesNeeded, spendDice } from "../../../store/slices/session/islandOne/diceSlice/diceSlice"
 import { ResourceType } from "../../../constants/resources"
-import { addToPendingScore } from "../../../store/slices/session/islandOne/scoreSlice/scoreSlice"
 import city_light from "/assets/cities/light/city-light.svg"
 import city_dark from "/assets/cities/dark/city-dark.svg"
 import { selectEffectiveVolume } from "../../../store/slices/local/settingsSlice/settingsSlice"
 import buildSound from '/audio/build.wav'
 import useSound from "use-sound"
-import { GetIslandOneCityNumber } from "../../../constants/mappings"
+import { islandTwoSpendDice, selectIslandTwoHasResourcesNeeded } from "../../../store/slices/session/islandTwo/diceSlice/islandTwoDiceSlice"
+import { islandTwoBuildStructure, selectIslandTwoHasPrerequisiteStructuresBuilt, selectIslandTwoIsStructureBuilt } from "../../../store/slices/session/islandTwo/structureSlice/islandTwoStructureSlice"
+import { selectIslandTwoIsGamePhaseBuilding } from "../../../store/slices/session/islandTwo/gameSlice/islandTwoGameSlice"
+import { islandTwoAddScore } from "../../../store/slices/session/islandTwo/scoreSlice/islandTwoScoreSlice"
 
 interface CityProps {
     id: number,
@@ -27,7 +26,6 @@ const City = (props: CityProps) => {
     // Props and constants
 
     const structureId = props.id
-    const cityNumber = GetIslandOneCityNumber(structureId)
 
     // Dispatch
 
@@ -35,19 +33,11 @@ const City = (props: CityProps) => {
 
     // Selectors
 
-    const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
-    const isCityBuilt = false
-    const hasResourcesNeeded = useAppSelector(state => selectHasResourcesNeeded(state, cityCost))
-    const hasPrerequisiteStructuresBuilt = false
+    const gamePhaseBuilding = useAppSelector(state => selectIslandTwoIsGamePhaseBuilding(state))
+    const isCityBuilt = useAppSelector(state => selectIslandTwoIsStructureBuilt(state, structureId))
+    const hasResourcesNeeded = useAppSelector(state => selectIslandTwoHasResourcesNeeded(state, cityCost))
+    const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectIslandTwoHasPrerequisiteStructuresBuilt(state, structureId))
     const volume = useAppSelector(state => selectEffectiveVolume(state))
-
-    /*
-    const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
-    const isCityBuilt = useAppSelector(state => selectIsStructureBuilt(state, structureId))
-    const hasResourcesNeeded = useAppSelector(state => selectHasResourcesNeeded(state, cityCost))
-    const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectHasPrerequisiteStructuresBuilt(state, structureId))
-    const volume = useAppSelector(state => selectEffectiveVolume(state))
-    */
 
     // Can build conditions
 
@@ -88,13 +78,13 @@ const City = (props: CityProps) => {
         if (canBuildCity) {
             playBuildSound()
 
-            dispatch(buildStructure(structureId))
+            dispatch(islandTwoBuildStructure(structureId))
 
             cityCost.forEach((resourceType: ResourceType) => {
-                dispatch(spendDice(JSON.stringify(resourceType)))
+                dispatch(islandTwoSpendDice(JSON.stringify(resourceType)))
             })
 
-            dispatch(addToPendingScore(cityNumber))
+            dispatch(islandTwoAddScore(2))
         }
     }
 
@@ -106,7 +96,7 @@ const City = (props: CityProps) => {
                 $left={props.left}
                 $pointer={canBuildCity}
                 $canBuild={canBuildCity}>
-                <StyledAsset src={icon} alt={`City ${cityNumber}`} />
+                <StyledAsset src={icon} alt={`City`} />
             </StyledCity>
             <ResourceCostPopup
                 disabled={disableResourceCostPopup}

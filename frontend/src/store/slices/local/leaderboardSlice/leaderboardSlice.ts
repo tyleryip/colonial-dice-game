@@ -1,8 +1,10 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { RootState } from "../../../store"
+import { GameMode } from "../../../../constants/enumerations"
 
 export interface LeaderboardEntry {
     name: string
+    mode: GameMode
     score: number
     date: Date
 }
@@ -28,6 +30,7 @@ export const leaderboardSlice = createSlice({
             const serializedLeaderboardEntry = JSON.stringify(
                 {
                     name: action.payload.name,
+                    mode: action.payload.mode,
                     score: action.payload.score,
                     date: new Date()
                 })
@@ -48,6 +51,7 @@ export default leaderboardSlice.reducer;
 // Actions 
 export interface AddLeaderboardEntryPayload {
     name: string
+    mode: GameMode
     score: number
 }
 
@@ -60,9 +64,18 @@ export const {
 
 const selectLeaderboardEntries = (state: RootState) => state.local.leaderboard.entries
 
-export const selectOrderedLeaderboardEntries = createSelector([selectLeaderboardEntries], (serializedEntries) => {
-    const leaderboardEntries = serializedEntries.map((serializedEntry) => JSON.parse(serializedEntry))
+export const selectOrderedIslandOneLeaderboardEntries = createSelector([selectLeaderboardEntries], (serializedEntries) => {
+    const leaderboardEntries = serializedEntries
+        .map((serializedEntry) => JSON.parse(serializedEntry))
+        .filter(entry => entry.mode === GameMode.IslandOne)
     return leaderboardEntries.sort((a, b) => b.score - a.score)
+})
+
+export const selectOrderedIslandTwoLeaderboardEntries = createSelector([selectLeaderboardEntries], (serializedEntries) => {
+    const leaderboardEntries = serializedEntries
+        .map((serializedEntry) => JSON.parse(serializedEntry))
+        .filter(entry => entry.mode === GameMode.IslandTwo)
+    return leaderboardEntries.sort((a, b) => a.score - b.score)
 })
 
 // Helper functions

@@ -228,3 +228,17 @@ export function GetIslandTwoKnightType(knightId: number): KnightType {
 
     return islandTwoKnightMappings[knightId]
 }
+
+/**
+ * Maps a resource joker to one or more knights
+ */
+export const IslandTwoResourceJokerKnightMappings: Readonly<Record<number, number[]>> =
+{
+    0: [0],
+    1: [1],
+    2: [2],
+    3: [3],
+    4: [4],
+    5: [5, 6],
+    6: [7, 8]
+}

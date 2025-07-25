@@ -7,6 +7,7 @@ import City from '../City/City'
 import Settlement from '../Settlement/Settlement'
 import Road from '../Road/Road'
 import WildcardResourceJoker from '../ResourceJoker/WildcardJoker'
+import { GetIslandTwoResourceJokerType } from '../../../constants/mappings'
 
 // Hexagon icons
 import water_hexagon from "/assets/hexagons/water-hexagon.svg";
@@ -16,7 +17,6 @@ import wool_hexagon from "/assets/hexagons/wool-hexagon.svg";
 import wood_hexagon from "/assets/hexagons/wood-hexagon.svg";
 import brick_hexagon from "/assets/hexagons/brick-hexagon.svg";
 import desert_hexagon from "/assets/hexagons/desert-hexagon.svg";
-import { GetIslandTwoResourceJokerType } from '../../../constants/mappings'
 
 interface HexagonProps {
     id: number,

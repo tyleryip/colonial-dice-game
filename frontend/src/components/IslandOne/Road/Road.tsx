@@ -1,16 +1,16 @@
 import { IconType, RoadType } from "../../../constants/enumerations"
 import StyledAsset from "../../Asset/StyledAsset"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
-import { buildStructure, selectHasPrerequisiteStructuresBuilt, selectIsStructureBuilt } from "../../../store/slices/session/islandOne/structureSlice/structureSlice"
+import { islandOneBuildStructure, selectIslandOneHasPrerequisiteStructuresBuilt, selectIslandOneIsStructureBuilt } from "../../../store/slices/session/islandOne/structureSlice/islandOneStructureSlice"
 import { GetIslandOneRoadType } from "../../../constants/mappings"
 import StyledRoad from "./styles/StyledRoad"
 import { useHover } from "@uidotdev/usehooks"
-import { selectIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/gameSlice"
+import { selectIslandOneIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/islandOneGameSlice"
 import ResourceCostPopup from "../../Popups/ResourceCostPopup/ResourceCostPopup"
 import { roadCost } from "../../../constants/structures"
-import { selectHasResourcesNeeded, spendDice } from "../../../store/slices/session/islandOne/diceSlice/diceSlice"
+import { selectIslandOneHasResourcesNeeded, islandOneSpendDice } from "../../../store/slices/session/islandOne/diceSlice/islandOneDiceSlice"
 import { ResourceType } from "../../../constants/resources"
-import { addToPendingScore } from "../../../store/slices/session/islandOne/scoreSlice/scoreSlice"
+import { islandOneAddToPendingScore } from "../../../store/slices/session/islandOne/scoreSlice/islandOneScoreSlice"
 import horizontal_road_1_light from "/assets/roads/light/horizontal-road-1-light.svg"
 import forwardslash_road_1_light from "/assets/roads/light/forwardslash-road-1-light.svg"
 import backwardslash_road_1_light from "/assets/roads/light/backslash-road-1-light.svg"
@@ -76,10 +76,10 @@ const Road = (props: RoadProps) => {
 
     // Selectors
 
-    const gamePhaseBuilding = useAppSelector(state => selectIsGamePhaseBuilding(state))
-    const isRoadBuilt = useAppSelector(state => selectIsStructureBuilt(state, structureId))
-    const hasResourcesNeeded = useAppSelector(state => selectHasResourcesNeeded(state, roadCost))
-    const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectHasPrerequisiteStructuresBuilt(state, structureId))
+    const gamePhaseBuilding = useAppSelector(state => selectIslandOneIsGamePhaseBuilding(state))
+    const isRoadBuilt = useAppSelector(state => selectIslandOneIsStructureBuilt(state, structureId))
+    const hasResourcesNeeded = useAppSelector(state => selectIslandOneHasResourcesNeeded(state, roadCost))
+    const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectIslandOneHasPrerequisiteStructuresBuilt(state, structureId))
     const volume = useAppSelector(state => selectEffectiveVolume(state))
 
     // Can build conditions
@@ -122,13 +122,13 @@ const Road = (props: RoadProps) => {
         if (canBuildRoad) {
             playBuildSound()
 
-            dispatch(buildStructure(structureId))
+            dispatch(islandOneBuildStructure(structureId))
 
             roadCost.forEach((resourceType: ResourceType) => {
-                dispatch(spendDice(JSON.stringify(resourceType)))
+                dispatch(islandOneSpendDice(JSON.stringify(resourceType)))
             })
 
-            dispatch(addToPendingScore(roadPoints))
+            dispatch(islandOneAddToPendingScore(roadPoints))
         }
     }
 

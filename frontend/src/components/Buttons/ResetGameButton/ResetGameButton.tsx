@@ -1,46 +1,29 @@
-import { useAppDispatch } from "../../../store/hooks";
-import { resetDice } from "../../../store/slices/session/islandOne/diceSlice/diceSlice";
-import { resetGame } from "../../../store/slices/session/islandOne/gameSlice/gameSlice";
-import { resetKnights } from "../../../store/slices/session/islandOne/knightSlice/knightSlice";
-import { resetResourceJokers } from "../../../store/slices/session/islandOne/resourceJokerSlice/resourceJokerSlice";
-import { resetScore } from "../../../store/slices/session/islandOne/scoreSlice/scoreSlice";
-import { resetStructures } from "../../../store/slices/session/islandOne/structureSlice/structureSlice";
 import StyledResetGameButton from "./styles/StyledResetGameButton";
 
 interface ResetGameButtonProps {
+  title: string,
   onReset: () => void;
 }
 
 const ResetGameButton = (props: ResetGameButtonProps) => {
-  // Dispatch
-
-  const dispatch = useAppDispatch();
-
   // Conditional rendering
 
-  const tooltip = "Reset game";
+  const tooltip = `${props.title}`;
 
   // Event handlers
 
   function handleClick() {
-    const resetConfirmed = confirm("Do you want to reset the game? All progress will be lost.")
+    const resetConfirmed = confirm(`Do you want to reset ${props.title}? All progress will be lost.`)
     if (!resetConfirmed) {
       return
     }
-
-    dispatch(resetGame());
-    dispatch(resetKnights());
-    dispatch(resetResourceJokers());
-    dispatch(resetStructures());
-    dispatch(resetScore());
-    dispatch(resetDice());
 
     props.onReset();
   }
 
   return (
     <StyledResetGameButton title={tooltip} onClick={handleClick}>
-      Reset Game
+      {`Reset ${props.title}`}
     </StyledResetGameButton>
   );
 };

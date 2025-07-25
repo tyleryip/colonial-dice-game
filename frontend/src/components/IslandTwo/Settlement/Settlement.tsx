@@ -1,21 +1,20 @@
 import StyledAsset from "../../Asset/StyledAsset"
 import { IconType } from "../../../constants/enumerations"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
-import { buildStructure } from "../../../store/slices/session/islandOne/structureSlice/structureSlice"
-import { GetIslandOneSettlementNumber } from "../../../constants/mappings"
 import StyledSettlement from "./styles/StyledSettlement"
-import { selectIsGamePhaseBuilding } from "../../../store/slices/session/islandOne/gameSlice/gameSlice"
 import { useHover } from "@uidotdev/usehooks"
 import ResourceCostPopup from "../../Popups/ResourceCostPopup/ResourceCostPopup"
 import { settlementCost } from "../../../constants/structures"
-import { selectHasResourcesNeeded, spendDice } from "../../../store/slices/session/islandOne/diceSlice/diceSlice"
 import { ResourceType } from "../../../constants/resources"
-import { addToPendingScore } from "../../../store/slices/session/islandOne/scoreSlice/scoreSlice"
 import settlement_light from "/assets/settlements/light/settlement-light.svg"
 import settlement_dark from "/assets/settlements/dark/settlement-dark.svg"
 import { selectEffectiveVolume } from "../../../store/slices/local/settingsSlice/settingsSlice"
 import buildSound from '/audio/build.wav'
 import useSound from "use-sound"
+import { islandTwoBuildStructure, selectIslandTwoHasPrerequisiteStructuresBuilt, selectIslandTwoIsStructureBuilt } from "../../../store/slices/session/islandTwo/structureSlice/islandTwoStructureSlice"
+import { islandTwoSpendDice, selectIslandTwoHasResourcesNeeded } from "../../../store/slices/session/islandTwo/diceSlice/islandTwoDiceSlice"
+import { selectIslandTwoIsGamePhaseBuilding } from "../../../store/slices/session/islandTwo/gameSlice/islandTwoGameSlice"
+import { islandTwoAddScore } from "../../../store/slices/session/islandTwo/scoreSlice/islandTwoScoreSlice"
 
 interface SettlementProps {
     id: number,
@@ -27,7 +26,6 @@ const Settlement = (props: SettlementProps) => {
     // Props and constants
 
     const structureId = props.id
-    const settlementNumber = GetIslandOneSettlementNumber(structureId)
 
     // Dispatch
 
@@ -35,19 +33,11 @@ const Settlement = (props: SettlementProps) => {
 
     // Selectors
 
-    const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
-    const isSettlementBuilt = false
-    const hasPrerequisiteStructuresBuilt = true
-    const hasResourcesNeeded = useAppSelector(state => selectHasResourcesNeeded(state, settlementCost))
+    const gamePhaseBuilding = useAppSelector((state) => selectIslandTwoIsGamePhaseBuilding(state))
+    const isSettlementBuilt = useAppSelector(state => selectIslandTwoIsStructureBuilt(state, structureId))
+    const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectIslandTwoHasPrerequisiteStructuresBuilt(state, structureId))
+    const hasResourcesNeeded = useAppSelector(state => selectIslandTwoHasResourcesNeeded(state, settlementCost))
     const volume = useAppSelector(state => selectEffectiveVolume(state))
-
-    /*
-    const gamePhaseBuilding = useAppSelector((state) => selectIsGamePhaseBuilding(state))
-    const isSettlementBuilt = useAppSelector(state => selectIsStructureBuilt(state, structureId))
-    const hasPrerequisiteStructuresBuilt = useAppSelector(state => selectHasPrerequisiteStructuresBuilt(state, structureId))
-    const hasResourcesNeeded = useAppSelector(state => selectHasResourcesNeeded(state, settlementCost))
-    const volume = useAppSelector(state => selectEffectiveVolume(state))
-    */
 
     // Built and can build conditions
 
@@ -87,13 +77,13 @@ const Settlement = (props: SettlementProps) => {
     function handleClick() {
         if (canBuildSettlement) {
             playBuildSound()
-            dispatch(buildStructure(props.id))
+            dispatch(islandTwoBuildStructure(props.id))
 
             settlementCost.forEach((resourceType: ResourceType) => {
-                dispatch(spendDice(JSON.stringify(resourceType)))
+                dispatch(islandTwoSpendDice(JSON.stringify(resourceType)))
             })
 
-            dispatch(addToPendingScore(settlementNumber))
+            dispatch(islandTwoAddScore(1))
         }
     }
 
@@ -107,7 +97,7 @@ const Settlement = (props: SettlementProps) => {
                 $canBuild={canBuildSettlement}>
                 <StyledAsset
                     src={icon}
-                    alt={`Settlement ${settlementNumber}`} />
+                    alt={`Settlement`} />
             </StyledSettlement>
             <ResourceCostPopup
                 disabled={disableResourceCostPopup}

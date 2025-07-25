@@ -1,6 +1,6 @@
 import Table from 'react-bootstrap/Table'
 import { useAppSelector } from '../../store/hooks'
-import { selectOrderedLeaderboardEntries } from '../../store/slices/local/leaderboardSlice/leaderboardSlice'
+import { selectOrderedIslandOneLeaderboardEntries } from '../../store/slices/local/leaderboardSlice/leaderboardSlice'
 import StyledLeaderboard from './styles/StyledLeaderboard'
 import LeaderboardRow from './LeaderboardRow/LeaderboardRow'
 import LeaderboardPlaceholder from './LeaderboardPlaceholder/LeaderboardPlaceholder'
@@ -9,7 +9,7 @@ const Leaderboard = () => {
     // Props and constants
 
     // Selectors
-    const leaderboardEntries = useAppSelector(state => selectOrderedLeaderboardEntries(state))
+    const leaderboardEntries = useAppSelector(state => selectOrderedIslandOneLeaderboardEntries(state))
 
     // Conditional rendering
 
