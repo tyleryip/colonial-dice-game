@@ -1,5 +1,6 @@
 import { test, expect } from 'vitest'
-import reducer, { islandOneBuildStructure, islandOneResetStructures, StructureState } from './islandOneStructureSlice'
+import reducer, { islandOneBuildStructure, islandOneResetStructures } from './islandOneStructureSlice'
+import { StructureState } from '../../shared/structureSlice'
 
 test('should return the initial state', () => {
     // Act
