@@ -3,11 +3,13 @@ import Layout from "../Layout/Layout"
 import StyledGameBoardContainer from "../Layout/styles/StyledGameBoardContainer"
 import GameBoard from "./GameBoard/GameBoard"
 import GameOverModal from "./Modals/GameOverModal/GameOverModal"
+import Scoreboard from "./Scoreboard/Scoreboard"
 
 const IslandTwo = () => {
     return (
         <Layout>
             <GameOverModal />
+            <Scoreboard />
             <StyledGameBoardContainer>
                 <GameBoard />
                 <GameControlsContainer />
