@@ -34,10 +34,7 @@ const GameOverModal = () => {
 
     const show = gamePhaseRolling && score >= 10
 
-    // Since the current turn is 0-based, we add 1 (ex. the first play occurs on the first turn)
-    const currentDisplayTurn = currentTurn + 1
-
-    const totalScoreDisplay = currentDisplayTurn <= 12 ? `${currentDisplayTurn} turns!` : `${currentDisplayTurn} turns.`
+    const totalScoreDisplay = currentTurn <= 12 ? `${currentTurn} turns!` : `${currentTurn} turns.`
 
     const saveToLeaderboard = leaderboardName.length > 0
 
@@ -52,7 +49,7 @@ const GameOverModal = () => {
             const addLeaderboardEntryPayload: AddLeaderboardEntryPayload = {
                 name: leaderboardName,
                 mode: GameMode.IslandTwo,
-                score: currentDisplayTurn
+                score: currentTurn
             }
 
             dispatch(addLeaderboardEntry(addLeaderboardEntryPayload))

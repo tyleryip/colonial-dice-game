@@ -6,8 +6,8 @@ import { useHover } from "@uidotdev/usehooks"
 import ResourceCostPopup from "../../Popups/ResourceCostPopup/ResourceCostPopup"
 import { cityCost } from "../../../constants/structures"
 import { ResourceType } from "../../../constants/resources"
-import city_light from "/assets/cities/light/city-light.svg"
-import city_dark from "/assets/cities/dark/city-dark.svg"
+import city_2_light from "/assets/cities/light/city-2-light.svg"
+import city_2_dark from "/assets/cities/dark/city-2-dark.svg"
 import { selectEffectiveVolume } from "../../../store/slices/local/settingsSlice/settingsSlice"
 import buildSound from '/audio/build.wav'
 import useSound from "use-sound"
@@ -56,8 +56,8 @@ const City = (props: CityProps) => {
         : IconType.Light
 
     const icon = iconType === IconType.Light
-        ? city_light
-        : city_dark
+        ? city_2_light
+        : city_2_dark
 
     const disableResourceCostPopup =
         !hovering

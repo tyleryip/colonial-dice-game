@@ -20,7 +20,7 @@ test('should increment turn', () => {
     const result = reducer(previousState, islandTwoIncrementTurn())
 
     // Assert
-    expect(result.currentTurn).toEqual(1)
+    expect(result.currentTurn).toEqual(2)
 })
 
 test('should set game phase', () => {
@@ -54,6 +54,6 @@ test('should reset game', () => {
 const getInitialState = (): GameState => {
     return {
         currentGamePhase: GamePhase.Rolling,
-        currentTurn: 0
+        currentTurn: 1
     }
 }

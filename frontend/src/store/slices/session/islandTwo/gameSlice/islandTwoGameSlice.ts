@@ -5,7 +5,7 @@ import { GameState } from "../../shared/gameSlice";
 
 const initialState: GameState = {
     currentGamePhase: GamePhase.Rolling,
-    currentTurn: 0
+    currentTurn: 1
 }
 
 export const islandTwoGameSlice = createSlice({
@@ -33,7 +33,7 @@ export const islandTwoGameSlice = createSlice({
          */
         islandTwoResetGame: (state) => {
             state.currentGamePhase = GamePhase.Rolling
-            state.currentTurn = 0
+            state.currentTurn = 1
         }
     }
 })
