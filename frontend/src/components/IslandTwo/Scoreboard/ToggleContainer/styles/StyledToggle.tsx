@@ -1,6 +1,10 @@
-import { styled } from 'styled-components'
+import { css, styled } from 'styled-components'
 
-const StyledToggle = styled.img`
+interface StyledToggleProps {
+    $disabled: boolean
+}
+
+const StyledToggle = styled.img<StyledToggleProps>`
 /** Layout */ 
     justify-self: right;
 
@@ -14,28 +18,12 @@ const StyledToggle = styled.img`
 /** Typography */ 
 
 /** Visual Effects */ 
+    filter: ${props => props.$disabled && css`grayscale(100%)`};
 
 /** Responsive Design */ 
-@media ${(props) => props.theme.breakpoints.xs} {
-
-} 
-@media ${(props) => props.theme.breakpoints.s} {
-
-}
-@media ${(props) => props.theme.breakpoints.m} {
-
-}
-@media ${(props) => props.theme.breakpoints.l} {
-
-}
-@media ${(props) => props.theme.breakpoints.xl} {
-
-}
-@media ${(props) => props.theme.breakpoints.xxl} {
-
-}
 
 /** Interactivity */ 
+    cursor: ${props => !props.$disabled && css`pointer`};
 
 /** Micellaneous */
 

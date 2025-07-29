@@ -6,6 +6,8 @@ import unchecked_longest_road from '/assets/scoreboard/unchecked-longest-road.pn
 import unchecked_largest_army from '/assets/scoreboard/unchecked-largest-army.png'
 import checked_longest_road from '/assets/scoreboard/checked-longest-road.png'
 import checked_largest_army from '/assets/scoreboard/checked-largest-army.png'
+import { selectIslandTwoIsStructureBuilt } from '../../../../store/slices/session/islandTwo/structureSlice/islandTwoStructureSlice'
+import { selectIslandTwoKnightsBuiltTotal } from '../../../../store/slices/session/islandTwo/knightSlice/islandTwoKnightSlice'
 
 const ToggleContainer = () => {
     // Dispatch
@@ -17,20 +19,53 @@ const ToggleContainer = () => {
     const hasLongestRoad = useAppSelector(state => selectIslandTwoHasLongestRoad(state))
     const hasLargestArmy = useAppSelector(state => selectIslandTwoHasLargestArmy(state))
 
+    // Must have built road with id=12 to have 5 consecutive roads
+    const hasMinimumRoadsBuilt = useAppSelector(state => selectIslandTwoIsStructureBuilt(state, 12))
+    const numberOfKnightsBuilt = useAppSelector(state => selectIslandTwoKnightsBuiltTotal(state))
+
+    // Conditional rendering
+
+    const disableLongestRoad = !hasMinimumRoadsBuilt
+    const disableLargestArmy = numberOfKnightsBuilt < 3
+
+    const longestRoadTooltip = disableLongestRoad
+        ? "Build 5 or more consecutive roads"
+        : "Toggle Longest Road"
+
+    const largestArmyTooltip = disableLargestArmy
+        ? "Build 3 or more knights"
+        : "Toggle Largest Army"
+
     // Event handlers
 
     const handleLongestRoadChanged = () => {
+        if (disableLongestRoad) {
+            return
+        }
+
         dispatch(islandTwoToggleLongestRoad())
     }
 
     const handleLargestArmyChanged = () => {
+        if (disableLargestArmy) {
+            return
+        }
+
         dispatch(islandTwoToggleLargestArmy())
     }
 
     return (
         <StyledToggleContainer>
-            <StyledToggle onClick={handleLongestRoadChanged} src={hasLongestRoad ? checked_longest_road : unchecked_longest_road} />
-            <StyledToggle onClick={handleLargestArmyChanged} src={hasLargestArmy ? checked_largest_army : unchecked_largest_army} />
+            <StyledToggle
+                title={longestRoadTooltip}
+                $disabled={disableLongestRoad}
+                onClick={handleLongestRoadChanged}
+                src={hasLongestRoad ? checked_longest_road : unchecked_longest_road} />
+            <StyledToggle
+                title={largestArmyTooltip}
+                $disabled={disableLargestArmy}
+                onClick={handleLargestArmyChanged}
+                src={hasLargestArmy ? checked_largest_army : unchecked_largest_army} />
         </StyledToggleContainer>
     )
 }

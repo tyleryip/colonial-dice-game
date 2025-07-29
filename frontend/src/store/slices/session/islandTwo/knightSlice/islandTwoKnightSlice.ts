@@ -87,6 +87,15 @@ export const selectIslandTwoKnightsSpentCount = (state: RootState, knightIds: nu
     return knightIds.map(knightId => state.session.islandTwo.knight.isSpent[knightId]).filter(isSpent => isSpent).length
 }
 
+/**
+ * 
+ * @param state 
+ * @returns 
+ */
+export const selectIslandTwoKnightsBuiltTotal = (state: RootState) => {
+    return state.session.islandTwo.knight.isBuilt.filter(isBuilt => isBuilt).length
+}
+
 // Helper functions
 
 function findFirstUnspentBuiltKnight(state: KnightState, knightIds: number[]): number {
