@@ -6,8 +6,8 @@ import { useHover } from "@uidotdev/usehooks"
 import ResourceCostPopup from "../../Popups/ResourceCostPopup/ResourceCostPopup"
 import { settlementCost } from "../../../constants/structures"
 import { ResourceType } from "../../../constants/resources"
-import settlement_light from "/assets/settlements/light/settlement-light.svg"
-import settlement_dark from "/assets/settlements/dark/settlement-dark.svg"
+import settlement_1_light from "/assets/settlements/light/settlement-1-light.svg"
+import settlement_1_dark from "/assets/settlements/dark/settlement-1-dark.svg"
 import { selectEffectiveVolume } from "../../../store/slices/local/settingsSlice/settingsSlice"
 import buildSound from '/audio/build.wav'
 import useSound from "use-sound"
@@ -56,8 +56,8 @@ const Settlement = (props: SettlementProps) => {
         : IconType.Light
 
     const icon = iconType === IconType.Light
-        ? settlement_light
-        : settlement_dark
+        ? settlement_1_light
+        : settlement_1_dark
 
     const disableResourceCostPopup =
         !hovering
