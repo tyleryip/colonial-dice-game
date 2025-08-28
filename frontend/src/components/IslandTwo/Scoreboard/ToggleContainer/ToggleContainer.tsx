@@ -19,8 +19,8 @@ const ToggleContainer = () => {
     const hasLongestRoad = useAppSelector(state => selectIslandTwoHasLongestRoad(state))
     const hasLargestArmy = useAppSelector(state => selectIslandTwoHasLargestArmy(state))
 
-    // Must have built road with id=12 to have 5 consecutive roads
-    const hasMinimumRoadsBuilt = useAppSelector(state => selectIslandTwoIsStructureBuilt(state, 12))
+    // Must have built road with id=10 to have 5 consecutive roads
+    const hasMinimumRoadsBuilt = useAppSelector(state => selectIslandTwoIsStructureBuilt(state, 10))
     const numberOfKnightsBuilt = useAppSelector(state => selectIslandTwoKnightsBuiltTotal(state))
 
     // Conditional rendering

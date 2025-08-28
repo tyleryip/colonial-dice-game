@@ -9,15 +9,6 @@ const StyledHowToPlayModalBody = styled(ModalBody)`
 /** Colour + Background */ 
 
 /** Typography */ 
-> h1 {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-> h2 {
-    font-size: 20px;
-    font-weight: bold;
-}
 
 /** Visual Effects */ 
 

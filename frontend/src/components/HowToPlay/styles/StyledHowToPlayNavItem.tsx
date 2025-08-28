@@ -1,13 +1,16 @@
+import { Nav } from 'react-bootstrap'
 import { styled } from 'styled-components'
 
-const StyledLeaderboard = styled.div`
+const StyledHowToPlayNavItem = styled(Nav.Item)`
 /** Layout */ 
 
 /** Box Model */ 
+    padding-left: 3%;
 
 /** Colour + Background */ 
 
 /** Typography */ 
+    white-space: nowrap;
 
 /** Visual Effects */ 
 
@@ -18,4 +21,4 @@ const StyledLeaderboard = styled.div`
 /** Micellaneous */
 `
 
-export default StyledLeaderboard
+export default StyledHowToPlayNavItem
