@@ -52,13 +52,13 @@ const Settings = () => {
             </StyledSettingsRow>
             <StyledSettingsRow>
                 <StyledSettingsLabel>
-                    Hide Instructions
+                    Show Hints
                 </StyledSettingsLabel>
                 <StyledSettingsIcon src={instructions_icon} $width={6} />
                 <Form.Check
                     type="switch"
                     reverse
-                    checked={!showInstructions}
+                    checked={showInstructions}
                     onChange={onHideInstructionsChange}
                 />
             </StyledSettingsRow>
