@@ -35,7 +35,8 @@ const SettingsModal = (props: SettingsModalProps) => {
 
   // Copy
 
-  const headerCopy = "Settings";
+  const showDedication = import.meta.env.VITE_SHOW_DEDICATION === "true"
+  console.log("showDedication: ", showDedication)
 
   const footerCopy = `v${appVersion}`;
 
@@ -65,7 +66,7 @@ const SettingsModal = (props: SettingsModalProps) => {
   return (
     <Modal centered backdrop="static" show={props.show}>
       <StyledModalHeader closeButton onHide={() => props.onHide()}>
-        {headerCopy}
+        {"Settings"}
       </StyledModalHeader>
       <StyledSettingsModalBody>
         <Settings />
@@ -77,6 +78,7 @@ const SettingsModal = (props: SettingsModalProps) => {
       </StyledSettingsModalBody>
       <StyledModalFooter>
         <StyledVersion>{footerCopy}</StyledVersion>
+        {showDedication && <StyledVersion>{"Inspired by Monika ❤️"}</StyledVersion>}
       </StyledModalFooter>
     </Modal>
   );

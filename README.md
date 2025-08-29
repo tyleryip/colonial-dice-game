@@ -49,6 +49,8 @@ npm run build
 
 ## References
 
+Inspired by Monika ❤️
+
 - https://www.codeconcisely.com/posts/react-detect-clicks-outside-component/
 - https://usehooks.com/
 - https://react-bootstrap.github.io/

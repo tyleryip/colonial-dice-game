@@ -73,7 +73,7 @@ const GameOverModal = () => {
             backdrop="static"
         >
             <StyledModalHeader>
-                {"Game Over"}
+                {"🎉 Game Over 🎉"}
             </StyledModalHeader>
             <StyledGameOverModalBody>
                 <p>{`You reached 10 points in ${totalScoreDisplay}`}</p>
