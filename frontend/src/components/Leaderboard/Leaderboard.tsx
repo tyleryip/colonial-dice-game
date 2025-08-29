@@ -1,6 +1,5 @@
 import { useAppSelector } from '../../store/hooks'
 import { selectOrderedIslandOneLeaderboardEntries, selectOrderedIslandTwoLeaderboardEntries } from '../../store/slices/local/leaderboardSlice/leaderboardSlice'
-import StyledLeaderboard from './styles/StyledLeaderboard'
 import LeaderboardPlaceholder from './LeaderboardPlaceholder/LeaderboardPlaceholder'
 import Tab from 'react-bootstrap/Tab'
 import { Nav, Row } from 'react-bootstrap'
@@ -18,46 +17,44 @@ const Leaderboard = () => {
     const islandTwoEntries = useAppSelector(state => selectOrderedIslandTwoLeaderboardEntries(state))
 
     return (
-        <StyledLeaderboard>
-            <Tab.Container
-                defaultActiveKey={'islandOne'}>
-                <Row>
-                    <Nav
-                        variant='underline'
-                        className='flex-row'>
-                        <StyledLeaderboardNavItem>
-                            <Nav.Link eventKey={'islandOne'}>Island 1</Nav.Link>
-                        </StyledLeaderboardNavItem>
-                        <StyledLeaderboardNavItem>
-                            <Nav.Link eventKey={'islandTwo'}>Island 2</Nav.Link>
-                        </StyledLeaderboardNavItem>
-                    </Nav>
-                </Row>
-                <Row>
-                    <Tab.Content>
-                        <StyledLeaderboardTabPane eventKey={'islandOne'}>
-                            {
-                                islandOneEntries.length == 0 ?
-                                    <LeaderboardPlaceholder /> :
-                                    <LeaderboardTable
-                                        entries={islandOneEntries}
-                                        scoreLabel={"Score"}
-                                        scoreInformation={islandOneScoreInformation} />
-                            }
-                        </StyledLeaderboardTabPane>
-                        <StyledLeaderboardTabPane eventKey={'islandTwo'}>
-                            {
-                                islandTwoEntries.length == 0 ? <LeaderboardPlaceholder /> :
-                                    <LeaderboardTable
-                                        entries={islandTwoEntries}
-                                        scoreLabel={"Turns"}
-                                        scoreInformation={islandTwoScoreInformation} />
-                            }
-                        </StyledLeaderboardTabPane>
-                    </Tab.Content>
-                </Row>
-            </Tab.Container>
-        </StyledLeaderboard>
+        <Tab.Container
+            defaultActiveKey={'islandOne'}>
+            <Row>
+                <Nav
+                    variant='underline'
+                    className='flex-row'>
+                    <StyledLeaderboardNavItem>
+                        <Nav.Link eventKey={'islandOne'}>Island 1</Nav.Link>
+                    </StyledLeaderboardNavItem>
+                    <StyledLeaderboardNavItem>
+                        <Nav.Link eventKey={'islandTwo'}>Island 2</Nav.Link>
+                    </StyledLeaderboardNavItem>
+                </Nav>
+            </Row>
+            <Row>
+                <Tab.Content>
+                    <StyledLeaderboardTabPane eventKey={'islandOne'}>
+                        {
+                            islandOneEntries.length == 0 ?
+                                <LeaderboardPlaceholder /> :
+                                <LeaderboardTable
+                                    entries={islandOneEntries}
+                                    scoreLabel={"Score"}
+                                    scoreInformation={islandOneScoreInformation} />
+                        }
+                    </StyledLeaderboardTabPane>
+                    <StyledLeaderboardTabPane eventKey={'islandTwo'}>
+                        {
+                            islandTwoEntries.length == 0 ? <LeaderboardPlaceholder /> :
+                                <LeaderboardTable
+                                    entries={islandTwoEntries}
+                                    scoreLabel={"Turns"}
+                                    scoreInformation={islandTwoScoreInformation} />
+                        }
+                    </StyledLeaderboardTabPane>
+                </Tab.Content>
+            </Row>
+        </Tab.Container>
     )
 }
 

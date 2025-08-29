@@ -28,6 +28,7 @@ export const islandOneKnightSlice = createSlice({
          */
         islandOneResetKnights: (state) => {
             state.isBuilt = initialState.isBuilt
+            state.isSpent = initialState.isSpent
         },
         /**
          * When a user spends the resource joker associated with this knight
