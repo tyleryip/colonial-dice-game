@@ -1,4 +1,4 @@
-import { LeaderboardEntry } from "../../../store/slices/leaderboardSlice/leaderboardSlice"
+import { LeaderboardEntry } from "../../../store/slices/local/leaderboardSlice/leaderboardSlice"
 import StyledLeaderboardRankIcon from "./styles/StyledLeaderboardRankIcon"
 import StyledLeaderboardRow from "./styles/StyledLeaderboardRow"
 import StyledLeaderboardTableData from "./styles/StyledLeaderboardTableData"

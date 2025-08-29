@@ -7,6 +7,7 @@ const StyledNavbarButton = styled.div`
   width: 100%;
 
 /** Colour + Background */ 
+  color: black;
 
 /** Typography */ 
 

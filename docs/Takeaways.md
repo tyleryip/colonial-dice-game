@@ -30,3 +30,37 @@ there will be issues on reload or dynamic styling changes.
 Pick one or the other. You cannot have it both ways. You can either switch to
 using a pure vector SVG with no embedded images, or you can switch to using
 a pure raster-based image format like a PNG or JPEG.
+
+## Javascript 'of' operator vs array.forEach()
+
+### Problem
+
+In one of the slices for Island 2, I was trying to find the first match in an
+array and return the index. I tried to use an array.forEach with a callback to
+evaluate the condition and return early. However, the forEach loop is not actually
+a oop. Instead, the callback will be evaluated on each element.
+
+```javascript
+    function getFirstIndex(collection) {
+        collection.forEach(item => {
+            if (item meets condition) {
+                return item // Will not return
+            }
+        })
+    }
+```
+
+### Solution
+
+A much better solution is to use the 'of' operator in a for loop, which is similar
+to a foreach loop in C#.
+
+```javascript
+    function getFirstIndex(collection) {
+        for(const item of collection) {
+            if (item meets collection) {
+                return item // Will return
+            }
+        }
+    }
+```

@@ -6,22 +6,46 @@
 
 ## About
 
+Colonial Dice Game is a web-based game inspired by the dice-rolling mechanics of the Catan Dice Game.
+
 [Live Demo](https://colonial-dice-game.netlify.app/)
 
 ## Features
 
-TODO
+- Full Gameplay Implementation - Experience the complete mechanics of the Colonial Dice Game, including both islands and all core gameplay elements.
+- Local Leaderboard - Track your high scores and challenge yourself to improve with a built-in local leaderboard.
+- Immersive Sound Effects - Enjoy engaging audio feedback that enhances the gameplay atmosphere.
+- Toggleable Hints - Get strategic guidance when you need it — or turn off hints for a more challenging experience.
+- "How to Play" Section - Learn the rules and mechanics quickly with a built-in tutorial and instructions.
 
 ## Available Scripts
 
-To run the app in the local dev environment, navigate to the /frontend directory and run:
+### Dev
 
-```
+To run the app in the local dev environment, navigate to the `/frontend` directory and run:
+
+```sh
 npm install
 npm run dev
 ```
 
 Open [http://localhost:5173](http://localhost:5173) to view it in the browser
+
+### Test
+
+To run the unit test suite and get a coverage report, navigate to the `/frontend` directory and run:
+
+```sh
+npm run test
+```
+
+### Build
+
+To create a production-ready build, naviagte to the `/frontend` directory and run:
+
+```sh
+npm run build
+```
 
 ## References
 
