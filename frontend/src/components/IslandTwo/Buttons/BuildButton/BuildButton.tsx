@@ -9,7 +9,8 @@ import build_icon from '/assets/buttons/build-icon.png'
 import dice_icon from '/assets/buttons/dice-icon.png'
 import StyledBuildButtonIcon from "./styles/StyledBuildButtonIcon";
 import { islandTwoResetDice, islandTwoResetDiceLocks, islandTwoSetRollCount } from "../../../../store/slices/session/islandTwo/diceSlice/islandTwoDiceSlice";
-import { selectIslandTwoIsGamePhaseRolling, selectIslandTwoIsGamePhaseBuilding, selectIslandTwoCurrentTurn, islandTwoSetGamePhase, islandTwoIncrementTurn } from "../../../../store/slices/session/islandTwo/gameSlice/islandTwoGameSlice";
+import { selectIslandTwoIsGamePhaseRolling, selectIslandTwoIsGamePhaseBuilding, islandTwoSetGamePhase, islandTwoIncrementTurn } from "../../../../store/slices/session/islandTwo/gameSlice/islandTwoGameSlice";
+import { selectIslandTwoScore } from "../../../../store/slices/session/islandTwo/scoreSlice/islandTwoScoreSlice";
 
 interface BuildButtonProps {
   disabled?: boolean;
@@ -33,7 +34,7 @@ const BuildButton = (props: BuildButtonProps) => {
   const gamePhaseBuilding = useAppSelector(state =>
     selectIslandTwoIsGamePhaseBuilding(state)
   );
-  const currentTurn = useAppSelector(state => selectIslandTwoCurrentTurn(state))
+  const score = useAppSelector(state => selectIslandTwoScore(state))
   const volume = useAppSelector(state => selectEffectiveVolume(state))
 
   // Conditional rendering
@@ -85,7 +86,7 @@ const BuildButton = (props: BuildButtonProps) => {
       dispatch(islandTwoIncrementTurn());
       dispatch(islandTwoResetDice());
 
-      if (currentTurn >= 14) {
+      if (score >= 10) {
         playGameOverSound();
       }
     }
